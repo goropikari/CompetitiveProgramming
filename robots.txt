@@ -1,0 +1,4 @@
+Sitemap: https://goropikari.github.io/CompetitiveProgramming/sitemap.xml
+
+User-agent: *
+Disallow:

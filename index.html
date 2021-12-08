@@ -1,0 +1,69 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/CompetitiveProgramming/libs/highlight/github.min.css"> <link rel=stylesheet  href="/CompetitiveProgramming/css/franklin.css"> <link rel=stylesheet  href="/CompetitiveProgramming/css/poole_hyde.css"> <style> html {font-size: 17px;} .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;} @media (min-width: 940px) { .franklin-content {width: 100%; margin-left: auto; margin-right: auto;} } @media (max-width: 768px) { .franklin-content {padding-left: 6%; padding-right: 6%;} } </style> <link rel=icon  href="/CompetitiveProgramming/assets/favicon.png"> <title>Competitive Programming</title> <div class=sidebar > <div class="container sidebar-sticky"> <div class=sidebar-about > <h1><a href="/CompetitiveProgramming/">競プロ メモ</a></h1> </div> <nav class=sidebar-nav > <a class="sidebar-nav-item active" href="/CompetitiveProgramming/">Home</a> <a class="sidebar-nav-item " href="/CompetitiveProgramming/tag/atcoder/">AtCoder</a> <a class="sidebar-nav-item " href="/CompetitiveProgramming/tag/abc/">ABC</a> </nav> <p>&copy; goropikari.</p> </div> </div> <div class="content container"> <div class=franklin-content > <h1 id=tips ><a href="#tips" class=header-anchor >Tips</a></h1> <p><div class=franklin-toc ><ol><li><a href="#int_-_string">int &lt;-&gt; string</a><li><a href="#priority_queue">priority queue</a><li><a href="#sort">sort</a></ol></div> </p> <h2 id=int_-_string ><a href="#int_-_string" class=header-anchor >int &lt;-&gt; string</a></h2> <pre><code class="cpp hljs"><span class=hljs-built_in >to_string</span>(<span class=hljs-type >int</span>) -&gt; <span class=hljs-function >string
+<span class=hljs-title >to_string</span><span class=hljs-params >(ll)</span> -&gt; string
+<span class=hljs-title >stoi</span><span class=hljs-params >(string)</span> -&gt; <span class=hljs-type >int</span>
+<span class=hljs-title >stoll</span><span class=hljs-params >(string)</span> -&gt; ll</span></code></pre> <h2 id=priority_queue ><a href="#priority_queue" class=header-anchor >priority queue</a></h2> <p>昇順</p> <pre><code class="cpp hljs"><span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;iostream&gt;</span></span>
+<span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;queue&gt;</span></span>
+
+<span class=hljs-function ><span class=hljs-type >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span>
+</span>{
+  <span class=hljs-comment >// intを要素に持つ優先順位付きキュー。</span>
+  <span class=hljs-comment >// 降順に処理する</span>
+  std::priority_queue&lt;<span class=hljs-type >int</span>&gt; que;
+
+  <span class=hljs-comment >// データを追加する</span>
+  que.<span class=hljs-built_in >push</span>(<span class=hljs-number >3</span>);
+  que.<span class=hljs-built_in >push</span>(<span class=hljs-number >1</span>);
+  que.<span class=hljs-built_in >push</span>(<span class=hljs-number >4</span>);
+
+  <span class=hljs-comment >// 処理順に出力する</span>
+  <span class=hljs-keyword >while</span> (!que.<span class=hljs-built_in >empty</span>()) {
+    std::cout &lt;&lt; que.<span class=hljs-built_in >top</span>() &lt;&lt; std::endl;
+    que.<span class=hljs-built_in >pop</span>();
+  }
+}</code></pre> <pre><code class="julia hljs"><span class=hljs-number >4</span>
+<span class=hljs-number >3</span>
+<span class=hljs-number >1</span></code></pre> <p>降順に出力</p> <pre><code class="cpp hljs"><span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;iostream&gt;</span></span>
+<span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;queue&gt;</span></span>
+
+<span class=hljs-function ><span class=hljs-type >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span>
+</span>{
+  <span class=hljs-comment >// intを要素に持つ優先順位付きキュー。</span>
+  <span class=hljs-comment >// 降順に処理する</span>
+  std::priority_queue&lt;<span class=hljs-type >int</span>, vector&lt;<span class=hljs-type >int</span>&gt;, greater&lt;<span class=hljs-type >int</span>&gt;&gt; que;
+
+  <span class=hljs-comment >// データを追加する</span>
+  que.<span class=hljs-built_in >push</span>(<span class=hljs-number >3</span>);
+  que.<span class=hljs-built_in >push</span>(<span class=hljs-number >1</span>);
+  que.<span class=hljs-built_in >push</span>(<span class=hljs-number >4</span>);
+
+  <span class=hljs-comment >// 降順順に出力する</span>
+  <span class=hljs-keyword >while</span> (!que.<span class=hljs-built_in >empty</span>()) {
+    std::cout &lt;&lt; que.<span class=hljs-built_in >top</span>() &lt;&lt; std::endl;
+    que.<span class=hljs-built_in >pop</span>();
+  }
+}</code></pre> <pre><code class="julia hljs"><span class=hljs-number >1</span>
+<span class=hljs-number >3</span>
+<span class=hljs-number >4</span></code></pre> <h2 id=sort ><a href="#sort" class=header-anchor >sort</a></h2> <p>自作 struct に関して sort する。</p> <pre><code class="cpp hljs"><span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;iostream&gt;</span></span>
+<span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;vector&gt;</span></span>
+<span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;algorithm&gt;</span></span>
+
+<span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> std;
+
+<span class=hljs-keyword >struct</span> <span class="hljs-title class_">Hoge</span> {
+    <span class=hljs-type >int</span> x, y;
+};
+
+<span class=hljs-function ><span class=hljs-type >bool</span> <span class=hljs-title >compare</span><span class=hljs-params >(Hoge a, Hoge b)</span> </span>{ <span class=hljs-keyword >return</span> a.y &gt; b.y; }
+
+<span class=hljs-function ><span class=hljs-type >int</span> <span class=hljs-title >main</span><span class=hljs-params >(<span class=hljs-type >int</span> argc, <span class=hljs-type >char</span>* argv[])</span>
+</span>{
+    vector&lt;Hoge&gt; v = { {<span class=hljs-number >0</span>, <span class=hljs-number >1</span>}, {<span class=hljs-number >1</span>, <span class=hljs-number >9</span>} };
+
+    <span class=hljs-built_in >sort</span>(v.<span class=hljs-built_in >begin</span>(), v.<span class=hljs-built_in >end</span>(), compare);
+
+    <span class=hljs-keyword >for</span> (Hoge item : v) {
+        cout &lt;&lt; item.x &lt;&lt; <span class=hljs-string >&quot; &quot;</span> &lt;&lt; item.y &lt;&lt; endl;
+    }
+    <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>;
+}</code></pre> <pre><code class="julia hljs"><span class=hljs-number >1</span> <span class=hljs-number >9</span>
+<span class=hljs-number >0</span> <span class=hljs-number >1</span></code></pre> <div class=page-foot > <div class=copyright > &copy; <a href=https://github.com/goropikari>goropikari</a>. Last modified: December 08, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. This site source is located at <a href=https://goropikari.github.io/CompetitiveProgramming>goropikari/CompetitiveProgramming</a> </div> </div> </div> </div>
