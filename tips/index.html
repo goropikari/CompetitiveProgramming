@@ -1,0 +1,62 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/CompetitiveProgramming/libs/katex/katex.min.css"> <link rel=stylesheet  href="/CompetitiveProgramming/libs/highlight/github.min.css"> <link rel=stylesheet  href="/CompetitiveProgramming/css/franklin.css"> <link rel=stylesheet  href="/CompetitiveProgramming/css/poole_hyde.css"> <style> html {font-size: 17px;} .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;} @media (min-width: 940px) { .franklin-content {width: 100%; margin-left: auto; margin-right: auto;} } @media (max-width: 768px) { .franklin-content {padding-left: 6%; padding-right: 6%;} } </style> <link rel=icon  href="/CompetitiveProgramming/assets/favicon.png"> <title>Tips</title> <div class=sidebar > <div class="container sidebar-sticky"> <div class=sidebar-about > <h1><a href="/CompetitiveProgramming/">競プロ メモ</a></h1> </div> <nav class=sidebar-nav > <a class="sidebar-nav-item " href="/CompetitiveProgramming/">Home</a> <a class="sidebar-nav-item " href="/CompetitiveProgramming/tag/atcoder/">AtCoder</a> <a class="sidebar-nav-item " href="/CompetitiveProgramming/tag/abc/">ABC</a> </nav> <p>&copy; <a href=https://github.com/goropikari>goropikari</a>.</p> </div> </div> <div class="content container"> <div class=franklin-content > <h1 id=performance ><a href="#performance" class=header-anchor >Performance</a></h1> <div class=franklin-toc ><ol><li><a href="#multiset_vs_vector">multiset vs vector</a></ol></div> <h2 id=multiset_vs_vector ><a href="#multiset_vs_vector" class=header-anchor >multiset vs vector</a></h2> <p>multiset は遅いので二部探索のように使うときは注意する。 insert, find, erase の計算量は <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo><mo stretchy=false >(</mo><mi>N</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">\log(N)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mop >lo<span style="margin-right:0.01389em;">g</span></span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class=mclose >)</span></span></span></span> &#40;<span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> は要素数&#41;であるが、定数項が効いているのかなかなかに遅い。</p> <p><pre><code class="cpp hljs"><span class=hljs-meta >#<span class=hljs-keyword >include</span> <span class=hljs-string >&lt;bits/stdc++.h&gt;</span></span>
+<span class=hljs-meta >#<span class=hljs-keyword >define</span> all(v) (v).begin(), (v).end()</span>
+<span class=hljs-meta >#<span class=hljs-keyword >define</span> rall(v) (v).rbegin(), (v).rend()</span>
+<span class=hljs-meta >#<span class=hljs-keyword >define</span> rep(i,n) for (int i = 0; i &lt; (n); ++i)</span>
+<span class=hljs-meta >#<span class=hljs-keyword >define</span> rep2(i,k,n) for (int i = (k); i &lt; (n); ++i)</span>
+<span class=hljs-keyword >using</span> <span class=hljs-keyword >namespace</span> std;
+<span class=hljs-keyword >using</span> ll = <span class=hljs-type >long</span> <span class=hljs-type >long</span>;
+<span class=hljs-keyword >using</span> P = pair&lt;<span class=hljs-type >int</span>,<span class=hljs-type >int</span>&gt;;
+<span class=hljs-comment >// using P = pair&lt;ll,ll&gt;;</span>
+
+<span class=hljs-type >const</span> ll INF = (ll)<span class=hljs-number >1e18</span>;
+<span class=hljs-comment >// const int INF = (int)1e9+7;</span>
+<span class=hljs-function ><span class=hljs-keyword >template</span>&lt;<span class=hljs-keyword >typename</span> T&gt;
+<span class=hljs-type >void</span> <span class=hljs-title >chmin</span><span class=hljs-params >(T &amp;a, T b)</span> </span>{ a = <span class=hljs-built_in >min</span>(a, b); }
+<span class=hljs-function ><span class=hljs-keyword >template</span>&lt;<span class=hljs-keyword >typename</span> T&gt;
+<span class=hljs-type >void</span> <span class=hljs-title >chmax</span><span class=hljs-params >(T &amp;a, T b)</span> </span>{ a = <span class=hljs-built_in >max</span>(a, b); }
+
+<span class=hljs-function ><span class=hljs-type >void</span> <span class=hljs-title >solve</span><span class=hljs-params >()</span> </span>{
+    <span class=hljs-type >int</span> ns[] = {<span class=hljs-number >100</span>, <span class=hljs-number >1000</span>, <span class=hljs-number >10000</span>, <span class=hljs-number >100000</span>, <span class=hljs-number >1000000</span>, <span class=hljs-number >10000000</span>};
+    cout &lt;&lt; <span class=hljs-string >&quot;multiset&quot;</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class=hljs-string >&quot;size\telapsed time (sec)&quot;</span> &lt;&lt; endl;
+    <span class=hljs-keyword >for</span> (<span class=hljs-type >int</span> n : ns) {
+        multiset&lt;<span class=hljs-type >int</span>&gt; ms;
+        <span class=hljs-type >clock_t</span> start = <span class=hljs-built_in >clock</span>();
+        <span class=hljs-built_in >rep</span>(i,n) ms.<span class=hljs-built_in >insert</span>(i);
+        <span class=hljs-type >clock_t</span> end = <span class=hljs-built_in >clock</span>();
+        cout &lt;&lt; n &lt;&lt; <span class=hljs-string >&quot;\t&quot;</span> &lt;&lt; (<span class=hljs-type >double</span>)(end - start) / CLOCKS_PER_SEC &lt;&lt; endl;
+    }
+
+    cout &lt;&lt; endl;
+    cout &lt;&lt; <span class=hljs-string >&quot;vector&quot;</span> &lt;&lt; endl;
+    cout &lt;&lt; <span class=hljs-string >&quot;size\telapsed time (sec)&quot;</span> &lt;&lt; endl;
+    <span class=hljs-keyword >for</span> (<span class=hljs-type >int</span> n : ns) {
+        <span class=hljs-function >vector&lt;<span class=hljs-type >int</span>&gt; <span class=hljs-title >v</span><span class=hljs-params >(n)</span></span>;
+        <span class=hljs-type >clock_t</span> start = <span class=hljs-built_in >clock</span>();
+        <span class=hljs-built_in >rep</span>(i,n) v[i] = i;
+        <span class=hljs-built_in >sort</span>(<span class=hljs-built_in >all</span>(v));
+        <span class=hljs-type >clock_t</span> end = <span class=hljs-built_in >clock</span>();
+        cout &lt;&lt; n &lt;&lt; <span class=hljs-string >&quot;\t&quot;</span> &lt;&lt; (<span class=hljs-type >double</span>)(end - start) / CLOCKS_PER_SEC &lt;&lt; endl;
+    }
+}
+
+<span class=hljs-function ><span class=hljs-type >int</span> <span class=hljs-title >main</span><span class=hljs-params >()</span> </span>{
+    <span class=hljs-built_in >solve</span>();
+    <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>;
+}</code></pre> </p> <pre><code class="julia hljs">multiset
+size    elapsed time (sec)
+<span class=hljs-number >100</span>     <span class=hljs-number >9e-06</span>
+<span class=hljs-number >1000</span>    <span class=hljs-number >6.4e-05</span>
+<span class=hljs-number >10000</span>   <span class=hljs-number >0.000915</span>
+<span class=hljs-number >100000</span>  <span class=hljs-number >0.011328</span>
+<span class=hljs-number >1000000</span> <span class=hljs-number >0.144224</span>
+<span class=hljs-number >10000000</span>        <span class=hljs-number >2.5446</span>
+
+vector
+size    elapsed time (sec)
+<span class=hljs-number >100</span>     <span class=hljs-number >5e-06</span>
+<span class=hljs-number >1000</span>    <span class=hljs-number >1e-05</span>
+<span class=hljs-number >10000</span>   <span class=hljs-number >7.5e-05</span>
+<span class=hljs-number >100000</span>  <span class=hljs-number >0.000858</span>
+<span class=hljs-number >1000000</span> <span class=hljs-number >0.010139</span>
+<span class=hljs-number >10000000</span>        <span class=hljs-number >0.130072</span></code></pre> <p><img src="/CompetitiveProgramming/assets/tips/multiset_vs_vector.png" alt=multiset_vs_vector  /></p> <div class=page-foot > <div class=copyright > &copy; <a href=https://github.com/goropikari>goropikari</a>. Last modified: December 12, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. This site source is located at <a href=https://goropikari.github.io/CompetitiveProgramming>goropikari/CompetitiveProgramming</a> </div> </div> </div> </div>
