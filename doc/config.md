@@ -16,7 +16,7 @@ ignore = ["node_modules/"]
 # RSS (the website_{title, descr, url} must be defined to get RSS)
 generate_rss = true
 website_title = "競プロメモ"
-website_descr = "競プロで勉強したことをメモする場所"
+website_descr = "競プロ用に勉強したことをメモする場所"
 website_url   = "https://goropikari.github.io/CompetitiveProgramming"
 +++
 
@@ -24,4 +24,5 @@ website_url   = "https://goropikari.github.io/CompetitiveProgramming"
 Add here global latex commands to use throughout your pages.
 -->
 \newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
 \newcommand{\scal}[1]{\langle #1 \rangle}
