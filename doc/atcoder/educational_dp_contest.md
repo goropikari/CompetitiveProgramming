@@ -87,3 +87,15 @@ $dp[0] = 0$
 submission code
 - [配列使用](https://atcoder.jp/contests/dp/submissions/27929636)
 - [再帰関数使用](https://atcoder.jp/contests/dp/submissions/27929767)
+
+
+## [M - Candies](https://atcoder.jp/contests/dp/tasks/dp_m)
+
+$dp[i][j]$: $i$ 番目の子どもたちに飴をあげたときに、あげた飴の総数が $j$ となる場合の数
+
+$\displaystyle dp[i][j] = \sum_{k = \min(0, j-a[i])}^j dp[i-1][k]$
+
+愚直に解くと $O(NK^2)$ の計算量がかかるが、summation の計算を累積和を使って高速化することで $O(NK)$ で計算できるようになる。
+
+submission code
+- [配列使用](https://atcoder.jp/contests/dp/submissions/27971446)
