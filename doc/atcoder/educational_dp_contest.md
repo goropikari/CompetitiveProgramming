@@ -64,3 +64,26 @@ $dp[i][j]$: $(i,j)$ までの経路の数とすると $dp[i][j] = dp[i-1][j] + d
 submission code
 - [配列使用](https://atcoder.jp/contests/dp/submissions/27914012)
 - [再帰関数使用](https://atcoder.jp/contests/dp/submissions/27914109)
+
+## [I - Coins](https://atcoder.jp/contests/dp/tasks/dp_i)
+
+$dp[i][j]$: $i$ 番目までの coin を使って表が出る回数が $j$ となる確率。
+
+$dp[i][j] = dp[i-1][j] \times (1-p[i]) + dp[i-1][j-1] \times p[i]$, ($dp[0][0] = 1$).
+
+submission code
+- [配列使用](https://atcoder.jp/contests/dp/submissions/27962255)
+- [再帰関数使用](https://atcoder.jp/contests/dp/submissions/27962271)
+
+## [J - Sushi](https://atcoder.jp/contests/dp/tasks/dp_j)
+
+submission code
+
+## [K - Stones](https://atcoder.jp/contests/dp/tasks/dp_k)
+
+$dp[i]$ 石の個数が $i$ のとき、先手が勝てるか?
+$dp[0] = 0$
+
+submission code
+- [配列使用](https://atcoder.jp/contests/dp/submissions/27929636)
+- [再帰関数使用](https://atcoder.jp/contests/dp/submissions/27929767)
