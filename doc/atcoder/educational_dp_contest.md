@@ -99,3 +99,34 @@ $\displaystyle dp[i][j] = \sum_{k = \min(0, j-a[i])}^j dp[i-1][k]$
 
 submission code
 - [配列使用](https://atcoder.jp/contests/dp/submissions/27971446)
+
+
+
+## [N - Slimes](https://atcoder.jp/contests/dp/tasks/dp_n)
+
+$f(l, r)$: $[l,r]$ の範囲(0-index)のスライム合体させたときの最小コスト, ($f(x,x) = a[x]$).
+
+ある $k$ $(l \leq k \leq r-1)$ について $[l,k]$, $[k+1, r]$ の2つの部分を合体してスライムを生成するときにかかるコストは
+
+$[l,k]$ の部分からの寄与 = if $i = k$ then $f(l,k)$, otherwise $f(l,k) + a[l] + ... + a[k]$.
+
+同様にして $[k+1, r]$ の部分からの寄与 = if $k+1 = r$ then $f(k+1,r)$, otherwise $f(k+1, r) + a[k+1] + ... + a[r]$
+
+よって合体するときのコストは
+$f(l,k) + (l \neq k) \times (\mathrm{cumsum}[k+1]-\mathrm{cumsum}[l]) + f(k+1,r) + (k+1 \neq r) \times (\mathrm{cumsum}[r+1] - \mathrm{cumsum}[k+1])$
+
+ここで $\mathrm{cumsum}[k] = a[0] + \cdots + a[k-1]$.
+
+これをすべての $k$ に関して求め最小となるものが $f(l, r)$
+
+submission code
+- [再帰関数使用](https://atcoder.jp/contests/dp/submissions/27929767)
+
+$f(x,x) = 0$ とすると
+
+$\displaystyle f(l, r) = \min_k\{f(l,k) + f(k+1, r) + \mathrm{cumsum}[r+1] - \mathrm{cumsum}[l] \}$
+
+とできるのでこちらのほうが簡単かも
+
+submission code
+- [再帰関数使用](https://atcoder.jp/contests/dp/submissions/28038660)
