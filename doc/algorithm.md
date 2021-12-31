@@ -28,7 +28,7 @@ stoll(string) -> ll
 
 int main()
 {
-  // intを要素に持つ優先順位付きキュー。
+  // intを要素に持つ優先順位付きキュー.
   // 降順に処理する
   std::priority_queue<int> que;
 
@@ -58,7 +58,7 @@ int main()
 
 int main()
 {
-  // intを要素に持つ優先順位付きキュー。
+  // intを要素に持つ優先順位付きキュー.
   // 降順に処理する
   std::priority_queue<int, vector<int>, greater<int>> que;
 
@@ -84,7 +84,7 @@ int main()
 
 ## sort
 
-自作 struct に関して sort する。
+自作 struct に関して sort する.
 
 ```cpp
 #include <iostream>
@@ -150,4 +150,134 @@ vector<T> cumsum(vector<T> v) {
     rep2(i,1,n) v[i] += v[i-1];
     return v;
 }
+```
+
+## 高速べき乗計算
+
+$x^n$ を高速に求める
+
+```cpp
+// x^n
+ll pow(ll x, ll n) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1) ret *= x;
+        x *= x;
+        n >>= 1;
+    }
+    return ret;
+}
+
+// べき乗 mod
+// x^n mod m
+ll modpow(ll x, ll n, ll mod) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1) ret = (ret * x) % mod;
+        x = (x * x) % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+```
+
+フェルマーの小定理より素数 $p$ に対して $a^{p-1} \equiv 1 \mod p$ であるから
+$a^{-1} \equiv a^{p-2} \mod p$
+
+```cpp
+// べき乗 inv mod
+// x^{-1} mod m
+ll modinvpow(ll x, ll mod) {
+    return modpow(x, mod-2, mod);
+}
+```
+
+## 素数
+
+### エラトステネスのふるい
+
+```cpp
+int MAX = 100005;
+vector<int> isprime(MAX, true);
+isprime[0] = isprime[1] = false;
+for (int i = 2; i < MAX; i++) {
+    if (isprime[i]) {
+        for (int j = i+i; j < MAX; j+=i) {
+            isprime[j] = false;
+        }
+    }
+}
+```
+
+## 行列操作
+
+$H \times W$ の行列 $A$ を考える.
+$A$ に以下の操作を加えたでできた行列を $A^\prime$ とする.
+このとき $A^\prime$ の $(i^\prime, j^\prime)$ 成分と $A$ の $(i,j)$ 成分の対応は以下の通りである.
+
+各操作を愚直に行うと $O(HW)$ かかるが, index のみを更新することで $O(H+W)$ に計算量を落とすことができる.
+
+### rotr90
+
+$
+i^\prime = j \\
+j^\prime = H - 1 - i
+$
+
+### rotl90
+
+$
+i^\prime = W - 1 - j \\
+j^\prime = i
+$
+
+### transpose
+
+$
+i^\prime = j \\
+j^\prime = i
+$
+
+### 上下反転
+
+$
+i^\prime = H - 1 - i \\
+j^\prime = j
+$
+
+### 左右反転
+$
+i^\prime = i \\
+j^\prime = W - 1 - j
+$
+\input{cpp}{/assets/scripts/algorithm/matrix.cpp} <!--_-->
+
+output
+```
+original
+a b c
+d e f
+
+rotr90
+d a
+e b
+f c
+
+set 'z' at (0, 1)
+d z
+e b
+f c
+
+rotr90
+f e d
+c b z
+
+rotl90
+d z
+e b
+f c
+
+transpose
+d e f
+z b c
 ```
