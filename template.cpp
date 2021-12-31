@@ -1,3 +1,7 @@
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
+// using mint = modint1000000007;
 #include <bits/stdc++.h>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
@@ -8,10 +12,9 @@ using ll = long long;
 using P = pair<int,int>;
 // using P = pair<ll,ll>;
 
+
 const ll INF = (ll)1e18;
 // const int INF = (int)1e9+7;
-// const int MOD = (int)1e9+7;
-// const ll MOD = (ll)1e9+7;
 template<typename T>
 void chmin(T &a, T b) { a = min(a, b); }
 template<typename T>
