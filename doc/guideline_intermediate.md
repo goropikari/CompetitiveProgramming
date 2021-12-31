@@ -1,0 +1,613 @@
++++
+title = "AtCoder上達のガイドライン 中級編"
+hascode = true
+date = Date(2021, 12, 31)
++++
+@def tags = ["atcoder"]
+
+# 『 レッドコーダーが教える、競プロ・AtCoder上達のガイドライン【中級編：目指せ水色コーダー！】 』掲載問題メモ
+
+[元記事](https://qiita.com/e869120/items/eb50fdaece12be418faa)
+
+\toc
+
+## DPL_1_B: 0-1 ナップザック問題
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_B)
+
+$dp[i][j]$: $i$ 番目までの品物を使って重さの総和が $j$ 以下のときの価値の最大値
+
+$i$ 番目の品物を使わなかったときと $dp[i-1][j]$ と, $i$ 番目の品物を使うとき $dp[i-1][j-w[i]]$ の大きい方を選ぶ.
+
+$dp[i][j] = \max(dp[i-1][j], dp[i-1][j-w[i]] + v[i])$
+
+```cpp
+vector<vector<int>> dp(N+1, vector<int>(W+1,0));
+rep2(i,1,N+1) {
+    rep(j,W+1) {
+        if (j-w[i] >= 0) chmax(dp[i][j], dp[i-1][j-w[i]] + v[i]);
+        chmax(dp[i][j], dp[i-1][j]);
+    }
+}
+```
+
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_1_B/judge/6163387/C++17)
+
+## DPL_1_C ナップザック問題
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_C)
+
+$dp[w]$: 重さが $w$ を以下のときの価値の最大値
+
+```cpp
+vector<int> dp(W+1,0);
+rep(j,W+1) {
+    rep2(i,1,N+1) {
+        if (j + w[i] <= W) chmax(dp[j+w[i]], dp[j]+v[i]);
+    }
+}
+ans = dp[W];
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_1_C/judge/6163401/C++14)
+
+## DPL_1_A コイン問題
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_A)
+
+$dp[n]$: $n$ 円払うときのコインの最小枚数
+
+0円払うとき必要なコインは 0 枚だから $dp[0] = 0$.
+
+```cpp
+vector<int> dp(n+1, INF);
+dp[0] = 0;
+rep(i,n+1) {
+    rep(j,m) {
+        if (i+coins[j] <= n) chmin(dp[i+coins[j]], dp[i] + 1);
+    }
+}
+// ans = dp[n];
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_1_A/judge/6163410/C++17)
+
+## ALDS1_10_C 最長共通部分列
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_10_C)
+
+$dp[i][j]$: 文字列 $X$ を $i$ 文字目, 文字列 $Y$ を $j$ 文字目まで見たときの最長共通部分列
+
+- $X_i = Y_j$ のとき $dp[i][j] = dp[i-1][j-1] + 1$
+- $X_i \neq Y_j$ のとき, 文字列 $X$ の見ている文字を右に進めるか, 文字列 $Y$ の見ている文字を右に進めるかの2択. よって $dp[i-1][j]$ または $dp[i][j-1]$ のうちの大きい方 $dp[i][j] = \max(dp[i-1][j], dp[i][j-1])$.
+
+```cpp
+int lcs(string s, string t) {
+    int lens = s.size(), lent = t.size();
+    vector<vector<int>> dp(lens+1, vector<int>(lent+1, 0));
+    rep2(i,1,lens+1) {
+        rep2(j,1,lent+1) {
+            if (s[i-1] == t[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+            else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+        }
+    }
+
+    return dp[lens][lent];
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_10_C/judge/6163429/C++17)
+
+## JOI 2011 予選 4 - 1 年生
+
+[問題](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_d)
+
+$dp[i][x]$: $i$ 番目までの数字を足し引きをして $x$ となる場合の数
+$n-1$ 番目の数字を足し引きして $n$ 番目の数字と同じになる場合の数が答え
+
+一番はじめの数は足す一択だから $dp[1][a[1]] = 1$.
+
+$i$ が小さい方から決めていく.
+
+配る dp の場合
+```cpp
+// dp[i][x]: i 番目の数字を足し引きして x となる場合の数
+vector<vector<ll>> dp(n+1, vector<ll>(21,0));
+// 1 番目の数は足す一択
+dp[1][a[1]] = 1;
+
+rep2(i,2,n) {
+    rep(x,21) {
+        // i 番目の数が x+a[i] となるのは dp[i-1] のとき x で i 番目の数字 a[i] を足したとき
+        if (x+a[i] <= 20) dp[i][x+a[i]] += dp[i-1][x];
+
+        // i 番目の数が x-a[i] となるのは dp[i-1] のとき x で i 番目の数字 a[i] を引いたとき
+        if (x-a[i] >= 0) dp[i][x-a[i]] += dp[i-1][x];
+    }
+}
+
+// n-1 番目の数を足し引きして, n 番目の数と一致する場合な数
+cout << dp[n-1][a[n]] << endl;
+```
+
+[提出コード](https://atcoder.jp/contests/joi2011yo/submissions/28253843)
+
+
+集める dp の場合
+```cpp
+rep2(i,2,n) {
+    rep(x,21) {
+        // i 番目の数字が x のなるのは i-1 の数字が x-a[i] で, i番目で a[i] を足したとき
+        if (x-a[i] >= 0) dp[i][x] += dp[i-1][x-a[i]];
+
+        // i 番目の数字が x のなるのは i-1 の数字が x+a[i] で, i番目で a[i] を引いたとき
+        if (x+a[i] <= 20) dp[i][x] += dp[i-1][x+a[i]];
+    }
+}
+```
+
+[提出コード](https://atcoder.jp/contests/joi2011yo/submissions/28253965)
+
+
+
+## JOI 2012 予選 4 - パスタ
+
+[問題](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_d)
+
+$dp[i][x][y]$: $i$ 日目にソース x を食べ, $i-1$ にソース y を食べたときの場合の数.
+
+$i$, $i-1$ 日目にソース x を食べたとき, $i-2$ 日目には x 以外のソースを食べる必要があるため
+$\displaystyle dp[i][x][x] = \sum_{k \neq x} dp[i-1][x][k]$
+
+$i$, $i-1$ 日目に食べるソースが違った場合は $i-2$ 日目に何を食べてもよいので
+$\displaystyle dp[i][x][y] = \sum_{k} dp[i-1][y][k]$
+
+
+```cpp
+void solve() {
+    int N, K;
+    cin >> N >> K;
+    // dp[i][x][y]: i日目にソース x を食べ, i-1 日目にはソース y を食べたときの場合の数
+    // ソースの種類 1 <= x, y <= 3
+    // y = 0 のときは食べなかったことを表す
+    int dp[105][4][4];
+    rep(i,105) rep(j,4) rep(k,4) dp[i][j][k] = 0;
+
+    map<int,int> mp;
+    rep(i,K) {
+        int a, b;
+        cin >> a >> b;
+        mp[a] = b;
+    }
+
+    const int MOD = 10000;
+    if (mp.find(1) != mp.end()) {
+        dp[1][mp[1]][0] = 1;
+    } else {
+        rep2(i,1,4) dp[1][i][0] = 1;
+    }
+
+    rep2(i,2,N+1) {
+        rep2(x,1,4) {
+            if (mp.find(i) != mp.end()) {
+                // i 日目に食べるものが決まっていた場合は, それ以外の候補は除外する
+                if (x != mp[i]) continue;
+            }
+            rep(y,4) {
+                if (x == y) {
+                    rep(z,4) {
+                        // i, i-1 日目にソース x を食べたとき, i-2 日目には x 以外のソースを食べる必要がある
+                        if (z != x) {
+                            dp[i][x][x] += dp[i-1][x][z];
+                            dp[i][x][x] %= MOD;
+                        }
+                    }
+                } else {
+                    rep(z,4) {
+                        dp[i][x][y] += dp[i-1][y][z];
+                        dp[i][x][y] %= MOD;
+                    }
+                }
+            }
+        }
+    }
+
+
+    ll ans = 0;
+    rep2(i,1,4) rep2(j,1,4) {
+        ans += dp[N][i][j];
+        ans %= MOD;
+    }
+    cout << ans << endl;
+```
+
+[提出コード](https://atcoder.jp/contests/joi2012yo/submissions/28232419)
+
+## JOI 2013 予選 4 - 暑い日々
+
+[問題](https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d)
+
+$dp[i][j]$: $i$ 日目に服 $j$ を着たときの $\displaystyle \sum_{k=1}^{i-1} |C_{x_k} - C_{x_{k+1}}|$ の最大値
+
+$i$ 日目に服 $j$ を着たときの最大値は, $i-1$ 日目に服 $k$ ($1 \leq k \leq N$)を着たときからの遷移だから
+
+$\displaystyle dp[i][j] = \max_{k} \left\{ dp[i-1][k] + |C[k] - C[j]| \right\}$
+
+ただし, 最高気温に適した服のみ選ぶ.
+
+答えは $D$ 日目に着ていた服のうち, $\displaystyle \sum_{i=1}^{D-1} |C_{x_i} - C_{x_{i+1}}|$ が最大となるもの.
+
+```cpp
+vector<vector<int>> dp(D+1, vector<int>(N+1, 0));
+rep2(i,2,D+1) {
+    rep2(j,1,N+1) {
+        rep2(k,1,N+1) {
+            // i 日目に j を, i-1 日目に k を着る
+            if (A[j] <= T[i] && T[i] <= B[j] && A[k] <= T[i-1] && T[i-1] <= B[k]) {
+                chmax(dp[i][j], dp[i-1][k]+abs(C[k]-C[j]));
+            }
+        }
+    }
+}
+
+int ans = 0;
+rep2(i,1,N+1) chmax(ans, dp[D][i]);
+```
+
+[提出コード](https://atcoder.jp/contests/joi2013yo/submissions/28234808)
+
+
+## JOI 2015 予選 4 - シルクロード
+
+[問題](https://atcoder.jp/contests/joi2015yo/tasks/joi2015yo_d)
+
+$dp[i][j]$: $i$ 日目に都市 $j$ にいるときの最小コスト
+
+0 日目に都市 0 にいるコストは 0, $dp[0][0] = 0$.
+
+$i$ 日目に都市 $j$ にいるときのコストは, $i-k$ 日目に都市 $j-1$ にいて, $i$ 日目に都市 $j$ に移動してきた, または,
+$i-1$ 日目には都市 $j$ にいて, そのまま動かなかった場合のいずれか. そのうちの最小コストが $dp[i][j]$ となる.
+
+- 移動してくる: $\displaystyle \min_k \{dp[i-k][j-1] + c[i] \times d[j]\}$
+- 移動しない: $dp[i-1][j]$
+
+$\displaystyle dp[i][j] = \min \left(dp[i-1][j],~ \min_k \{dp[i-k][j-1] + c[i] \times d[j]\}  \right)$
+
+答えは $dp[m][n]$.
+
+
+```cpp
+vector<vector<ll>> dp(m+1, vector<ll>(n+1, INF));
+
+dp[0][0] = 0;
+rep2(i,1,m+1) {
+    rep2(j,1,n+1) {
+        rep2(k,1,i+1) {
+            chmin(dp[i][j], dp[i-k][j-1] + c[i] * d[j]);
+            chmin(dp[i][j], dp[i-1][j]);
+        }
+    }
+}
+
+cout << dp[m][n] << endl;
+```
+
+[提出コード](https://atcoder.jp/contests/joi2015yo/submissions/28237554)
+
+
+## パ研杯2019 D - パ研軍旗
+
+[問題](https://atcoder.jp/contests/pakencamp-2019-day3/tasks/pakencamp_2019_day3_d)
+
+$dp[j][x]$: $j$ 列目の色を x で塗ったときの最小コスト
+
+2列連続で同じ色は使えないから, $dp[j][x]$ は $j-1$ 列目を色 y (x != y) で塗ったときのコストと j 列目を x で塗るときのコストの和のうち最小となるもの.
+
+$\displaystyle dp[j][x] = \min_{x \neq y} \{ dp[j-1][y] + (\text{\# of not x at j th column}) \}$
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    int nrow = 5;
+    vector<vector<int>> flag(nrow, vector<int>(n+1,0));
+    rep(i,nrow) {
+        rep(j,n) {
+            char c;
+            cin >> c;
+            if (c == 'R') flag[i][j+1] = 0;
+            if (c == 'B') flag[i][j+1] = 1;
+            if (c == 'W') flag[i][j+1] = 2;
+            if (c == '#') flag[i][j+1] = 3;
+        }
+    }
+
+    // dp[j][x]: j-1 列目までの色は確定しており, j 列目を色 x で塗ったときの最小コスト
+    vector<vector<int>> dp(n+1, vector<int>(3, INF));
+    rep(x,3) dp[0][x] = 0;
+
+    rep2(j,1,n+1) {
+        rep(x,3) {
+            int numnotx = 0;
+            rep(i,nrow) {
+                numnotx += flag[i][j] != x;
+            }
+
+            rep(y,3) {
+                if (x == y) continue;
+                chmin(dp[j][x], dp[j-1][y] + numnotx);
+            }
+        }
+    }
+
+    int ans = INF;
+    rep(x,3) chmin(ans, dp[n][x]);
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/pakencamp-2019-day3/submissions/28253637)
+
+
+
+## AOJ 1167 - ポロック予想
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/1167)
+
+$dp[x]$: x を表すのに必要な正四面体数の個数の最小値
+
+$\displaystyle dp[x] = \min_{i}\{ dp[x-s_i] + dp[s_i] \}$ ここで $s_i$ は $i$ 番目の正四面体数.
+
+x が小さいところから順に確定させていく
+
+```cpp
+void solve() {
+    // sq[i]: i 番目の正四面体数
+    vector<int> sq;
+    for (int n = 1; n*(n+1)*(n+2)/6 <= (int)1e6; n++) {
+        sq.push_back(n*(n+1)*(n+2)/6);
+    }
+
+    // dp[x]: x を表すのに必要な正四面体数の個数の最小値
+    vector<int> dp((int)1e6+5, INF);
+    vector<int> odddp((int)1e6+5, INF);
+    for (int x : sq) {
+        dp[x] = 1;
+        if (x&1) odddp[x] = 1;
+    }
+
+    rep(x,(int)1e6+1) {
+        for (int s : sq) {
+            if (x - s >= 0) {
+                chmin(dp[x], dp[x-s] + dp[s]);
+                if (s&1) chmin(odddp[x], odddp[x-s] + odddp[s]);
+            }
+        }
+    }
+
+    while (1) {
+        int x;
+        cin >> x;
+        if (x == 0) return;
+        cout << dp[x] << " " << odddp[x] << endl;
+    }
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1167/judge/6165707/C++17)
+
+
+## AOJ 2199 - 差分パルス符号変調
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/2199)
+
+$dp[i][x]$: $y_i = x$ となるときの考えうる二乗和のうちの最小値
+
+$y_{i-1} + C[l] > 255$ のとき $y_i = 255$, $y_{i-1} + C[l] < 0$ のとき $y_i = 0$ になるので配る dp で書くと楽そう
+
+答えは $\displaystyle \min_k \{ dp[n][k] \}$.
+
+```cpp
+void solve(int n, int m) {
+    vector<int> C(m+1), x(n+1);
+    rep(i,m) cin >> C[i+1];
+    rep(i,n) cin >> x[i+1];
+
+    // dp[i][x]: y_i が x だったときの二乗和の最小値
+    vector<vector<int>> dp(n+1, vector<int>(256,INF));
+    dp[0][128] = 0;
+
+    rep2(i,1,n+1) {
+        rep(k,256) {
+            rep2(j,1,m+1) {
+                int s = k + C[j];
+                if (s > 255) s = 255;
+                if (s < 0) s = 0;
+                chmin(dp[i][s], dp[i-1][k] + (s-x[i])*(s-x[i]));
+            }
+        }
+    }
+
+    int ans = INF;
+    rep(i,256) chmin(ans, dp[n][i]);
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/2199/judge/6166950/C++17)
+
+
+## ALDS_10_B - 連鎖行列積
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_10_B)
+
+$f(l,r)$ を $M_l M_{l+1} \cdots M_r$ のスカラー乗算の回数が最小値とする。
+
+$\displaystyle f(l, r) = \min_{k \in [0, r), k \in \Z} \{ f(l,k) + f(k+1, r) + (\text{\# of row of } M_l) \times (\text{\# of column of } M_k) \times (\text{\# of column of } M_r) \}$
+となる。
+
+```cpp
+int dfs(int l, int r) {
+    if (l < 0 || r >= n) return INF;
+    if (visited[l][r]) return dp[l][r];
+    visited[l][r] = 1;
+
+    rep2(k,l,r) {
+        chmin(dp[l][r], dfs(l,k) + dfs(k+1,r) + mats[l].first * mats[k].second * mats[r].second);
+    }
+
+    return dp[l][r];
+}
+
+
+void solve() {
+    cin >> n;
+    rep(i,n) {
+        int a, b;
+        cin >> a >> b;
+        mats.push_back({a,b});
+    }
+
+    // dp[l][r]: [l, r] の範囲の連鎖行列のスカラー乗算回数の最小値
+    dp.resize(n, vector<int>(n, INF));
+    visited.resize(n, vector<int>(n, 0));
+    rep(i,n) {
+        dp[i][i] = 0;
+        visited[i][i] = 1;
+    }
+
+    cout << dfs(0, n-1) << endl;
+}
+```
+
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_10_B/judge/6167331/C++17)
+
+
+## JOI 2015 本選 2 - ケーキの切り分け 2
+
+[問題](https://atcoder.jp/contests/joi2015ho/tasks/joi2015ho_b)
+
+$calc(s, f)$: JOI の番が終わった状態で、$A_s$, $A_f$ が端として残っているときから操作をすることで JOI が獲得できるスコアの最大値とする。(すでに食べられた部分のことは考えない)
+
+次のターンで IOI は $A_s$ と $A_f$ のうち大きい方を食べる。
+
+- $A_s > A_f$ のとき
+IOI が $A_s$ を食べ、次のターンに JOI は $A_{s-1}$ または $A_f$ を食べる。
+$A_{s-1}$ を食べたときの得点は $A_{s-1} + calc(s-2, f)$, $A_f$ を食べたときの得点は $A_f + calc(s-1, f+1)$.
+この2通りのうち大きいほうが $calc(s, f)$ となるので
+
+$calc(s, f) = \max(A_{s-1} + calc(s-2, f), A_f + calc(s-1, f+1))$.
+
+- $A_s < A_f$ のとき
+
+同様にして
+
+$calc(s, f) = \max(A_s + calc(s-1, f+1), A_{f+1} + calc(s, f+2))$.
+
+
+あとは JOI がピースのどの部分から食べるかを全探索することで答えを得られる。
+
+```cpp
+int n;
+vector<vector<ll>> dp, visited;
+vector<ll> A;
+
+// calc(s, f): JOI の番が終わった段階で A_s と A_f が端として残っているとき、
+//             JOI が獲得できる最大のスコア
+// s+1, ..., f-1 (mod n) の範囲がすでに食べられている
+ll calc(int s, int f) {
+    if (s == f) return 0; // 残りが1つのときは JOI に得点は入らない
+    if (s == (f+1)%n) return min(A[s], A[f]); // 残り2つのとき小さいほうが JOI の得点
+    if (visited[s][f]) return dp[s][f];
+    visited[s][f] = 1;
+
+    // JOI の番が終わった状態で A[s], A[f] が残っているとき、IOI は A[s] または A[f] の
+    // 大きい方を食べる
+    if (A[s] > A[f]) {
+        // IOI が A[s] をたべる
+        // IOI のあとに JOI は A[s-1] または A[f] を食べる。
+        return dp[s][f] = max(
+            calc((s-2+n)%n, f) + A[(s-1+n)%n], // JOI が A[s-1] を食べる
+            calc((s-1+n)%n, (f+1)%n) + A[f]    // JOI が A[f] を食べる
+        );
+    }
+    return dp[s][f] = max(
+        calc((s-1+n)%n, (f+1)%n) + A[s], // JOI が A[s] を食べる
+        calc(s, (f+2)%n) + A[(f+1)%n]    // JOI が A[f+1] を食べる
+    );
+}
+
+void solve() {
+    cin >> n;
+    dp.resize(n, vector<ll>(n, 0));
+    visited.resize(n, vector<ll>(n, 0));
+    A.resize(n);
+    rep(i,n) cin >> A[i];
+
+    ll ans = 0;
+    rep(i,n) {
+        int s = (i - 1 + n) % n;
+        int f = (i + 1) % n;
+        chmax(ans, A[i] + calc(s,f));
+    }
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/joi2015ho/submissions/28264730)
+
+
+## AOJ 1611 ダルマ落とし
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/1611)
+
+$\mathrm{dfs}(l, r)$: $[l, r]$ の区間のブロックを落とせる最大値とする
+
+- $\mathrm{dfs}(l+1, r-1) = l-r-1$ のとき
+
+$[l+1, r-1]$ の範囲のブロックをすべて落とせるということだから
+
+$\mathrm{dfs}(l, r) = \mathrm{dfs}(l+1, r-1) + (|w_l - w_r| \leq 1) \times 2$
+
+- 適当な $k \in [l, r]$ で上下を分離して考えたとき
+
+$\displaystyle \mathrm{dfs}(l, r) = \min_{k \in [l,r-1]} \{ \mathrm{dfs}(l, k) + \mathrm{dfs}(k+1, r) \}$
+
+$k$, $k+1$ 番目のブロックが $|w_k - w_{k+1}| \leq 1$ を満たしていてもそれをここで考慮する必要はない。
+なぜなら, そのようなケースの場合は $\mathrm{dfs}(l+1, r-1) = l-r-1$ のときの条件ですでに考慮されているため。
+
+```cpp
+int n;
+const int MAX = 305;
+int w[MAX], dp[MAX][MAX], visited[MAX][MAX];
+
+void init() {
+    rep(i,n) cin >> w[i];
+    rep(i,MAX) rep(j,MAX) dp[i][j] = visited[i][j] = 0;
+}
+
+// dfs(l, r): [l, r] の範囲で落とせる最大の数
+int dfs(int l, int r) {
+    if (l >= r) return 0;
+    if (visited[l][r]) return dp[l][r];
+    visited[l][r] = 1;
+
+    if (dfs(l+1, r-1) == r-l-1) {
+        chmax(dp[l][r], dfs(l+1, r-1) + (abs(w[l] - w[r]) <= 1) * 2);
+    }
+    rep2(k,l,r) {
+        chmax(dp[l][r], dfs(l, k) + dfs(k+1, r));
+    }
+
+    return dp[l][r];
+}
+
+void solve() {
+    init();
+    cout << dfs(0, n-1) << endl;
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1611/judge/6167977/C++17)
