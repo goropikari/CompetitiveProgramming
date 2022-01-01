@@ -5,7 +5,7 @@ date = Date(2021, 12, 31)
 +++
 @def tags = ["atcoder"]
 
-# 『 レッドコーダーが教える、競プロ・AtCoder上達のガイドライン【中級編：目指せ水色コーダー！】 』掲載問題メモ
+# 『 レッドコーダーが教える, 競プロ・AtCoder上達のガイドライン【中級編：目指せ水色コーダー！】 』掲載問題メモ
 
 [元記事](https://qiita.com/e869120/items/eb50fdaece12be418faa)
 
@@ -442,10 +442,10 @@ void solve(int n, int m) {
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_10_B)
 
-$f(l,r)$ を $M_l M_{l+1} \cdots M_r$ のスカラー乗算の回数が最小値とする。
+$f(l,r)$ を $M_l M_{l+1} \cdots M_r$ のスカラー乗算の回数が最小値とする.
 
 $\displaystyle f(l, r) = \min_{k \in [0, r), k \in \Z} \{ f(l,k) + f(k+1, r) + (\text{\# of row of } M_l) \times (\text{\# of column of } M_k) \times (\text{\# of column of } M_r) \}$
-となる。
+となる.
 
 ```cpp
 int dfs(int l, int r) {
@@ -489,12 +489,12 @@ void solve() {
 
 [問題](https://atcoder.jp/contests/joi2015ho/tasks/joi2015ho_b)
 
-$calc(s, f)$: JOI の番が終わった状態で、$A_s$, $A_f$ が端として残っているときから操作をすることで JOI が獲得できるスコアの最大値とする。(すでに食べられた部分のことは考えない)
+$calc(s, f)$: JOI の番が終わった状態で, $A_s$, $A_f$ が端として残っているときから操作をすることで JOI が獲得できるスコアの最大値とする. (すでに食べられた部分のことは考えない)
 
-次のターンで IOI は $A_s$ と $A_f$ のうち大きい方を食べる。
+次のターンで IOI は $A_s$ と $A_f$ のうち大きい方を食べる.
 
 - $A_s > A_f$ のとき
-IOI が $A_s$ を食べ、次のターンに JOI は $A_{s-1}$ または $A_f$ を食べる。
+IOI が $A_s$ を食べ, 次のターンに JOI は $A_{s-1}$ または $A_f$ を食べる.
 $A_{s-1}$ を食べたときの得点は $A_{s-1} + calc(s-2, f)$, $A_f$ を食べたときの得点は $A_f + calc(s-1, f+1)$.
 この2通りのうち大きいほうが $calc(s, f)$ となるので
 
@@ -507,14 +507,14 @@ $calc(s, f) = \max(A_{s-1} + calc(s-2, f), A_f + calc(s-1, f+1))$.
 $calc(s, f) = \max(A_s + calc(s-1, f+1), A_{f+1} + calc(s, f+2))$.
 
 
-あとは JOI がピースのどの部分から食べるかを全探索することで答えを得られる。
+あとは JOI がピースのどの部分から食べるかを全探索することで答えを得られる.
 
 ```cpp
 int n;
 vector<vector<ll>> dp, visited;
 vector<ll> A;
 
-// calc(s, f): JOI の番が終わった段階で A_s と A_f が端として残っているとき、
+// calc(s, f): JOI の番が終わった段階で A_s と A_f が端として残っているとき,
 //             JOI が獲得できる最大のスコア
 // s+1, ..., f-1 (mod n) の範囲がすでに食べられている
 ll calc(int s, int f) {
@@ -523,11 +523,11 @@ ll calc(int s, int f) {
     if (visited[s][f]) return dp[s][f];
     visited[s][f] = 1;
 
-    // JOI の番が終わった状態で A[s], A[f] が残っているとき、IOI は A[s] または A[f] の
+    // JOI の番が終わった状態で A[s], A[f] が残っているとき, IOI は A[s] または A[f] の
     // 大きい方を食べる
     if (A[s] > A[f]) {
         // IOI が A[s] をたべる
-        // IOI のあとに JOI は A[s-1] または A[f] を食べる。
+        // IOI のあとに JOI は A[s-1] または A[f] を食べる.
         return dp[s][f] = max(
             calc((s-2+n)%n, f) + A[(s-1+n)%n], // JOI が A[s-1] を食べる
             calc((s-1+n)%n, (f+1)%n) + A[f]    // JOI が A[f] を食べる
@@ -575,8 +575,8 @@ $\mathrm{dfs}(l, r) = \mathrm{dfs}(l+1, r-1) + (|w_l - w_r| \leq 1) \times 2$
 
 $\displaystyle \mathrm{dfs}(l, r) = \min_{k \in [l,r-1]} \{ \mathrm{dfs}(l, k) + \mathrm{dfs}(k+1, r) \}$
 
-$k$, $k+1$ 番目のブロックが $|w_k - w_{k+1}| \leq 1$ を満たしていてもそれをここで考慮する必要はない。
-なぜなら, そのようなケースの場合は $\mathrm{dfs}(l+1, r-1) = l-r-1$ のときの条件ですでに考慮されているため。
+$k$, $k+1$ 番目のブロックが $|w_k - w_{k+1}| \leq 1$ を満たしていてもそれをここで考慮する必要はない.
+なぜなら, そのようなケースの場合は $\mathrm{dfs}(l+1, r-1) = l-r-1$ のときの条件ですでに考慮されているため.
 
 ```cpp
 int n;
@@ -618,9 +618,9 @@ void solve() {
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_2_A)
 
 $dp[S][x]$: $S$ をすでに訪れた node の集合, $x$ を最後に訪れた node としたときのコストの最小値
-サイクルがあるならどこからスタートしても問題ないので node 0 から始めたとする。
+サイクルがあるならどこからスタートしても問題ないので node 0 から始めたとする.
 まだどこも訪れていない状態で node 0 にいるコストは 0 なので $dp[{}][0] = 0$.
-答えはすべてを訪れた状態で最後に訪れたのが 0 のときだから $dp[V][0]$。
+答えはすべてを訪れた状態で最後に訪れたのが 0 のときだから $dp[V][0]$.
 
 ```cpp
 bool hasBit(int x, int i) {
@@ -671,7 +671,7 @@ void solve() {
 
 [問題](https://atcoder.jp/contests/s8pc-1/tasks/s8pc_1_g)
 
-上記の巡回セールマン問題とほぼ同じだが、遷移を考えるときに時間を見て、所定の時間を超えていた場合は緩和処理を飛ばすようにする。
+上記の巡回セールマン問題とほぼ同じだが, 遷移を考えるときに時間を見て, 所定の時間を超えていた場合は緩和処理を飛ばすようにする.
 
 
 ```cpp
