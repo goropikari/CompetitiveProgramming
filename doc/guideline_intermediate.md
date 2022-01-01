@@ -611,3 +611,120 @@ void solve() {
 ```
 
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1611/judge/6167977/C++17)
+
+
+## DPL_2_A - 巡回セールスマン問題
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_2_A)
+
+$dp[S][x]$: $S$ をすでに訪れた node の集合, $x$ を最後に訪れた node としたときのコストの最小値
+サイクルがあるならどこからスタートしても問題ないので node 0 から始めたとする。
+まだどこも訪れていない状態で node 0 にいるコストは 0 なので $dp[{}][0] = 0$.
+答えはすべてを訪れた状態で最後に訪れたのが 0 のときだから $dp[V][0]$。
+
+```cpp
+bool hasBit(int x, int i) {
+    return (x>>i)&1;
+}
+
+struct Edge {
+    int from, weight;
+};
+
+int v, e;
+vector<vector<Edge>> graph;
+
+void solve() {
+    cin >> v >> e;
+    graph.resize(v);
+    rep(i,e) {
+        int s, t, d;
+        cin >> s >> t >> d;
+        graph[t].push_back({s, d});
+    }
+
+    // dp[S][x]: S を訪れた集合, x を最後に訪れた node としたときのコストの最小値
+    // サイクルがあるならどこからスタートでも問題ないので node 0 からスタートすると考える
+    vector<vector<int>> dp(1<<v, vector<int>(v, INF));
+    dp[0][0] = 0;
+    rep(S, 1<<v) {
+        rep(x,v) {
+            if (!hasBit(S, x)) {
+                for (auto edge : graph[x]) {
+                    int from = edge.from;
+                    int weight = edge.weight;
+                    chmin(dp[S|(1<<x)][x], dp[S][from] + weight);
+                }
+            }
+        }
+    }
+
+    int ans = dp[(1<<v)-1][0];
+    cout << (ans == INF ? -1 : ans) << endl;
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_2_A/judge/6168190/C++17)
+
+
+## Square869120Contest #1 G - Revenge of Traveling Salesman Problem
+
+[問題](https://atcoder.jp/contests/s8pc-1/tasks/s8pc_1_g)
+
+上記の巡回セールマン問題とほぼ同じだが、遷移を考えるときに時間を見て、所定の時間を超えていた場合は緩和処理を飛ばすようにする。
+
+
+```cpp
+bool hasBit(int x, int i) {
+    return (x>>i)&1;
+}
+
+struct Edge {
+    int from;
+    ll weight, time;
+};
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<Edge>> graph(n);
+    rep(i,m) {
+        int s, t;
+        ll d, time;
+        cin >> s >> t >> d >> time;
+        s--, t--;
+        graph[s].push_back({t, d, time});
+        graph[t].push_back({s, d, time});
+    }
+
+    // dp[S][x]: S 訪れた建物の集合, x 最後に訪れた建物としたときの最短時間とそれを達成する方法の総数
+    // pair = (time, count)
+    vector<vector<pair<ll,ll>>> dp(1<<n, vector<pair<ll,ll>>(n, {INF, 0}));
+    dp[0][0] = {0, 1};
+    rep(S, 1<<n) {
+        rep(x,n) {
+            if (!hasBit(S, x)) {
+                for (auto edge : graph[x]) {
+                    int from = edge.from;
+                    ll weight = edge.weight;
+                    ll time = edge.time;
+                    ll cost = dp[S][from].first + weight;
+                    if (cost > time) continue;
+                    if (dp[S|(1<<x)][x].first > cost) {
+                        dp[S|(1<<x)][x] = {cost, dp[S][from].second};
+                    } else if (dp[S|(1<<x)][x].first == cost) {
+                        dp[S|(1<<x)][x].second += dp[S][from].second;
+                    }
+                }
+            }
+        }
+    }
+
+    ll ans_time = dp[(1<<n)-1][0].first;
+    ll ans_cnt = dp[(1<<n)-1][0].second;
+    if (ans_time == INF) cout << "IMPOSSIBLE" << endl;
+    else cout << ans_time << " " << ans_cnt << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/s8pc-1/submissions/28272213)
