@@ -1052,3 +1052,218 @@ void solve() {
 ```
 
 [提出コード](https://atcoder.jp/contests/s8pc-1/submissions/28272213)
+
+### JOI 2014 予選 4 - 部活のスケジュール表
+[問題](https://atcoder.jp/contests/joi2014yo/tasks/joi2014yo_d)
+
+$dp[i][S]$: $i$ 日目に出席する人の集合が $S$ のなる場合の数とする。
+最初鍵を持っている J は0日目に出席したと考えて $dp[0][\{\text{J}\}] = 1$.
+
+$i$ 日目には責任者と $i-1$ 日目に鍵を持ち帰った人が出席する必要があるから、
+$i$ 日目の責任者を $x$, $i$ 日目の出席者の集合を $S_i$ とすると $x \in S_i \wedge S_i \cap S_{i-1} \neq \empty$ が成り立つ。鍵は出席者のうちの誰かが持ち帰ればいいので、誰が持ち帰ったかということは気にする必要はない。
+
+\begin{align}
+dp[i][S] =
+\left\{
+    \begin{aligned}
+    & 0  ~~(S \text{に責任者が含まれない場合)} \\
+    & \sum_{S^\prime} dp[i-1][S^\prime] ~~ (S \cap S^\prime \neq \empty)
+    \end{aligned}
+\right.
+\end{align}
+
+となる。
+入力例1 と照らし合わせると二日目に J, O, I となるのは1日目が J, O 由来のものと、J, O, I 由来がある。
+
+```cpp
+bool hasBit(int x, int n) {
+    return (x>>n)&1;
+}
+
+void solve() {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    vector<int> admin(n+1);
+    rep(i,n) admin[i+1] = (s[i] == 'J' ? 0 : s[i] == 'O' ? 1 : 2);
+
+    const int mod = 10007;
+
+    // dp[i][S]: i 日目に出席する人の集合が S となる場合の数
+    vector<vector<int>> dp(n+1, vector<int>(1<<3, 0));
+    dp[0][1] = 1;
+    rep2(i,1,n+1) {
+        rep(S, 1<<3) {
+            rep(Sp, 1<<3) {
+                if (hasBit(S, admin[i]) && (S & Sp) > 0) {
+                    dp[i][S] += dp[i-1][Sp];
+                    dp[i][S] %= mod;
+                }
+            }
+        }
+    }
+
+    int ans = 0;
+    rep(S, 1<<3) {
+        ans += dp[n][S];
+        ans %= mod;
+    }
+    cout << ans << endl;
+}
+```
+
+
+[提出コード](https://atcoder.jp/contests/joi2014yo/submissions/28287737)
+
+
+### JOI 2017 予選 4 - ぬいぐるみの整理
+
+[問題](https://atcoder.jp/contests/joi2017yo/tasks/joi2017yo_d)
+
+愚直にぬいぐるみの並び順を考えると $M!$ 通りあるので $1 \leq M \leq 20$ の制約では全探索は現実的ではない。
+$M$ の制約が小さいので順列全探索を $O(M 2^M)$ の DP で解く問題なのだろうという推測がつく。
+$2^{20} = 1048576$ なのでこれならば実行時間制限に十分間に合う。
+
+$dp[S]$ をすでに並べたぬいぐるみの集合を $S$ としたときの最小コストとする。
+すでに並べたぬいぐるみが決まっているとき、それまででどこにどのぬいぐるみを置いたかを考慮する必要はない。
+よって
+$\displaystyle dp[S] = \min_{k} \{ dp[S \backslash \{k\}] + (k \text{を置くためにどかす必要のあるぬいぐるみの数)} \}$
+
+```cpp
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    // numfig[i][j]: ぬいぐるみ i が j 列目までに何個含まれているか
+    vector<vector<int>> numfig(m, vector<int>(n+1, 0));
+    rep(i,n) {
+        int c;
+        cin >> c;
+        c--;
+        numfig[c][i+1]++;
+    }
+    rep(i,m) rep(j,n) numfig[i][j+1] += numfig[i][j];
+
+    // dp[S]: すでに並べたぬいぐるみの集合を S としたときの最小コスト
+    // 0 種類のぬいぐるみを置くとき、入れ替えが必要な種類は 0.
+    vector<int> dp(1<<m, INF);
+    dp[0] = 0;
+    rep2(S, 1,1<<m) {
+        int num_occupied = 0; // S のぬいぐるみが置かれているとき、すでに何個決まっているか
+        rep(j,m) if (S & (1<<j)) num_occupied += numfig[j][n];
+        rep(i,m) {
+            if (!hasBit(S, i)) continue;
+            int numi = numfig[i][n]; // ぬいぐるみ i が全部で何個あるか
+            int must_remove = numi - (numfig[i][num_occupied] - numfig[i][num_occupied - numi]);
+            chmin(dp[S], dp[S^(1<<i)]+must_remove);
+        }
+    }
+    cout << dp[(1<<m)-1] << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/joi2017yo/submissions/28292131)
+
+
+## 動的計画法：その他
+
+### DPL_1_D - 最長増加部分列 (LIS, Longest Increasing Subsequence)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_D)
+
+参考記事: [最長増加部分列(LIS)の長さを求める](https://qiita.com/python_walker/items/d1e2be789f6e7a0851e5)
+
+無駄な更新をしないようにすると `upper_bound` 使って以下のような感じになる。
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n), lis(n, INF);
+    rep(i,n) cin >> a[i];
+
+    rep(i,n) {
+        auto it = upper_bound(all(lis), a[i]);
+        if (it == lis.begin()) {
+            *it = a[i];
+        } else if (*(it-1) < a[i]) {
+            *it = a[i];
+        }
+    }
+
+    auto it = lower_bound(all(lis), INF);
+    cout << it - lis.begin() << endl;
+}
+```
+
+同じところを同じ数字に置き換えても問題ないので、`lower_bound` を使うほうがよりシンプルに書ける。
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n), lis(n, INF);
+    rep(i,n) cin >> a[i];
+
+    rep(i,n) {
+        auto it = lower_bound(all(lis), a[i]);
+        *it = a[i];
+    }
+
+    auto it = lower_bound(all(lis), INF);
+    cout << it - lis.begin() << endl;
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_1_D/judge/6170671/C++17)
+
+
+### AtCoder Beginner Contest 006 D - トランプ挿入ソート
+
+[問題](https://atcoder.jp/contests/abc006/tasks/abc006_4)
+
+LIS 分はトランプを動かす必要ないが、それ以外はソートのために動かさないといけないので $N - LIS$ が答え。
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> c(n), lis(n, INF);
+    rep(i,n) cin >> c[i];
+
+    rep(i,n) {
+        auto it = lower_bound(all(lis), c[i]);
+        *it = c[i];
+    }
+
+    cout << n - (lower_bound(all(lis), INF) - lis.begin()) << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/abc006/submissions/28292614)
+
+
+### AtCoder Beginner Contest 134 E - Sequence Decomposing
+
+[問題](https://atcoder.jp/contests/abc134/tasks/abc134_e)
+
+けんちょん さんの[解説記事](https://drken1215.hatenablog.com/entry/2020/12/25/184700)がとてもわかり易かった。
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> A(n), B(n);
+    rep(i,n) cin >> A[i];
+    vector<int> lis(n, INF);
+    reverse(all(A));
+
+    rep(i,n) {
+        auto it = upper_bound(all(lis), A[i]);
+        *it = A[i];
+    }
+
+    cout << lower_bound(all(lis), INF) - lis.begin() << endl;
+}
+```
+
+
+[提出コード](https://atcoder.jp/contests/abc134/submissions/28293382)

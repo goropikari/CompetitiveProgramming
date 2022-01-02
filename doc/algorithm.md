@@ -281,3 +281,38 @@ transpose
 d e f
 z b c
 ```
+
+## 最長増加部分列 (LIS: Longest Increasing Subsequence)
+
+数列 $A=a_0,a_1,\cdots, a_{n−1}$ の最長増加部分列 (LIS: Longest Increasing Subsequence) とは
+数列 $A$ の増加部分列 $a_{i_0}, \cdots, a_{i_k}$ ($0 \leq i_0 < i_1 < \cdots < i_k < n$ かつ $a_{i_0} < a_{i_1} < \cdots < a_{i_k}$) のうち最も $k$ が大きいもの。
+
+- https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_D
+- https://qiita.com/python_walker/items/d1e2be789f6e7a0851e5
+
+
+```cpp
+// is_strong = true のとき increasing
+// is_strong = false のとき non-decreasing
+int LIS(vector<int>& A, bool is_strong) {
+    int n = A.size();
+    vector<int> dp(n, INF);
+
+    rep(i,n) {
+        // A_{i_{k}} < A_{i_{k+1}}
+        if (is_strong) *lower_bound(all(dp), A[i]) = A[i];
+        // A_{i_{k}} <= A_{i_{k+1}}
+        else *upper_bound(all(dp), A[i]) = A[i];
+    }
+
+    return lower_bound(all(dp), INF) - dp.begin();
+}
+
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    rep(i, n) cin >> a[i];
+    cout << LIS(a, true) << endl;
+}
+```
