@@ -84,14 +84,14 @@ date = Date(2021, 12, 31)
 ### JOI 2008 予選 5 - おせんべい
 - [問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_e)
 
-行をひっくり返すのが $2^R$ 通り。行のひっくり返し方を決めたら列方向は白い丸が増えるようにひっくり返すかそのままにするかを決めればよい。
+行をひっくり返すのが $2^R$ 通り. 行のひっくり返し方を決めたら列方向は白い丸が増えるようにひっくり返すかそのままにするかを決めればよい.
 
 - [提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28203202)
 
 ### Square869120Contest #4 B - Buildings are Colorful!
 - [問題](https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_b)
 
-どの建物の高さを増やすかという $2^N$ 通りを全て試して、最小コストを求める。
+どの建物の高さを増やすかという $2^N$ 通りを全て試して, 最小コストを求める.
 
 - [提出コード](https://atcoder.jp/contests/s8pc-4/submissions/28203429)
 
@@ -110,8 +110,8 @@ date = Date(2021, 12, 31)
 ### ALDS_13_A - 8 クイーン問題
 - [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_13_A)
 
-クイーンが $(x,y)$ にあるとき、そのクイーンが動ける範囲は $\{(x^\prime, y^\prime) : |x - x^\prime| = |y - y^\prime| \}$ となる。
-クイーンの置き場所 $8!$ 通りを全て試す。
+クイーンが $(x,y)$ にあるとき, そのクイーンが動ける範囲は $\{(x^\prime, y^\prime) : |x - x^\prime| = |y - y^\prime| \}$ となる.
+クイーンの置き場所 $8!$ 通りを全て試す.
 
 - [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ALDS1_13_A/judge/6160721/C++14)
 
@@ -125,7 +125,7 @@ date = Date(2021, 12, 31)
 ### JOI 2009 本選 2 - ピザ
 - [問題](https://atcoder.jp/contests/joi2009ho/tasks/joi2009ho_b)
 
-店の場所を表す `vector` に 0, N を追加し, ソートする。0, N は本店を表し、二分探索するときの番兵の役割を果たす。
+店の場所を表す `vector` に 0, N を追加し, ソートする. 0, N は本店を表し, 二分探索するときの番兵の役割を果たす.
 
 ```cpp
 void solve() {
@@ -148,9 +148,9 @@ void solve() {
 }
 ```
 
-二分探索するときは `upper_bound` の方を使う。
-`lower_bound` は指定された要素以上の値をところの iterator を返してくるので、多くの場合は `min(*it - k, k - *(it - 1)` で正しい距離が求まるが、k = 0 のときは `it - 1` が `shohp.begin()` よりも前のアドレスを指してしまうので芳しくない。
-(lower_bound 番のコードでも AC 出てしまったけれど。)
+二分探索するときは `upper_bound` の方を使う.
+`lower_bound` は指定された要素以上の値をところの iterator を返してくるので, 多くの場合は `min(*it - k, k - *(it - 1)` で正しい距離が求まるが, k = 0 のときは `it - 1` が `shohp.begin()` よりも前のアドレスを指してしまうので芳しくない.
+(lower_bound 番のコードでも AC 出てしまったけれど. )
 
 upper_bound であればそのへんの心配がないので楽
 
@@ -159,19 +159,19 @@ upper_bound であればそのへんの心配がないので楽
 ### AtCoder Beginner Contest 077 C - Snuke Festival
 - [問題](https://atcoder.jp/contests/abc077/tasks/arc084_a)
 
-$B$ の値を動かして、$A$, $C$ のとり得る範囲を二分探索で調べる。
-$O(N\log N)$ で解ける。
+$B$ の値を動かして, $A$, $C$ のとり得る範囲を二分探索で調べる.
+$O(N\log N)$ で解ける.
 
 - [提出コード](https://atcoder.jp/contests/abc077/submissions/28207529)
 
 ### AtCoder Beginner Contest 023 D - 射撃王
 - [問題](https://atcoder.jp/contests/abc023/tasks/abc023_d)
 
-風船 $i$ が割られる時刻を $k_i$ とすると、ゲームの得点が $x$ だったとき $\displaystyle \forall i, H_i + k_i S_i \leq x \Rightarrow k_i \leq \frac{x - H_i}{S_i}$ が成り立つ。
+風船 $i$ が割られる時刻を $k_i$ とすると, ゲームの得点が $x$ だったとき $\displaystyle \forall i, H_i + k_i S_i \leq x \Rightarrow k_i \leq \frac{x - H_i}{S_i}$ が成り立つ.
 
-不等式より、得点を固定すると各風船は $\frac{x - H_i}{S_i}$ 秒以内に割らないといけないことがわかる。
-$j$ 秒($j \geq 0$)経過したとき $k_i \leq j$ を満たす $i$ の数が $j+1$ を超えなければ得点の上限は $x$ となり、逆に超えた場合は得点 $x$ を取ることは不可能である。
-この得点 $x$ は二分探索で求めることができる。
+不等式より, 得点を固定すると各風船は $\frac{x - H_i}{S_i}$ 秒以内に割らないといけないことがわかる.
+$j$ 秒($j \geq 0$)経過したとき $k_i \leq j$ を満たす $i$ の数が $j+1$ を超えなければ得点の上限は $x$ となり, 逆に超えた場合は得点 $x$ を取ることは不可能である.
+この得点 $x$ は二分探索で求めることができる.
 
 ```cpp
 void solve() {
@@ -187,7 +187,7 @@ void solve() {
 
     ll ans = INF;
     while (abs(ok - ng) > 1) {
-        // 答えが mid のとき、各風船を何秒後までに割らないといけないかを計算する
+        // 答えが mid のとき, 各風船を何秒後までに割らないといけないかを計算する
         ll mid = (ok + ng) / 2;
         // cnt[i]: i 秒後までに割らないといけない風船の数
         vector<int> cnt(n);
@@ -201,7 +201,7 @@ void solve() {
 
         int achievable = 1;
         rep(i,n) {
-            // 答えが mid のとき、i 秒後までに割らないといけない風船の数が
+            // 答えが mid のとき, i 秒後までに割らないといけない風船の数が
             // i+1 個を超えていた場合, mid は答えとして小さすぎるため不適
             if (cnt[i] > i+1) {
                 ng = mid;
@@ -218,7 +218,7 @@ void solve() {
 }
 ```
 
-ここでは[めぐる式二分探索](https://twitter.com/meguru_comp/status/697008509376835584)を使った。
+ここでは[めぐる式二分探索](https://twitter.com/meguru_comp/status/697008509376835584)を使った.
 
 - [提出コード](https://atcoder.jp/contests/abc023/submissions/28208977)
 
@@ -231,11 +231,11 @@ void solve() {
 - [問題](https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_c)
 
 $P_0 = 0$ (ダーツを投げなかった or 的を外したときの点数) とすると1本投げて獲得できる点数は $P_i$ ($0 \leq i \leq N$),
-2本投げて獲得できる点数は $P_i + P_j$ ($0 \leq i,j \leq N \wedge P_i + P_j \leq M$)となる。
+2本投げて獲得できる点数は $P_i + P_j$ ($0 \leq i,j \leq N \wedge P_i + P_j \leq M$)となる.
 
-2本投げた時点での得点を $x$ とすると、残り2本を投げて獲得できる得点が $P_i + P_j \leq M - x$ を満たす $P_i + P_j$ のうちの最大値をとったとき合計得点が最も大きくなる。
+2本投げた時点での得点を $x$ とすると, 残り2本を投げて獲得できる得点が $P_i + P_j \leq M - x$ を満たす $P_i + P_j$ のうちの最大値をとったとき合計得点が最も大きくなる.
 
-最初の2本の得点が決まったとき、残りの2本の得点は二分探索で高速に探すことができる。
+最初の2本の得点が決まったとき, 残りの2本の得点は二分探索で高速に探すことができる.
 
 ```cpp
 void solve() {
@@ -255,7 +255,7 @@ void solve() {
 }
 ```
 
-上記のコードでは2本の得点を作る段階で $M$ を超えた値は入れないようにしているが, その処理を入れない場合は `m - x` の値が負になることがある。その場合 `it` は `pp.begin()` になるので飛ばすという書き方もある。
+上記のコードでは2本の得点を作る段階で $M$ を超えた値は入れないようにしているが, その処理を入れない場合は `m - x` の値が負になることがある. その場合 `it` は `pp.begin()` になるので飛ばすという書き方もある.
 
 ```cpp
 void solve() {
@@ -1056,11 +1056,11 @@ void solve() {
 ### JOI 2014 予選 4 - 部活のスケジュール表
 [問題](https://atcoder.jp/contests/joi2014yo/tasks/joi2014yo_d)
 
-$dp[i][S]$: $i$ 日目に出席する人の集合が $S$ のなる場合の数とする。
+$dp[i][S]$: $i$ 日目に出席する人の集合が $S$ のなる場合の数とする.
 最初鍵を持っている J は0日目に出席したと考えて $dp[0][\{\text{J}\}] = 1$.
 
-$i$ 日目には責任者と $i-1$ 日目に鍵を持ち帰った人が出席する必要があるから、
-$i$ 日目の責任者を $x$, $i$ 日目の出席者の集合を $S_i$ とすると $x \in S_i \wedge S_i \cap S_{i-1} \neq \empty$ が成り立つ。鍵は出席者のうちの誰かが持ち帰ればいいので、誰が持ち帰ったかということは気にする必要はない。
+$i$ 日目には責任者と $i-1$ 日目に鍵を持ち帰った人が出席する必要があるから,
+$i$ 日目の責任者を $x$, $i$ 日目の出席者の集合を $S_i$ とすると $x \in S_i \wedge S_i \cap S_{i-1} \neq \empty$ が成り立つ. 鍵は出席者のうちの誰かが持ち帰ればいいので, 誰が持ち帰ったかということは気にする必要はない.
 
 \begin{align}
 dp[i][S] =
@@ -1072,8 +1072,8 @@ dp[i][S] =
 \right.
 \end{align}
 
-となる。
-入力例1 と照らし合わせると二日目に J, O, I となるのは1日目が J, O 由来のものと、J, O, I 由来がある。
+となる.
+入力例1 と照らし合わせると二日目に J, O, I となるのは1日目が J, O 由来のものと, J, O, I 由来がある.
 
 ```cpp
 bool hasBit(int x, int n) {
@@ -1121,12 +1121,12 @@ void solve() {
 
 [問題](https://atcoder.jp/contests/joi2017yo/tasks/joi2017yo_d)
 
-愚直にぬいぐるみの並び順を考えると $M!$ 通りあるので $1 \leq M \leq 20$ の制約では全探索は現実的ではない。
-$M$ の制約が小さいので順列全探索を $O(M 2^M)$ の DP で解く問題なのだろうという推測がつく。
-$2^{20} = 1048576$ なのでこれならば実行時間制限に十分間に合う。
+愚直にぬいぐるみの並び順を考えると $M!$ 通りあるので $1 \leq M \leq 20$ の制約では全探索は現実的ではない.
+$M$ の制約が小さいので順列全探索を $O(M 2^M)$ の DP で解く問題なのだろうという推測がつく.
+$2^{20} = 1048576$ なのでこれならば実行時間制限に十分間に合う.
 
-$dp[S]$ をすでに並べたぬいぐるみの集合を $S$ としたときの最小コストとする。
-すでに並べたぬいぐるみが決まっているとき、それまででどこにどのぬいぐるみを置いたかを考慮する必要はない。
+$dp[S]$ をすでに並べたぬいぐるみの集合を $S$ としたときの最小コストとする.
+すでに並べたぬいぐるみが決まっているとき, それまででどこにどのぬいぐるみを置いたかを考慮する必要はない.
 よって
 $\displaystyle dp[S] = \min_{k} \{ dp[S \backslash \{k\}] + (k \text{を置くためにどかす必要のあるぬいぐるみの数)} \}$
 
@@ -1145,11 +1145,11 @@ void solve() {
     rep(i,m) rep(j,n) numfig[i][j+1] += numfig[i][j];
 
     // dp[S]: すでに並べたぬいぐるみの集合を S としたときの最小コスト
-    // 0 種類のぬいぐるみを置くとき、入れ替えが必要な種類は 0.
+    // 0 種類のぬいぐるみを置くとき, 入れ替えが必要な種類は 0.
     vector<int> dp(1<<m, INF);
     dp[0] = 0;
     rep2(S, 1,1<<m) {
-        int num_occupied = 0; // S のぬいぐるみが置かれているとき、すでに何個決まっているか
+        int num_occupied = 0; // S のぬいぐるみが置かれているとき, すでに何個決まっているか
         rep(j,m) if (S & (1<<j)) num_occupied += numfig[j][n];
         rep(i,m) {
             if (!hasBit(S, i)) continue;
@@ -1172,7 +1172,7 @@ void solve() {
 
 参考記事: [最長増加部分列(LIS)の長さを求める](https://qiita.com/python_walker/items/d1e2be789f6e7a0851e5)
 
-無駄な更新をしないようにすると `upper_bound` 使って以下のような感じになる。
+無駄な更新をしないようにすると `upper_bound` 使って以下のような感じになる.
 ```cpp
 void solve() {
     int n;
@@ -1194,7 +1194,7 @@ void solve() {
 }
 ```
 
-同じところを同じ数字に置き換えても問題ないので、`lower_bound` を使うほうがよりシンプルに書ける。
+同じところを同じ数字に置き換えても問題ないので, `lower_bound` を使うほうがよりシンプルに書ける.
 
 ```cpp
 void solve() {
@@ -1220,7 +1220,7 @@ void solve() {
 
 [問題](https://atcoder.jp/contests/abc006/tasks/abc006_4)
 
-LIS 分はトランプを動かす必要ないが、それ以外はソートのために動かさないといけないので $N - LIS$ が答え。
+LIS 分はトランプを動かす必要ないが, それ以外はソートのために動かさないといけないので $N - LIS$ が答え.
 
 ```cpp
 void solve() {
@@ -1245,7 +1245,7 @@ void solve() {
 
 [問題](https://atcoder.jp/contests/abc134/tasks/abc134_e)
 
-けんちょん さんの[解説記事](https://drken1215.hatenablog.com/entry/2020/12/25/184700)がとてもわかり易かった。
+けんちょん さんの[解説記事](https://drken1215.hatenablog.com/entry/2020/12/25/184700)がとてもわかり易かった.
 
 ```cpp
 void solve() {
@@ -1265,5 +1265,246 @@ void solve() {
 }
 ```
 
-
 [提出コード](https://atcoder.jp/contests/abc134/submissions/28293382)
+
+
+## 最短経路問題：ダイクストラ法
+
+### GRL_1_A - 単一始点最短経路
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/GRL_1_A)
+
+素直にダイクストラを実装する
+
+```cpp
+struct Edge {
+    int to, cost;
+};
+
+void solve() {
+    int n, m, r;
+    cin >> n >> m >> r;
+    vector<vector<Edge>> graph(n);
+    rep(i,m) {
+        int s, t, cost;
+        cin >> s >> t >> cost;
+        graph[s].push_back({t, cost});
+    }
+
+    vector<int> dist(n, INF);
+    dist[r] = 0;
+
+    priority_queue<P, vector<P>, greater<P>> pq;
+    pq.push({0, r});
+    while (!pq.empty()) {
+        int cost, node;
+        tie(cost, node) = pq.top();
+        pq.pop();
+
+        for (auto e : graph[node]) {
+            if (dist[e.to] > dist[node] + e.cost) {
+                pq.push({dist[node]+e.cost, e.to});
+                dist[e.to] = dist[node] + e.cost;
+            }
+        }
+    }
+
+    rep(i,n) {
+        if (dist[i] == INF) cout << "INF" << endl;
+        else cout << dist[i] << endl;
+    }
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/GRL_1_A/judge/6171021/C++17)
+
+
+### JOI 2008 予選 6 - 船旅
+- [問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_f)
+
+注文表のときは最短距離を計算して, 新たな航路ができたときはグラフを更新する.
+
+- [提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28295773)
+
+
+### JOI 2016 予選 5 - ゾンビ島
+- [問題](https://atcoder.jp/contests/joi2016yo/tasks/joi2016yo_e)
+
+公式解説のように危険な町の探索の仕方を工夫する.
+
+```cpp
+using Graph = vector<vector<Edge>>;
+
+// 危険な町か否かの情報を持つ vector を返す
+// 0 -> 安全
+// 1 -> 危険
+// -1 -> ゾンビがいる町 を表す
+vector<int> danger_zone(Graph graph, vector<int> &zonbi, int s) {
+    // ゾンビがいる町と直接つながる仮想的な町を追加する.
+    // その町から距離 s+1 以内にある町が危険な町
+    graph.push_back(vector<Edge>());
+    int n = graph.size();
+    int k = zonbi.size();
+    rep(i,k) graph[n-1].push_back({zonbi[i], 0});
+
+    vector<int> isdanger(n, 0);
+
+    // P: island id, distance
+    queue<P> que;
+    que.push({n-1, -1}); // ゾンビがいる町にいるときにコスト 0 になるように距離を -1 にしておく.
+    while (!que.empty()) {
+        auto p = que.front();
+        int id = p.first;
+        int dis = p.second;
+        que.pop();
+
+        isdanger[id] = 1;
+        for (auto e : graph[id]) {
+            if (isdanger[e.to]) continue;
+            if (dis+1 <= s) {
+                que.push({e.to, dis+1});
+            }
+        }
+    }
+
+    rep(i,k) isdanger[zonbi[i]] = -1;
+
+    return isdanger;
+}
+
+void solve() {
+    int n, m, k, s;
+    cin >> n >> m >> k >> s;
+    ll p, q;
+    cin >> p >> q;
+
+    vector<int> C(k);
+    rep(i,k) cin >> C[i], C[i]--;
+
+    Graph graph(n);
+    rep(i,m) {
+        int a, b;
+        cin >> a >> b;
+        a--, b--;
+        graph[a].push_back({b, INF});
+        graph[b].push_back({a, INF});
+    }
+
+    vector<int> is_danger = danger_zone(graph, C, s);
+    // 危険な町の情報をもとに移動コストをつけ直す
+    rep(i,n) {
+        for (auto &e : graph[i]) {
+            if (e.to == n-1) e.cost = 0; // 町 n-1 では宿泊しないのでコスト 0
+            else if (is_danger[e.to] == -1) e.cost = INF;
+            else if (is_danger[e.to] == 1) e.cost = q;
+            else e.cost = p;
+        }
+    }
+
+    vector<ll> dist(n, INF);
+    dist[0] = 0;
+
+    // P: cost, node id
+    priority_queue<P, vector<P>, greater<P>> pq;
+    pq.push({0, 0});
+    while (!pq.empty()) {
+        auto node = pq.top();
+        int id = node.second;
+        pq.pop();
+        for (auto e : graph[id]) {
+            if (dist[e.to] > dist[id] + e.cost) {
+                dist[e.to] = dist[id] + e.cost;
+                pq.push({dist[e.to], e.to});
+            }
+        }
+    }
+
+    cout << dist[n-1] << endl;
+}
+```
+
+- [提出コード](https://atcoder.jp/contests/joi2016yo/submissions/28297302)
+
+
+### JOI 2014 予選 5 - タクシー
+- [問題](https://atcoder.jp/contests/joi2014yo/tasks/joi2014yo_e)
+
+町 $i$ とタクシー $i$ で到達できる町を直接つなぐグラフを作り, そのグラフに対して最短経路問題を解く.
+辺の数がすごいことになりそうだが大丈夫らしい.
+$K$ が最大でも 10000 というところが結構効いているっぽい.
+$N = 5000$ のときの完全グラフの辺の数は $\displaystyle \frac{5000 \times 4999}{2} = 12497500$ なので,
+それと比べると確かに辺の数が少ないスカスカなグラフということがわかる.
+
+```cpp
+struct Edge {
+    int to;
+    ll cost;
+};
+
+using Root = vector<vector<int>>;
+using Graph = vector<vector<Edge>>;
+
+void solve() {
+    int n, k;
+    cin >> n >> k;
+    vector<ll> cost(n), R(n);
+    rep(i,n) cin >> cost[i] >> R[i];
+
+    Root root(n); // 道のつながりを表す
+    rep(i,k) {
+        int a, b;
+        cin >> a >> b;
+        a--, b--;
+        root[a].push_back(b);
+        root[b].push_back(a);
+    }
+
+    // taxi で同じ値段で行けるところを直接つなぐグラフを構築する
+    Graph graph(n);
+    // P: id, dist
+    queue<P> que;
+    rep(i,n) {
+        // taxi i を使って到達できる町を調べる
+        vector<int> visited(n, 0);
+        que.push({i,0});
+        visited[i] = 1;
+        while (!que.empty()) {
+            auto q = que.front();
+            que.pop();
+            visited[q.first] = 1;
+            for (int to : root[q.first]) {
+                if (visited[to]) continue;
+                int next_step = q.second + 1;
+                if (next_step <= R[i]) {
+                    que.push({to, next_step});
+                }
+            }
+        }
+
+        // 町 i と taxi i からいける町を直接つなぐ graph をつくる
+        rep(k,n) if (i != k && visited[k]) graph[i].push_back({k, cost[i]});
+    }
+
+    // dijkstra
+    vector<ll> dist(n, INF);
+    dist[0] = 0;
+    // P: cost, node id
+    priority_queue<P, vector<P>, greater<P>> pq;
+    pq.push({0, 0});
+    while (!pq.empty()) {
+        auto node = pq.top();
+        pq.pop();
+
+        for (auto e : graph[node.second]) {
+            if (dist[e.to] > dist[node.second] + e.cost) {
+                dist[e.to] = dist[node.second] + e.cost;
+                pq.push({dist[e.to], e.to});
+            }
+        }
+    }
+
+    cout << dist[n-1] << endl;
+}
+```
+
+- [提出コード](https://atcoder.jp/contests/joi2014yo/submissions/28298613)

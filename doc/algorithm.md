@@ -285,7 +285,7 @@ z b c
 ## 最長増加部分列 (LIS: Longest Increasing Subsequence)
 
 数列 $A=a_0,a_1,\cdots, a_{n−1}$ の最長増加部分列 (LIS: Longest Increasing Subsequence) とは
-数列 $A$ の増加部分列 $a_{i_0}, \cdots, a_{i_k}$ ($0 \leq i_0 < i_1 < \cdots < i_k < n$ かつ $a_{i_0} < a_{i_1} < \cdots < a_{i_k}$) のうち最も $k$ が大きいもの。
+数列 $A$ の増加部分列 $a_{i_0}, \cdots, a_{i_k}$ ($0 \leq i_0 < i_1 < \cdots < i_k < n$ かつ $a_{i_0} < a_{i_1} < \cdots < a_{i_k}$) のうち最も $k$ が大きいもの.
 
 - https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_D
 - https://qiita.com/python_walker/items/d1e2be789f6e7a0851e5
@@ -314,5 +314,54 @@ void solve() {
     vector<int> a(n);
     rep(i, n) cin >> a[i];
     cout << LIS(a, true) << endl;
+}
+```
+
+## 最短経路
+
+### ダイクストラ法 (Dijkstra)
+
+```cpp
+using Graph = vector<vector<Edge>>;
+
+// node s からの最短距離を求める
+// 到達できない node との距離は INF になる.
+vector<int> dijkstra(Graph &graph, int s) {
+    int n = graph.size();
+    vector<int> dist(n, INF);
+    dist[s] = 0;
+    // P: cost, node
+    priority_queue<P, vector<P>, greater<P>> pq;
+    pq.push({0, s});
+    while (!pq.empty()) {
+        auto node = pq.top();
+        pq.pop();
+
+        for (auto e : graph[node.second]) {
+            if (dist[e.to] > dist[node.second] + e.cost) {
+                dist[e.to] = dist[node.second] + e.cost;
+                pq.push({dist[e.to], e.to});
+            }
+        }
+    }
+
+    return dist;
+}
+
+void solve() {
+    int v, e, r;
+    cin >> v >> e >> r;
+    Graph graph(v);
+    rep(i,e) {
+        int s, t, d;
+        cin >> s >> t >> d;
+        graph[s].push_back({t, d});
+    }
+
+    auto dist = dijkstra(graph, r);
+    rep(i,v) {
+        if (dist[i] == INF) cout << "INF" << endl;
+        else cout << dist[i] << endl;
+    }
 }
 ```
