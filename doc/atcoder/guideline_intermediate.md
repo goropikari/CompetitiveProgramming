@@ -11,7 +11,327 @@ date = Date(2021, 12, 31)
 
 \toc
 
-## DPL_1_B: 0-1 ナップザック問題
+```
+###
+- [問題]()
+- [提出コード]()
+```
+
+## 全探索：全列挙
+
+### ITP1_7_B - How Many Ways?
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ITP1_7_B)
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ITP1_7_B/judge/6156067/C++17)
+
+
+### AtCoder Beginner Contest 106 B - 105
+- [問題](https://atcoder.jp/contests/abc106/tasks/abc106_b)
+- [提出コード](https://atcoder.jp/contests/abc106/submissions/28158388)
+
+### AtCoder Beginner Contest 122 B - ATCoder
+- [問題](https://atcoder.jp/contests/abc122/tasks/abc122_b)
+- [提出コード](https://atcoder.jp/contests/abc122/submissions/28158330)
+
+
+### パ研杯2019 C - カラオケ
+- [問題](https://atcoder.jp/contests/pakencamp-2019-day3/tasks/pakencamp_2019_day3_c)
+- [提出コード](https://atcoder.jp/contests/pakencamp-2019-day3/submissions/28161419)
+
+## 全探索：工夫して通り数を減らす全列挙
+
+### AtCoder Beginner Contest 095 C - Half and Half
+- [問題](https://atcoder.jp/contests/abc095/tasks/arc096_a)
+- [提出コード](https://atcoder.jp/contests/abc095/submissions/28158599)
+
+
+### 三井住友信託銀行プログラミングコンテスト 2019 D - Lucky PIN
+- [問題](https://atcoder.jp/contests/sumitrust2019/tasks/sumitb2019_d)
+- [提出コード](https://atcoder.jp/contests/sumitrust2019/submissions/28159010)
+
+
+### JOI 2007 本選 3 - 最古の遺跡
+- [問題](https://atcoder.jp/contests/joi2007ho/tasks/joi2007ho_c)
+- [提出コード](https://atcoder.jp/contests/joi2007ho/submissions/28166905)
+
+
+### Square869120Contest #6 B - AtCoder Markets
+
+- [問題](https://atcoder.jp/contests/s8pc-6/tasks/s8pc_6_b)
+- [提出コード](https://atcoder.jp/contests/s8pc-6/submissions/28167076)
+
+
+###  JOI 2008 予選 4 - 星座探し
+- [問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_d)
+- [提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28167332)
+
+
+## 全探索：ビット全探索
+
+### ALDS_5_A - 総当たり
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_5_A)
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ALDS1_5_A/judge/6160514/C++17)
+
+
+
+### AtCoder Beginner Contest 128 C - Switches
+- [問題](https://atcoder.jp/contests/abc128/tasks/abc128_c)
+- [提出コード](https://atcoder.jp/contests/abc128/submissions/28159189)
+
+### AtCoder Beginner Contest 002 D - 派閥
+- [問題](https://atcoder.jp/contests/abc002/tasks/abc002_4)
+- [提出コード](https://atcoder.jp/contests/abc002/submissions/28202911)
+
+### JOI 2008 予選 5 - おせんべい
+- [問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_e)
+
+行をひっくり返すのが $2^R$ 通り。行のひっくり返し方を決めたら列方向は白い丸が増えるようにひっくり返すかそのままにするかを決めればよい。
+
+- [提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28203202)
+
+### Square869120Contest #4 B - Buildings are Colorful!
+- [問題](https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_b)
+
+どの建物の高さを増やすかという $2^N$ 通りを全て試して、最小コストを求める。
+
+- [提出コード](https://atcoder.jp/contests/s8pc-4/submissions/28203429)
+
+
+## 全探索：順列全探索
+
+### AtCoder Beginner Contest 145 C - Average Length
+- [問題](https://atcoder.jp/contests/abc145/tasks/abc145_c)
+- [提出コード](https://atcoder.jp/contests/abc145/submissions/28160521)
+
+
+### AtCoder Beginner Contest 150 C - Count Order
+- [問題](https://atcoder.jp/contests/abc150/tasks/abc150_c)
+- [提出コード](https://atcoder.jp/contests/abc150/submissions/28160609)
+
+### ALDS_13_A - 8 クイーン問題
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_13_A)
+
+クイーンが $(x,y)$ にあるとき、そのクイーンが動ける範囲は $\{(x^\prime, y^\prime) : |x - x^\prime| = |y - y^\prime| \}$ となる。
+クイーンの置き場所 $8!$ 通りを全て試す。
+
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ALDS1_13_A/judge/6160721/C++14)
+
+
+## 二分探索
+
+### ALDS_4_B - 二分探索
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_4_B)
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_4_B/judge/6161188/C++14)
+
+### JOI 2009 本選 2 - ピザ
+- [問題](https://atcoder.jp/contests/joi2009ho/tasks/joi2009ho_b)
+
+店の場所を表す `vector` に 0, N を追加し, ソートする。0, N は本店を表し、二分探索するときの番兵の役割を果たす。
+
+```cpp
+void solve() {
+    int d, n, m;
+    cin >> d >> n >>  m;
+    vector<int> shop(n-1);
+    rep(i,n-1) cin >> shop[i];
+    shop.push_back(0);
+    shop.push_back(d);
+    sort(all(shop));
+
+    ll ans = 0;
+    rep(i,m) {
+        int k;
+        cin >> k;
+        auto it = upper_bound(all(shop), k);
+        ans += min(*it - k, k - *(it-1));
+    }
+    cout << ans << endl;
+}
+```
+
+二分探索するときは `upper_bound` の方を使う。
+`lower_bound` は指定された要素以上の値をところの iterator を返してくるので、多くの場合は `min(*it - k, k - *(it - 1)` で正しい距離が求まるが、k = 0 のときは `it - 1` が `shohp.begin()` よりも前のアドレスを指してしまうので芳しくない。
+(lower_bound 番のコードでも AC 出てしまったけれど。)
+
+upper_bound であればそのへんの心配がないので楽
+
+- [提出コード](https://atcoder.jp/contests/joi2009ho/submissions/28283279)
+
+### AtCoder Beginner Contest 077 C - Snuke Festival
+- [問題](https://atcoder.jp/contests/abc077/tasks/arc084_a)
+
+$B$ の値を動かして、$A$, $C$ のとり得る範囲を二分探索で調べる。
+$O(N\log N)$ で解ける。
+
+- [提出コード](https://atcoder.jp/contests/abc077/submissions/28207529)
+
+### AtCoder Beginner Contest 023 D - 射撃王
+- [問題](https://atcoder.jp/contests/abc023/tasks/abc023_d)
+
+風船 $i$ が割られる時刻を $k_i$ とすると、ゲームの得点が $x$ だったとき $\displaystyle \forall i, H_i + k_i S_i \leq x \Rightarrow k_i \leq \frac{x - H_i}{S_i}$ が成り立つ。
+
+不等式より、得点を固定すると各風船は $\frac{x - H_i}{S_i}$ 秒以内に割らないといけないことがわかる。
+$j$ 秒($j \geq 0$)経過したとき $k_i \leq j$ を満たす $i$ の数が $j+1$ を超えなければ得点の上限は $x$ となり、逆に超えた場合は得点 $x$ を取ることは不可能である。
+この得点 $x$ は二分探索で求めることができる。
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<ll> H(n), S(n);
+    ll ok = 0, ng = 0;
+    rep(i,n) {
+        cin >> H[i] >> S[i];
+        chmax(ng, H[i]-1);
+        chmax(ok, H[i]+(n-1)*S[i]);
+    }
+
+    ll ans = INF;
+    while (abs(ok - ng) > 1) {
+        // 答えが mid のとき、各風船を何秒後までに割らないといけないかを計算する
+        ll mid = (ok + ng) / 2;
+        // cnt[i]: i 秒後までに割らないといけない風船の数
+        vector<int> cnt(n);
+        rep(i,n) {
+            ll k = (mid - H[i]) / S[i];
+            if (k > n-1) cnt[n-1]++;
+            else if (k < 0) cnt[0]++;
+            else cnt[k]++;
+        }
+        rep(i,n-1) cnt[i+1] += cnt[i];
+
+        int achievable = 1;
+        rep(i,n) {
+            // 答えが mid のとき、i 秒後までに割らないといけない風船の数が
+            // i+1 個を超えていた場合, mid は答えとして小さすぎるため不適
+            if (cnt[i] > i+1) {
+                ng = mid;
+                achievable = 0;
+                break;
+            }
+        }
+        if (achievable) {
+            chmin(ans, mid);
+            ok = mid;
+        }
+    }
+    cout << ans << endl;
+}
+```
+
+ここでは[めぐる式二分探索](https://twitter.com/meguru_comp/status/697008509376835584)を使った。
+
+- [提出コード](https://atcoder.jp/contests/abc023/submissions/28208977)
+
+### AtCoder Regular Contest 054 B - ムーアの法則
+- [問題](https://atcoder.jp/contests/arc054/tasks/arc054_b)
+
+解いてない
+
+### JOI 2008 本選 3 - ダーツ
+- [問題](https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_c)
+
+$P_0 = 0$ (ダーツを投げなかった or 的を外したときの点数) とすると1本投げて獲得できる点数は $P_i$ ($0 \leq i \leq N$),
+2本投げて獲得できる点数は $P_i + P_j$ ($0 \leq i,j \leq N \wedge P_i + P_j \leq M$)となる。
+
+2本投げた時点での得点を $x$ とすると、残り2本を投げて獲得できる得点が $P_i + P_j \leq M - x$ を満たす $P_i + P_j$ のうちの最大値をとったとき合計得点が最も大きくなる。
+
+最初の2本の得点が決まったとき、残りの2本の得点は二分探索で高速に探すことができる。
+
+```cpp
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<int> p(n+1, 0), pp;
+    rep(i,n) cin >> p[i+1];
+    rep(i,n+1) rep2(j,i,n+1) if (p[i]+p[j] <= m) pp.push_back(p[i]+p[j]);
+    sort(all(pp));
+
+    int ans = 0;
+    for (int x : pp) {
+        auto it = upper_bound(all(pp), m-x);
+        chmax(ans, *(it-1) + x);
+    }
+    cout << ans << endl;
+}
+```
+
+上記のコードでは2本の得点を作る段階で $M$ を超えた値は入れないようにしているが, その処理を入れない場合は `m - x` の値が負になることがある。その場合 `it` は `pp.begin()` になるので飛ばすという書き方もある。
+
+```cpp
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<int> p(n+1, 0), pp;
+    rep(i,n) cin >> p[i+1];
+    rep(i,n+1) rep2(j,i,n+1) pp.push_back(p[i]+p[j]);
+    sort(all(pp));
+
+    int ans = 0;
+    for (int x : pp) {
+        auto it = upper_bound(all(pp), m-x);
+        if (it == pp.begin()) continue;
+        chmax(ans, *(it-1) + x);
+    }
+    cout << ans << endl;
+}
+```
+
+- [提出コード](https://atcoder.jp/contests/joi2008ho/submissions/28213217)
+
+## 深さ優先探索
+
+### ALDS_11_B - 深さ優先探索
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_11_B)
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_11_B/judge/6162203/C++14)
+
+### AOJ 1160 - 島はいくつある？
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/1160)
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/1160/judge/6162242/C++14)
+
+### AtCoder Beginner Contest 138 D - Ki
+- [問題](https://atcoder.jp/contests/abc138/tasks/abc138_d)
+- [提出コード](https://atcoder.jp/contests/abc138/submissions/28213792)
+
+### JOI 2009 予選 4 - 薄氷渡り
+- [問題](https://atcoder.jp/contests/joi2009yo/tasks/joi2009yo_d)
+- [提出コード](https://atcoder.jp/contests/joi2009yo/submissions/28214093)
+
+
+## 幅優先探索
+
+### ALDS_11_C - 幅優先探索
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_11_C)
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_11_C/judge/6162659/C++17)
+
+
+### AtCoder Beginner Contest 007 C - 幅優先探索
+- [問題](https://atcoder.jp/contests/abc007/tasks/abc007_3)
+- [提出コード](https://atcoder.jp/contests/abc007/submissions/28217073)
+
+
+### JOI 2011 予選 5 - チーズ
+- [問題](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_e)
+- [提出コード](https://atcoder.jp/contests/joi2011yo/submissions/28217300)
+
+
+### JOI 2012 予選 5 - イルミネーション
+- [問題](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_e)
+- [提出コード](https://atcoder.jp/contests/joi2012yo/submissions/28218973)
+
+
+### AOJ 1166 - 迷図と命ず
+- [問題](https://onlinejudge.u-aizu.ac.jp/problems/1166)
+- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/1166/judge/6163330/C++17)
+
+
+### AtCoder Beginner Contest 088 D - Grid Repainting
+- [問題](https://atcoder.jp/contests/abc088/tasks/abc088_d)
+- [提出コード](https://atcoder.jp/contests/abc088/submissions/28221687)
+
+
+## 動的計画法：ナップザック DP
+
+### DPL_1_B: 0-1 ナップザック問題
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_B)
 
@@ -34,7 +354,7 @@ rep2(i,1,N+1) {
 
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_1_B/judge/6163387/C++17)
 
-## DPL_1_C ナップザック問題
+### DPL_1_C ナップザック問題
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_C)
 
@@ -52,7 +372,7 @@ ans = dp[W];
 
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_1_C/judge/6163401/C++14)
 
-## DPL_1_A コイン問題
+### DPL_1_A コイン問題
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_A)
 
@@ -73,7 +393,7 @@ rep(i,n+1) {
 
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_1_A/judge/6163410/C++17)
 
-## ALDS1_10_C 最長共通部分列
+### ALDS1_10_C 最長共通部分列
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_10_C)
 
@@ -99,7 +419,7 @@ int lcs(string s, string t) {
 
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_10_C/judge/6163429/C++17)
 
-## JOI 2011 予選 4 - 1 年生
+### JOI 2011 予選 4 - 1 年生
 
 [問題](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_d)
 
@@ -151,7 +471,7 @@ rep2(i,2,n) {
 
 
 
-## JOI 2012 予選 4 - パスタ
+### JOI 2012 予選 4 - パスタ
 
 [問題](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_d)
 
@@ -224,7 +544,7 @@ void solve() {
 
 [提出コード](https://atcoder.jp/contests/joi2012yo/submissions/28232419)
 
-## JOI 2013 予選 4 - 暑い日々
+### JOI 2013 予選 4 - 暑い日々
 
 [問題](https://atcoder.jp/contests/joi2013yo/tasks/joi2013yo_d)
 
@@ -258,7 +578,7 @@ rep2(i,1,N+1) chmax(ans, dp[D][i]);
 [提出コード](https://atcoder.jp/contests/joi2013yo/submissions/28234808)
 
 
-## JOI 2015 予選 4 - シルクロード
+### JOI 2015 予選 4 - シルクロード
 
 [問題](https://atcoder.jp/contests/joi2015yo/tasks/joi2015yo_d)
 
@@ -296,7 +616,7 @@ cout << dp[m][n] << endl;
 [提出コード](https://atcoder.jp/contests/joi2015yo/submissions/28237554)
 
 
-## パ研杯2019 D - パ研軍旗
+### パ研杯2019 D - パ研軍旗
 
 [問題](https://atcoder.jp/contests/pakencamp-2019-day3/tasks/pakencamp_2019_day3_d)
 
@@ -351,7 +671,7 @@ void solve() {
 
 
 
-## AOJ 1167 - ポロック予想
+### AOJ 1167 - ポロック予想
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/1167)
 
@@ -398,7 +718,7 @@ void solve() {
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1167/judge/6165707/C++17)
 
 
-## AOJ 2199 - 差分パルス符号変調
+### AOJ 2199 - 差分パルス符号変調
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/2199)
 
@@ -438,7 +758,9 @@ void solve(int n, int m) {
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/2199/judge/6166950/C++17)
 
 
-## ALDS_10_B - 連鎖行列積
+## 動的計画法：区間 DP
+
+### ALDS_10_B - 連鎖行列積
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_10_B)
 
@@ -485,7 +807,7 @@ void solve() {
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_10_B/judge/6167331/C++17)
 
 
-## JOI 2015 本選 2 - ケーキの切り分け 2
+### JOI 2015 本選 2 - ケーキの切り分け 2
 
 [問題](https://atcoder.jp/contests/joi2015ho/tasks/joi2015ho_b)
 
@@ -559,7 +881,7 @@ void solve() {
 [提出コード](https://atcoder.jp/contests/joi2015ho/submissions/28264730)
 
 
-## AOJ 1611 ダルマ落とし
+### AOJ 1611 ダルマ落とし
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/1611)
 
@@ -613,7 +935,9 @@ void solve() {
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1611/judge/6167977/C++17)
 
 
-## DPL_2_A - 巡回セールスマン問題
+## 動的計画法：bit DP
+
+### DPL_2_A - 巡回セールスマン問題
 
 [問題](https://onlinejudge.u-aizu.ac.jp/problems/DPL_2_A)
 
@@ -667,7 +991,7 @@ void solve() {
 [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DPL_2_A/judge/6168190/C++17)
 
 
-## Square869120Contest #1 G - Revenge of Traveling Salesman Problem
+### Square869120Contest #1 G - Revenge of Traveling Salesman Problem
 
 [問題](https://atcoder.jp/contests/s8pc-1/tasks/s8pc_1_g)
 
