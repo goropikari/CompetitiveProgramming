@@ -13,117 +13,117 @@ date = Date(2021, 12, 31)
 
 ```
 ###
-- [問題]()
-- [提出コード]()
+[問題]()
+[提出コード]()
 ```
 
 ## 全探索：全列挙
 
 ### ITP1_7_B - How Many Ways?
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ITP1_7_B)
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ITP1_7_B/judge/6156067/C++17)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ITP1_7_B)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ITP1_7_B/judge/6156067/C++17)
 
 
 ### AtCoder Beginner Contest 106 B - 105
-- [問題](https://atcoder.jp/contests/abc106/tasks/abc106_b)
-- [提出コード](https://atcoder.jp/contests/abc106/submissions/28158388)
+[問題](https://atcoder.jp/contests/abc106/tasks/abc106_b)
+[提出コード](https://atcoder.jp/contests/abc106/submissions/28158388)
 
 ### AtCoder Beginner Contest 122 B - ATCoder
-- [問題](https://atcoder.jp/contests/abc122/tasks/abc122_b)
-- [提出コード](https://atcoder.jp/contests/abc122/submissions/28158330)
+[問題](https://atcoder.jp/contests/abc122/tasks/abc122_b)
+[提出コード](https://atcoder.jp/contests/abc122/submissions/28158330)
 
 
 ### パ研杯2019 C - カラオケ
-- [問題](https://atcoder.jp/contests/pakencamp-2019-day3/tasks/pakencamp_2019_day3_c)
-- [提出コード](https://atcoder.jp/contests/pakencamp-2019-day3/submissions/28161419)
+[問題](https://atcoder.jp/contests/pakencamp-2019-day3/tasks/pakencamp_2019_day3_c)
+[提出コード](https://atcoder.jp/contests/pakencamp-2019-day3/submissions/28161419)
 
 ## 全探索：工夫して通り数を減らす全列挙
 
 ### AtCoder Beginner Contest 095 C - Half and Half
-- [問題](https://atcoder.jp/contests/abc095/tasks/arc096_a)
-- [提出コード](https://atcoder.jp/contests/abc095/submissions/28158599)
+[問題](https://atcoder.jp/contests/abc095/tasks/arc096_a)
+[提出コード](https://atcoder.jp/contests/abc095/submissions/28158599)
 
 
 ### 三井住友信託銀行プログラミングコンテスト 2019 D - Lucky PIN
-- [問題](https://atcoder.jp/contests/sumitrust2019/tasks/sumitb2019_d)
-- [提出コード](https://atcoder.jp/contests/sumitrust2019/submissions/28159010)
+[問題](https://atcoder.jp/contests/sumitrust2019/tasks/sumitb2019_d)
+[提出コード](https://atcoder.jp/contests/sumitrust2019/submissions/28159010)
 
 
 ### JOI 2007 本選 3 - 最古の遺跡
-- [問題](https://atcoder.jp/contests/joi2007ho/tasks/joi2007ho_c)
-- [提出コード](https://atcoder.jp/contests/joi2007ho/submissions/28166905)
+[問題](https://atcoder.jp/contests/joi2007ho/tasks/joi2007ho_c)
+[提出コード](https://atcoder.jp/contests/joi2007ho/submissions/28166905)
 
 
 ### Square869120Contest #6 B - AtCoder Markets
 
-- [問題](https://atcoder.jp/contests/s8pc-6/tasks/s8pc_6_b)
-- [提出コード](https://atcoder.jp/contests/s8pc-6/submissions/28167076)
+[問題](https://atcoder.jp/contests/s8pc-6/tasks/s8pc_6_b)
+[提出コード](https://atcoder.jp/contests/s8pc-6/submissions/28167076)
 
 
 ###  JOI 2008 予選 4 - 星座探し
-- [問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_d)
-- [提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28167332)
+[問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_d)
+[提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28167332)
 
 
 ## 全探索：ビット全探索
 
 ### ALDS_5_A - 総当たり
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_5_A)
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ALDS1_5_A/judge/6160514/C++17)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_5_A)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ALDS1_5_A/judge/6160514/C++17)
 
 
 
 ### AtCoder Beginner Contest 128 C - Switches
-- [問題](https://atcoder.jp/contests/abc128/tasks/abc128_c)
-- [提出コード](https://atcoder.jp/contests/abc128/submissions/28159189)
+[問題](https://atcoder.jp/contests/abc128/tasks/abc128_c)
+[提出コード](https://atcoder.jp/contests/abc128/submissions/28159189)
 
 ### AtCoder Beginner Contest 002 D - 派閥
-- [問題](https://atcoder.jp/contests/abc002/tasks/abc002_4)
-- [提出コード](https://atcoder.jp/contests/abc002/submissions/28202911)
+[問題](https://atcoder.jp/contests/abc002/tasks/abc002_4)
+[提出コード](https://atcoder.jp/contests/abc002/submissions/28202911)
 
 ### JOI 2008 予選 5 - おせんべい
-- [問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_e)
+[問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_e)
 
 行をひっくり返すのが $2^R$ 通り. 行のひっくり返し方を決めたら列方向は白い丸が増えるようにひっくり返すかそのままにするかを決めればよい.
 
-- [提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28203202)
+[提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28203202)
 
 ### Square869120Contest #4 B - Buildings are Colorful!
-- [問題](https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_b)
+[問題](https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_b)
 
 どの建物の高さを増やすかという $2^N$ 通りを全て試して, 最小コストを求める.
 
-- [提出コード](https://atcoder.jp/contests/s8pc-4/submissions/28203429)
+[提出コード](https://atcoder.jp/contests/s8pc-4/submissions/28203429)
 
 
 ## 全探索：順列全探索
 
 ### AtCoder Beginner Contest 145 C - Average Length
-- [問題](https://atcoder.jp/contests/abc145/tasks/abc145_c)
-- [提出コード](https://atcoder.jp/contests/abc145/submissions/28160521)
+[問題](https://atcoder.jp/contests/abc145/tasks/abc145_c)
+[提出コード](https://atcoder.jp/contests/abc145/submissions/28160521)
 
 
 ### AtCoder Beginner Contest 150 C - Count Order
-- [問題](https://atcoder.jp/contests/abc150/tasks/abc150_c)
-- [提出コード](https://atcoder.jp/contests/abc150/submissions/28160609)
+[問題](https://atcoder.jp/contests/abc150/tasks/abc150_c)
+[提出コード](https://atcoder.jp/contests/abc150/submissions/28160609)
 
 ### ALDS_13_A - 8 クイーン問題
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_13_A)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_13_A)
 
 クイーンが $(x,y)$ にあるとき, そのクイーンが動ける範囲は $\{(x^\prime, y^\prime) : |x - x^\prime| = |y - y^\prime| \}$ となる.
 クイーンの置き場所 $8!$ 通りを全て試す.
 
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ALDS1_13_A/judge/6160721/C++14)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/5/ALDS1_13_A/judge/6160721/C++14)
 
 
 ## 二分探索
 
 ### ALDS_4_B - 二分探索
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_4_B)
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_4_B/judge/6161188/C++14)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_4_B)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_4_B/judge/6161188/C++14)
 
 ### JOI 2009 本選 2 - ピザ
-- [問題](https://atcoder.jp/contests/joi2009ho/tasks/joi2009ho_b)
+[問題](https://atcoder.jp/contests/joi2009ho/tasks/joi2009ho_b)
 
 店の場所を表す `vector` に 0, N を追加し, ソートする. 0, N は本店を表し, 二分探索するときの番兵の役割を果たす.
 
@@ -154,18 +154,18 @@ void solve() {
 
 upper_bound であればそのへんの心配がないので楽
 
-- [提出コード](https://atcoder.jp/contests/joi2009ho/submissions/28283279)
+[提出コード](https://atcoder.jp/contests/joi2009ho/submissions/28283279)
 
 ### AtCoder Beginner Contest 077 C - Snuke Festival
-- [問題](https://atcoder.jp/contests/abc077/tasks/arc084_a)
+[問題](https://atcoder.jp/contests/abc077/tasks/arc084_a)
 
 $B$ の値を動かして, $A$, $C$ のとり得る範囲を二分探索で調べる.
 $O(N\log N)$ で解ける.
 
-- [提出コード](https://atcoder.jp/contests/abc077/submissions/28207529)
+[提出コード](https://atcoder.jp/contests/abc077/submissions/28207529)
 
 ### AtCoder Beginner Contest 023 D - 射撃王
-- [問題](https://atcoder.jp/contests/abc023/tasks/abc023_d)
+[問題](https://atcoder.jp/contests/abc023/tasks/abc023_d)
 
 風船 $i$ が割られる時刻を $k_i$ とすると, ゲームの得点が $x$ だったとき $\displaystyle \forall i, H_i + k_i S_i \leq x \Rightarrow k_i \leq \frac{x - H_i}{S_i}$ が成り立つ.
 
@@ -220,15 +220,15 @@ void solve() {
 
 ここでは[めぐる式二分探索](https://twitter.com/meguru_comp/status/697008509376835584)を使った.
 
-- [提出コード](https://atcoder.jp/contests/abc023/submissions/28208977)
+[提出コード](https://atcoder.jp/contests/abc023/submissions/28208977)
 
 ### AtCoder Regular Contest 054 B - ムーアの法則
-- [問題](https://atcoder.jp/contests/arc054/tasks/arc054_b)
+[問題](https://atcoder.jp/contests/arc054/tasks/arc054_b)
 
 解いてない
 
 ### JOI 2008 本選 3 - ダーツ
-- [問題](https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_c)
+[問題](https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_c)
 
 $P_0 = 0$ (ダーツを投げなかった or 的を外したときの点数) とすると1本投げて獲得できる点数は $P_i$ ($0 \leq i \leq N$),
 2本投げて獲得できる点数は $P_i + P_j$ ($0 \leq i,j \leq N \wedge P_i + P_j \leq M$)となる.
@@ -276,57 +276,57 @@ void solve() {
 }
 ```
 
-- [提出コード](https://atcoder.jp/contests/joi2008ho/submissions/28213217)
+[提出コード](https://atcoder.jp/contests/joi2008ho/submissions/28213217)
 
 ## 深さ優先探索
 
 ### ALDS_11_B - 深さ優先探索
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_11_B)
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_11_B/judge/6162203/C++14)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_11_B)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_11_B/judge/6162203/C++14)
 
 ### AOJ 1160 - 島はいくつある？
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/1160)
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/1160/judge/6162242/C++14)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/1160)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/1160/judge/6162242/C++14)
 
 ### AtCoder Beginner Contest 138 D - Ki
-- [問題](https://atcoder.jp/contests/abc138/tasks/abc138_d)
-- [提出コード](https://atcoder.jp/contests/abc138/submissions/28213792)
+[問題](https://atcoder.jp/contests/abc138/tasks/abc138_d)
+[提出コード](https://atcoder.jp/contests/abc138/submissions/28213792)
 
 ### JOI 2009 予選 4 - 薄氷渡り
-- [問題](https://atcoder.jp/contests/joi2009yo/tasks/joi2009yo_d)
-- [提出コード](https://atcoder.jp/contests/joi2009yo/submissions/28214093)
+[問題](https://atcoder.jp/contests/joi2009yo/tasks/joi2009yo_d)
+[提出コード](https://atcoder.jp/contests/joi2009yo/submissions/28214093)
 
 
 ## 幅優先探索
 
 ### ALDS_11_C - 幅優先探索
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_11_C)
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_11_C/judge/6162659/C++17)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_11_C)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/ALDS1_11_C/judge/6162659/C++17)
 
 
 ### AtCoder Beginner Contest 007 C - 幅優先探索
-- [問題](https://atcoder.jp/contests/abc007/tasks/abc007_3)
-- [提出コード](https://atcoder.jp/contests/abc007/submissions/28217073)
+[問題](https://atcoder.jp/contests/abc007/tasks/abc007_3)
+[提出コード](https://atcoder.jp/contests/abc007/submissions/28217073)
 
 
 ### JOI 2011 予選 5 - チーズ
-- [問題](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_e)
-- [提出コード](https://atcoder.jp/contests/joi2011yo/submissions/28217300)
+[問題](https://atcoder.jp/contests/joi2011yo/tasks/joi2011yo_e)
+[提出コード](https://atcoder.jp/contests/joi2011yo/submissions/28217300)
 
 
 ### JOI 2012 予選 5 - イルミネーション
-- [問題](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_e)
-- [提出コード](https://atcoder.jp/contests/joi2012yo/submissions/28218973)
+[問題](https://atcoder.jp/contests/joi2012yo/tasks/joi2012yo_e)
+[提出コード](https://atcoder.jp/contests/joi2012yo/submissions/28218973)
 
 
 ### AOJ 1166 - 迷図と命ず
-- [問題](https://onlinejudge.u-aizu.ac.jp/problems/1166)
-- [提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/1166/judge/6163330/C++17)
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/1166)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/4/1166/judge/6163330/C++17)
 
 
 ### AtCoder Beginner Contest 088 D - Grid Repainting
-- [問題](https://atcoder.jp/contests/abc088/tasks/abc088_d)
-- [提出コード](https://atcoder.jp/contests/abc088/submissions/28221687)
+[問題](https://atcoder.jp/contests/abc088/tasks/abc088_d)
+[提出コード](https://atcoder.jp/contests/abc088/submissions/28221687)
 
 
 ## 動的計画法：ナップザック DP
@@ -1320,15 +1320,15 @@ void solve() {
 
 
 ### JOI 2008 予選 6 - 船旅
-- [問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_f)
+[問題](https://atcoder.jp/contests/joi2008yo/tasks/joi2008yo_f)
 
 注文表のときは最短距離を計算して, 新たな航路ができたときはグラフを更新する.
 
-- [提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28295773)
+[提出コード](https://atcoder.jp/contests/joi2008yo/submissions/28295773)
 
 
 ### JOI 2016 予選 5 - ゾンビ島
-- [問題](https://atcoder.jp/contests/joi2016yo/tasks/joi2016yo_e)
+[問題](https://atcoder.jp/contests/joi2016yo/tasks/joi2016yo_e)
 
 公式解説のように危険な町の探索の仕方を工夫する.
 
@@ -1423,11 +1423,11 @@ void solve() {
 }
 ```
 
-- [提出コード](https://atcoder.jp/contests/joi2016yo/submissions/28297302)
+[提出コード](https://atcoder.jp/contests/joi2016yo/submissions/28297302)
 
 
 ### JOI 2014 予選 5 - タクシー
-- [問題](https://atcoder.jp/contests/joi2014yo/tasks/joi2014yo_e)
+[問題](https://atcoder.jp/contests/joi2014yo/tasks/joi2014yo_e)
 
 町 $i$ とタクシー $i$ で到達できる町を直接つなぐグラフを作り, そのグラフに対して最短経路問題を解く.
 辺の数がすごいことになりそうだが大丈夫らしい.
@@ -1507,4 +1507,825 @@ void solve() {
 }
 ```
 
-- [提出コード](https://atcoder.jp/contests/joi2014yo/submissions/28298613)
+[提出コード](https://atcoder.jp/contests/joi2014yo/submissions/28298613)
+
+
+## 最短経路問題：ワーシャルフロイド法
+
+### GRL_1_C - 全点対間最短経路
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/GRL_1_C)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/GRL_1_C/judge/6171465/C++17)
+
+### AtCoder Beginner Contest 012 D - バスと避けられない運命
+
+[問題](https://atcoder.jp/contests/abc012/tasks/abc012_4)
+[提出コード](https://atcoder.jp/contests/abc012/submissions/28299292)
+
+### AtCoder Beginner Contest 079 D - Wall
+[問題](https://atcoder.jp/contests/abc079/tasks/abc079_d)
+[提出コード](https://atcoder.jp/contests/abc079/submissions/28299377)
+
+
+### AtCoder Beginner Contest 074 D - Restoring Road Network
+[問題](https://atcoder.jp/contests/abc074/tasks/arc083_b)
+
+与えられた隣接行列に対してワーシャルフロイドをして, 距離が変われば元々の隣接行列の値は最短距離を表していなかったということなのでそのような経路は存在しない.
+
+経路が存在していた場合, どこかを経由した場合と, 直接行く場合の距離が同じ場合,
+すなわち $dist(i, j) = dist(i, k) + dist(k, j)~~ (i \neq k \wedge k \neq j)$ のとき
+直接の経路はなくても最短距離に影響を及ぼさないので消しても問題ない.
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    Graph A(n, vector<ll>(n, 0));
+    rep(i,n) rep(j,n) cin >> A[i][j];
+
+    // Floyd–Warshall
+    // 最短距離を求めて, 元の matrix と異なった場合は, 元々の隣接行列は最短距離ではなかったということ
+    Graph B = A;
+    rep(k,n) rep(i,n) rep(j,n) chmin(A[i][j], A[i][k] + A[k][j]);
+    rep(i,n) rep(j,n) {
+        if (A[i][j] != B[i][j]) {
+            cout << -1 << endl;
+            return;
+        }
+    }
+
+    // 直接つないでいる距離が他を経由しても同じ場合は, 直接の経路はなくしても
+    // 全体の最短距離には影響を与えない
+    Graph removable(n, vector<ll>(n, 0));
+    rep(k,n) rep(i,n) rep(j,n) {
+        if (j != k && i != k && A[i][j] == A[i][k] + A[k][j]) removable[i][j] = 1;
+    }
+    rep(i,n) rep(j,n) if (removable[i][j]) A[i][j] = 0;
+
+    // 無向グラフなので上三角部分を足すと経路の和になる
+    ll ans = 0;
+    rep(i,n) rep2(j,i+1, n) ans += A[i][j];
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/abc074/submissions/28302075)
+
+
+## 最小全域木問題
+
+### GRL_2_A - 最小全域木
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/GRL_2_A)
+
+適当に root を決めて, 辺のコストが小さい順に採用していく. (プリム法)
+
+```cpp
+struct Edge {
+    int to;
+    ll cost;
+};
+
+bool operator> (const Edge &a, const Edge &b) {
+    return a.cost > b.cost;
+}
+
+using Graph = vector<vector<Edge>>;
+
+void solve() {
+    int v, e;
+    cin >> v >> e;
+    Graph graph(v);
+    rep(i,e) {
+        int s, t;
+        ll w;
+        cin >> s >> t >> w;
+        graph[s].push_back({t, w});
+        graph[t].push_back({s, w});
+    }
+
+    vector<int> used(v, 0);
+    used[0] = 1;
+    priority_queue<Edge, vector<Edge>, greater<Edge>> pq;
+    for (auto e : graph[0]) pq.push(e);
+    ll ans = 0;
+    while (!pq.empty()) {
+        auto e = pq.top();
+        pq.pop();
+        if (used[e.to]) continue;
+        used[e.to] = 1;
+        ans += e.cost;
+        for (auto edge : graph[e.to]) {
+            if (used[edge.to]) continue;
+            pq.push(edge);
+        }
+    }
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/GRL_2_A/judge/6171650/C++17)
+
+
+### JOI 2010 春合宿 - Finals
+[問題](https://atcoder.jp/contests/joisc2010/tasks/joisc2010_finals)
+
+最小全域木を作ったあと, コストが高い辺 $k-1$ 本を抜いたときの残りの辺のコストを合計が答え.
+
+[提出コード](https://atcoder.jp/contests/joisc2010/submissions/28302422)
+
+
+### AOJ 1127 - Building a Space Station
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/1127)
+
+球体 $i$, $j$ 間の距離を $dist(i,j)$ とする. $dist(i,j) > r_i + r_j$ ならば corridor を作る必要があるし,
+そうでないならば球体同士は接するまたはオーバーラップしているので corridor を作る必要はない.
+作る必要のある corridor の長さを辺とする graph をつくり, 最小全域木のコストを出力する.
+ただしcorridor を作る必要がないときの辺の長さ 0 とする.
+
+```cpp
+using Graph = vector<vector<double>>;
+
+void solve(int n) {
+    vector<double> x(n), y(n), z(n), r(n);
+    rep(i,n) {
+        cin >> x[i] >> y[i] >> z[i] >> r[i];
+    }
+
+    Graph dist(n, vector<double>(n, 0.0));
+    rep(i,n) rep2(j,i+1,n) {
+        double dx = x[i] - x[j];
+        double dy = y[i] - y[j];
+        double dz = z[i] - z[j];
+        if (sqrt(dx*dx + dy*dy + dz*dz) > r[i] + r[j]) {
+            dist[i][j] = dist[j][i] = sqrt(dx*dx + dy*dy + dz*dz) - (r[i] + r[j]);
+        }
+    }
+
+    // PDI: cost, node id
+    using PDI = pair<double,int>;
+    priority_queue<PDI, vector<PDI>, greater<PDI>> pq;
+    rep2(i,1,n) pq.push({dist[0][i], i});
+    vector<int> used(n, 0);
+    used[0] = 1;
+    double ans = 0;
+    while (!pq.empty()) {
+        auto t = pq.top();
+        pq.pop();
+        if (used[t.second]) continue;
+        used[t.second] = 1;
+        ans += t.first;
+        rep(i,n) {
+            if (used[i]) continue;
+            pq.push({dist[t.second][i], i});
+        }
+    }
+    printf("%.3lf\n", ans);
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1127/judge/6171699/C++17)
+
+
+
+### AtCoder Beginner Contest 065 D - Built?
+
+[問題](https://atcoder.jp/contests/abc065/tasks/arc076_b)
+
+プリム法からわかるように最小全域木を構築する過程では最もコストの小さい辺から採用していくので,
+この問題の場合, 最も $x$ 軸方向に最も近い node をつなぐ辺か, $y$ 軸方向に最も近い node をつなぐ辺の2通り以外の辺を
+考える必要はない.
+よって, 座標を $x$, $y$ それぞれでソートして隣接する node 間に辺を張ったグラフを作り最小全域木を作ればよい.
+辺の数が $2(N-1)$ 本になるので計算量は $O(N \log N)$ になる.
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<P> x(n), y(n);
+    rep(i,n) {
+        int a, b;
+        cin >> a >> b;
+        x[i] = {a, i};
+        y[i] = {b, i};
+    }
+
+    sort(all(x));
+    sort(all(y));
+
+    using Graph = vector<vector<P>>;
+    Graph graph(n);
+    rep(i,n-1) {
+        int a = x[i].second;
+        int costa = x[i].first;
+        int b = x[i+1].second;
+        int costb = x[i+1].first;
+        graph[a].push_back({abs(costa - costb), b});
+        graph[b].push_back({abs(costa - costb), a});
+    }
+    rep(i,n-1) {
+        int a = y[i].second;
+        int costa = y[i].first;
+        int b = y[i+1].second;
+        int costb = y[i+1].first;
+        graph[a].push_back({abs(costa - costb), b});
+        graph[b].push_back({abs(costa - costb), a});
+    }
+
+    vector<int> used(n, 0);
+    used[0] = 1;
+    priority_queue<P, vector<P>, greater<P>> pq;
+    for (auto e : graph[0]) pq.push(e);
+    ll ans = 0;
+    while (!pq.empty()) {
+        auto p = pq.top();
+        pq.pop();
+        if (used[p.second]) continue;
+        used[p.second] = 1;
+        ans += p.first;
+        for (auto e : graph[p.second]) {
+            if (used[e.second]) continue;
+            pq.push(e);
+        }
+    }
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/abc065/submissions/28302812)
+
+
+## 高速な素数判定法
+
+### NTL_1_A - 素因数分解
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/NTL_1_A)
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    cout << n << ":";
+    int t = n;
+    for (int i = 2; i*i <= n; i++) {
+        while (t % i == 0) {
+            cout << " " << i;
+            t /= i;
+        }
+    }
+    if (t > 1) cout << " " << t;
+    cout << endl;
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/NTL_1_A/judge/6171712/C++17)
+
+
+### AtCoder Beginner Contest 084 D - 2017-like Number
+[問題](https://atcoder.jp/contests/abc084/tasks/abc084_d)
+
+- エラトステネスのふるいで素数判定テーブルを作る
+- $[0,r]$ の範囲に 2017 に似た数がいくつあるかを保持する累積和を作る
+- `cum[r] - cum[l-1]` を答える
+
+```cpp
+void solve() {
+    int MAX = 100005;
+    vector<int> isprime(MAX, false);
+    for (int i = 2; i < MAX; i++) {
+        if (!isprime[i]) {
+            for (int j = i+i; j < MAX; j+=i) {
+                isprime[j] = true;
+            }
+        }
+    }
+    rep2(i,2,MAX) isprime[i] = !isprime[i];
+
+    vector<int> like2017(MAX, 0);
+    for (int i = 3; i < MAX; i+=2) {
+        if (isprime[i] && isprime[(i+1)/2]) like2017[i] = 1;
+    }
+    vector<int> cum(MAX, 0);
+    rep(i,MAX-1) cum[i+1] += cum[i] + like2017[i+1];
+
+    int q;
+    cin >> q;
+    rep(i,q) {
+        int l, r;
+        cin >> l >> r;
+        cout << cum[r] - cum[l-1] << endl;
+    }
+}
+```
+
+[提出コード](https://atcoder.jp/contests/abc084/submissions/28303166)
+
+
+
+
+## 高速なべき乗計算
+
+### NTL_1_B - べき乗
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/NTL_1_B)
+
+```cpp
+ll powmod(ll a, ll n, ll mod) {
+    ll ret = 1;
+    while (n) {
+        if (n&1) ret = ret * a % mod;
+        a = a * a % mod;
+        n /= 2;
+    }
+    return ret;
+}
+
+void solve() {
+    int m, n;
+    cin >> m >> n;
+    cout << powmod(m, n, (ll)1e9+7) << endl;
+}
+```
+
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/NTL_1_B/judge/6171740/C++17)
+
+
+### Square869120Contest #1 E - 散歩
+[問題](https://atcoder.jp/contests/s8pc-1/tasks/s8pc_1_e)
+
+```cpp
+const ll MOD = (ll)1e9 + 7;
+
+ll powmod(ll a, ll n, ll mod) {
+    ll ret = 1;
+    while (n) {
+        if (n&1) ret = ret * a % mod;
+        a = a * a % mod;
+        n /= 2;
+    }
+    return ret;
+}
+
+void solve() {
+    int n, q;
+    cin >> n >> q;
+    vector<ll> a(n), c(q+2, 0);
+    rep(i,n) cin >> a[i];
+    rep(i,q) cin >> c[i+1], c[i+1]--;
+
+    vector<ll> len(n, 0);
+    rep2(i,1,n) len[i] = powmod(a[i-1], a[i], MOD);
+    vector<ll> cumlen(n+1, 0);
+    rep2(i,1,n+1) {
+        cumlen[i] += cumlen[i-1] + len[i];
+        cumlen[i] %= MOD;
+    }
+
+    ll ans = 0;
+    rep2(i,1,q+2) {
+        int a = c[i];
+        int b = c[i-1];
+        if (a > b) swap(a,b);
+        ans += (cumlen[b] - cumlen[a] + MOD) % MOD;
+        ans %= MOD;
+    }
+    cout << ans << endl;
+}
+```
+[提出コード](https://atcoder.jp/contests/s8pc-1/submissions/28303428)
+
+
+## 逆元を使う問題
+
+
+### AtCoder Beginner Contest 034 C - 経路
+[問題](https://atcoder.jp/contests/abc034/tasks/abc034_c)
+
+```cpp
+ll powmod(ll x, ll n, ll mod) {
+    ll ret = 1;
+    while (n) {
+        if (n&1) ret = ret * x % mod;
+        x = x * x % mod;
+        n /= 2;
+    }
+    return ret;
+}
+
+ll invmod(ll x, ll mod) {
+    return powmod(x, mod-2, mod);
+}
+
+void solve() {
+    const ll MOD = (ll)1e9 + 7;
+    const ll MAX = (ll)2e5 + 5;
+    ll W, H;
+    cin >> W >> H;
+    // (W+H) choose W
+    vector<ll> fac(MAX, 1), invfac(MAX, 1);
+    rep2(i,2,MAX) fac[i] = (fac[i-1] * i) % MOD;
+    rep2(i,2,MAX) invfac[i] = invmod(fac[i], MOD);
+
+    W--, H--;
+    ll ans = 1;
+    ans = ans * fac[H+W] % MOD;
+    ans = ans * invfac[H] % MOD;
+    ans = ans * invfac[W] % MOD;
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/abc034/submissions/28303535)
+
+
+### AtCoder Beginner Contest 145 D - Knight
+[問題](https://atcoder.jp/contests/abc145/tasks/abc145_d)
+
+$(i+1,j+2)$ の操作を $a$ 回, $(i+2,j+1)$ の操作を $b$ 回行うとすると
+
+\begin{align}
+\left\{
+    \begin{aligned}
+        a + 2b = X \\
+        2a + b = Y
+    \end{aligned}
+\right.
+\Rightarrow
+\left\{
+    \begin{aligned}
+        a = \frac{2Y - X}{3} \\
+        b = \frac{2X - Y}{3}
+    \end{aligned}
+\right.
+\end{align}
+
+が成り立つ.
+$a < 0$ or $b < 0$ のとき条件を満たす操作はない.
+
+操作できるときは $\displaystyle \comb{a+b}{a} = \frac{(a+b)!}{a!~b!}$ を求めればよい
+
+```cpp
+ll powmod(ll x, ll n, ll mod) {
+    ll ret = 1;
+    while (n) {
+        if(n&1) ret = ret * x % mod;
+        x = x * x % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+
+ll invmod(ll x, ll mod) {
+    return powmod(x, mod-2, mod);
+}
+
+void solve() {
+    ll MAX = (ll)2e6 + 6;
+    ll MOD = (ll)1e9 + 7;
+    vector<ll> fac(MAX, 1), invfac(MAX, 1);
+    rep2(i,2,MAX) fac[i] = fac[i-1] * i % MOD;
+    rep2(i,2,MAX) invfac[i] = invmod(fac[i], MOD);
+
+    ll x, y;
+    cin >> x >> y;
+    ll a = 2* x - y;
+    ll b = 2* y - x;
+    if (a >= 0 && b >= 0 && a % 3 == 0 && b % 3 == 0) {
+        a /= 3, b /= 3;
+        ll ans = fac[a+b] * (invfac[a] * invfac[b] % MOD) % MOD;
+        cout << ans << endl;
+        return;
+    }
+    cout << 0 << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/abc145/submissions/28303725)
+
+
+### AtCoder Beginner Contest 021 D - 多重ループ
+
+[問題](https://atcoder.jp/contests/abc021/tasks/abc021_d)
+
+$a^\prime_i = a_i + k-1$ とおくと
+$1 \leq a^\prime_1 < \cdots < a^\prime_k \leq n + k - 1$ となる.
+よって $[1, n-k-1]$ の範囲の数字を $k$ 個選んで昇順に並べると題意を条件を満たした数列を構築できる.
+そのような選び方は $\displaystyle \comb{n+k-1}{k} = \frac{(n+k-1)!}{k! ~ (n-1)!}$ 通りある.
+
+```cpp
+ll powmod(ll x, ll n, ll mod) {
+    ll ret = 1;
+    while (n) {
+        if(n&1) ret = ret * x % mod;
+        x = x * x % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+
+ll invmod(ll x, ll mod) {
+    return powmod(x, mod-2, mod);
+}
+
+void solve() {
+    ll MAX = (ll)2e5 + 5;
+    ll MOD = (ll)1e9 + 7;
+    vector<ll> fac(MAX, 1), invfac(MAX, 1);
+    rep2(i,2,MAX) fac[i] = fac[i-1] * i % MOD;
+    rep2(i,2,MAX) invfac[i] = invmod(fac[i], MOD);
+
+    ll n, k;
+    cin >> n >> k;
+    ll ans = fac[n+k-1] * (invfac[k] * invfac[n-1] % MOD) % MOD;
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/abc021/submissions/28303844)
+
+
+
+### AtCoder Beginner Contest 149 F - Surrounded Nodes
+[問題](https://atcoder.jp/contests/abc149/tasks/abc149_f)
+
+解けていない
+
+
+## 全国統一プログラミング王決定戦本戦 A - Abundant Resources
+### 全国統一プログラミング王決定戦本戦 A - Abundant Resources
+[問題](https://atcoder.jp/contests/nikkei2019-final/tasks/nikkei2019_final_a)
+[提出コード](https://atcoder.jp/contests/nikkei2019-final/submissions/28306263)
+
+### JOI 2010 本選 1 - 旅人
+[問題](https://atcoder.jp/contests/joi2010ho/tasks/joi2010ho_a)
+[提出コード](https://atcoder.jp/contests/joi2010ho/submissions/28306419)
+
+### JOI 2011 本選 1 - 惑星探査
+[問題](https://atcoder.jp/contests/joi2011ho/tasks/joi2011ho1)
+
+$s[x][y] = s[x-1][y] + s[x][y-1] - s[x-1][y-1] + (grid[x][y] == 'X')$
+
+といった感じで累積和を求める
+
+[提出コード](https://atcoder.jp/contests/joi2011ho/submissions/28306857)
+
+
+### AtCoder Beginner Contest 106 D - AtCoder Express 2
+[問題](https://atcoder.jp/contests/abc106/tasks/abc106_d)
+[提出コード](https://atcoder.jp/contests/abc106/submissions/28309629)
+
+
+### GigaCode 2019 D - 家の建設
+
+[問題](https://atcoder.jp/contests/gigacode-2019/tasks/gigacode_2019_d)
+[提出コード](https://atcoder.jp/contests/gigacode-2019/submissions/28310222)
+
+### AtCoder Beginner Contest 014 C - AtColor
+
+[問題](https://atcoder.jp/contests/abc014/tasks/abc014_3)
+[提出コード](https://atcoder.jp/contests/abc014/submissions/28310306)
+
+
+### AOJ 2013 - 大崎
+
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/2013)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/2013/judge/6172945/C++17)
+
+
+### JOI 2015 本選 1 - 鉄道運賃
+
+[問題](https://atcoder.jp/contests/joi2015ho/tasks/joi2015ho_a)
+
+各鉄道を何回乗るかをいもす法で調べて, きっぷまたは IC のうち安い方を使うようにする.
+
+[提出コード](https://atcoder.jp/contests/joi2015ho/submissions/28311058)
+
+### JOI 2012 本選 4 - 釘
+[問題](https://atcoder.jp/contests/joi2012ho/tasks/joi2012ho4)
+
+理解しきれなかったので一旦飛ばし
+
+
+
+## Union-Find
+
+### DSL_1_A - 互いに素な集合
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_1_A/judge/6175933/C++17)
+
+
+### AtCoder Beginner Contest 075 C - Bridge
+[問題](https://atcoder.jp/contests/abc075/tasks/abc075_c)
+[提出コード](https://atcoder.jp/contests/abc075/submissions/28324991)
+
+### AtCoder Beginner Contest 120 D - Decayed Bridge
+[問題](https://atcoder.jp/contests/abc120/tasks/abc120_d)
+
+$A_i$, $B_i$ を反転させて、橋を構築していくごとに不便さがどう減るかを考える。これを逆順にすれば問題の答えとなる。
+
+橋が全くなかったときの不便さは $\displaystyle \comb{n}{2} = \frac{n(n-1)}{2}$ となる。
+$x$ 個の島が橋によって行き来できるようになったとすると不便さは $\comb{x}{2}$ 減る。
+また $x$ 個の島からなる島群と、$y$ 個の島からなる島群が橋によってつながると不便さは
+$\displaystyle \comb{x}{2} + \comb{y}{2} - \comb{x+y}{2} = \frac{x(x-1)}{2} + \frac{y(y-1)}{2} - \frac{(x+y)(x+y-1)}{2} = xy$ だけ減る。
+
+```cpp
+struct UnionFind {
+    vector<int> d;
+    UnionFind(int n) : d(n, -1) {}
+    int find(int x) {
+        if (d[x] < 0) return x;
+        return d[x] = find(d[x]);
+    }
+    bool unite(int x, int y) {
+        x = find(x), y = find(y);
+        if (x == y) return false;
+        if (d[x] > d[y]) swap(x,y);
+        d[x] += d[y];
+        d[y] = x;
+        return true;
+    }
+    bool same(int x, int y) {
+        return find(x) == find(y);
+    }
+    int size(int x) {
+        return -d[find(x)];
+    }
+};
+
+void solve() {
+    ll n, m;
+    cin >> n >> m;
+    vector<ll> a(m), b(m);
+    rep(i,m) {
+        cin >> a[i] >> b[i];
+        a[i]--, b[i]--;
+    }
+    reverse(all(a));
+    reverse(all(b));
+
+    ll inconvenient = n * (n-1) / 2;
+    UnionFind uf(n);
+    vector<ll> ans;
+    ans.reserve(m);
+    ans.push_back(inconvenient);
+    rep(i,m-1) {
+        if (uf.same(a[i], b[i])) {
+            ans.push_back(inconvenient);
+        } else {
+            ll asize = uf.size(a[i]);
+            ll bsize = uf.size(b[i]);
+            inconvenient -= asize * bsize;
+            ans.push_back(inconvenient);
+            uf.unite(a[i], b[i]);
+        }
+    }
+    reverse(all(ans));
+    for (ll x : ans) cout << x << endl;
+}
+```
+
+```cpp
+rep(i,m-1) {
+    if (uf.same(a[i], b[i])) {
+        ans.push_back(inconvenient);
+    } else {
+        ll asize = uf.size(a[i]);
+        ll bsize = uf.size(b[i]);
+        inconvenient -= asize * bsize;
+        ans.push_back(inconvenient);
+        uf.unite(a[i], b[i]);
+    }
+}
+```
+のように loop の回数が $m-1$ 回で良い理由は、1つの目の橋が壊れるときの不便さは 2個目 ~ $m$ 個目の橋を構築したときの不便さなので $A_1$, $B_1$ 間の橋のことは考えなくてよい。
+
+[提出コード](https://atcoder.jp/contests/abc120/submissions/28329931)
+
+
+その他のテクニック
+### JOI 2008 本選 1 - 碁石ならべ
+[問題](https://atcoder.jp/contests/joi2008ho/tasks/joi2008ho_a)
+[提出コード](https://atcoder.jp/contests/joi2008ho/submissions/28329897)
+
+### JOI 2013 本選 1 - 電飾
+[問題](https://atcoder.jp/contests/joi2013ho/tasks/joi2013ho1)
+[提出コード](https://atcoder.jp/contests/joi2013ho/submissions/28340054)
+
+### Square869120Contest #5 B - Emblem
+[問題](https://atcoder.jp/contests/s8pc-5/tasks/s8pc_5_b)
+
+半径が決まっていない円の半径を全て同じペースで大きくしていって、どれかの円の接したときの半径が取りうる最大の半径となると考え、二分探索で取れる半径の最大値を探した。
+解説によるとそんな複雑なことはしなくてよかったらしい。
+
+[提出コード](https://atcoder.jp/contests/s8pc-5/submissions/28340947)
+
+
+### AtCoder Beginner Contest 144 D - Water Bottle
+
+[問題](https://atcoder.jp/contests/abc144/tasks/abc144_d)
+[提出コード](https://atcoder.jp/contests/abc144/submissions/28341673)
+
+
+### AOJ 1193 - 連鎖消滅パズル
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/1193)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1193/judge/6184833/C++17)
+
+
+### Square869120Contest #3 B - 石落としゲーム
+[問題](https://atcoder.jp/contests/s8pc-3/tasks/s8pc_3_b)
+[提出コード](https://atcoder.jp/contests/s8pc-3/submissions/28353405)
+
+
+### AOJ 1149 - ケーキカット
+[問題](https://onlinejudge.u-aizu.ac.jp/problems/1149)
+[提出コード](https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/1149/judge/6185660/C++17)
+
+
+### AtCoder Beginner Contest 149 B - Greedy Takahashi
+[問題](https://atcoder.jp/contests/abc149/tasks/abc149_b)
+[提出コード](https://atcoder.jp/contests/abc149/submissions/28354817)
+
+### AtCoder Beginner Contest 139 D - ModSum
+[問題](https://atcoder.jp/contests/abc139/tasks/abc139_d)
+[提出コード](https://atcoder.jp/contests/abc139/submissions/28362718)
+
+### AtCoder Beginner Contest 150 D - Semi Common Multiple
+[問題](https://atcoder.jp/contests/abc150/tasks/abc150_d)
+[提出コード](https://atcoder.jp/contests/abc150/submissions/28363212)
+
+### 三井住友信託銀行プログラミングコンテスト2019 予選 E - Colorful Hats 2
+[問題](https://atcoder.jp/contests/sumitrust2019/tasks/sumitb2019_e)
+
+$A_i = k$ ($0 \leq k \leq N-1$) だったとき, $i$ 番目の人の帽子の選び方を $T_i$ とすると
+
+
+
+\begin{align}
+T_i = \left\{
+    \begin{aligned}
+        &3 - \text{(それまでに出た } 0 \text{ と言った人の数) if } k = 0 \\
+        & (\text{それまでに出た } k-1 \text{ と言った人の数}) - (\text{それまでに出た } k \text{ と言った人の数})
+    \end{aligned}
+\right.
+\end{align}
+
+通りである.
+よって答えは $\displaystyle \prod_i T_i \mod 1000000007$.
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vector<ll> A(n);
+    rep(i,n) cin >> A[i], A[i]++;
+
+    vector<ll> cnt(n+1, 0);
+    cnt[0] = 3;
+    ll ans = 1;
+    rep(i,n) {
+        ans *= cnt[A[i]-1];
+        ans %= MOD;
+        cnt[A[i]]++;
+        cnt[A[i]-1]--;
+    }
+    cout << ans << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/sumitrust2019/submissions/28364331)
+
+
+
+### DDCC2020 予選 D - Digit Sum Replace
+[問題](https://atcoder.jp/contests/ddcc2020-qual/tasks/ddcc2020_qual_d)
+[公式解説](https://www.youtube.com/watch?v=BssyLgQvdcY)
+
+公式解説補足
+
+$s$ が1桁になるまでに 9 を引く回数を $x$ とすると $1 \leq s - 9x \leq 9$ が成り立つ。
+よって
+
+$\displaystyle \frac{s-9}{9} \leq x \leq \frac{s-1}{9}$ を満たす整数 $x$ は
+$\displaystyle x = \left\lfloor \frac{s-1}{9} \right\rfloor$.
+
+```cpp
+void solve() {
+    int m;
+    cin >> m;
+    vector<ll> d(m), c(m);
+    rep(i,m) cin >> d[i] >> c[i];
+    ll keta = 0;
+    ll sum = 0;
+    rep(i,m) {
+        keta += c[i];
+        sum += d[i] * c[i];
+    }
+
+    cout << keta - 1 + (sum - 1) / 9 << endl;
+}
+```
+
+[提出コード](https://atcoder.jp/contests/ddcc2020-qual/submissions/28365947)
+
+
+### Tenka1 Programmer Beginner Contest D - Crossing
+[問題](https://atcoder.jp/contests/tenka1-2018-beginner/tasks/tenka1_2018_d)
+[提出コード](https://atcoder.jp/contests/tenka1-2018-beginner/submissions/28366912)

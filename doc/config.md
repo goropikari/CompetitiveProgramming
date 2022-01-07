@@ -26,3 +26,4 @@ Add here global latex commands to use throughout your pages.
 \newcommand{\R}{\mathbb R}
 \newcommand{\Z}{\mathbb Z}
 \newcommand{\scal}[1]{\langle #1 \rangle}
+\newcommand{\comb}[2]{{}_{#1}\mathrm{C}_{#2}}
