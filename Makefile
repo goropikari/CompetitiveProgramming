@@ -1,7 +1,7 @@
 CXX := g++
 CXXFLAGS := -g -O2 -Wall -std=c++14 -I .
 
-build:
+build: ex
 test: ex
 	./ex < test.txt
 
