@@ -5,7 +5,7 @@ ARTICLES = $(shell find doc/ -type f -name "*.md" -not -path "doc/node_modules/*
 
 build: ex
 test: ex
-	./ex < test.txt | tee real_out.txt
+	./ex < test.txt
 
 diff:
 	diff -swBZ test_out.txt real_out.txt
