@@ -12,8 +12,8 @@ date = Date(2021, 12, 12)
 
 ## multiset vs vector
 
-multiset は遅いので二部探索のように使うときは注意する。
-insert, find, erase の計算量は $\log(N)$ ($N$ は要素数)であるが、定数項が効いているのかなかなかに遅い。
+multiset は遅いので二部探索のように使うときは注意する.
+insert, find, erase の計算量は $\log(N)$ ($N$ は要素数)であるが, 定数項が効いているのかなかなかに遅い.
 
 \input{cpp}{/assets/scripts/tips/multiset_vs_vector.cpp} <!--_-->
 

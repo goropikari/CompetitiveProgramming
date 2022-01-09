@@ -1,6 +1,8 @@
 CXX := g++
 CXXFLAGS := -g -O2 -Wall -std=c++14 -I .
 
+ARTICLES = $(shell find doc/ -type f -name "*.md" -not -path "doc/node_modules/*")
+
 build: ex
 test: ex
 	./ex < test.txt | tee real_out.txt
@@ -10,3 +12,9 @@ diff:
 
 ptest:
 	python3 ex.py < test.txt
+
+docfmt: $(ARTICLES)
+	@echo $?
+	@sed -i -e "s/。/. /g" $?
+	@sed -i -e "s/、/, /g" $?
+	@sed -i -e "s/[ \t]*$$//" $?
