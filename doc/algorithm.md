@@ -137,7 +137,7 @@ int gcd(int a, int b) {
 }
 
 int lcm(int a, int b) {
-    return (a*b) / gcd(a,b);
+    return a / gcd(a,b) * b;
 }
 ```
 
@@ -287,8 +287,8 @@ z b c
 数列 $A=a_0,a_1,\cdots, a_{n−1}$ の最長増加部分列 (LIS: Longest Increasing Subsequence) とは
 数列 $A$ の増加部分列 $a_{i_0}, \cdots, a_{i_k}$ ($0 \leq i_0 < i_1 < \cdots < i_k < n$ かつ $a_{i_0} < a_{i_1} < \cdots < a_{i_k}$) のうち最も $k$ が大きいもの.
 
-- https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_D
-- https://qiita.com/python_walker/items/d1e2be789f6e7a0851e5
+- [Qiita - 最長増加部分列(LIS)の長さを求める](https://qiita.com/python_walker/items/d1e2be789f6e7a0851e5)
+- [AOJ - 最長増加部分列](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_D)
 
 
 ```cpp
@@ -363,5 +363,121 @@ void solve() {
         if (dist[i] == INF) cout << "INF" << endl;
         else cout << dist[i] << endl;
     }
+}
+```
+
+## 最小全域木(minimum spanning tree)
+
+### プリム法
+
+適当な頂点(本当にどこからでもいい)を起点にして、まだ訪れていない頂点への最小のコストの辺を採用していく。
+すでに訪れた頂点への辺は捨てる。
+
+```cpp
+struct Edge {
+    int to;
+    ll cost;
+};
+
+bool operator>(const Edge &a, const Edge &b) {
+    return a.cost > b.cost;
+}
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<Edge>> graph(n);
+    rep(i,m) {
+        int s, t;
+        ll w;
+        cin >> s >> t >> w;
+        graph[s].push_back({t, w});
+        graph[t].push_back({s, w});
+    }
+
+    vint visited(n, 0);
+    visited[0] = 1;
+    priority_queue<Edge, vector<Edge>, greater<Edge>> pq;
+    for (auto edge : graph[0]) pq.push(edge);
+    vector<Edge> mst;
+    while (pq.size()) {
+        auto t = pq.top(); pq.pop();
+        if (visited[t.to]) continue;
+        visited[t.to] = 1;
+        mst.push_back(t);
+        for (auto edge : graph[t.to]) {
+            if (visited[edge.to]) continue;
+            pq.push(edge);
+        }
+    }
+
+    ll tot = 0;
+    for (auto edge : mst) {
+        tot += edge.cost;
+    }
+    cout << tot << endl;
+}
+```
+
+### クラスカル法
+
+全ての辺をコストが小さい順に見ていき、見ている辺をつないだときにサイクルができなければその辺を採用、それ以外のときは捨てる。
+サイクルの検出には Union Find を使うのが定石。
+
+```cpp
+struct Edge {
+    int from;
+    int to;
+    ll cost;
+};
+
+bool operator<(const Edge &a, const Edge &b) {
+    return a.cost < b.cost;
+}
+
+struct UnionFind {
+    vint d;
+    UnionFind(int n) : d(n, -1) {}
+    int leader(int x) {
+        if (d[x] < 0) return x;
+        return d[x] = leader(d[x]);
+    }
+    void merge(int x, int y) {
+        x = leader(x), y = leader(y);
+        if (x == y) return;
+        if (d[x] < d[y]) swap(x, y);
+        d[x] += d[y];
+        d[y] = x;
+    }
+    bool same(int x, int y) {
+        return leader(x) == leader(y);
+    }
+};
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<Edge> edges;
+    rep(i,m) {
+        int s, t;
+        ll w;
+        cin >> s >> t >> w;
+        edges.push_back({s, t, w});
+        edges.push_back({t, s, w});
+    }
+    sort(all(edges));
+
+    vector<Edge> mst_edges;
+    UnionFind uf(n);
+    for (auto [from, to, cost] : edges) {
+        if (!uf.same(from, to)) {
+            mst_edges.push_back({from, to, cost});
+            uf.merge(from, to);
+        }
+    }
+
+    ll tot = 0;
+    for (auto edge : mst_edges) tot += edge.cost;
+    cout << tot << endl;
 }
 ```
