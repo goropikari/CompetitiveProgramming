@@ -110,49 +110,157 @@ cout << ok << endl;
 
 ## 005 - Restricted Digits（★7）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_e)
-[提出コード]()
 
-##
-[問題]()
-[提出コード]()
+スキップ
 
-##
-[問題]()
-[提出コード]()
+## 006 - Smallest Subsequence（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_f)
 
-##
-[問題]()
-[提出コード]()
+解説AC
 
-##
-[問題]()
-[提出コード]()
+```cpp
+void solve() {
+    int N, K;
+    cin >> N >> K;
+    string S;
+    cin >> S;
 
-##
-[問題]()
-[提出コード]()
+    vvi nex(N+1, vi(26, 0));
+    rep(i,26) nex[N][i] = N; // 残りの文字がないことを表す番兵
 
-##
-[問題]()
-[提出コード]()
+    for (int i = N-1; i >= 0; i--) {
+        for (int j = 0; j < 26; j++) {
+            if (S[i] - 'a' == j) nex[i][j] = i;
+            else nex[i][j] = nex[i+1][j];
+        }
+    }
 
-##
-[問題]()
-[提出コード]()
+    string ans = "";
+    int cur = 0;
+    for (int i = 1; i <= K; i++) {
+        for (int j = 0; j < 26; j++) {
+            int nextPos = nex[cur][j];
+            int numRem = N-1 - nextPos; // nextPos 以降にある文字の数
+            int needNum = K - i; // K 文字構成するのに必要な残りの数
+            if (numRem >= needNum) {
+                ans.push_back(S[nextPos]);
+                cur = nextPos + 1;
+                break;
+            }
+        }
+    }
 
-##
-[問題]()
-[提出コード]()
+    cout << ans << endl;
+}
+```
 
-##
-[問題]()
-[提出コード]()
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28452819)
 
-##
-[問題]()
-[提出コード]()
+## 008 - AtCounter（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_h)
 
-##
-[問題]()
-[提出コード]()
+ほぼ同じ問題を解いていたので解けた.
+[類題: ABC C - chokudai](https://atcoder.jp/contests/abc211/tasks/abc211_c)
 
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28454325)
+
+## 009 - Three Point Angle（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_i)
+
+解説AC
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28480057)
+
+
+## 010 - Score Sum Queries（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_j)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28455455)
+
+## 011 - Gravy Jobs（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_k)
+
+解説AC
+
+報酬のことは一旦無視して, 決まった期間でどれだけ多くの仕事をできるかという問題を考えると
+区間スケジューリング問題になる.
+よって, まず締切が早い順に仕事をソートする.
+
+次にソートした仕事順に, 総仕事時間が $x$ と決まっているときにその仕事をするかしないかを決めながら報酬の合計が
+最大になるように選んでいく.
+これはナップザック問題と同じである.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28498511)
+
+## 012 - Red Painting（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_l)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28456062)
+
+## 013 - Passing（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_m)
+
+ノード1からとNからの2つのダイクストラをする.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28456319)
+
+## 014 - We Used to Sing a Song Together（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_n)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28456403)
+
+## 015 - Don't be too close（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_o)
+
+スキップ
+
+## 016 - Minimum Coins（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_p)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28467564)
+
+## 017 - Crossing Segments（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_q)
+
+スキップ
+
+## 018 - Statue of Chokudai（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_r)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28468254)
+
+
+## 019 - Pick Two（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_s)
+
+[AOJ 連鎖行列積](https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_10_B) と同じように解く
+
+$f(l, r)$ を $[l, r)$ の範囲を取り除くときのコストの最小値とすると
+
+\begin{align}
+f(l, r) =
+\min \left\{
+    \begin{aligned}
+        |A_l - A_{r-1}| + f(l+1, r-1), \\
+        f(l,k) + f(k, r) ~~,k \in [l+1, r)
+    \end{aligned}
+\right\}
+\end{align}
+となる.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28482583)
+
+
+## 020 - Log Inequality（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_t)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28482806)
+
+## 021 - Come Back in One Piece（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_u)
+
+解説AC
+
+強連結成分分解
+
+[Algorithms on Graphs](https://www.coursera.org/learn/algorithms-on-graphs) の講義でもやったらしいのだが覚えていなかった.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28493716)
+
+## 022 - Cubic Cake（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_v)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28493234)

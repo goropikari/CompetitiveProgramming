@@ -9,12 +9,16 @@
 #define rep2(i,k,n) for (int i = (k); i < (n); ++i)
 using namespace std;
 using ll = long long;
-using P = pair<int,int>;
 // using P = pair<ll,ll>;
+using P = pair<int,int>;
+using vint = vector<int>;
+using vll = vector<ll>;
+using vvint = vector<vector<int>>;
+using vvll = vector<vector<ll>>;
 
-
-const ll INF = (ll)1e18;
-// const int INF = (int)1e9+7;
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9+7;
+// const ll MOD = (ll)1e9+9;
 template<typename T>
 void chmin(T &a, T b) { a = min(a, b); }
 template<typename T>
