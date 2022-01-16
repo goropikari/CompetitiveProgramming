@@ -14,3 +14,27 @@ function lx_baz(com, _)
   # do whatever you want here
   return uppercase(brace_content)
 end
+
+function hfun_custom_taglist()::String
+    tag = locvar(:fd_tag)
+    rpaths = globvar("fd_tag_pages")[tag]
+    sort!(rpaths, rev=true)
+    c = IOBuffer()
+    write(c, "<ul>")
+    # go over all paths
+    for rpath in rpaths
+        # recover the url corresponding to the rpath
+        url = get_url(rpath)
+        # recover the title of the page if there is one defined,
+        # if there isn't, fallback on the path to the page
+        title = pagevar(rpath, "title")
+        if isnothing(title)
+            title = "/$rpath/"
+        end
+        write(c, "<li><a href=\"$(url)\">$(title)</a></li>")
+    end
+    # finish the HTML
+    write(c, "</ul>")
+    # return the HTML string
+    return String(take!(c))
+end
