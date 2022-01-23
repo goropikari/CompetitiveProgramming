@@ -167,7 +167,35 @@ ll pow(ll x, ll n) {
     }
     return ret;
 }
+```
 
+ref: [逆元](#逆元)
+
+## 素数
+
+### エラトステネスのふるい
+
+```cpp
+int MAX = 100005;
+vector<int> isprime(MAX, true);
+isprime[0] = isprime[1] = false;
+for (int i = 2; i < MAX; i++) {
+    if (isprime[i]) {
+        for (int j = i+i; j < MAX; j+=i) {
+            isprime[j] = false;
+        }
+    }
+}
+```
+
+## 逆元
+
+ref: [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆元から離散対数まで 〜](https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a)
+
+
+### exponential mod
+
+```
 // べき乗 mod
 // x^n mod m
 ll modpow(ll x, ll n, ll mod) {
@@ -189,23 +217,6 @@ $a^{-1} \equiv a^{p-2} \mod p$
 // x^{-1} mod m
 ll modinvpow(ll x, ll mod) {
     return modpow(x, mod-2, mod);
-}
-```
-
-## 素数
-
-### エラトステネスのふるい
-
-```cpp
-int MAX = 100005;
-vector<int> isprime(MAX, true);
-isprime[0] = isprime[1] = false;
-for (int i = 2; i < MAX; i++) {
-    if (isprime[i]) {
-        for (int j = i+i; j < MAX; j+=i) {
-            isprime[j] = false;
-        }
-    }
 }
 ```
 
@@ -370,8 +381,8 @@ void solve() {
 
 ### プリム法
 
-適当な頂点(本当にどこからでもいい)を起点にして、まだ訪れていない頂点への最小のコストの辺を採用していく。
-すでに訪れた頂点への辺は捨てる。
+適当な頂点(本当にどこからでもいい)を起点にして, まだ訪れていない頂点への最小のコストの辺を採用していく.
+すでに訪れた頂点への辺は捨てる.
 
 ```cpp
 struct Edge {
@@ -421,8 +432,8 @@ void solve() {
 
 ### クラスカル法
 
-全ての辺をコストが小さい順に見ていき、見ている辺をつないだときにサイクルができなければその辺を採用、それ以外のときは捨てる。
-サイクルの検出には Union Find を使うのが定石。
+全ての辺をコストが小さい順に見ていき, 見ている辺をつないだときにサイクルができなければその辺を採用, それ以外のときは捨てる.
+サイクルの検出には Union Find を使うのが定石.
 
 ```cpp
 struct Edge {

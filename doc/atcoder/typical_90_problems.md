@@ -209,7 +209,33 @@ void solve() {
 ## 015 - Don't be too close（★6）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_o)
 
-スキップ
+どの2つのボールについても書かれている数字が $k$ 以上離れているように $a$ 個のボールを選んでくる.
+また, ボールの数字を小さい順に $1 \leq b_1 < b_2 < \cdots < b_M \leq N$ とする.
+
+\begin{align}
+\left\{
+    \begin{aligned}
+        b_1^\prime &= b_1 \\
+        b_2^\prime &= b_2 - (k-1) \\
+        \vdots \\
+        b_M^\prime &= b_M - (M-1)(k-1)
+    \end{aligned}
+\right.
+\end{align}
+と定義すると $1 \leq b_1^\prime < b_2^\prime < \cdots < b_M^\prime \leq N - (M-1)(k-1)$ となる.
+$\{b_i^\prime\}$ の組み合わせを決めると $\{b_i\}$ の組み合わせが一意に定まるから, $\comb{N-(M-1)(k-1)}{M}$ を計算すれば良い.
+
+以上より, $k$ が固定したとき $\displaystyle \sum_{M}\comb{N-(M-1)(k-1)}{M}$.
+ここで sum は $\displaystyle N-(M-1)(k-1) \geq M \Leftrightarrow M \leq \frac{N-1}{k} + 1 \leq \frac{N}{k} + 1$
+より, combination の計算が $O(1)$ でできれば, 問題は $O(N\log N)$ で解ける.
+
+
+調和級数が $O(N\log N)$ に収まる理由.
+\begin{align}
+    \sum_{k=1}^N \frac{N}{k} < \int^N_1 dk \frac{N}{k} = N \ln k \left.\right|^N_1 = N\ln N
+\end{align}
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28618080)
 
 ## 016 - Minimum Coins（★3）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_p)
@@ -264,3 +290,377 @@ f(l, r) =
 ## 022 - Cubic Cake（★2）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_v)
 [提出コード](https://atcoder.jp/contests/typical90/submissions/28493234)
+
+
+## 023 - Avoid War（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_w)
+
+スキップ
+
+## 024 - Select +／- One（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_x)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28618532)
+
+
+## 025 - Digit Product Equation（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_y)
+
+スキップ
+
+## 026 - Independent Set on a Tree（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_z)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28619196)
+
+
+## 027 - Sign Up Requests （★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_aa)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28635533)
+
+
+## 028 - Cluttered Paper（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ab)
+
+2次元いもす法
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28636386)
+
+## 029 - Long Bricks（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ac)
+
+スキップ
+
+遅延セグメント木で解くらしいが interval tree でもできる気がする.
+
+## 030 - K Factors（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ad)
+
+エラトステネスと同じ要領.
+
+エラトステネスのふるいを使って高速に素因数分解する osa_k 法はこちらの記事がわかりやすかった.
+https://blog.manuel1024.com/archives/79
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28648799)
+
+## 031 - VS AtCoder（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ae)
+
+スキップ
+
+## 032 - AtCoder Ekiden（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_af)
+
+$N = 10$ と小さいので `next_permutation` を使って素直に全探索で解ける.
+
+$N = 18$ のとき, $18! = 6402373705728000$ となり, `next_permutation` 実装だと TLE になる.
+この場合は DP で解ける.
+
+$dp[S][x]$: すでに走った人の集合 $S$, 最後に走った人を $x$ とすると
+
+$\displaystyle dp[S][x] = \min_k dp[S\backslash \{k\}][k] + A[k][|S|]$ となる.
+
+
+- [提出コード 順列全探索](https://atcoder.jp/contests/typical90/submissions/28649102)
+- [提出コード DP](https://atcoder.jp/contests/typical90/submissions/28650112)
+
+## 033 - Not Too Bright（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ag)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28665856)
+
+## 034 - There are few types of elements（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ah)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28666289)
+
+
+## 035 - Preserve Connectivity（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ai)
+
+スキップ
+
+## 036 - Max Manhattan Distance（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_aj)
+
+\begin{align}
+    |x_i - x_j| + |y_i - y_j|
+        &= \max
+        \left\{
+            \begin{aligned}
+                x_i - x_j + y_i - y_j, \\
+                -(x_i - x_j) + y_i - y_j, \\
+                x_i - x_j - (y_i - y_j),\\
+                -(x_i - x_j) - (y_i - y_j)
+            \end{aligned}
+        \right\} \\
+        &= \max
+        \left\{
+            \begin{aligned}
+                x_i + y_i - (x_j + y_j), \\
+                -(x_i - y_i) + (x_j - y_j), \\
+                (x_i - y_i) - (x_j - y_j), \\
+                -(x_i + y_i) + (x_j + y_j)
+            \end{aligned}
+        \right\} \\
+        &= \max
+        \left\{
+            \begin{aligned}
+                |X_i - X_j|, \\
+                |Y_i - Y_j|
+            \end{aligned}
+        \right\}
+\end{align}
+where $X = x+y$, $Y = x-y$.
+
+
+$\max(|X_{\text{max}} - X_q|, |X_{\text{min}} - X_q|, |Y_{\text{min}} - Y_q|, |Y_{\text{max}} - Y_q|)$
+
+が答え.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28670935)
+
+
+## 037 - Don't Leave the Spice（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ak)
+
+解説AC
+
+$dp[i][w]$: $i$ 番目までの香辛料を使って重さが $w$ であるときの価値の最大値とする.
+$dp[0][0] = 0$ とし, それ以外の値は $-\infty$ で初期化する.
+
+$i$ 番目の香辛料を使って重さが $w$ とするときの価値の最大値は
+$\displaystyle dp[i][w] = \max_{j \in [L,R]} \{ dp[i-1][w-j] \} + V$ となり, 使わない場合は $dp[i][w] = dp[i-1][w]$ である.
+
+これを実装すると以下のようになる.
+
+```cpp
+vvll dp(N+1, vll(W+1, -INF));
+dp[0][0] = 0;
+rep2(i,1,N+1) {
+    auto [l,r,v] = spices[i];
+    rep2(w,0,W+1) {
+        rep2(j,l,r+1) {
+            if (w-j >= 0) {
+                chmax(dp[i][w], dp[i-1][w-j] + v);
+            }
+        }
+        chmax(dp[i][w], dp[i-1][w]);
+    }
+}
+
+if (dp[N][W] < 0) cout << -1 << endl;
+else cout << dp[N][W] << endl;
+```
+
+この実装だと計算量が $O(NW^2)$ となり TLE する.
+ここで $\max_{j \in [L,R]} \{ dp[i-1][w-j] \}$ を計算している部分を segment tree を使うことで $O(\log W)$ に落とすことができる.
+
+```cpp
+segtree<ll,op,e> seg(W+1);
+seg.set(0, 0);
+
+vvll dp(N+1, vll(W+1, -INF));
+dp[0][0] = 0;
+rep2(i,1,N+1) {
+    auto [l,r,v] = spices[i];
+    rep2(w,0,W+1) {
+        if (w-l >= 0) {
+            int L = max(0ll, w-r);
+            int R = w - l;
+            ll mx = seg.prod(L, R+1);
+            chmax(dp[i][w], mx + v);
+        }
+        chmax(dp[i][w], dp[i-1][w]);
+    }
+    seg = segtree<ll,op,e>(dp[i]);
+}
+
+if (dp[N][W] < 0) cout << -1 << endl;
+else cout << dp[N][W] << endl;
+```
+
+上の実装では $i$ が変わるごとに segment tree を新しく作っているが, $w$ を小さくしていく方向でループを回すと segment tree 1つで事足りる.
+
+
+```cpp
+segtree<ll,op,e> seg(W+1);
+seg.set(0, 0);
+
+rep2(i,1,N+1) {
+    auto [l,r,v] = spices[i];
+    for (ll w = W; w >= 0; w--) {
+        if (w-l >= 0) {
+            int L = max(0ll, w-r);
+            int R = w - l;
+            ll mx = seg.prod(L, R+1);
+            if (mx + v > seg.get(w)) seg.set(w, mx + v);
+        }
+    }
+}
+
+ll ans = seg.get(W);
+if (ans < 0) cout << -1 << endl;
+else cout << ans << endl;
+```
+
+小さい方からやる方式で同じように一つの segment tree を使いまわすと $w_p$ の更新が $w_q$ ($p < q$) に更新に影響を及ぼしてしまうためうまくいかない.
+
+元の DP テーブルの更新で考えると $dp[i][w] = dp[i][w-j]$ としているようなもの.
+通常は $dp[i][w] = dp[i-1][w-j]$ なので $w$ を大きい方からやっても小さい方からやっても変わらない.
+
+$w$ を大きい方からやる場合, 一度 $dp[i][w]$ の値が確定するとそれ以降 $dp[i][w]$ が読まれることはないので問題にならない.
+
+
+- [提出コード TLEコード](https://atcoder.jp/contests/typical90/submissions/28676703)
+- [提出コード segment tree 1](https://atcoder.jp/contests/typical90/submissions/28676833)
+- [提出コード segment tree 2](https://atcoder.jp/contests/typical90/submissions/28676892)
+
+## 038 - Large LCM（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_al)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28677585)
+
+## 039 - Tree Distance（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_am)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28678725)
+
+## 040 - Get More Money（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_an)
+
+スキップ
+
+## 041 - Piles in AtCoder Farm（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ao)
+
+スキップ
+
+## 042 - Multiple of 9（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ap)
+
+解説AC
+
+9の倍数ならば各位の桁の和が9になるので, ならない場合はそのような正の整数 $X$ は存在しない.
+
+$dp[x]$: 各位の桁の和が $x$ となる場合の数とすると
+$\displaystyle dp[x] = \sum_{i = 1}^{9} dp[x-i]$ となる.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28710194)
+
+
+### 9の倍数の各位の桁の和が9の倍数になる証明
+
+$X = \sum_{i = 0} c_i 10^i$ ($c_i \in \Z$ and $0 \leq c_i \leq 9$) が9の倍数だとすると
+
+\begin{align}
+    X &\equiv 0 \mod 9 \\
+      &\equiv \sum_{i = 0} c_i 10^i \\
+      &\equiv \sum_{i=0} c_i (10 \mod 9)^i \\
+      &\equiv \sum_{i=0} c_i (1)^i \\
+      &\equiv \sum_{i=0} c_i
+\end{align}
+
+よって9の倍数ならば各位の桁の和が9の倍数になる.
+
+公式解説にあった他のものについても調べている.
+2, 5 の倍数のときは自明なので省略
+
+### 3の倍数の各位の桁の和が3の倍数
+
+9のときと同様にして考えて
+
+\begin{align}
+    X &\equiv 0 \mod 3 \\
+      &\equiv \sum_{i = 0} c_i 10^i \\
+      &\equiv \sum_{i=0} c_i (10 \mod 3)^i \\
+      &\equiv \sum_{i=0} c_i (1)^i \\
+      &\equiv \sum_{i=0} c_i
+\end{align}
+
+
+### 下2桁が4の倍数のとき, 4の倍数となる
+
+
+\begin{align}
+    X &\equiv 0 \mod 4 \\
+      &\equiv \sum_{i = 0}^{n} c_i 10^i \\
+      &\equiv \sum_{i=0}^{n} c_i (10^i \mod 4) \\
+      &\equiv 10 c_1 + c_0 ~~(\because \forall i \geq 2, 10^i \equiv 0 \mod 4)
+\end{align}
+
+よって下2桁が4の倍数であれば4の倍数となる.
+
+### 下3桁が8の倍数のとき, 4の倍数となる
+
+\begin{align}
+    X &\equiv 0 \mod 8 \\
+      &\equiv \sum_{i = 0}^{n} c_i 10^i \\
+      &\equiv \sum_{i=0}^{n} c_i (10^i \mod 8) \\
+      &\equiv 100 c_2 + 10 c_1 + c_0 ~~(\because \forall i \geq 3, 10^i \equiv 0 \mod 8)
+\end{align}
+
+### 11の倍数: (奇数桁目の数字の和) - (偶数桁目の数字の和) が11の倍数 (1-index)
+
+以下 0 index で考えるので (偶数桁目の数字の和) - (奇数桁目の数字の和)が11の倍数であることを示す.
+
+まず, 10の偶数乗を11で割ったあまりは1, 10の奇数乗を11で割ったあまりは10である.
+- $10^{2i} \equiv (10^2)^i \equiv (100 \mod 11)^i \equiv 1 \mod 11$
+- $10^{2i+1} \equiv (10^2)^i \times 10 \equiv (100 \mod 11)^i \times 10 \equiv 10 \mod 11$
+
+これより
+
+\begin{align}
+    X &\equiv 0 \mod 11 \\
+      &\equiv \sum_{i = 0}^{n} c_i 10^i \\
+      &\equiv \left(\sum_{i \text{ is even}} c_i 10^i\right) + \left(\sum_{i \text{ is odd}} c_i 10^i\right) \\
+      &\equiv \left(\sum_{i \text{ is even}} c_i (10^i \mod 11)\right) + \left(\sum_{i \text{ is odd}} c_i (10^i \mod 11)\right) \\
+      &\equiv \left(\sum_{i \text{ is even}} c_i \right) + \left(\sum_{i \text{ is odd}} 10c_i \right) \\
+      &\equiv \left(\sum_{i \text{ is even}} c_i \right) - \left(\sum_{i \text{ is odd}} c_i \right) ~~(\because 10 \equiv -1 \mod 11)\\
+\end{align}
+
+よって, (偶数桁目の数字の和) - (奇数桁目の数字の和)が11の倍数) であれば11の倍数
+
+
+## 043 - Maze Challenge with Lack of Sleep（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_aq)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28712969)
+
+## 044 - Shift and Swapping（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ar)
+
+circular buffer の要領で始点をシフトのときに変える
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/me)
+
+
+## 045 - Simple Grouping（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_as)
+
+
+## 046 - I Love 46（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_at)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28715416)
+
+## 047 - Monochromatic Diagonal（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_au)
+
+スキップ
+
+## 048 - I will not drop out（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_av)
+
+解説AC
+
+1分間に得られる得点は
+- 部分点を獲得して $B_i$ 点を取る
+- すでに部分点をとっていた課題を満点にして $A_i - B_i$ 点取る
+の2通りが考えられる.
+
+$B_1, \cdots, B_N, A_1 - B_1, \cdots, A_N - B_N$ を降順にソートして先頭の $K$ 個分の和が答えとなる.
+ここで満点となるとき, 先に部分点をとっている必要があるが,
+$A_i / 2 < B_i < A_i \Rightarrow A_i - B_i < B_i$ であるから, $A_i - B_i$ が選ばれる場合は先に $B_i$ が選ばれているので部分店が取られていないことを心配する必要はない.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28716913)
+
+
+##
+[問題]()
+[提出コード]()
+
+
+
