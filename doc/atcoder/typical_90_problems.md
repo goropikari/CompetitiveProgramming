@@ -762,8 +762,99 @@ $dp[i][j] = (dp[i-1][1] + \cdots dp[i-1][6]) \times A_{i,j}$
 [提出コード]()
 
 
+## 056 - Lucky Bag（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bd)
+
+
+自力で解いたときは 「$dp[i][x][S]$: $i$ 日目に福袋 x を買って総額が S のなる」として DP テーブルをうめ,
+逆をたどって復元 (LCS の復元のように) にしたが, 解説読んで $i$ 日目にどっち買うかを保存する必要はないということ知った.
+条件を満たすような買い方を一つ求めればよいだけなので, どっちを買ったかを保存しておく必要はなかった.
+
+
+```cpp
+void solve() {
+    int N, S;
+    cin >> N >> S;
+    vvint bag(N+1, vint(2));
+    rep(i,N) rep(j,2) {
+        cin >> bag[i+1][j];
+    }
+
+    // dp[i][x][S]: i 日目に福袋 x を買って総額が S となるか
+    vector<vvint> dp(N+1, vvint(2, vint(S+1)));
+    // 0 日目には何も買わないので総額が0円となることは可能
+    dp[0][0][0] = dp[0][1][0] = 1;
+    rep2(i,1,N+1) {
+        rep(s,S+1) {
+            rep(x,2) {
+                // i 日目に x を買う
+                rep(y,2) {
+                    // i-1 日目に y を買う
+                    if (s-bag[i][x] >= 0) dp[i][x][s] |= dp[i-1][y][s-bag[i][x]];
+                }
+            }
+        }
+    }
+
+    if (dp[N][0][S] == 0 && dp[N][1][S] == 0) {
+        cout << "Impossible" << endl;
+        return;
+    }
+
+    int s = S;
+    string ans = "";
+    for (int i = N; i >= 1; i--) {
+        rep(x,2) {
+            if (dp[i][x][s]) {
+                ans.push_back((x == 0 ? 'A' : 'B'));
+                int t = s - bag[i][x];
+                if (t >= 0) {
+                    if (dp[i-1][0][t]) {
+                        s = t;
+                        break;
+                    }
+                    if (dp[i-1][1][t]) {
+                        s = t;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    reverse(all(ans));
+    cout << ans << endl;
+}
+```
+
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28813811)
+
+
 ##
 [問題]()
 [提出コード]()
 
 
+
+##
+[問題]()
+[提出コード]()
+
+
+##
+[問題]()
+[提出コード]()
+
+##
+[問題]()
+[提出コード]()
+
+
+##
+[問題]()
+[提出コード]()
+
+
+##
+[問題]()
+[提出コード]()
