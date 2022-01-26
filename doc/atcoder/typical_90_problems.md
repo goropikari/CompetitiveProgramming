@@ -673,14 +673,79 @@ $dp[i+L] = dp[i+L-1] + dp[i]$ となる.
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/28780145)
 
-##
-[問題]()
-[提出コード]()
+## 051 - Typical Shop（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ay)
 
+半分全列挙の問題
 
-##
-[問題]()
-[提出コード]()
+品物の選び方を全探索すると $2^N$ 通りあるのでこのままでは TLE してしまう.
+半分の $2^{N/2}$ 通りなら全通り試せる.
+配列を2つに分けてそれぞれで全列挙をする. 2つに分けた配列をそれぞれ $A$, $B$ と呼ぶことにする.
+それぞれの配列に対して全列挙をする. このとき品物の数を key して, 値はその点数買ったときの値段を配列に昇順に保存する.
+
+$A$ に含まれる値を1つずつ見ていきながら, 問題の条件を満たす $B$ の要素を二分探索で探す.
+
+```cpp
+// 組み合わせた数の個数ごとに値段を保存する
+map<ll,vll> freq1, freq2;
+int n1 = a1.size(), n2 = a2.size();
+rep2(mask, 1,1<<n1) {
+    int k = __builtin_popcount(mask);
+    ll tot = 0;
+    rep(i,n1) if (mask>>i&1) tot += a1[i];
+    freq1[k].push_back(tot);
+}
+rep2(mask, 1,1<<n2) {
+    int k = __builtin_popcount(mask);
+    ll tot = 0;
+    rep(i,n2) if (mask>>i&1) tot += a2[i];
+    freq2[k].push_back(tot);
+}
+
+// 番兵として 0 を入れる
+freq1[0].push_back(0);
+freq2[0].push_back(0);
+
+// 二分探索用に sort
+for (auto it = freq2.begin(); it != freq2.end(); it++) {
+    sort(all(it->second));
+}
+
+ll ans = 0;
+for (auto it = freq1.begin(); it != freq1.end(); it++) {
+    int num = it->first;
+    if (num > K) continue;
+    int k = K - num;
+    for (ll x : freq1[num]) {
+        auto s = upper_bound(all(freq2[k]), P-x);
+        ans += s - freq2[k].begin();
+    }
+}
+cout << ans << endl;
+```
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28812182)
+
+## 052 - Dice Product（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_az)
+
+求める値は
+
+\begin{align}
+    \sum_{j_1, \cdots, j_n} A_{1,j_1} A_{2,j_2} \cdots A_{n, j_n}
+        &= \left(\sum_{j_1} A_{1,j_1} \right) \times \cdots \times \left(\sum_{j_1} A_{n,j_n} \right) \\
+        &= \prod_{i=1}^n \left( \sum_{j=1}^6 A_{i,j} \right)
+\end{align}
+
+DP を使って解くという方法もある. むしろ最初 DP の問題だと思っていた.
+
+$dp[i][j]$: $i$ 番目の数字が $A_{i,j}$ であるときの総積の和とすると
+
+$dp[i][j] = (dp[i-1][1] + \cdots dp[i-1][6]) \times A_{i,j}$
+
+- [提出コード 積](https://atcoder.jp/contests/typical90/submissions/28796316)
+- [提出コード DP](https://atcoder.jp/contests/typical90/submissions/28796194)
+
 
 
 ##
