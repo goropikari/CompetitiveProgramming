@@ -748,18 +748,24 @@ $dp[i][j] = (dp[i-1][1] + \cdots dp[i-1][6]) \times A_{i,j}$
 
 
 
-##
-[問題]()
-[提出コード]()
+## 053 - Discrete Dowsing（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ba)
+
+スキップ
+
+## 054 - Takahashi Number（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bb)
+
+スキップ
 
 
-##
-[問題]()
-[提出コード]()
+## 055 - Select 5（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bc)
 
-##
-[問題]()
-[提出コード]()
+一見5重ループにすると $O(10^10)$ の計算量になって TLE するように見えるが
+$\comb{100}{5} = 75287520$ なので, 愚直なループで間に合う.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28829214)
 
 
 ## 056 - Lucky Bag（★5）
@@ -836,18 +842,24 @@ void solve() {
 
 
 
-##
-[問題]()
-[提出コード]()
+## 058 - Original Calculator（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bf)
 
+ポロードローメソッドの要領で周期的に回る.
 
-##
-[問題]()
-[提出コード]()
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28844939)
 
 ##
 [問題]()
 [提出コード]()
+
+##
+[問題]()
+[提出コード]()
+
+## 061 - Deck（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bi)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28890016)
 
 
 ##
