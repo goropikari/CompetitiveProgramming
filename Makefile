@@ -7,6 +7,10 @@ build: ex
 test: ex
 	./ex < test.txt
 
+.PHONY: test2
+test2: $(ARGS)
+	./$(ARGS) < test.txt
+
 diff:
 	./ex < test.txt | tee test_actual_output.txt
 	diff -swBZ test_expected_output.txt test_actual_output.txt

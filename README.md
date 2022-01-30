@@ -15,3 +15,14 @@ using Franklin
 lunr()
 ```
 として index ファイルを作る.
+
+
+neovim の設定
+```
+" 競技プログラミング用の設定
+" :Make で今開いているファイルをコンパイルする
+command! Make call Make()
+function! Make()
+    make test2 ARGS=%:r
+endfunction
+```
