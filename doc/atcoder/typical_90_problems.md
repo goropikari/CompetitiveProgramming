@@ -867,6 +867,49 @@ void solve() {
 [提出コード]()
 
 
-##
-[問題]()
-[提出コード]()
+## 063 - Monochromatic Subgrid（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bk)
+
+行数が最大で 8 と小さいのでどの行を選ぶかを全探索 $(O(2^H))$ して, 各列に対して全ての数字が同じであるような列のみを残して, そのうちの出現回数が一番多い数字の個数が答え.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28994088)
+
+## 064 - Uplift（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bl)
+
+いい解き方が思いつかなかったので fenwick tree を使った明らかにオーバースペックの解法で解いてしまった.
+
+
+### fenwick tree を使った解き方
+不便さは $|a_{l-1} - a_l|$ と $|a_r - a_{r+1}|$ の変化のみに依存する.
+その他の区間では隣接要素が同じ分だけ変化するので不便さの変化には寄与しない.
+クエリが処理したあとの $a_i$ の値を求めたいが, これをいもす法を使って求めることを考える.
+0 で初期化した配列に対して $L$ 番目に $+v$, $R+1$ 番目を $-v$ して累積和をとると,
+$i$ 番目の要素の増減が求まる.
+各クエリでは累積和を取る前の配列を使いまわし, 累積和は別の配列に持っておけば各クエリ時点での $i$ 番目の要素の増減がわかる.
+ただし, ここで累積和を愚直に for loop を回して求めると全体で $O(NQ)$ の計算量になってしまうので TLE になってしまう.
+そこで累積和を求める部分を fenwick tree を使うことで $O(\log N)$ に落とす.
+これによって全体計算量が $O(Q \log N)$ となり実行時間に間に合う.
+
+### 階差を使った解き方
+
+想定解は階差 $b_i = a_{i+1} - a_i$ を使って解く方法だった.
+
+$[l,r]$ の範囲に $+v$ したあとの階差を $b^\prime_i$ とすると
+
+\begin{align}
+    b^\prime_i     &= (a_{i+1} + v) - (a_i + v) = b_i~~ (l \leq i < r) \\
+    b^\prime_{l-1} &= (a_l + v) - a_{l-1} = b_{l-1} + v \\
+    b^\prime_{r}   &= a_{r+1} - (a_r + v) = b_{r} - v \\
+    b^\prime_i     &= b_i~~ ~ \text{otherwise}
+\end{align}
+
+となる. 初期状態の不便さを $S$ とするとクエリを処理したあとの不便さは
+
+$S - (|b_{l-1}| + |b_r|) + (|b^\prime_{l-1}| + |b^\prime_r|)$
+
+となる.
+
+
+[提出コード fenwick tree ver](https://atcoder.jp/contests/typical90/submissions/29012172)
+[提出コード 階差 ver](https://atcoder.jp/contests/typical90/submissions/29013161)
