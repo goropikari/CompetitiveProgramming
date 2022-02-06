@@ -858,9 +858,47 @@ void solve() {
 [問題]()
 [提出コード]()
 
-##
-[問題]()
-[提出コード]()
+## 060 - Chimera（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bh)
+
+前からの LIS と後ろからの LIS を考える。
+それぞれの LIS で着目している文字が LIS の何文字目かを記録する。
+$i$ 文字目が前から LIS をしたときに何文字目かを記録した配列を `Front`,
+$i$ 文字目が後から LIS をしたときに何文字目かを記録した配列を `Back` とすると
+$\text{Front}_{i} + \text{Back}_{i} - 1$ の最大値が答えとなる。
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    vint a(n);
+    rep(i,n) cin >> a[i];
+
+    vint lisf(n, INF), lisb(n, INF), front(n, 0), back(n, 0);
+    rep(i,n) {
+        auto it = lower_bound(all(lisf), a[i]);
+        front[i] = it - lisf.begin() + 1;
+        *it = a[i];
+    }
+
+    reverse(all(a));
+    rep(i,n) {
+        auto it = lower_bound(all(lisb), a[i]);
+        back[i] = it - lisb.begin() + 1;
+        *it = a[i];
+    }
+    reverse(all(back));
+
+    int ans = 0;
+    rep(i,n) {
+        chmax(ans, front[i] + back[i] - 1);
+    }
+    cout << ans << endl;
+}
+```
+
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29129876)
 
 ## 061 - Deck（★2）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bi)
@@ -1054,3 +1092,27 @@ $A_i$ が non-negative と言われていたら
 ```
 という入力ケースのとき, 模範解答だと Ambiguous となるけど, 5, 6 番目の何であろうと先頭4つの並びは `0 1 1 0` に確定するから 1 番目の要素は 0 と出力されるのが正解となる.
 ただ, $A_i$ は負数にもなるため, 最初の4つの並びは $1, 0, 2 -1$ という並びにもなることがあるため Ambiguous となる.
+
+
+
+## 069 - Colorful Blocks 2（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bq)
+
+1つ目の塗り方は $K$ 通り、
+2つ目の塗り方は1つ目とは違う色で塗るから $K-1$ 通り
+3つ目の以降の塗り方は1つ前と2つ前と違う色で塗るから $K-2$ 通りとなる。
+よって塗り方の総数の $K(K-1)(K-2)^{N-2}$.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29130574)
+
+## 070 - Plant Planning（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_br)
+
+発電所を建設する座標を $(a, b)$ とすると不便さは
+
+$\sum_i |a - X_i| + |b - Y_i|$ となる。ここで $x$, $y$ は独立に考えることができるので
+$\sum_i |a - X_i|$ が最小になるような $a$ と $\sum_i |b - Y_i|$ が最小になるような $b$ を求めれば良い。
+そのような $a$, $b$ はそれぞれ $X_i$ の中央値と $Y_i$ の中央値を選べばよい。
+($N$ が偶数のとき $\lceil N/2 \rceil$ と $\lfloor N/2 \rfloor$ のいずれの要素を選んでも答えは変わらない。)
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29131824)
