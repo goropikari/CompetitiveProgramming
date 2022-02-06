@@ -327,9 +327,14 @@ f(l, r) =
 ## 029 - Long Bricks（★5）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_ac)
 
-スキップ
+解説AC
 
-遅延セグメント木で解くらしいが interval tree でもできる気がする.
+区間変更・区間最大値取得の遅延セグメント木を使えばよい.
+
+ACL の遅延セグメント木のチートシートを書いている方がいるのでそれを使わせてもらうと楽
+- [AtCoder LibraryのLazy Segtreeのチートシート](https://betrue12.hateblo.jp/entry/2020/09/23/005940#%E5%8C%BA%E9%96%93%E5%A4%89%E6%9B%B4%E5%8C%BA%E9%96%93%E6%9C%80%E5%A4%A7%E5%80%A4%E5%8F%96%E5%BE%97)
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29123495)
 
 ## 030 - K Factors（★5）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_ad)
@@ -913,3 +918,139 @@ $S - (|b_{l-1}| + |b_r|) + (|b^\prime_{l-1}| + |b^\prime_r|)$
 
 [提出コード fenwick tree ver](https://atcoder.jp/contests/typical90/submissions/29012172)
 [提出コード 階差 ver](https://atcoder.jp/contests/typical90/submissions/29013161)
+
+
+##
+[問題]()
+[提出コード]()
+
+##
+[問題]()
+[提出コード]()
+
+## 067 - Base 8 to 9（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bo)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29027684)
+
+## 068 - Paired Information（★5）
+
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bp)
+
+
+$T = 0$ のイベントで $X_i$, $Y_i$ の間に辺を張ることを考える.
+$T = 1$ のイベントでは $X_i$ と $Y_i$ の間にパスがあれば答えが一意に定まる. (一つの値が決まると隣の数が自動的に決まるため. )
+パスがなければ Ambiguous となる.
+
+パスがあるか否かは Union Find を使って高速に調べることができる.
+
+![068.png](/assets/atcoder/typical_90/068.png)
+
+パスがある場合に $Y_i$ の値を求める方法を考える.
+$X_i < Y_i$ の場合について考える.
+愚直に $A_{X_i} = V_i$ を代入して $A_{X_i} + A_{X_i + 1} = V_p$ から $A_{X_i + 1}$ を求め, $A_{X_i + 1} + A_{X_i + 2} = V_q$ から $A_{X_i + 2}$ を求め, ..., $A_{Y_i}$ を求めとすると
+各イベントで $O(N)$ の計算量になってしまうので TLE になってしまう.
+よって, $A_{X_i}$ から $A_{Y_i}$ を高速に求める方法を考える必要がある.
+
+$e_{X_i} = A_{X_i} + A_{X_i + 1}$ とすると
+
+\begin{align}
+A_{X_i} - A_{Y_i} &= (A_{X_i} + A_{X_i + 1}) - (A_{X_i + 1} + A_{X_i + 2}) + \cdots - (A_{Y_i -2} + A_{Y_i - 1})+ (A_{Y_i - 1} + A_{Y_i}) \\
+    &= e_{X_i} - e_{X_i + 1} + \cdots + e_{Y_i - 2} - e_{Y_i - 1}
+\end{align}
+
+区間和 $e_{X_i} - e_{X_i + 1} + \cdots + e_{Y_i - 2} - e_{Y_i - 1}$ は fewwick tree などを使うと $\log N$ で計算することができる.
+
+これらのことから問題は以下のようにして解ける. 以下 $X_i$, $Y_i$ は 0-index で考える. (問題の値 - 1 となる)
+
+- まず fenwick tree, union find を作る.
+- $T = 0$ のイベント:
+  - $X_i$ が偶数ならば fenwick tree の $X_i$ 番目の値を $+ V_i$ し,
+  - $X_i$ が奇数ならば fenwick tree の $X_i$ 番目の値に $-V_i$ を加える.
+  - union find で $X_i$, $X_i +1$ を連結させる.
+- $T = 1$ のイベント
+  - $X_i$, $Y_i$ が連結でなければ Ambiguous を出力
+  - 連結だった場合
+    - $X_i < Y_i$ ならば $x = X_i$, $y = Y_i$, そうでなければ $x = Y_i$, $y = X_i$ とする.
+    - fenwick tree で $[x, y-1]$ の範囲の和を求める. これを `sum` とする.
+    - $x, y$ のパリティが同じ場合
+      - $x$ が偶数ならば
+          - $\text{sum} = A_{x} - A_{y}$
+      - $x$ が偶数ならば
+          - $\text{sum} = - A_{x} + A_{y}$
+      - $X_i < Y_i$ ならば求めた sum を -1 倍
+      - $\text{sum} + V_i$ を出力
+    - $x, y$ のパリティが違う場合
+      - $x$ が偶数ならば
+        - $\text{sum} = A_{x} + A_{y}$ となる
+      - $x$ が奇数ならば
+          - $\text{sum} = - (A_{x} + A_{y})$
+      - $x$ が奇数ならば sum を -1 倍
+      - $\text{sum} - V_i$ を出力
+
+とすることで問題を解ける.
+
+```cpp
+void solve() {
+    int n, q;
+    cin >> n >> q;
+    dsu uf(n);
+    fenwick_tree<ll> fw(n+1);
+
+    rep(i,q) {
+        ll t, x, y, v;
+        cin >> t >> x >> y >> v;
+        x--, y--;
+        if (t == 0) {
+            if (!uf.same(x,y)) {
+                if (x % 2 == 0) fw.add(x, v);
+                else fw.add(x, -v);
+                uf.merge(x,y);
+            }
+        } else {
+            if (!uf.same(x,y)) {
+                cout << "Ambiguous" << endl;
+                continue;
+            }
+            ll ox = x, oy = y;
+            if (x > y) swap(x,y);
+            ll sum = fw.sum(x, y);
+            if (x % 2 != y % 2) {
+                if (x % 2 == 1) sum *= -1;
+                cout << sum - v << endl;
+            } else {
+                if (x % 2 == 0) {
+                    // ax - ay
+                    if (ox < oy) {
+                        sum *= -1ll;
+                    }
+                } else {
+                    // -ax + ay
+                    if (ox > oy) {
+                        sum *= -1ll;
+                    }
+                }
+                cout << sum + v << endl;
+            }
+        }
+    }
+}
+```
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29060821)
+
+余談
+
+最初 $V_i$ の値が 0 以上の数となっていたから $A_i$ も 0 以上になると思っていたが, 単に整数としか書いてなかったので
+出力される $A_i$ の値は負数になることもあった.
+$A_i$ が non-negative と言われていたら
+
+```
+6
+4
+0 1 2 1
+0 2 3 2
+0 3 4 1
+1 5 1 3
+```
+という入力ケースのとき, 模範解答だと Ambiguous となるけど, 5, 6 番目の何であろうと先頭4つの並びは `0 1 1 0` に確定するから 1 番目の要素は 0 と出力されるのが正解となる.
+ただ, $A_i$ は負数にもなるため, 最初の4つの並びは $1, 0, 2 -1$ という並びにもなることがあるため Ambiguous となる.
