@@ -958,13 +958,21 @@ $S - (|b_{l-1}| + |b_r|) + (|b^\prime_{l-1}| + |b^\prime_r|)$
 [提出コード 階差 ver](https://atcoder.jp/contests/typical90/submissions/29013161)
 
 
-##
-[問題]()
-[提出コード]()
+## 066 - Various Arrays（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bn)
 
-##
-[問題]()
-[提出コード]()
+解説AC
+
+$x_i > x_j$ $(i < j)$ となる確率を $E_{i,j}$ とすると、$x_i > x_j$ からの寄与分の転倒数の期待値は
+$0 \times (1 - E_{i,j}) + 1 \times E_{i,j} = E_{i,j}$ である。
+
+求める答えは
+\begin{align}
+    \sum_{i = 1}^{N} \sum_{j = i+1}^N E_{i,j}
+\end{align}
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29182688)
+
 
 ## 067 - Base 8 to 9（★2）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bo)
