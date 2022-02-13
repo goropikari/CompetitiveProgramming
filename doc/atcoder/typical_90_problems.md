@@ -1177,3 +1177,21 @@ d_i = \left\{
 一番左にある non zero から処理していくのが最適となるところの証明を追えていない.
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29258017)
+
+
+## 075 - Magic For Balls（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bw)
+
+$N = p_1^{r_1} p_2^{r_2} \cdots p_m^{r_m}$ と素因数分解する。
+
+$\lceil \log_2 (\sum_i r_i) \rceil$ が答えとなる。
+
+合成数 $x$ を2つの数に分解するときは $a$, $b$ の素因数の数がそれぞれ同じ, または素因数の数の差が 1
+となるように分解したとき魔法を使う回数が最小になる。
+この回数はノード数が $\sum_i r_i$ のときの完全二分木の高さと同じなので $\lceil \log_2 (\sum_i r_i) \rceil$ となる。
+
+
+実際は $\log$ 使うと浮動小数点数になってしまうので $\sum_i r_i \leq 2^K$ となる最小の $K$ を出力する。
+
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29320555)
