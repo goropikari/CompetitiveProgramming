@@ -861,11 +861,11 @@ void solve() {
 ## 060 - Chimera（★5）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bh)
 
-前からの LIS と後ろからの LIS を考える。
-それぞれの LIS で着目している文字が LIS の何文字目かを記録する。
+前からの LIS と後ろからの LIS を考える.
+それぞれの LIS で着目している文字が LIS の何文字目かを記録する.
 $i$ 文字目が前から LIS をしたときに何文字目かを記録した配列を `Front`,
 $i$ 文字目が後から LIS をしたときに何文字目かを記録した配列を `Back` とすると
-$\text{Front}_{i} + \text{Back}_{i} - 1$ の最大値が答えとなる。
+$\text{Front}_{i} + \text{Back}_{i} - 1$ の最大値が答えとなる.
 
 ```cpp
 void solve() {
@@ -963,8 +963,8 @@ $S - (|b_{l-1}| + |b_r|) + (|b^\prime_{l-1}| + |b^\prime_r|)$
 
 解説AC
 
-$x_i > x_j$ $(i < j)$ となる確率を $E_{i,j}$ とすると、$x_i > x_j$ からの寄与分の転倒数の期待値は
-$0 \times (1 - E_{i,j}) + 1 \times E_{i,j} = E_{i,j}$ である。
+$x_i > x_j$ $(i < j)$ となる確率を $E_{i,j}$ とすると, $x_i > x_j$ からの寄与分の転倒数の期待値は
+$0 \times (1 - E_{i,j}) + 1 \times E_{i,j} = E_{i,j}$ である.
 
 求める答えは
 \begin{align}
@@ -1106,9 +1106,9 @@ $A_i$ が non-negative と言われていたら
 ## 069 - Colorful Blocks 2（★3）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bq)
 
-1つ目の塗り方は $K$ 通り、
+1つ目の塗り方は $K$ 通り,
 2つ目の塗り方は1つ目とは違う色で塗るから $K-1$ 通り
-3つ目の以降の塗り方は1つ前と2つ前と違う色で塗るから $K-2$ 通りとなる。
+3つ目の以降の塗り方は1つ前と2つ前と違う色で塗るから $K-2$ 通りとなる.
 よって塗り方の総数の $K(K-1)(K-2)^{N-2}$.
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29130574)
@@ -1118,9 +1118,62 @@ $A_i$ が non-negative と言われていたら
 
 発電所を建設する座標を $(a, b)$ とすると不便さは
 
-$\sum_i |a - X_i| + |b - Y_i|$ となる。ここで $x$, $y$ は独立に考えることができるので
-$\sum_i |a - X_i|$ が最小になるような $a$ と $\sum_i |b - Y_i|$ が最小になるような $b$ を求めれば良い。
-そのような $a$, $b$ はそれぞれ $X_i$ の中央値と $Y_i$ の中央値を選べばよい。
-($N$ が偶数のとき $\lceil N/2 \rceil$ と $\lfloor N/2 \rfloor$ のいずれの要素を選んでも答えは変わらない。)
+$\sum_i |a - X_i| + |b - Y_i|$ となる. ここで $x$, $y$ は独立に考えることができるので
+$\sum_i |a - X_i|$ が最小になるような $a$ と $\sum_i |b - Y_i|$ が最小になるような $b$ を求めれば良い.
+そのような $a$, $b$ はそれぞれ $X_i$ の中央値と $Y_i$ の中央値を選べばよい.
+($N$ が偶数のとき $\lceil N/2 \rceil$ と $\lfloor N/2 \rfloor$ のいずれの要素を選んでも答えは変わらない. )
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29131824)
+
+## 071 - Fuzzy Priority（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bs)
+
+スキップ
+
+## 072 - Loop Railway Plan（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bt)
+
+$H \times W \leq 16$ と制約が小さいので DFS で全探索できる.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29134619)
+
+
+## 073 - We Need Both a and b（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bu)
+
+解説読んだがよくわかってない
+
+
+## 074 - ABC String 2（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bv)
+
+自力ACしたがなんでこれでいいのか証明ができていない.
+
+とりあえず実験をしてみる. a, b, c を 0, 1, 2 にそれぞれ置き換えて考える.
+
+![074 1](/assets/atcoder/typical_90/074_1.png)
+
+常に一番左にある non zero の場所に対して操作をするのが最適なように見える.
+
+入力例3 の `baaca` に対して上の予想を適用すると操作回数は 17 となりこの予想は良さそうに見える.
+![074 2](/assets/atcoder/typical_90/074_2.png)
+
+実験の動きをみると, 2進数表記で数を1ずつ減らしている動きに似ている. 2 があるので完全に2進数ではないが, その部分は2回分できると考えると操作回数は
+
+$\displaystyle \sum_{i = 0}^{n-1} d_i \times 2^{i}$
+
+となる. ここで
+\begin{align}
+d_i = \left\{
+    \begin{aligned}
+        0 ~~ \text{if } s_i = a \\
+        1 ~~ \text{if } s_i = b \\
+        2 ~~ \text{if } s_i = c
+    \end{aligned}
+\right.
+\end{align}
+
+
+一番左にある non zero から処理していくのが最適となるところの証明を追えていない.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29258017)
