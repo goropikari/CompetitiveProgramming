@@ -1174,7 +1174,30 @@ d_i = \left\{
 \end{align}
 
 
-一番左にある non zero から処理していくのが最適となるところの証明を追えていない.
+### なぜ一番左にある non zero に対して操作をするのが最適か？
+
+$\text{Potential} = \sum_{i = 0}^{n-1} d_i \times 2^{i}$ と定義する.
+
+この Potential に対して以下の2つが成り立つ.
+- (1) 1回の操作に対して Potential は必ず 1 以上減る
+- (2) Potential を 1 だけ減らす操作が存在する
+
+(1) について
+
+例えば $x_0 x_1 \cdots x_n$ とあったとき $x_i$ ($x_i = 1 \text{ or } 2$) に操作をすると
+$x_i$ が 1 減ることで Potential は $2^i$ 減る.
+$x_0, \cdots x_{i-1}$ のそれぞれの数字は最大で 1 増えるので $x_0, \cdots x_{i-1}$ の変化による
+Potential の増分は最大で $2^i - 1$ となる.
+よってトータルで $- 2^i + (2^i - 1) = -1$ となり操作によって Potential は 1 以上減ることがわかった.
+
+
+(2) について
+
+一番左にある non zero の要素に対して操作をすると
+Potential は $2^i$ 減って $2^i - 1$ 増えるので total $1$ だけ減らすことができる.
+
+以上のことより一番左の non zero の要素に対して操作をすることが最適だということが示された.
+
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29258017)
 
@@ -1182,16 +1205,16 @@ d_i = \left\{
 ## 075 - Magic For Balls（★3）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bw)
 
-$N = p_1^{r_1} p_2^{r_2} \cdots p_m^{r_m}$ と素因数分解する。
+$N = p_1^{r_1} p_2^{r_2} \cdots p_m^{r_m}$ と素因数分解する.
 
-$\lceil \log_2 (\sum_i r_i) \rceil$ が答えとなる。
+$\lceil \log_2 (\sum_i r_i) \rceil$ が答えとなる.
 
 合成数 $x$ を2つの数に分解するときは $a$, $b$ の素因数の数がそれぞれ同じ, または素因数の数の差が 1
-となるように分解したとき魔法を使う回数が最小になる。
-この回数はノード数が $\sum_i r_i$ のときの完全二分木の高さと同じなので $\lceil \log_2 (\sum_i r_i) \rceil$ となる。
+となるように分解したとき魔法を使う回数が最小になる.
+この回数はノード数が $\sum_i r_i$ のときの完全二分木の高さと同じなので $\lceil \log_2 (\sum_i r_i) \rceil$ となる.
 
 
-実際は $\log$ 使うと浮動小数点数になってしまうので $\sum_i r_i \leq 2^K$ となる最小の $K$ を出力する。
+実際は $\log$ 使うと浮動小数点数になってしまうので $\sum_i r_i \leq 2^K$ となる最小の $K$ を出力する.
 
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29320555)
