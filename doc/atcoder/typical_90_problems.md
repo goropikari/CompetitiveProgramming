@@ -156,6 +156,11 @@ void solve() {
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/28452819)
 
+
+## 007 - CP Classes（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_g)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/28453912)
+
 ## 008 - AtCounter（★4）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_h)
 
@@ -841,9 +846,10 @@ void solve() {
 [提出コード](https://atcoder.jp/contests/typical90/submissions/28813811)
 
 
-##
-[問題]()
-[提出コード]()
+## 057 - Flip Flap（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_be)
+
+スキップ
 
 
 
@@ -854,9 +860,10 @@ void solve() {
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/28844939)
 
-##
-[問題]()
-[提出コード]()
+## 059 - Many Graph Queries（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bg)
+
+スキップ
 
 ## 060 - Chimera（★5）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bh)
@@ -905,10 +912,10 @@ void solve() {
 [提出コード](https://atcoder.jp/contests/typical90/submissions/28890016)
 
 
-##
-[問題]()
-[提出コード]()
+## 062 - Paint All（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bj)
 
+スキップ
 
 ## 063 - Monochromatic Subgrid（★4）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bk)
@@ -957,6 +964,10 @@ $S - (|b_{l-1}| + |b_r|) + (|b^\prime_{l-1}| + |b^\prime_r|)$
 [提出コード fenwick tree ver](https://atcoder.jp/contests/typical90/submissions/29012172)
 [提出コード 階差 ver](https://atcoder.jp/contests/typical90/submissions/29013161)
 
+## 065 - RGB Balls 2（★7）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bm)
+
+スキップ
 
 ## 066 - Various Arrays（★5）
 [問題](https://atcoder.jp/contests/typical90/tasks/typical90_bn)
@@ -1218,3 +1229,38 @@ $\lceil \log_2 (\sum_i r_i) \rceil$ が答えとなる.
 
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29320555)
+
+
+## 076 - Cake Cut（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bx)
+
+尺取り法で求められる. 起点となる左端の index は $N$ を超えた場合(0-index)は
+index 0 から始めるのと一緒なので `No` となる.
+また尺取りの終点が始点に追いついてもだめ
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29372626)
+
+
+## 077 - Planes on a 2D Plane（★7）
+
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_by)
+
+スキップ
+
+
+## 078 - Easy Graph Problem（★2）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_bz)
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29372907)
+
+
+## 079 - Two by Two（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ca)
+
+操作順序によらないので愚直に左から右, 上から下に向かって $B$ と同じになるように変化させていく.
+$H$ 行, $W$ 列のそれぞれの値が $A$, $B$ で同じになっていれば Yes, そうでなければ No を出力する.
+
+最低操作回数は単純に上の操作での回数を出力すれば良い.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29373286)
+
+

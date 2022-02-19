@@ -18,7 +18,7 @@ diff:
 ptest:
 	python3 ex.py < test.txt
 
-docfmt: $(ARTICLES)
+format: $(ARTICLES)
 	@echo $?
 	@sed -i -e "s/。/. /g" $?
 	@sed -i -e "s/、/, /g" $?
