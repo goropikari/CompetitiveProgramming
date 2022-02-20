@@ -116,6 +116,33 @@ int main(int argc, char* argv[])
 1 9
 0 1
 ```
+
+## ceil, floor
+
+$x / y$ が負のときにも対応
+
+```cpp
+// ceil(x/y)
+ll ceil(ll x, ll y) {
+    if ((x > 0 && y > 0) || (x < 0 && y < 0)) {
+        x = abs(x), y = abs(y);
+        return (x + y - 1) / y;
+    }
+
+    // x/y が負の数のときは整数除算の x/y が切り上げになる
+    return x / y;
+}
+
+// floor(x/y)
+ll floor(ll x, ll y) {
+    if ((x > 0 && y < 0) || (x > 0 && y < 0)) {
+        if (x % y != 0) return x / y - 1;
+    }
+
+    return x / y;
+}
+```
+
 ## gcd, lcm
 
 $\mathrm{gcd}(a, b) = \mathrm{gcd}(b, a \% b)$.
