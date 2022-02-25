@@ -1264,3 +1264,34 @@ $H$ 行, $W$ 列のそれぞれの値が $A$, $B$ で同じになっていれば
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29373286)
 
 
+## 080 - Let's Share Bit（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_cb)
+
+$S_i = \{x | 2^i \text{ AND } A_j \neq 0,~~ 1 \leq j \leq n \}$ $(0 \leq i < D)$とする($i$ bit 目が立っている $A$ の部分集合).
+
+こうすると問題は $S_i$ をいくつか選び和集合をとったとき $A$ となる組み合わせはいくつあるかという問題に言い換えられる.
+
+入力例 1 の場合のとき
+- $S_1 = {1, 3, 5}$
+- $S_2 = {3}$
+- $S_3 = {4, 5}$
+となり, このとき和集合が ${1, 3, 4, 5}$ となる部分集合の組み合わせは $(S_0, S_2)$, $(S_0, S_1, S_2)$ の2通り.
+
+$dp[X][i]$ を $i$ 番目までの部分集合を使って, 和集合が $X$ となる場合の数とすると
+0 個の部分集合を使って和集合が $\empty$ となる場合の数は 1 であるから
+$dp[\empty][0] = 1$.
+
+それ以外のとき
+- $S_i$ を使うとき: $\displaystyle dp[X \cup S_i][i] += dp[X][i-1]$
+- $S_i$ を使わないとき: $\displaystyle dp[X][i] += dp[X][i-1]$
+
+これを $X$ を $0$ から $2^N -1$ まで順に計算していく.
+$S_i = \empty$ のとき $X \cup S_i = X$ となり, $dp[X][i]$ に $dp[X][i-1]$ が二回足されるので
+$i$ bit 目が 0 か 1 の 2 通り選べることをちゃんと表現できている.
+
+最終的に $dp[A][D]$ が答えとなる.
+
+
+$X \cup S_i = X$ となるのでもらう DP で書くのは厳しそう.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29643015)
