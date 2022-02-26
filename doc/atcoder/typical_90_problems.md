@@ -1295,3 +1295,21 @@ $i$ bit 目が 0 か 1 の 2 通り選べることをちゃんと表現できて
 $X \cup S_i = X$ となるのでもらう DP で書くのは厳しそう.
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29643015)
+
+
+## 081 - Friendly Group（★5）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_cc)
+
+解説AC
+
+身長を横軸, 体重を縦軸にとって $K \times K$ の正方形の中に含まれる点の数を求めればよいということと
+2 次元累積和を使うところまでは思いついたが, 正方形の頂点のいずれかに生徒を表す点が含むと思っていたが
+実際はそうではなかった.
+
+長方形の頂点に点が含まれる場合のみ調べると, 下図のような長方形の中点に点が来るときが最適なときな場合を漏らしてしまう.
+![081.png](/assets/atcoder/typical_90/081.png)
+
+2次元累積和を作れたら正方形の左端の頂点を前通り試すのがベストだった.
+
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29649467)
