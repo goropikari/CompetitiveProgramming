@@ -1313,3 +1313,88 @@ $X \cup S_i = X$ となるのでもらう DP で書くのは厳しそう.
 
 
 [提出コード](https://atcoder.jp/contests/typical90/submissions/29649467)
+
+
+## 082 - Counting Numbers（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_cd)
+
+$l, r$ ($l <= r$) をそれぞれ $K$ 桁の整数の場合を考える.
+このとき $l + (l+1) + \cdots + r = \frac{r(r+1)}{2} - \frac{(l-1)l}{2}$ 個の数字が黒板に書かれる.
+これらの数字はすべて $K$ 文字であるから黒板に書かれた文字数は $K \times \left( \frac{r(r+1)}{2} - \frac{(l-1)l}{2} \right)$ である.
+
+これを1桁から19桁まで調べることで答えを求めることができる.
+
+```cpp
+// l + (l+1) + ... + r-1
+mint sum(ll l, ll r) {
+    if (l >= r) return 0;
+
+    mint L = l, R = r;
+    mint ans = R * (R-1) / 2;
+    ans -= (L-1)*L / 2;
+
+    return ans;
+}
+
+void solve() {
+    ll L, R;
+    cin >> L >> R;
+
+    mint ans = 0;
+    ll base = 1;
+    ll digit = 1;
+    while(digit <= 18) {
+        ll l = max(L, base);
+        ll r = min(R+1, base*10);
+        ans += sum(l, r) * digit;
+        base *= 10;
+        digit++;
+    }
+
+    if (R == (ll)1e18) ans += mint(ll(1e18)) * 19;
+
+    cout << ans.val() << endl;
+}
+```
+
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29652776)
+
+## 083 - Colorful Graph（★6）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_ce)
+
+スキップ
+
+## 084 - There are two types of characters（★3）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_cf)
+
+解説と違う方法で AC
+
+0-index で考える. すなわち $0 \leq l \leq r \leq N-1$ の条件で考える.
+
+$l$ を固定したときに条件を満たす $r$ が何種類あるか調べる.
+
+$S_l \neq S_k$ $(l < k < N)$ を満たす最小の $k$ が存在するとき,
+$r$ として $k$ 以上であれば常に `o` と `x` の両方が含まれる.
+そのような $k$ が存在しないときはどんな $r \geq l$ を選んでも条件を満たすことはできない.
+よって $r$ としての選択肢は $k, k+1, \cdots, N-1$ の $N-k$ 通りある.
+これを $l = 0 \sim N-1$ まで求め和を取ることで答えを求めることができる.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29941550)
+
+
+## 085 - Multiplication 085（★4）
+[問題](https://atcoder.jp/contests/typical90/tasks/typical90_cg)
+
+解説と違う方法で AC
+
+[ABC227 C 問題](https://atcoder.jp/contests/abc227/tasks/abc227_c) とちょっと違うだけでほとんど一緒.
+
+$abc = K \wedge a \leq b \leq c$ より $a$ の取りうる最大値は $a^3 \leq K \Rightarrow a \leq K^{1/3}$
+同様にして $b$ の取りうる最大値は $b^2 \leq K/a \Rightarrow b \leq \sqrt{K/a}$
+この範囲で $a, b$ を動かし $a b \times \lfloor \frac{K}{ab} \rfloor$ が $K$ に一致するか調べれば良い.
+
+ABC227 C 問題の解説によるとこのときの計算量は $O(N^{2/3})$ らしいので今回の問題の場合だと $O(10^8)$ となり
+C++ なら間に合う.
+
+[提出コード](https://atcoder.jp/contests/typical90/submissions/29941762)
