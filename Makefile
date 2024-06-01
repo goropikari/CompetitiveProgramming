@@ -10,6 +10,10 @@ test: $(ARGS)
 ptest:
 	python3 ex.py < test.txt
 
+.PHONY: template
+template:
+	tee {a..g}.cpp < template.cpp > /dev/null
+
 format: $(ARTICLES)
 	@echo $?
 	@sed -i -e "s/。/. /g" $?
