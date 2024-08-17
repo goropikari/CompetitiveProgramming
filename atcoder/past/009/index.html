@@ -34,7 +34,7 @@
 
     <span class=hljs-function >vector&lt;<span class=hljs-type >int</span>&gt; <span class=hljs-title >ans</span><span class=hljs-params >(<span class=hljs-number >6</span>)</span></span>;
     <span class=hljs-keyword >for</span> (<span class=hljs-type >int</span> i = n<span class=hljs-number >-1</span>; i &gt;= <span class=hljs-number >0</span>; i--) {
-        <span class=hljs-keyword >if</span> (submits[i].second == <span class=hljs-string >&quot;AC&quot;</span>) ans[submits[i].first - <span class=hljs-string >&#x27;A&#x27;</span>] = i+<span class=hljs-number >1</span>;
+        <span class=hljs-keyword >if</span> (submits[i].second == <span class=hljs-string >&quot;AC&quot;</span>) ans[submits[i].first - <span class=hljs-string >&#x27;A&#x27;</span>] = i<span class=hljs-number >+1</span>;
     }
 
     <span class=hljs-built_in >rep</span>(i,<span class=hljs-number >6</span>) cout &lt;&lt; ans[i] &lt;&lt; endl;
@@ -57,7 +57,7 @@
     <span class=hljs-built_in >rep</span>(i,n) cin &gt;&gt; A[i];
     <span class=hljs-built_in >rep</span>(i,n) cin &gt;&gt; B[i];
     <span class=hljs-function >vector&lt;Student&gt; <span class=hljs-title >students</span><span class=hljs-params >(n)</span></span>;
-    <span class=hljs-built_in >rep</span>(i,n) students[i] = {i+<span class=hljs-number >1</span>, A[i], B[i]};
+    <span class=hljs-built_in >rep</span>(i,n) students[i] = {i<span class=hljs-number >+1</span>, A[i], B[i]};
     <span class=hljs-built_in >sort</span>(<span class=hljs-built_in >all</span>(students), compare);
 
     <span class=hljs-built_in >rep</span>(i,n) {
@@ -246,7 +246,7 @@
         <span class=hljs-keyword >for</span> (<span class=hljs-type >int</span> nx : graph[x]) {
             <span class=hljs-keyword >if</span> (dist[nx] &gt; depth + <span class=hljs-number >1</span>) {
                 dist[nx] = depth + <span class=hljs-number >1</span>;
-                que.<span class=hljs-built_in >push</span>({nx, depth+<span class=hljs-number >1</span>});
+                que.<span class=hljs-built_in >push</span>({nx, depth<span class=hljs-number >+1</span>});
             }
         }
     }
@@ -279,4 +279,4 @@
         <span class=hljs-built_in >rep</span>(i,k) <span class=hljs-built_in >chmin</span>(ans, dists[i][s] + dists[i][t]);
         cout &lt;&lt; ans &lt;&lt; endl;
     }
-}</code></pre> <p><a href="https://atcoder.jp/contests/past202112-open/submissions/28278076">提出コード</a></p> <h2 id="l_-_嘘つきな生徒たち"><a href="#l_-_嘘つきな生徒たち" class=header-anchor >L - 嘘つきな生徒たち</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_l">問題</a></p> <p>わからない</p> <h2 id="m_-_名前の変更"><a href="#m_-_名前の変更" class=header-anchor >M - 名前の変更</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_m">問題</a></p> <p>わからない</p> <h2 id="n_-_共通部分"><a href="#n_-_共通部分" class=header-anchor >N - 共通部分</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_n">問題</a></p> <p>外積を使って共通部分の内部か外部かの判定をしているらしい. あと線分の交差判定も外積を使っているっぽい. ちゃんと理解はできてない.</p> <p>最後面積を求める部分は外積を使っていい感じに内部の面積だけを計算できているっぽい. 図示した感じだと凸多角形とか関係なく多角形の面積を求めるときは常に使えそうな雰囲気を感じた.</p> <h2 id="o_-_ペアスコア"><a href="#o_-_ペアスコア" class=header-anchor >O - ペアスコア</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_o">問題</a></p> <p>わからない</p> <div class=page-foot > <div class=copyright > &copy; <a href=https://github.com/goropikari>goropikari</a>. Last modified: June 25, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. This site source is located at <a href=https://goropikari.github.io/CompetitiveProgramming>goropikari/CompetitiveProgramming</a> </div> </div> </div> </div>
+}</code></pre> <p><a href="https://atcoder.jp/contests/past202112-open/submissions/28278076">提出コード</a></p> <h2 id="l_-_嘘つきな生徒たち"><a href="#l_-_嘘つきな生徒たち" class=header-anchor >L - 嘘つきな生徒たち</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_l">問題</a></p> <p>わからない</p> <h2 id="m_-_名前の変更"><a href="#m_-_名前の変更" class=header-anchor >M - 名前の変更</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_m">問題</a></p> <p>わからない</p> <h2 id="n_-_共通部分"><a href="#n_-_共通部分" class=header-anchor >N - 共通部分</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_n">問題</a></p> <p>外積を使って共通部分の内部か外部かの判定をしているらしい. あと線分の交差判定も外積を使っているっぽい. ちゃんと理解はできてない.</p> <p>最後面積を求める部分は外積を使っていい感じに内部の面積だけを計算できているっぽい. 図示した感じだと凸多角形とか関係なく多角形の面積を求めるときは常に使えそうな雰囲気を感じた.</p> <h2 id="o_-_ペアスコア"><a href="#o_-_ペアスコア" class=header-anchor >O - ペアスコア</a></h2> <p><a href="https://atcoder.jp/contests/past202112-open/tasks/past202112_o">問題</a></p> <p>わからない</p> <div class=page-foot > <div class=copyright > &copy; <a href=https://github.com/goropikari>goropikari</a>. Last modified: August 17, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. This site source is located at <a href=https://goropikari.github.io/CompetitiveProgramming>goropikari/CompetitiveProgramming</a> </div> </div> </div> </div>
