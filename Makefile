@@ -12,7 +12,7 @@ ptest:
 
 .PHONY: template
 template:
-	tee {a..g}.cpp < template.cpp > /dev/null
+	tee {a..o}.cpp < template.cpp > /dev/null
 
 format: $(ARTICLES)
 	@echo $?
