@@ -3,12 +3,11 @@ CXXFLAGS := -g -O0 -Wall -std=gnu++17 -I .
 
 ARTICLES = $(shell find doc/ -type f -name "*.md" -not -path "doc/node_modules/*")
 
-.PHONY: test
-test: $(ARGS)
-	./$(ARGS) < test.txt
+build:
+	g++ -g -O0 -Wall -std=gnu++20 -I . $(INPUT) -o $(OUTPUT)
 
-ptest:
-	python3 ex.py < test.txt
+test: build
+	$(OUTPUT) < test.txt
 
 .PHONY: template
 template:
