@@ -3,7 +3,9 @@ CXXFLAGS := -g -O0 -Wall -std=gnu++17 -I .
 
 ARTICLES = $(shell find doc/ -type f -name "*.md" -not -path "doc/node_modules/*")
 
-build:
+build: $(OUTPUT)
+
+$(OUTPUT): $(INPUT)
 	g++ -g -O0 -Wall -std=gnu++20 -I . $(INPUT) -o $(OUTPUT)
 
 test: build
