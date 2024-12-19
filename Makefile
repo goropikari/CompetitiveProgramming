@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -g -O0 -Wall -std=gnu++17 -I .
+CXXFLAGS := -g -O0 -Wall -std=gnu++23 -I .
 
 ARTICLES = $(shell find doc/ -type f -name "*.md" -not -path "doc/node_modules/*")
 
