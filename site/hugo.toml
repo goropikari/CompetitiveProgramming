@@ -1,0 +1,22 @@
+baseURL = 'https://goropikari.github.io/CompetitiveProgramming/'
+languageCode = 'ja'
+title = '競プロメモ'
+theme = "hyde"
+
+menu.main = [
+  { name = "Algorithm", url = "/algorithm/", weight = 1 },
+]
+
+menu.atcoder = [
+  { name = "ABC", url = "/tags/abc", weight = 1 },
+  { name = "ARC", url = "/tags/arc", weight = 2 },
+]
+
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false

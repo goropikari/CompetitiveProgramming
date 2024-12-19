@@ -1,0 +1,20 @@
+{{ define "main" }}
+  {{ if eq .Type "tags" }}
+    <h1>タグ: {{ .Title }}</h1>
+    <ul>
+      {{ range sort .Data.Pages ".Title" "desc" }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <ul class="posts">
+    {{ range .Data.Pages -}}
+      <li>
+        <span><a href="{{ .Permalink }}">{{ .Title }}</a> <time class="pull-right post-list" datetime="{{ .Date.Format "2006-01-02T15:04:05Z0700" }}">{{ .Date.Format "Mon, Jan 2, 2006" }}</time></span>
+      </li>
+    {{- end }}
+    </ul>
+  {{ end }}
+{{ end }}
