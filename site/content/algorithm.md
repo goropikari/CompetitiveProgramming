@@ -142,6 +142,51 @@ ll floor(ll x, ll y) {
 }
 ```
 
+## 未満
+
+$s, x, P$ が正整数のとき
+
+$$
+s < \frac{P}{x} \iff s < \floor{ \frac{P+x-1}{x} }
+$$
+
+が成り立つ。
+
+$(\rightarrow)$
+
+$$
+s < \frac{P}{x} \rightarrow sx < P \rightarrow sx + 1 \leq P ~(\because s, x, P \text{ are positive integers})
+$$
+
+$f(P) = \floor{ \frac{P+x-1}{x} }$ とすると $f(P)$ は non-decreasing fn だから
+
+$$
+f(sx+1) \leq f(P) \\\\
+\therefore \floor{  \frac{(sx+1)+x-1}{x}  } \leq f(P) \\\\
+\therefore \floor{  \frac{sx + x}{x}  } \leq f(P) \\\\
+\therefore \floor{  s+1  } \leq f(P) \\\\
+\therefore   s+1  \leq f(P) \\\\
+\therefore   s < s+1  \leq f(P) \\\\
+\therefore   s < f(P)
+$$
+
+
+$(\leftarrow)$
+
+$f(sx) = \floor{ \frac{sx + x-1}{x} } = \floor{ s + \frac{x-1}{x} } = s + \floor{ \frac{x-1}{x} } = s$
+
+$f(sx+1) = s+1$
+
+より $s < f(P)$ ならば
+$$
+sx+1 \leq P \\\\
+\therefore sx < sx+1 \leq P \\\\
+\therefore sx < P \\\\
+\therefore s < \frac{P}{x}
+$$
+
+ref: https://atcoder.jp/contests/abc384/tasks/abc384_e
+
 ## gcd, lcm
 
 $\mathrm{gcd}(a, b) = \mathrm{gcd}(b, a \\% b)$.
