@@ -81,6 +81,62 @@ int main()
 ```
 
 
+struct で priority queue
+
+```cpp
+struct Point {
+    int x, y;
+};
+
+bool operator<(const Point& a, const Point& b)
+{
+    return a.x < b.x;
+}
+
+bool operator>(const Point& a, const Point& b)
+{
+    return a.x > b.x;
+}
+
+void solve()
+{
+    {
+        // operator< が必要
+        priority_queue<Point> pq;
+        rep(i, 3) pq.push({ i, 3 - i });
+
+        while (pq.size()) {
+            auto [x, y] = pq.top();
+            pq.pop();
+            cout << x << ' ' << y << endl;
+        }
+    }
+
+    cout << endl;
+    {
+        // operator> が必要
+        priority_queue<Point, vector<Point>, greater<Point>> pq;
+        rep(i, 3) pq.push({ i, 3 - i });
+
+        while (pq.size()) {
+            auto [x, y] = pq.top();
+            pq.pop();
+            cout << x << ' ' << y << endl;
+        }
+    }
+}
+```
+
+```
+2 1
+1 2
+0 3
+
+0 3
+1 2
+2 1
+```
+
 ## sort
 
 自作 struct に関して sort する.
