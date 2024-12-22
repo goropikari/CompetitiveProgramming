@@ -20,3 +20,6 @@ format: $(ARTICLES)
 	@sed -i -e "s/。/. /g" $?
 	@sed -i -e "s/、/, /g" $?
 	@sed -i -e "s/[ \t]*$$//" $?
+
+clean:
+	$(shell find ./atcoder -type f -executable | xargs rm -f)

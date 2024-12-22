@@ -3,3 +3,4 @@ ex.cpp
 test.txt
 *out.txt
 .ipynb_checkpoints
+test_*
