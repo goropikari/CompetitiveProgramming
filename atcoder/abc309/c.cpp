@@ -1,9 +1,12 @@
-// https://atcoder.jp/contests/abc380/tasks/abc380_a
+/*https://atcoder.jp/contests/abc309/tasks/abc309_c*/
+/*2024年12月26日 01時07分02秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <numeric>
+#include <queue>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -45,14 +48,36 @@ void yesno(bool x) {
     puts(x ? "Yes" : "No");
 }
 
-void solve() {
-    string n;
-    cin >> n;
-    sort(all(n));
-    yesno(n == "122333");
-}
+void solve();
 
 int main() {
     solve();
     return 0;
+}
+
+void solve() {
+    int N, K;
+    cin >> N >> K;
+
+    priority_queue<pair<ll, ll>> pq;
+
+    ll tot = 0;
+    rep(i, N) {
+        ll a, b;
+        cin >> a >> b;
+        tot += b;
+        pq.push({-a, b});
+    }
+    pq.push({0, 0});
+
+    while (pq.size()) {
+        auto [a, b] = pq.top();
+        pq.pop();
+        a *= -1;
+        if (tot - b <= K) {
+            cout << a + 1 << endl;
+            return;
+        }
+        tot -= b;
+    }
 }

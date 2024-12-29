@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/abc380/tasks/abc380_a
+/*https://atcoder.jp/contests/abc335/tasks/abc335_c*/
+/*2024年12月29日 01時59分59秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -45,14 +46,44 @@ void yesno(bool x) {
     puts(x ? "Yes" : "No");
 }
 
-void solve() {
-    string n;
-    cin >> n;
-    sort(all(n));
-    yesno(n == "122333");
-}
+void solve();
 
 int main() {
     solve();
     return 0;
+}
+
+void solve() {
+    int N, Q;
+    cin >> N >> Q;
+    vector<pair<int, int>> head = {{1, 0}};
+    rep(i, Q) {
+        int kind;
+        cin >> kind;
+        if (kind == 1) {
+            char c;
+            cin >> c;
+            auto [x, y] = head.back();
+            if (c == 'R') {
+                x++;
+            } else if (c == 'L') {
+                x--;
+            } else if (c == 'U') {
+                y++;
+            } else {  // D
+                y--;
+            }
+            head.push_back({x, y});
+        } else {
+            int p;
+            cin >> p;
+            int cnt = head.size();
+            if (cnt - p >= 0) {
+                auto [x, y] = head[cnt - p];
+                cout << x << ' ' << y << endl;
+            } else {
+                cout << p - cnt + 1 << ' ' << 0 << endl;
+            }
+        }
+    }
 }

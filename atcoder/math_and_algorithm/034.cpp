@@ -1,4 +1,4 @@
-// https://atcoder.jp/contests/abc380/tasks/abc380_a
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_af
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -45,14 +45,26 @@ void yesno(bool x) {
     puts(x ? "Yes" : "No");
 }
 
-void solve() {
-    string n;
-    cin >> n;
-    sort(all(n));
-    yesno(n == "122333");
-}
+void solve();
 
 int main() {
     solve();
     return 0;
+}
+
+void solve() {
+    int N;
+    cin >> N;
+    vector<double> x(N), y(N);
+    rep(i, N) cin >> x[i] >> y[i];
+
+    double ans = 2e18;
+    rep(i, N) {
+        rep2(j, i + 1, N) {
+            double dx = x[i] - x[j];
+            double dy = y[i] - y[j];
+            chmin(ans, sqrt(dx * dx + dy * dy));
+        }
+    }
+    printf("%.10lf\n", ans);
 }

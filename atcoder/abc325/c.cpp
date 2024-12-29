@@ -1,6 +1,7 @@
-// https://atcoder.jp/contests/abc380/tasks/abc380_a
-// #include <atcoder/all>
-// using namespace atcoder;
+/*https://atcoder.jp/contests/abc325/tasks/abc325_c*/
+/*2024年12月26日 01時23分49秒*/
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
@@ -45,14 +46,37 @@ void yesno(bool x) {
     puts(x ? "Yes" : "No");
 }
 
-void solve() {
-    string n;
-    cin >> n;
-    sort(all(n));
-    yesno(n == "122333");
-}
+void solve();
 
 int main() {
     solve();
     return 0;
+}
+
+void solve() {
+    int H, W;
+    cin >> H >> W;
+    vector<string> S(H);
+    rep(i, H) cin >> S[i];
+
+    dsu uf(H * W + 1);
+    rep(i, H) {
+        rep(j, W) {
+            if (S[i][j] == '.') {
+                uf.merge(i * W + j, H * W);
+                continue;
+            }
+
+            rep2(dx, -1, 2) {
+                rep2(dy, -1, 2) {
+                    int nx = clamp(i + dx, 0, H - 1),
+                        ny = clamp(j + dy, 0, W - 1);
+                    if (S[nx][ny] == '#')
+                        uf.merge(i * W + j, nx * W + ny);
+                }
+            }
+        }
+    }
+
+    cout << uf.groups().size() - 1 << endl;
 }

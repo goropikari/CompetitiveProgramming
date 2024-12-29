@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/abc380/tasks/abc380_a
+/*https://atcoder.jp/contests/abc386/tasks/abc386_e*/
+/*2024年12月28日 22時06分17秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -45,14 +46,44 @@ void yesno(bool x) {
     puts(x ? "Yes" : "No");
 }
 
-void solve() {
-    string n;
-    cin >> n;
-    sort(all(n));
-    yesno(n == "122333");
-}
+void solve();
 
 int main() {
     solve();
     return 0;
+}
+
+ll N, K;
+vll A, visited;
+ll ans = 0;
+
+void dfs(int now, int cnt, ll sum) {
+    sum = sum ^ A[now];
+    visited[now] = 1;
+
+    if (cnt == K) {
+        chmax(ans, sum);
+        visited[now] = 0;
+        return;
+    }
+
+    rep2(i, now + 1, N) {
+        if (visited[i])
+            continue;
+        dfs(i, cnt + 1, sum);
+    }
+    visited[now] = 0;
+}
+
+void solve() {
+    cin >> N >> K;
+    // vll A(N);
+    A.resize(N);
+    visited.resize(N);
+    rep(i, N) cin >> A[i];
+
+    rep(i, N) {
+        dfs(i, 1, 0);
+    }
+    cout << ans << endl;
 }

@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/abc380/tasks/abc380_a
+/*https://atcoder.jp/contests/abc386/tasks/abc386_d*/
+/*2024年12月28日 21時51分22秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -45,14 +46,54 @@ void yesno(bool x) {
     puts(x ? "Yes" : "No");
 }
 
-void solve() {
-    string n;
-    cin >> n;
-    sort(all(n));
-    yesno(n == "122333");
-}
+void solve();
 
 int main() {
     solve();
     return 0;
+}
+
+void sort_map(map<ll, vll>& mp) {
+    for (auto it = mp.begin(); it != mp.end(); it++) {
+        sort(all(it->second));
+    }
+}
+
+struct Point {
+    ll x, y;
+    char c;
+};
+
+bool operator<(const Point& a, const Point& b) {
+    if (a.x != b.x)
+        return a.x < b.x;
+    return a.y < b.y;
+}
+
+void solve() {
+    ll N, M;
+    cin >> N >> M;
+
+    vector<Point> pt;
+    rep(i, M) {
+        ll x, y;
+        char c;
+        cin >> x >> y >> c;
+        pt.push_back({x, y, c});
+    }
+    sort(all(pt));
+
+    ll miny = INF;
+    bool ok = true;
+    for (auto [x, y, c] : pt) {
+        if (c == 'W') {
+            chmin(miny, y);
+        } else {
+            if (y >= miny) {
+                ok = false;
+                break;
+            };
+        }
+    }
+    yesno(ok);
 }
