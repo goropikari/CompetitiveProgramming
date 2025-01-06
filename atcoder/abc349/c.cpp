@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc349/tasks/abc349_c*/
+/*2024年12月31日 22時42分14秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,27 @@ int main() {
 }
 
 void solve() {
+    string S, T;
+    cin >> S >> T;
+    for (char& c : S)
+        c ^= 32;
 
+    int i = 0, j = 0;
+    int n = S.size(), m = T.size();
+    int cnt = 0;
+    while (i < n && j < m) {
+        if (S[i] == T[j]) {
+            cnt++;
+            i++;
+            j++;
+        } else {
+            i++;
+        }
+    }
+    if (cnt == 3)
+        yesno(true);
+    else if (cnt == 2 && T[2] == 'X')
+        yesno(true);
+    else
+        yesno(false);
 }

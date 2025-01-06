@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc350/tasks/abc350_c*/
+/*2024年12月31日 22時59分05秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,33 @@ int main() {
 }
 
 void solve() {
+    int N;
+    cin >> N;
+    vint A(N);
+    rep(i, N) {
+        cin >> A[i];
+        A[i]--;
+    }
 
+    map<int, int> mp;
+    rep(i, N) mp[A[i]] = i;
+
+    vector<pair<int, int>> p;
+    rep(i, N - 1) {
+        if (A[i] == i)
+            continue;
+        int a = mp[i];
+        int b = A[i];
+        swap(mp[i], mp[b]);
+        swap(A[a], A[i]);
+        int x = i + 1, y = a + 1;
+        if (x > y)
+            swap(x, y);
+        p.push_back({x, y});
+    }
+
+    cout << p.size() << endl;
+    for (auto [x, y] : p) {
+        cout << x << ' ' << y << endl;
+    }
 }

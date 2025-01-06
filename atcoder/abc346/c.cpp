@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc346/tasks/abc346_c*/
+/*2024年12月31日 22時09分40秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,20 @@ int main() {
 }
 
 void solve() {
+    ll N, K;
+    cin >> N >> K;
 
+    ll tot = K * (K + 1) / 2;
+
+    set<ll> s;
+    rep(i, N) {
+        ll a;
+        cin >> a;
+        if (s.count(a))
+            continue;
+        if (a >= 1 && a <= K)
+            tot -= a;
+        s.insert(a);
+    }
+    cout << tot << endl;
 }

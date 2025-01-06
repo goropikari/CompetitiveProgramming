@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc352/tasks/abc352_c*/
+/*2024年12月31日 23時53分16秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,14 @@ int main() {
 }
 
 void solve() {
-
+    int N;
+    cin >> N;
+    ll s = 0, h = 0;
+    rep(i, N) {
+        ll a, b;
+        cin >> a >> b;
+        s += a;
+        chmax(h, b - a);
+    }
+    cout << s + h << endl;
 }

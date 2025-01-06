@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc351/tasks/abc351_c*/
+/*2024年12月31日 23時13分22秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,24 @@ int main() {
 }
 
 void solve() {
-
+    int N;
+    cin >> N;
+    vll A;
+    rep(i, N) {
+        ll a;
+        cin >> a;
+        A.push_back(a);
+        while (true) {
+            if (A.size() <= 1)
+                break;
+            int n = A.size();
+            if (A[n - 1] != A[n - 2])
+                break;
+            ll x = A.back();
+            A.pop_back();
+            A.pop_back();
+            A.push_back(x + 1);
+        }
+    }
+    cout << A.size() << endl;
 }

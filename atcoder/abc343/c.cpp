@@ -1,8 +1,11 @@
+/*https://atcoder.jp/contests/abc343/tasks/abc343_c*/
+/*2024年12月31日 15時34分41秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <string>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -52,5 +55,17 @@ int main() {
 }
 
 void solve() {
+    ll N;
+    cin >> N;
 
+    ll ans = 0;
+    for (ll x = 0; x * x * x <= N; x++) {
+        ll K = x * x * x;
+        string s, t;
+        s = t = to_string(K);
+        reverse(all(t));
+        if (s == t)
+            chmax(ans, K);
+    }
+    cout << ans << endl;
 }

@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc341/tasks/abc341_c*/
+/*2024年12月31日 14時57分27秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,6 +53,48 @@ int main() {
     return 0;
 }
 
-void solve() {
+int H, W, N;
+string T;
+vector<string> grid;
 
+bool valid(int i, int j) {
+    return clamp(i, 0, H - 1) == i && clamp(j, 0, W - 1) == j;
+}
+
+bool check(int i, int j) {
+    if (grid[i][j] == '#')
+        return false;
+
+    int x = i, y = j;
+    for (char c : T) {
+        if (c == 'L') {
+            y--;
+        } else if (c == 'R') {
+            y++;
+        } else if (c == 'U') {
+            x--;
+        } else {
+            x++;
+        }
+        if (!valid(x, y))
+            return false;
+        if (grid[x][y] == '#')
+            return false;
+    }
+    return grid[x][y] == '.';
+}
+
+void solve() {
+    cin >> H >> W >> N;
+    cin >> T;
+    grid.resize(H);
+    rep(i, H) cin >> grid[i];
+
+    int ans = 0;
+    rep(i, H) {
+        rep(j, W) {
+            ans += check(i, j);
+        }
+    }
+    cout << ans << endl;
 }

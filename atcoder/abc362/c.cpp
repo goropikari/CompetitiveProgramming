@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc362/tasks/abc362_c*/
+/*2025年01月06日 23時51分12秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,33 @@ int main() {
 }
 
 void solve() {
+    int N;
+    cin >> N;
+    vll L(N), R(N);
+    rep(i, N) cin >> L[i] >> R[i];
+    ll ltot = 0, rtot = 0;
+    rep(i, N) {
+        ltot += L[i];
+        rtot += R[i];
+    }
 
+    if (!(ltot <= 0 && 0 <= rtot)) {
+        yesno(false);
+        return;
+    }
+
+    vll ans = L;
+    ll tot = ltot;
+    rep(i, N) {
+        if (tot - L[i] + R[i] < 0) {
+            tot = tot - L[i] + R[i];
+            ans[i] = R[i];
+        } else {  // tot -L[i] + R[i] >= 0
+            tot -= L[i];
+            ans[i] = -tot;
+            tot = 0;
+        }
+    }
+    yesno(true);
+    print(ans);
 }

@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc348/tasks/abc348_c*/
+/*2024年12月31日 22時30分31秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,21 @@ int main() {
 }
 
 void solve() {
+    int N;
+    cin >> N;
+    map<int, vint> mp;
+    rep(i, N) {
+        int a, c;
+        cin >> a >> c;
+        mp[c].push_back(a);
+    }
+    for (auto it = mp.begin(); it != mp.end(); it++) {
+        sort(all(it->second));
+    }
 
+    int ans = 0;
+    for (auto it = mp.begin(); it != mp.end(); it++) {
+        chmax(ans, (it->second)[0]);
+    }
+    cout << ans << endl;
 }

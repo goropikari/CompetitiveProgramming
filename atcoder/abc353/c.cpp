@@ -1,8 +1,12 @@
+/*https://atcoder.jp/contests/abc353/tasks/abc353_c*/
+/*2024年12月31日 23時57分47秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <iterator>
+#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -51,6 +55,29 @@ int main() {
     return 0;
 }
 
-void solve() {
+vll cumsum;
 
+ll cal(int i, int j) {
+    if (i >= j)
+        return 0;
+    return cumsum[j] - cumsum[i];
+}
+
+void solve() {
+    ll N;
+    cin >> N;
+    vll A(N);
+    rep(i, N) cin >> A[i];
+
+    sort(all(A));
+    ll ans = 0;
+    rep(i, N) ans += (N - 1) * A[i];
+
+    ll cnt = 0;
+    rep(i, N - 1) {
+        auto it = lower_bound(A.begin() + i + 1, A.end(), (ll)1e8 - A[i]);
+        cnt += distance(it, A.end());
+    }
+    ans -= cnt * (ll)1e8;
+    cout << ans << endl;
 }

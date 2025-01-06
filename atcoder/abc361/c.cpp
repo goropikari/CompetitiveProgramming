@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc361/tasks/abc361_c*/
+/*2025年01月02日 22時46分20秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,15 @@ int main() {
 }
 
 void solve() {
-
+    int N, K;
+    cin >> N >> K;
+    vll A(N);
+    rep(i, N) cin >> A[i];
+    sort(all(A));
+    ll ans = INF;
+    int d = N - K;
+    rep(i, K + 1) {
+        chmin(ans, A[i + d - 1] - A[i]);
+    }
+    cout << ans << endl;
 }

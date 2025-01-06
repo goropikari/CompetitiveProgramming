@@ -1,5 +1,7 @@
-// #include <atcoder/all>
-// using namespace atcoder;
+/*https://atcoder.jp/contests/abc342/tasks/abc342_c*/
+/*2024年12月31日 15時16分38秒*/
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
@@ -52,5 +54,25 @@ int main() {
 }
 
 void solve() {
+    int N, Q;
+    string S;
+    cin >> N >> S >> Q;
 
+    int mx = 30;
+    vector<char> v(mx);
+    iota(all(v), 0);
+    rep(i, Q) {
+        char c, d;
+        cin >> c >> d;
+
+        rep(j, mx) {
+            if (v[j] == (c - 'a'))
+                v[j] = d - 'a';
+        }
+    }
+
+    for (char c : S) {
+        cout << char(v[c - 'a'] + 'a');
+    }
+    cout << endl;
 }

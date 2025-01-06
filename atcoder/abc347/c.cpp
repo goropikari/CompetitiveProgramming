@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc347/tasks/abc347_c*/
+/*2024年12月31日 22時13分49秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,22 @@ int main() {
 }
 
 void solve() {
+    ll N, A, B;
+    cin >> N >> A >> B;
+    vll D(N);
 
+    ll m = A + B;
+    rep(i, N) {
+        cin >> D[i];
+        D[i] %= m;
+    }
+
+    sort(all(D));
+    int n = D.size();
+    bool ok = 0;
+    ok = ok || (D.back() - D[0] < A);
+    rep2(i, 1, n) {
+        ok = ok || (abs(D[i] - (D[i - 1] + m)) < A);
+    }
+    yesno(ok);
 }

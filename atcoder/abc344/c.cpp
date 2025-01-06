@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc344/tasks/abc344_c*/
+/*2024年12月31日 15時36分41秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,29 @@ int main() {
 }
 
 void solve() {
+    int N;
+    cin >> N;
+    vll A(N);
+    rep(i, N) cin >> A[i];
 
+    int M;
+    cin >> M;
+    vll B(M);
+    rep(i, M) cin >> B[i];
+
+    int L;
+    cin >> L;
+    vll C(L);
+    rep(i, L) cin >> C[i];
+
+    set<ll> s;
+    rep(i, N) rep(j, M) rep(k, L) s.insert(A[i] + B[j] + C[k]);
+
+    int Q;
+    cin >> Q;
+    rep(i, Q) {
+        ll x;
+        cin >> x;
+        yesno(s.count(x));
+    }
 }

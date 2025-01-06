@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc345/tasks/abc345_c*/
+/*2024年12月31日 21時13分54秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,30 @@ int main() {
 }
 
 void solve() {
+    string S;
+    cin >> S;
+    int N = S.size();
 
+    // i < j, S[i] != S[j] を満たす j が何通りあるかを調べる
+    vvint cumsum(200, vint(N + 1, 0));
+    for (char c = 'a'; c <= 'z'; c++) {
+        rep(i, N) {
+            cumsum[c][i + 1] = cumsum[c][i] + (S[i] == c);
+        }
+    }
+
+    ll ans = 0;
+    ll same = 0;
+    rep(i, N - 1) {
+        for (char c = 'a'; c <= 'z'; c++) {
+            if (S[i] == c) {
+                same = same || ((cumsum[c][N] - cumsum[c][i + 1]) > 0);
+            } else {
+                ans += cumsum[c][N] - cumsum[c][i + 1];
+            }
+        }
+    }
+    if (same)
+        ans++;
+    cout << ans << endl;
 }

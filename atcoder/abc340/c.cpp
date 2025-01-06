@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc340/tasks/abc340_c*/
+/*2024年12月31日 14時46分41秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,6 +53,17 @@ int main() {
     return 0;
 }
 
-void solve() {
+map<ll,ll> mp;
 
+ll dfs(ll n) {
+    if (mp.count(n)) return mp[n];
+    return mp[n] = dfs(n/2) + dfs((n+1)/2) + n;
+}
+
+void solve() {
+    ll N;
+    cin >> N;
+    mp[0] = mp[1] = 0;
+    mp[2] = 2;
+    cout << dfs(N) << endl;
 }

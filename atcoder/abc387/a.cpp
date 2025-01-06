@@ -1,3 +1,5 @@
+/*https://atcoder.jp/contests/abc387/tasks/abc387_a*/
+/*2025年01月05日 21時05分46秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,5 +54,8 @@ int main() {
 }
 
 void solve() {
-
+    ll a, b;
+    cin >> a >> b;
+    ll x = a + b;
+    cout << x * x << endl;
 }
