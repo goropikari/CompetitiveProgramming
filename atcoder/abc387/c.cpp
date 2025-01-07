@@ -57,6 +57,12 @@ int main() {
 ll L, R;
 vvll keta(20, vll(10, 0));
 
+ll int_pow(ll b, ll n) {
+    ll ans = 1;
+    rep(i, n) ans *= b;
+    return ans;
+}
+
 ll cal(ll x) {
     string x_str = to_string(x);
     ll n = x_str.size();
@@ -64,6 +70,7 @@ ll cal(ll x) {
 
     // n 桁未満の snake number の個数
     rep2(k, 1, n) {
+        // k 桁、leading number が l のときの snake number の個数
         rep2(l, 1, 10) sum += keta[k][l];
     }
 
@@ -89,7 +96,7 @@ ll cal(ll x) {
     x_str = t_str;
     rep2(i, 1, n) {
         ll num = x_str[i] - '0';
-        sum += num * pow(leading_number, n - (i + 1));
+        sum += num * int_pow(leading_number, n - (i + 1));
     }
 
     bool is_snake = true;
@@ -107,7 +114,7 @@ void solve() {
     cin >> L >> R;
     rep2(k, 1, 20) {
         rep2(ln, 1, 10) {
-            keta[k][ln] = pow((ll)ln, (ll)(k - 1));
+            keta[k][ln] = int_pow((ll)ln, (ll)(k - 1));
         }
     }
     cout << cal(R) - cal(L - 1) << endl;
