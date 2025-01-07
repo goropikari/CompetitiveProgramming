@@ -546,6 +546,25 @@ d e f
 z b c
 ```
 
+## ランレングス圧縮 (Run Length Encoding)
+
+```cpp
+template <typename T>
+vector<pair<T, int>> runLengthEncode(const vector<T>& input) {
+    vector<pair<T, int>> encoded;
+    int size = input.size();
+    for (int i = 0; i < size; ++i) {
+        int count = 1;
+        while (i + 1 < size && input[i] == input[i + 1]) {
+            ++i;
+            ++count;
+        }
+        encoded.emplace_back(input[i], count);
+    }
+    return encoded;
+}
+```
+
 ## 最長増加部分列 (LIS: Longest Increasing Subsequence)
 
 数列 $A=a_0,a_1,\cdots, a_{n−1}$ の最長増加部分列 (LIS: Longest Increasing Subsequence) とは
