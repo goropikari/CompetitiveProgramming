@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/abc167_d
-/*2025年01月13日 17時51分56秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_be
+/*2025年01月14日 22時07分41秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -53,32 +53,31 @@ int main() {
     return 0;
 }
 
+ll intpow(ll x, ll n) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret *= x;
+        x *= x;
+        n >>= 1;
+    }
+    return ret;
+}
+
 void solve() {
     ll N, K;
     cin >> N >> K;
+    vll V(K);
+    rep(i, K) cin >> V[i];
 
-    vll A(N);
-    rep(i, N) {
-        cin >> A[i];
-        A[i]--;
+    ll ans = 0;
+    rep2(i, 1, 1 << K) {
+        ll k = __builtin_popcount(i);
+
+        ll a = 1;
+        rep(j, K) if ((i >> j) & 1) a = lcm(a, V[j]);
+        ll sign = (k % 2 == 0 ? -1 : 1);
+        ans += sign * (N / a);
     }
-
-    int mx = 61;
-    vvll d(mx, vll(N, 0));
-    rep(i, N) d[0][i] = A[i];
-
-    rep2(i, 1, mx) {
-        rep(j, N) {
-            d[i][j] = d[i - 1][d[i - 1][j]];
-        }
-    }
-
-    int now = 0;
-    rep(i, mx) {
-        if (K & 1) {
-            now = d[i][now];
-        }
-        K >>= 1LL;
-    }
-    cout << now + 1 << endl;
+    cout << ans << endl;
 }

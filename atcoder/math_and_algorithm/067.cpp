@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/abc167_d
-/*2025年01月13日 17時51分56秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/typical90_d
+/*2025年01月14日 22時04分10秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -54,31 +54,24 @@ int main() {
 }
 
 void solve() {
-    ll N, K;
-    cin >> N >> K;
+    ll H, W;
+    cin >> H >> W;
 
-    vll A(N);
-    rep(i, N) {
-        cin >> A[i];
-        A[i]--;
+    vvll A(H, vll(W));
+    rep(i, H) rep(j, W) cin >> A[i][j];
+
+    vll r(H, 0), c(W, 0);
+    rep(i, H) rep(j, W) {
+        r[i] += A[i][j];
+        c[j] += A[i][j];
     }
 
-    int mx = 61;
-    vvll d(mx, vll(N, 0));
-    rep(i, N) d[0][i] = A[i];
-
-    rep2(i, 1, mx) {
-        rep(j, N) {
-            d[i][j] = d[i - 1][d[i - 1][j]];
+    rep(i, H) {
+        rep(j, W) {
+            if (j != 0)
+                cout << ' ';
+            cout << r[i] + c[j] - A[i][j];
         }
+        cout << endl;
     }
-
-    int now = 0;
-    rep(i, mx) {
-        if (K & 1) {
-            now = d[i][now];
-        }
-        K >>= 1LL;
-    }
-    cout << now + 1 << endl;
 }
