@@ -278,13 +278,14 @@ vector<T> cumsum(vector<T> v) {
 }
 ```
 
-## 高速べき乗計算
+## べき乗計算(冪乗)
+### 高速べき乗計算
 
 $x^n$ を高速に求める
 
 ```cpp
 // x^n
-ll pow(ll x, ll n) {
+ll intpow(ll x, ll n) {
     long long ret = 1;
     while (n > 0) {
         if (n & 1) ret *= x;
@@ -297,29 +298,13 @@ ll pow(ll x, ll n) {
 
 ref: [逆元](#逆元)
 
-## 素数
 
-### エラトステネスのふるい
-
-```cpp
-int MAX = 100005;
-vector<int> isprime(MAX, true);
-isprime[0] = isprime[1] = false;
-for (int i = 2; i < MAX; i++) {
-    if (isprime[i]) {
-        for (int j = i+i; j < MAX; j+=i) {
-            isprime[j] = false;
-        }
-    }
-}
-```
-
-## 逆元
+### 逆元
 
 ref: [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆元から離散対数まで 〜](https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a)
 
 
-### exponential mod
+#### exponential mod
 
 ```
 // べき乗 mod
@@ -346,7 +331,26 @@ ll modinvpow(ll x, ll mod) {
 }
 ```
 
-## 行列操作
+
+## 素数
+
+### エラトステネスのふるい
+
+```cpp
+int MAX = 100005;
+vector<int> isprime(MAX, true);
+isprime[0] = isprime[1] = false;
+for (int i = 2; i < MAX; i++) {
+    if (isprime[i]) {
+        for (int j = i+i; j < MAX; j+=i) {
+            isprime[j] = false;
+        }
+    }
+}
+```
+
+
+## 行列
 
 $H \times W$ の行列 $A$ を考える.
 $A$ に以下の操作を加えたでできた行列を $A^\prime$ とする.
@@ -544,6 +548,48 @@ f c
 transpose
 d e f
 z b c
+```
+
+### べき乗
+
+```cpp
+#define rep(i, n) for (int i = 0; i < (n); ++i)
+using ll = long long;
+using vvll = vector<vector<ll>>;
+ll MOD = ((ll)1e9);
+
+struct Matrix {
+    vvll data;
+
+    Matrix(vvll data) { this->data = data; }
+
+    Matrix operator*(const Matrix& other) {
+        int n = data.size();
+        int m = other.data[0].size();
+        int l = other.data.size();
+        vvll res(n, vll(m, 0));
+        rep(i, n) rep(j, m) rep(k, l) {
+            res[i][j] += data[i][k] * other.data[k][j];
+            res[i][j] %= MOD;
+        }
+        return Matrix(res);
+    }
+
+    Matrix exp(ll k) {
+        int n = data.size();
+        Matrix res(vvll(n, vll(n, 0)));
+        rep(i, n) res.data[i][i] = 1;
+        Matrix a = *this;
+        while (k > 0) {
+            if (k & 1)
+                res = res * a;
+            a = a * a;
+            k >>= 1;
+        }
+        return res;
+    }
+};
+
 ```
 
 ## ランレングス圧縮 (Run Length Encoding)

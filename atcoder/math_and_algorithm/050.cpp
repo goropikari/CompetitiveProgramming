@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_aq
+/*2025年01月12日 17時23分01秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,21 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
-
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
-}
-
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    ll a, b;
+    cin >> a >> b;
+
+    ll mod = 1000000007;
+    ll base = a;
+    ll ans = 1;
+    while (b) {
+        if (b % 2 == 1) {
+            ans *= base;
+            ans %= mod;
+        }
+        b /= 2;
+        base *= base;
+        base %= mod;
+    }
+    cout << ans << endl;
 }

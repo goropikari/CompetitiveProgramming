@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/abc145_d
+/*2025年01月12日 18時01分36秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,54 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
+ll modpow(ll a, ll b, ll mod) {
+    ll base = a;
+    ll ans = 1;
+    while (b) {
+        if (b % 2 == 1) {
+            ans *= base;
+            ans %= mod;
+        }
+        b /= 2;
+        base *= base;
+        base %= mod;
+    }
+    return ans;
+}
 
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
+ll modinv(ll x, ll mod) {
+    return modpow(x, mod - 2, mod);
 }
 
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    ll X, Y;
+    cin >> X >> Y;
+    ll x = 2 * Y - X, y = 2 * X - Y;
+
+    if (x < 0 || y < 0 || x % 3 != 0 || y % 3 != 0) {
+        cout << 0 << endl;
+        return;
+    }
+
+    x /= 3;
+    y /= 3;
+
+    ll mod = (ll)1e9 + 7;
+    ll bunshi = 1, bunbo = 1;
+    rep(i, x + y) {
+        bunshi *= i + 1;
+        bunshi %= mod;
+    }
+    rep(i, x) {
+        bunbo *= i + 1;
+        bunbo %= mod;
+    }
+    rep(i, y) {
+        bunbo *= i + 1;
+        bunbo %= mod;
+    }
+
+    ll ans = bunshi * modinv(bunbo, mod);
+    ans %= mod;
+    cout << ans << endl;
 }

@@ -1,6 +1,7 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
-// #include <atcoder/all>
-// using namespace atcoder;
+/*https://atcoder.jp/contests/abc259/tasks/abc259_d*/
+/*2025年01月10日 22時57分16秒*/
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
@@ -52,10 +53,9 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
+vll x, y, r;
 
-int intersect() {
-    int i = 0, j = 1;
+bool intersect(int i, int j) {
     if (r[i] > r[j])
         swap(i, j);
 
@@ -63,18 +63,45 @@ int intersect() {
     ll dsq = dx * dx + dy * dy;
     ll r1 = r[i], r2 = r[j];
     if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
+        return true;
     else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
+        return true;
     else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
+        return false;
     else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
+        return false;
 
-    return 3;
+    return true;
 }
 
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    int N;
+    cin >> N;
+    ll sx, sy, tx, ty;
+    cin >> sx >> sy >> tx >> ty;
+    x.resize(N);
+    y.resize(N);
+    r.resize(N);
+    rep(i, N) cin >> x[i] >> y[i] >> r[i];
+
+    int sid = -1, tid = -1;
+    rep(i, N) {
+        ll dsx = sx - x[i], dsy = sy - y[i];
+        ll dssq = dsx * dsx + dsy * dsy;
+        if (dssq == r[i] * r[i])
+            sid = i;
+        ll dtx = tx - x[i], dty = ty - y[i];
+        ll dtsq = dtx * dtx + dty * dty;
+        if (dtsq == r[i] * r[i])
+            tid = i;
+    }
+
+    dsu uf(N);
+    rep(i, N) {
+        rep2(j, i + 1, N) {
+            if (intersect(i, j))
+                uf.merge(i, j);
+        }
+    }
+    yesno(uf.same(sid, tid));
 }

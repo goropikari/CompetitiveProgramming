@@ -1,9 +1,11 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_am
+/*2025年01月12日 02時31分43秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -52,29 +54,37 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
+vvll graph;
+vector<bool> visited;
 
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
+void dfs(int now, int p) {
+    visited[now] = true;
+    for (int nx : graph[now]) {
+        if (nx == p)
+            continue;
+        if (visited[nx])
+            continue;
+        dfs(nx, now);
+    }
 }
 
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    int N, M;
+    cin >> N >> M;
+    graph = vvll(N);
+    visited = vector<bool>(N, false);
+    rep(i, M) {
+        ll a, b;
+        cin >> a >> b;
+        a--, b--;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+    dfs(0, -1);
+
+    if (accumulate(all(visited), 0) == N) {
+        puts("The graph is connected.");
+    } else {
+        puts("The graph is not connected.");
+    }
 }

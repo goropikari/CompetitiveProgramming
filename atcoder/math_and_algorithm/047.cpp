@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ao
+/*2025年01月12日 03時09分49秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,43 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
-
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
-}
-
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    int N, M;
+    cin >> N >> M;
+    vll A(M), B(M);
+    rep(i, M) {
+        cin >> A[i] >> B[i];
+        A[i]--, B[i]--;
+    }
+
+    vvint graph(N);
+    rep(i, M) {
+        graph[A[i]].push_back(B[i]);
+        graph[B[i]].push_back(A[i]);
+    }
+
+    vint col(N, -1);
+    rep(i, N) {
+        if (col[i] >= 0)
+            continue;
+        col[i] = 0;
+        queue<int> que;
+        que.push(i);
+        while (que.size()) {
+            int x = que.front();
+            que.pop();
+            int c = col[x];
+            for (int nx : graph[x]) {
+                if (col[nx] == c) {
+                    yesno(false);
+                    return;
+                }
+                if (col[nx] < 0) {
+                    que.push(nx);
+                    col[nx] = 1 - c;
+                }
+            }
+        }
+    }
+    yesno(true);
 }

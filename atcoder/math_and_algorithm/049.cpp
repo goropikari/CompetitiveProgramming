@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ap
+/*2025年01月12日 17時16分01秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,24 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
-
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
+ll fib(ll n) {
+    if (n <= 2)
         return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
+    ll ans = 0;
+    n -= 2;
+    vll v = {1, 1};
+    while (n) {
+        ans = (v[0] + v[1]);
+        ans %= 1000000007LL;
+        v[1] = v[0];
+        v[0] = ans;
+        n--;
+    }
+    return ans;
 }
 
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    ll N;
+    cin >> N;
+    cout << fib(N) << endl;
 }

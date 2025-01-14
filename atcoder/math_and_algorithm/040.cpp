@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ak
+/*2025年01月12日 01時49分20秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,29 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
-
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
-}
-
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    ll N;
+    cin >> N;
+    vll A(N - 1);
+    rep(i, N - 1) cin >> A[i];
+    ll M;
+    cin >> M;
+    vll B(M);
+    rep(i, M) {
+        cin >> B[i];
+        B[i]--;
+    }
+
+    vll cumsum(N);
+    rep(i, N - 1) cumsum[i + 1] = A[i];
+    rep2(i, 1, N) cumsum[i] += cumsum[i - 1];
+
+    ll ans = 0;
+    rep(i, M - 1) {
+        ll a = B[i], b = B[i + 1];
+        if (a > b)
+            swap(a, b);
+        ans += cumsum[b] - cumsum[a];
+    }
+    cout << ans << endl;
 }

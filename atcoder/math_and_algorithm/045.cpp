@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/typical90_bz
+/*2025年01月12日 02時54分29秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,25 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
-
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
-}
-
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    int N, M;
+    cin >> N >> M;
+    vvll graph(N);
+    rep(i, M) {
+        int a, b;
+        cin >> a >> b;
+        a--, b--;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+
+    ll ans = 0;
+    rep(i, N) {
+        auto& v = graph[i];
+        sort(all(v));
+        auto it = lower_bound(all(v), i);
+        if (distance(v.begin(), it) == 1)
+            ans++;
+    }
+    cout << ans << endl;
 }

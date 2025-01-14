@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/abc167_d
+/*2025年01月13日 17時51分56秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,45 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
-
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
-}
-
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    ll N, K;
+    cin >> N >> K;
+    vll A(N);
+    rep(i, N) {
+        cin >> A[i];
+        A[i]--;
+    }
+
+    vll h;
+    vector<bool> visited(N, false);
+    ll now = 0;
+
+    while (!visited[now]) {
+        h.push_back(now);
+        visited[now] = true;
+        now = A[now];
+    }
+
+    ll tail_len = 0;
+    rep(i, h.size()) {
+        if (now == h[i]) {
+            tail_len = i;
+            break;
+        }
+    }
+
+    ll cycle_len = h.size() - tail_len;
+    if (K <= tail_len) {
+        ll now = 0;
+        while (K) {
+            now = A[now];
+            K--;
+        }
+        cout << now + 1 << endl;
+        return;
+    }
+
+    K -= tail_len;
+    K %= cycle_len;
+    cout << h[tail_len + K] + 1 << endl;
 }

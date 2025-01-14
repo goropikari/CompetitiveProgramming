@@ -1,4 +1,4 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_at
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +52,49 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
+ll MOD = ((ll)1e9);
 
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
+struct Matrix {
+    vvll data;
 
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
+    Matrix(vvll data) { this->data = data; }
 
-    return 3;
-}
+    Matrix operator*(const Matrix& other) {
+        int n = data.size();
+        int m = other.data[0].size();
+        int l = other.data.size();
+        vvll res(n, vll(m, 0));
+        rep(i, n) rep(j, m) rep(k, l) {
+            res[i][j] += data[i][k] * other.data[k][j];
+            res[i][j] %= MOD;
+        }
+        return Matrix(res);
+    }
+
+    Matrix exp(ll k) {
+        int n = data.size();
+        Matrix res(vvll(n, vll(n, 0)));
+        rep(i, n) res.data[i][i] = 1;
+        Matrix a = *this;
+        while (k > 0) {
+            if (k & 1)
+                res = res * a;
+            a = a * a;
+            k >>= 1;
+        }
+        return res;
+    }
+};
 
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    ll N;
+    cin >> N;
+
+    Matrix A({
+        {1, 1},
+        {1, 0},
+    });
+
+    Matrix res = A.exp(N - 1) * Matrix({{1}, {1}});
+    cout << res.data[1][0] << endl;
 }

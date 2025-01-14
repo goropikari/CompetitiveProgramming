@@ -1,4 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_ag
+/*https://atcoder.jp/contests/abc261/tasks/abc261_d*/
+/*2025年01月11日 00時05分20秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,29 +53,44 @@ int main() {
     return 0;
 }
 
-vll x(2), y(2), r(2);
-
-int intersect() {
-    int i = 0, j = 1;
-    if (r[i] > r[j])
-        swap(i, j);
-
-    ll dx = x[i] - x[j], dy = y[i] - y[j];
-    ll dsq = dx * dx + dy * dy;
-    ll r1 = r[i], r2 = r[j];
-    if (dsq == (r1 + r2) * (r1 + r2))
-        return 4;
-    else if (dsq == (r2 - r1) * (r2 - r1))
-        return 2;
-    else if (dsq < (r2 - r1) * (r2 - r1))
-        return 1;
-    else if (dsq > (r1 + r2) * (r1 + r2))
-        return 5;
-
-    return 3;
-}
-
 void solve() {
-    rep(i, 2) cin >> x[i] >> y[i] >> r[i];
-    cout << intersect() << endl;
+    ll N, M;
+    cin >> N >> M;
+    vll X(N + 1);
+    rep(i, N) cin >> X[i + 1];
+    map<ll, ll> bonus;
+    rep(i, M) {
+        ll c, y;
+        cin >> c >> y;
+        bonus[c] = y;
+    }
+
+    // dp[h][i][j]
+    // h: head or tail
+    // i 回目
+    // j 連続
+    vll mx(N + 1, 0);
+    vector<vector<vector<ll>>> dp(2, vvll(N + 1, vll(N + 1, 0)));
+    rep2(i, 1, N + 1) {
+        chmax(dp[0][i][0], dp[0][i - 1][0]);
+        // rep(k, i) {
+        //     chmax(dp[0][i][0], dp[1][i - 1][k]);
+        // }
+        chmax(dp[0][i][0], mx[i - 1]);
+        rep2(j, 1, i + 1) {
+            if (j == 1) {
+                chmax(dp[1][i][j], dp[0][i - 1][j - 1] + bonus[j] + X[i]);
+            } else {
+                chmax(dp[1][i][j], dp[1][i - 1][j - 1] + bonus[j] + X[i]);
+            }
+            chmax(mx[i], dp[1][i][j]);
+        }
+    }
+
+    ll ans = 0;
+    rep(j, N + 1) {
+        chmax(ans, dp[0][N][j]);
+        chmax(ans, dp[1][N][j]);
+    }
+    cout << ans << endl;
 }
