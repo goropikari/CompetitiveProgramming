@@ -306,7 +306,7 @@ ref: [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆�
 
 #### exponential mod
 
-```
+```cpp
 // べき乗 mod
 // x^n mod m
 ll modpow(ll x, ll n, ll mod) {
@@ -326,7 +326,7 @@ $a^{-1} \equiv a^{p-2} \mod p$
 ```cpp
 // べき乗 inv mod
 // x^{-1} mod m
-ll modinvpow(ll x, ll mod) {
+ll modinv(ll x, ll mod) {
     return modpow(x, mod-2, mod);
 }
 ```
