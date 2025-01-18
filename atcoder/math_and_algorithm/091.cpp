@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_br
+/*2025年01月16日 20時14分05秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -54,24 +54,17 @@ int main() {
 }
 
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
+    ll N, X;
+    cin >> N >> X;
 
-    if (a < c) {
-        yesno(true);
-        return;
-    }
-
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
+    ll ans = 0;
+    for (ll a = 1; a <= N; a++) {
+        for (ll b = a + 1; b <= N; b++) {
+            for (ll c = b + 1; c <= N; c++) {
+                if (a + b + c == X)
+                    ans++;
+            }
         }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
     }
-    yesno(a < 1);
+    cout << ans << endl;
 }

@@ -1,10 +1,11 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/abc204_d
+/*2025年01月16日 22時28分43秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -54,24 +55,27 @@ int main() {
 }
 
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
+    ll N;
+    cin >> N;
+    vll T(N);
+    rep(i, N) cin >> T[i];
 
-    if (a < c) {
-        yesno(true);
-        return;
+    ll tot = accumulate(all(T), 0);
+
+    vector<bool> par(tot + 1, 0);
+    par[0] = 1;
+
+    rep(i, N) {
+        for (ll j = tot; j - T[i] >= 0; j--) {
+            if (par[j - T[i]])
+                par[j] = 1;
+        }
     }
 
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
+    ll ans = tot;
+    rep(i, tot + 1) {
+        if (par[i])
+            chmin(ans, max(1LL * i, tot - i));
     }
-    yesno(a < 1);
+    cout << ans << endl;
 }

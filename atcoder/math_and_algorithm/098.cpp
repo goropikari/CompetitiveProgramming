@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bu
+/*2025年01月18日 01時37分57秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -53,25 +53,50 @@ int main() {
     return 0;
 }
 
+struct Point {
+    ll x, y;
+
+    Point operator-(const Point& b) {
+        return Point({this->x - b.x, this->y - b.y});
+    }
+
+    ll cross(const Point& b) { return this->x * b.y - this->y * b.x; }
+};
+
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
+    ll N;
+    cin >> N;
 
-    if (a < c) {
-        yesno(true);
-        return;
+    vll X(N), Y(N);
+    rep(i, N) cin >> X[i] >> Y[i];
+
+    ll A, B;
+    cin >> A >> B;
+
+    vector<Point> pts(N);
+    rep(i, N) pts[i] = {X[i], Y[i]};
+
+    vector<Point> edges(N);
+    rep(i, N) {
+        edges[i] = pts[(i + 1) % N] - pts[i];
     }
 
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
+    Point target = {A, B};
+
+    rep(i, N) {
+        Point v = target - pts[i];
+        if (edges[i].cross(edges[(i + 1) % N]) < 0) {
+            if (edges[i].cross(v) >= 0) {
+                cout << "OUTSIDE" << endl;
+                return;
+            }
+        } else {
+            if (edges[i].cross(v) <= 0) {
+                cout << "OUTSIDE" << endl;
+                return;
+            }
         }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
     }
-    yesno(a < 1);
+
+    cout << "INSIDE" << endl;
 }

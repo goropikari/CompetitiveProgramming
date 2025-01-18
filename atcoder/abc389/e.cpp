@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+/*https://atcoder.jp/contests/abc389/tasks/abc389_e*/
+/*2025年01月18日 21時53分36秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -53,25 +53,17 @@ int main() {
     return 0;
 }
 
+struct Item {
+    ll p, num, cost;
+    ll numsame, consume;
+};
+
+bool operator>(const Item& a, const Item& b) {
+    return a.cost > b.cost;
+}
+
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
-
-    if (a < c) {
-        yesno(true);
-        return;
-    }
-
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
-    }
-    yesno(a < 1);
+    ll N, M;
+    cin >> N >> M;
+    vll P(N);
 }

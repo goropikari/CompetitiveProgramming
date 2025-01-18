@@ -1,10 +1,11 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/typical90_j
+/*2025年01月16日 21時57分25秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <algorithm>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -53,25 +54,50 @@ int main() {
     return 0;
 }
 
+struct Student {
+    ll id, score;
+};
+
+bool operator<(const Student& a, const Student& other) {
+    return a.id < other.id;
+}
+
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
-
-    if (a < c) {
-        yesno(true);
-        return;
+    ll N;
+    cin >> N;
+    vector<vector<Student>> scores(2);
+    rep(i, N) {
+        ll c, p;
+        cin >> c >> p;
+        c--;
+        scores[c].push_back({i, p});
     }
 
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
+    vvll cumsum(2, vll(1, 0));
+    rep(i, 2) {
+        ll size = scores[i].size();
+        rep(j, size) {
+            cumsum[i].push_back(scores[i][j].score);
+            cumsum[i][j + 1] += cumsum[i][j];
         }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
     }
-    yesno(a < 1);
+
+    ll Q;
+    cin >> Q;
+    rep(i, Q) {
+        ll l, r;
+        cin >> l >> r;
+        l--, r--;
+
+        vll ans;
+        rep(k, 2) {
+            auto lit = lower_bound(all(scores[k]), Student({l, -1}));
+            auto rit = upper_bound(all(scores[k]), Student({r, INF}));
+
+            int lid = distance(scores[k].begin(), lit);
+            int rid = distance(scores[k].begin(), rit);
+            ans.push_back(cumsum[k][rid] - cumsum[k][lid]);
+        }
+        print(ans);
+    }
 }

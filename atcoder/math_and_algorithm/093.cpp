@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/typical90_al
+/*2025年01月16日 20時19分28秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -53,25 +53,38 @@ int main() {
     return 0;
 }
 
+ll gcd(ll a, ll b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+ll tenth(ll t) {
+    ll cnt = 0;
+    while (t) {
+        cnt++;
+        t /= 10;
+    }
+    return cnt - 1;
+}
+
+ll istenth(ll x) {
+    ll sum = 0;
+    while (x) {
+        sum += x % 10;
+        x /= 10;
+    }
+    return sum == 1;
+}
+
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
+    ll A, B;
+    cin >> A >> B;
 
-    if (a < c) {
-        yesno(true);
-        return;
+    ll d = gcd(A, B);
+    if (A / d > (ll)1e18 / B) {
+        puts("Large");
+    } else {
+        cout << A / d * B << endl;
     }
-
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
-    }
-    yesno(a < 1);
 }

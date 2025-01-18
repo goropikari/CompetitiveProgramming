@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+/*https://atcoder.jp/contests/abc389/tasks/abc389_a*/
+/*2025年01月18日 20時58分37秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -54,24 +54,7 @@ int main() {
 }
 
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
-
-    if (a < c) {
-        yesno(true);
-        return;
-    }
-
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
-    }
-    yesno(a < 1);
+    string s;
+    cin >> s;
+    cout << (s[0] - '0') * (s[2] - '0') << endl;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bs
+/*2025年01月16日 20時16分19秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -18,8 +18,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+const ll INF = (ll)2e18 + 9;
+// const int INF = (int)2e9 + 7;
 // const ll MOD = (ll)1e9+9;
 template <typename T>
 void chmin(T& a, T b) {
@@ -54,24 +54,16 @@ int main() {
 }
 
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
+    ll N;
+    cin >> N;
 
-    if (a < c) {
-        yesno(true);
-        return;
-    }
+    ll ans = INF;
+    for (ll x = 1; x * x <= N; x++) {
+        if (N % x != 0)
+            continue;
 
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
+        ll a = x, b = N / x;
+        chmin(ans, 2 * a + 2 * b);
     }
-    yesno(a < 1);
+    cout << ans << endl;
 }

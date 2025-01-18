@@ -1,10 +1,11 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/typical90_y
+/*2025年01月16日 20時03分38秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <string>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -53,25 +54,46 @@ int main() {
     return 0;
 }
 
-void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
+ll f(string m) {
+    ll ans = 1;
+    for (char c : m) {
+        ans *= c - '0';
+    }
+    return ans;
+}
 
-    if (a < c) {
-        yesno(true);
+ll N, B;
+ll ans = 0;
+// set<ll> S;
+
+void dfs(string s) {
+    if (s.size() == 12)
         return;
+
+    ll t = f(s) + B;
+    if (t > N)
+        return;
+    string m = to_string(t);
+    sort(all(m));
+    if (m == s) {
+        ans++;
+        // S.insert(t);
     }
 
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
+    int b = s.back() - '0';
+    rep2(i, b, 10) {
+        dfs(s + (char)('0' + i));
     }
-    yesno(a < 1);
+}
+
+void solve() {
+    cin >> N >> B;
+
+    rep2(i, 0, 10) {
+        string s = "";
+        s.push_back('0' + i);
+        dfs(s);
+    }
+    // cout << S.size() << endl;
+    cout << ans << endl;
 }

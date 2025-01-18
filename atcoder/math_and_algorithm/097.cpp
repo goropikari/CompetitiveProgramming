@@ -1,10 +1,11 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bt
+/*2025年01月18日 01時25分17秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (int i = 0; i < (n); ++i)
@@ -54,24 +55,26 @@ int main() {
 }
 
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
+    ll L, R;
+    cin >> L >> R;
 
-    if (a < c) {
-        yesno(true);
-        return;
+    vector<bool> prime(R - L + 1, true);
+    if (L == 1)
+        prime[0] = false;
+
+    for (ll i = 2; i * i <= R; i++) {
+        ll minv = (L + i - 1) / i * i;
+        for (ll j = minv; j <= R; j += i) {
+            if (i == j)
+                continue;
+            prime[j - L] = false;
+        }
     }
 
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
-    }
-    yesno(a < 1);
+    ll ans = 0;
+    for (bool x : prime)
+        if (x)
+            ans++;
+    // ll ans = accumulate(all(prime), 0);
+    cout << ans << endl;
 }

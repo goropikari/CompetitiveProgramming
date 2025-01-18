@@ -1,7 +1,7 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
-/*2025年01月16日 01時52分22秒*/
-// #include <atcoder/all>
-// using namespace atcoder;
+// https://atcoder.jp/contests/math-and-algorithm/tasks/typical90_am
+/*2025年01月18日 16時41分31秒*/
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
@@ -53,25 +53,41 @@ int main() {
     return 0;
 }
 
+vvll graph;
+vll depth;
+
+void dfs(int x, int p) {
+    depth[x] = 1;
+    for (int nx : graph[x]) {
+        if (nx == p)
+            continue;
+        dfs(nx, x);
+        depth[x] += depth[nx];
+    }
+}
+
 void solve() {
-    ll a, b, c;
-    cin >> a >> b >> c;
-
-    if (a < c) {
-        yesno(true);
-        return;
+    int N;
+    cin >> N;
+    vll A(N), B(N);
+    rep(i, N - 1) {
+        cin >> A[i] >> B[i];
+        A[i]--, B[i]--;
     }
 
-    ll x = c;
-    rep(i, 60) {
-        if ((b >> i) & 1) {
-            a /= x;
-        }
-        if (x > (ll)1e9 && (b >> (i + 1))) {
-            a = 0;
-            break;
-        }
-        x *= x;
+    depth = vll(N);
+    graph = vvll(N);
+    rep(i, N - 1) {
+        graph[A[i]].push_back(B[i]);
+        graph[B[i]].push_back(A[i]);
     }
-    yesno(a < 1);
+
+    dfs(0, -1);
+
+    ll ans = 0;
+    rep(i, N) {
+        ll x = depth[i];
+        ans += x * (N - x);
+    }
+    cout << ans << endl;
 }
