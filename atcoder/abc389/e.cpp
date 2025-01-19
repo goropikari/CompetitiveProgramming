@@ -12,7 +12,7 @@
 using namespace std;
 using ll = long long;
 // using P = pair<ll,ll>;
-using P = pair<int, int>;
+// using P = pair<int, int>;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
@@ -53,17 +53,49 @@ int main() {
     return 0;
 }
 
-struct Item {
-    ll p, num, cost;
-    ll numsame, consume;
-};
+ll N, M;
+vll P;
+ll tot, num;
 
-bool operator>(const Item& a, const Item& b) {
-    return a.cost > b.cost;
+// x 円未満の商品をすべて買うことができるか
+bool judge(ll x) {
+    tot = num = 0;
+    rep(i, N) {
+        // (2k-1)Pi < x
+        // <-> (2k-1)Pi <= x-1
+        ll k = ((x - 1) / P[i] + 1) / 2;
+        if (k == 0)
+            continue;
+        if (M / k / k / P[i] == 0) {
+            // M を超えるので ng
+            return false;
+        }
+        tot += k * k * P[i];
+        num += k;
+        if (tot > M)
+            return false;
+    }
+    return true;
 }
 
 void solve() {
-    ll N, M;
     cin >> N >> M;
-    vll P(N);
+    P = vll(N);
+    rep(i, N) cin >> P[i];
+
+    // judge(x) が true を返す最大の x を探索
+    ll ac = 0, wa = M + 1;
+    while (abs(ac - wa) > 1) {
+        ll x = (ac + wa) / 2;
+        if (judge(x))
+            ac = x;
+        else
+            wa = x;
+    }
+
+    // 二部探索終了時に ac 側で終わったのか wa 側で終わったかによって
+    // tot, num の値が変わるので改めて ac の値で計算
+    judge(ac);
+    num += (M - tot) / ac;
+    cout << num << endl;
 }

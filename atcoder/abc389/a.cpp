@@ -54,7 +54,12 @@ int main() {
 }
 
 void solve() {
-    string s;
-    cin >> s;
-    cout << (s[0] - '0') * (s[2] - '0') << endl;
+    // string s;
+    // cin >> s;
+    // cout << (s[0] - '0') * (s[2] - '0') << endl;
+
+    int a, b;
+    char c;
+    cin >> a >> c >> b;
+    cout << a * b << endl;
 }
