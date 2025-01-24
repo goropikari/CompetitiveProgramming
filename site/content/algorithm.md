@@ -650,47 +650,103 @@ void solve() {
 
 ### ダイクストラ法 (Dijkstra)
 
+https://judge.yosupo.jp/submission/263372
+
 ```cpp
+const ll INF = (ll)2e18 + 9;
+
+struct Edge {
+    int to;
+    long long int weight;
+};
+
+bool operator>(const Edge& a, const Edge& b) {
+    return a.weight > b.weight;
+}
+
 using Graph = vector<vector<Edge>>;
 
-// node s からの最短距離を求める
-// 到達できない node との距離は INF になる.
-vector<int> dijkstra(Graph &graph, int s) {
-    int n = graph.size();
-    vector<int> dist(n, INF);
-    dist[s] = 0;
-    // P: cost, node
-    priority_queue<P, vector<P>, greater<P>> pq;
-    pq.push({0, s});
-    while (!pq.empty()) {
-        auto node = pq.top();
-        pq.pop();
+struct Dijkstra {
+    int n; // ノード数
+    Graph graph;
+    vector<long long int> dist; // start からの最短距離
+    vector<int> from; // from[i]: i 番目のノードにどこから来たか
+    int start = -1;
 
-        for (auto e : graph[node.second]) {
-            if (dist[e.to] > dist[node.second] + e.cost) {
-                dist[e.to] = dist[node.second] + e.cost;
-                pq.push({dist[e.to], e.to});
+    Dijkstra(int n) : n(n), graph(n), dist(n, INF), from(n, -1) {}
+
+    void add_edge(int from, int to, long long int weight) {
+        graph[from].push_back({to, weight});
+    }
+
+    void run(int start) {
+        dist[start] = 0;
+        this->start = start;
+
+        // cost, node
+        using P = pair<long long int, int>;
+        priority_queue<P, vector<P>, greater<P>> pq;
+        pq.push({0, start});
+
+        while (pq.size()) {
+            auto [cost, node] = pq.top();
+            pq.pop();
+
+            if (dist[node] < cost)
+                continue;
+
+            for (auto [to, weight] : graph[node]) {
+                if (dist[to] > dist[node] + weight) {
+                    dist[to] = dist[node] + weight;
+                    from[to] = node;
+                    pq.push({dist[to], to});
+                }
             }
         }
     }
 
-    return dist;
-}
-
-void solve() {
-    int v, e, r;
-    cin >> v >> e >> r;
-    Graph graph(v);
-    rep(i,e) {
-        int s, t, d;
-        cin >> s >> t >> d;
-        graph[s].push_back({t, d});
+    // start から fin までの最短距離.  到達不可のときは -1 を返す
+    long long int distance(int fin) {
+        if (dist[fin] == INF)
+            return -1;
+        return dist[fin];
     }
 
-    auto dist = dijkstra(graph, r);
-    rep(i,v) {
-        if (dist[i] == INF) cout << "INF" << endl;
-        else cout << dist[i] << endl;
+    // start -> fin への経路
+    vector<int> path(int fin) {
+        vector<int> ans = {fin};
+        int now = fin;
+        while (now != start) {
+            now = from[now];
+            ans.push_back(now);
+        }
+
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+void solve() {
+    int N, M, s, t;
+    cin >> N >> M >> s >> t;
+
+    Dijkstra graph(N);
+    rep(i, M) {
+        ll a, b, c;
+        cin >> a >> b >> c;
+        graph.add_edge(a, b, c);
+    }
+
+    graph.run(s);
+    if (graph.distance(t) == -1) {
+        cout << -1 << endl;
+        return;
+    }
+
+    vint path = graph.path(t);
+    cout << graph.distance(t) << ' ' << path.size() - 1 << endl;
+    rep(i, path.size() - 1) {
+        cout << path[i] << ' ' << path[i + 1] << endl;
     }
 }
 ```
