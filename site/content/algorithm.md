@@ -267,7 +267,7 @@ int lcm(int a, int b) {
 }
 ```
 
-## cumsum
+## 累積和 (cumsum)
 
 ```cpp
 template<typename T>
@@ -277,6 +277,10 @@ vector<T> cumsum(vector<T> v) {
     return v;
 }
 ```
+
+### 3次元
+
+詳細は [ABC 366]({{< ref "abc/366.md" >}}) に書いた
 
 ## べき乗計算(冪乗)
 ### 高速べき乗計算
