@@ -1,20 +1,16 @@
-/*https://atcoder.jp/contests/abc353/tasks/abc353_c*/
-/*2024年12月31日 23時57分47秒*/
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+/*https://atcoder.jp/contests/abc353/tasks/abc353_d*/
+/*2025年02月12日 03時40分27秒*/
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
-#include <iterator>
-#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
-#define rep(i, n) for (int i = 0; i < (n); ++i)
-#define rep2(i, k, n) for (int i = (k); i < (n); ++i)
+#define rep(i, n) for (long long int i = 0; i < (n); ++i)
+#define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
 using namespace std;
 using ll = long long;
-// using P = pair<ll,ll>;
-using P = pair<int, int>;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
@@ -22,7 +18,7 @@ using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
 const int INF = (int)2e9 + 7;
-// const ll MOD = (ll)1e9+9;
+
 template <typename T>
 void chmin(T& a, T b) {
     a = min(a, b);
@@ -60,21 +56,22 @@ void solve() {
     cin >> n;
     vll a(n);
     rep(i, n) cin >> a[i];
-    sort(all(a));
 
-    vll cumsum(n + 1, 0);
-    rep(i, n) {
-        cumsum[i + 1] = cumsum[i] + a[i];
+    vll d(11, 0);
+    for (ll x : a) {
+        d[to_string(x).size()]++;
     }
 
-    ll ans = 0;
-    rep(i, n) {
-        ll rem = (ll)1e8 - a[i];
-        auto it = lower_bound(a.begin() + i + 1, a.end(), rem);
-
-        int d = distance(a.begin() + i, it);
-        ans += (n - i - 1) * a[i] + cumsum[n] - cumsum[i + 1] -
-               ((ll)1e8 * (n - d - i));
+    mint ans = 0;
+    rep2(i, 1, n) {
+        ans += i * a[i];
     }
-    cout << ans << endl;
+    rep(i, n - 1) {
+        d[to_string(a[i]).size()]--;
+        rep(j, 11) {
+            ans += ((mint)10).pow(j) * a[i] * d[j];
+        }
+    }
+
+    cout << ans.val() << endl;
 }
