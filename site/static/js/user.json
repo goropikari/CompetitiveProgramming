@@ -238,5 +238,11 @@
         "performance": 960,
         "rating": 1004,
         "url": "https://atcoder.jp/contests/abc391"
+    },
+    {
+        "contest": "鹿島建設プログラミングコンテスト2025（AtCoder Beginner Contest 394）",
+        "performance": 1058,
+        "rating": 1009,
+        "url": "https://atcoder.jp/contests/abc394"
     }
 ]
