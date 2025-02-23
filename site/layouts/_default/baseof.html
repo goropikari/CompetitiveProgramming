@@ -1,20 +1,4 @@
 {{ partial "head.html" . }}
-  <!-- katex 用設定 -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      renderMathInElement(document.body, {
-        delimiters: [
-          { left: "$$", right: "$$", display: true },
-          { left: "$", right: "$", display: false }
-        ],
-        macros: {
-          // \floor をカスタム定義
-          "\\floor": "\\left\\lfloor #1 \\right\\rfloor"
-        }
-      });
-    });
-  </script>
-
   <body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}}">
   {{ partial "sidebar.html" . }}
     <main class="content container">
