@@ -8,7 +8,8 @@ async function loadData() {
         return data.map(entry => ({
             contest: entry.contest,
             performance: entry.performance,
-            rating: entry.rating
+            rating: entry.rating,
+            url: entry.url
         }));
     } catch (error) {
         console.error('Error loading data:', error);
@@ -66,6 +67,16 @@ function addPerformances() {
     renderTable();
 }
 
+function getColorClass(value) {
+    if (value < 400) return 'user-gray';
+    if (value < 800) return 'user-brown';
+    if (value < 1200) return 'user-green';
+    if (value < 1600) return 'user-cyan';
+    if (value < 2000) return 'user-blue';
+    if (value < 2400) return 'user-yellow';
+    if (value < 2800) return 'user-orange';
+    return 'user-red';
+}
 
 function renderTable() {
     if (contestData) {
@@ -88,11 +99,27 @@ function renderTable() {
         const tbody = document.createElement('tbody');
         contestData.forEach(data => {
             const row = document.createElement('tr');
-            [data.contest, data.performance, data.rating].forEach(cellData => {
-                const td = document.createElement('td');
-                td.textContent = cellData;
-                row.appendChild(td);
-            });
+            const contestCell = document.createElement('td');
+            if (data.url) {
+                const link = document.createElement('a');
+                link.href = data.url;
+                link.textContent = data.contest;
+                contestCell.appendChild(link);
+            } else {
+                contestCell.textContent = data.contest;
+            }
+            row.appendChild(contestCell);
+
+            const performanceCell = document.createElement('td');
+            performanceCell.textContent = data.performance;
+            performanceCell.className = getColorClass(data.performance);
+            row.appendChild(performanceCell);
+
+            const ratingCell = document.createElement('td');
+            ratingCell.textContent = data.rating;
+            ratingCell.className = getColorClass(data.rating);
+            row.appendChild(ratingCell);
+
             tbody.appendChild(row);
         });
         table.appendChild(tbody);
