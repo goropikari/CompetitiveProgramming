@@ -1,0 +1,60 @@
+{{ define "main" }}
+
+<h1>Rating Calculator</h1>
+<div id="result" class="table-container"></div>
+<textarea id="performanceInput" rows="5" placeholder="パフォーマンスを改行区切りで入力してください"></textarea>
+<button onclick="addPerformances()">パフォーマンスを追加</button>
+<script type="module" src="{{ "js/rating.js" | relURL }}"></script>
+
+<style>
+.calculator {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin: 10px 0;
+    padding: 5px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.table-container {
+    max-height: 400px;  /* スクロール可能な高さを設定 */
+    overflow-y: auto;   /* 垂直スクロールを有効化 */
+    margin: 20px 0;     /* 上下のマージン */
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    position: sticky;  /* ヘッダーを固定 */
+    top: 0;           /* コンテナの一番上に固定 */
+    z-index: 1;       /* 他の要素の上に表示 */
+}
+
+/* スクロールバーのスタイリング（オプション）
+## Error
+```error
+Early stop: content_filter
+</style>
+{{ end }}
