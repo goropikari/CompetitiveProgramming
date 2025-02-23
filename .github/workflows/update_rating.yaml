@@ -58,5 +58,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: update-files-${{ env.date }}
+        base: "main"
         title: "Update performance data"
         body: "This PR updates performance data by running download_user_performance.py"
