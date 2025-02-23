@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc296/tasks/abc296_d*/
-/*2025年02月23日 19時52分34秒*/
+/*https://atcoder.jp/contests/abc393/tasks/abc393_d*/
+/*2025年02月17日 20時10分11秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -16,8 +16,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
-// const int INF = (int)2e9 + 7;
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -52,17 +52,41 @@ int main() {
 }
 
 void solve() {
-    ll n, m;
-    cin >> n >> m;
+    int N;
+    string S;
+    cin >> N >> S;
 
-    ll ans = INF;
-    for (ll a = 1; a <= (ll)2e6 + 5; a++) {
-        ll b = (m + a - 1) / a;
-        if (a <= n && b <= n) {
-            chmin(ans, a * b);
+    vint ids;
+    rep(i, N) {
+        if (S[i] == '1')
+            ids.push_back(i);
+    }
+
+    ll ans = 0;
+    int mid = ids[ids.size() / 2];
+    int zid = mid + 1;
+    for (int i = mid + 1; i < N; i++) {
+        while (S[zid] == '1' && zid < N)
+            zid++;
+        if (i <= zid)
+            continue;
+        if (S[i] == '1') {
+            ans += i - zid;
+            swap(S[i], S[zid]);
         }
     }
-    if (ans == INF)
-        ans = -1;
+
+    zid = mid - 1;
+    for (int i = mid - 1; i >= 0; i--) {
+        while (S[zid] == '1' && zid >= 0)
+            zid--;
+        if (zid <= i)
+            continue;
+        if (S[i] == '1') {
+            ans += zid - i;
+            swap(S[i], S[zid]);
+        }
+    }
     cout << ans << endl;
+    // cout << S << endl;
 }

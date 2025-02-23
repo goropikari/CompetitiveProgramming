@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc296/tasks/abc296_d*/
-/*2025年02月23日 19時52分34秒*/
+/*https://atcoder.jp/contests/abc394/tasks/abc394_a*/
+/*2025年02月22日 20時58分53秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -16,8 +16,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
-// const int INF = (int)2e9 + 7;
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -52,17 +52,12 @@ int main() {
 }
 
 void solve() {
-    ll n, m;
-    cin >> n >> m;
-
-    ll ans = INF;
-    for (ll a = 1; a <= (ll)2e6 + 5; a++) {
-        ll b = (m + a - 1) / a;
-        if (a <= n && b <= n) {
-            chmin(ans, a * b);
-        }
+    string s;
+    cin >> s;
+    string ans = "";
+    for (char c : s) {
+        if (c == '2')
+            ans.push_back(c);
     }
-    if (ans == INF)
-        ans = -1;
     cout << ans << endl;
 }

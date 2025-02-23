@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc280/tasks/abc280_d*/
-/*2025年02月23日 17時19分13秒*/
+/*https://atcoder.jp/contests/abc276/tasks/abc276_e*/
+/*2025年02月20日 01時22分55秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,45 +52,47 @@ int main() {
 }
 
 void solve() {
-    ll k;
-    cin >> k;
+    int H, W;
+    cin >> H >> W;
+    vector<string> grid(H);
+    rep(i, H) cin >> grid[i];
 
-    vector<pair<ll, ll>> facs;
-    {
-        ll t = k;
-        for (ll i = 2; i * i <= k; i++) {
-            if (t % i != 0)
+    int si, sj;
+    rep(i, H) rep(j, W) if (grid[i][j] == 'S') si = i, sj = j;
+    vvint mark(H, vint(W, -1));
+
+    queue<pair<int, int>> q;
+    q.push({si, sj});
+    mark[si][sj] = 0;
+
+    vint di = {0, 1, 0, -1};
+    vint dj = {1, 0, -1, 0};
+
+    while (q.size()) {
+        auto [i, j] = q.front();
+        q.pop();
+
+        int c = mark[i][j];
+        int start = c == 0;
+
+        rep(d, 4) {
+            if (start)
+                c = d + 1;
+            int ni = i + di[d], nj = j + dj[d];
+            if (clamp(ni, 0, H - 1) != ni || clamp(nj, 0, W - 1) != nj)
                 continue;
-            ll cnt = 0;
-            while (t % i == 0) {
-                cnt++;
-                t /= i;
+            if (grid[ni][nj] == '#')
+                continue;
+            int m = mark[ni][nj];
+            if (m > 0 && m != c) {
+                yesno(true);
+                return;
             }
-            facs.push_back({i, cnt});
-        }
-        if (t != 1) {
-            facs.push_back({t, 1});
+            if (m == -1) {
+                mark[ni][nj] = c;
+                q.push({ni, nj});
+            }
         }
     }
-
-    ll ac = k, wa = 1;
-    while (abs(ac - wa) > 1) {
-        ll wj = (ac + wa) / 2;
-        int ok = 1;
-        for (auto [x, cnt] : facs) {
-            ll r = 0;
-            ll t = wj;
-            while (t / x) {
-                r += t / x;
-                t /= x;
-            }
-            if (r < cnt)
-                ok = 0;
-        }
-        if (ok)
-            ac = wj;
-        else
-            wa = wj;
-    }
-    cout << ac << endl;
+    yesno(false);
 }

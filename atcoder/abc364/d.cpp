@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc296/tasks/abc296_d*/
-/*2025年02月23日 19時52分34秒*/
+/*https://atcoder.jp/contests/abc364/tasks/abc364_d*/
+/*2025年02月19日 22時13分13秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -16,8 +16,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
-// const int INF = (int)2e9 + 7;
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -52,17 +52,26 @@ int main() {
 }
 
 void solve() {
-    ll n, m;
-    cin >> n >> m;
+    ll N, Q;
+    cin >> N >> Q;
+    vll a(N);
+    rep(i, N) cin >> a[i];
+    sort(all(a));
 
-    ll ans = INF;
-    for (ll a = 1; a <= (ll)2e6 + 5; a++) {
-        ll b = (m + a - 1) / a;
-        if (a <= n && b <= n) {
-            chmin(ans, a * b);
+    rep(i, Q) {
+        ll b, k;
+        cin >> b >> k;
+
+        ll wa = -1, ac = 2e8 + 5;
+        while (abs(ac - wa) > 1) {
+            ll wj = (ac + wa) / 2;
+            auto l = lower_bound(all(a), b - wj);
+            auto r = upper_bound(all(a), b + wj);
+            if (r - l >= k)
+                ac = wj;
+            else
+                wa = wj;
         }
+        cout << ac << endl;
     }
-    if (ans == INF)
-        ans = -1;
-    cout << ans << endl;
 }

@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc296/tasks/abc296_d*/
-/*2025年02月23日 19時52分34秒*/
+/*https://atcoder.jp/contests/abc363/tasks/abc363_d*/
+/*2025年02月23日 20時32分54秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -16,8 +16,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
-// const int INF = (int)2e9 + 7;
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -52,17 +52,30 @@ int main() {
 }
 
 void solve() {
-    ll n, m;
-    cin >> n >> m;
-
-    ll ans = INF;
-    for (ll a = 1; a <= (ll)2e6 + 5; a++) {
-        ll b = (m + a - 1) / a;
-        if (a <= n && b <= n) {
-            chmin(ans, a * b);
-        }
+    ll n;
+    cin >> n;
+    if (n == 1) {
+        cout << 0 << endl;
+        return;
     }
-    if (ans == INF)
-        ans = -1;
-    cout << ans << endl;
+
+    vll tenth(18, 0);
+    tenth[0] = 1;
+    rep2(i, 1, 19) tenth[i] = tenth[i - 1] * 10;
+
+    n--;
+    for (ll d = 1;; d++) {
+        if (n > 9 * tenth[(d - 1) / 2]) {
+            n -= 9 * tenth[(d - 1) / 2];
+            continue;
+        }
+        ll b = tenth[(d - 1) / 2] + n - 1;
+        string ans = to_string(b);
+        ans.resize(d);
+        rep(i, d / 2) {
+            ans[d - 1 - i] = ans[i];
+        }
+        cout << ans << endl;
+        return;
+    }
 }

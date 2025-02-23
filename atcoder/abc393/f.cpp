@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc296/tasks/abc296_d*/
-/*2025年02月23日 19時52分34秒*/
+/*https://atcoder.jp/contests/abc393/tasks/abc393_f*/
+/*2025年02月17日 21時14分19秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -16,8 +16,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
-// const int INF = (int)2e9 + 7;
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -52,17 +52,32 @@ int main() {
 }
 
 void solve() {
-    ll n, m;
-    cin >> n >> m;
-
-    ll ans = INF;
-    for (ll a = 1; a <= (ll)2e6 + 5; a++) {
-        ll b = (m + a - 1) / a;
-        if (a <= n && b <= n) {
-            chmin(ans, a * b);
-        }
+    int n, q;
+    cin >> n >> q;
+    vint a(n);
+    rep(i, n) cin >> a[i];
+    vector<tuple<int, int, int>> qs;
+    rep(i, q) {
+        int r, x;
+        cin >> r >> x;
+        qs.push_back({r, x, i});
     }
-    if (ans == INF)
-        ans = -1;
-    cout << ans << endl;
+
+    sort(all(qs));
+
+    vint lis(n + 1, INF);
+    int k = 0;
+    vint ans(q);
+    for (auto [r, x, id] : qs) {
+        for (int i = k; i < r; i++) {
+            *lower_bound(all(lis), a[i]) = a[i];
+        }
+        k = r;
+
+        int d = upper_bound(all(lis), x) - lis.begin();
+        ans[id] = d;
+    }
+
+    for (int x : ans)
+        cout << x << endl;
 }

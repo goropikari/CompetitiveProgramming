@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc331/tasks/abc331_e*/
-/*2025年02月23日 19時24分50秒*/
+/*https://atcoder.jp/contests/abc394/tasks/abc394_d*/
+/*2025年02月22日 21時14分11秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,32 +52,45 @@ int main() {
 }
 
 void solve() {
-    ll n, m, l;
-    cin >> n >> m >> l;
-    vll a(n), b(m), c(l), d(l);
-    rep(i, n) cin >> a[i];
-    rep(i, m) cin >> b[i];
-    rep(i, l) {
-        cin >> c[i] >> d[i];
-        c[i]--, d[i]--;
-    }
+    string s;
+    cin >> s;
 
-    vector<pair<ll, int>> B;
-    rep(i, m) B.push_back({b[i], i});
-
-    sort(rall(B));
-
-    set<pair<int, int>> ban;
-    rep(i, l) ban.insert({c[i], d[i]});
-
-    ll ans = 0;
-    rep(i, n) {
-        rep(j, m) {
-            if (!ban.count({i, B[j].second})) {
-                chmax(ans, a[i] + B[j].first);
+    bool ok = true;
+    vector<char> st;
+    for (char c : s) {
+        if (c == '(' || c == '<' || c == '[') {
+            st.push_back(c);
+        } else {
+            if (st.size() == 0) {
+                ok = false;
                 break;
+            }
+            char prev = st.back();
+            if (c == ')') {
+                if (prev != '(') {
+                    ok = false;
+                    break;
+                }
+                st.pop_back();
+            }
+            if (c == '>') {
+                if (prev != '<') {
+                    ok = false;
+                    break;
+                }
+                st.pop_back();
+            }
+            if (c == ']') {
+                if (prev != '[') {
+                    ok = false;
+                    break;
+                }
+                st.pop_back();
             }
         }
     }
-    cout << ans << endl;
+
+    if (st.size() != 0)
+        ok = false;
+    yesno(ok);
 }

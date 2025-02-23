@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc296/tasks/abc296_d*/
-/*2025年02月23日 19時52分34秒*/
+/*https://atcoder.jp/contests/abc338/tasks/abc338_d*/
+/*2025年02月23日 14時39分36秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -54,15 +54,31 @@ int main() {
 void solve() {
     ll n, m;
     cin >> n >> m;
+    vll x(m);
+    rep(i, m) {
+        cin >> x[i];
+        x[i]--;
+    }
+
+    vll cumsum(n * 2 + 1, 0);
+
+    rep(i, m - 1) {
+        ll mi = min(x[i], x[i + 1]);
+        ll mx = max(x[i], x[i + 1]);
+
+        ll dr = mx - mi;
+        ll dl = n - dr;
+        cumsum[mi] += dl;
+        cumsum[mx] -= dl;
+        cumsum[0] += dr;
+        cumsum[mi] -= dr;
+        cumsum[mx] += dr;
+        cumsum[n] -= dr;
+    }
+
+    rep(i, n * 2) cumsum[i + 1] += cumsum[i];
 
     ll ans = INF;
-    for (ll a = 1; a <= (ll)2e6 + 5; a++) {
-        ll b = (m + a - 1) / a;
-        if (a <= n && b <= n) {
-            chmin(ans, a * b);
-        }
-    }
-    if (ans == INF)
-        ans = -1;
+    rep(i, n) chmin(ans, cumsum[i]);
     cout << ans << endl;
 }
