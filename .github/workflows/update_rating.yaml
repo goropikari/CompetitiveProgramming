@@ -40,24 +40,12 @@ jobs:
       id: date
       run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
-    - name: Create new branch
-      if: env.has_changes == 'true'
-      run: |
-        git checkout -b update-files-${{ env.date }}
-
-    - name: Commit and push changes
-      if: env.has_changes == 'true'
-      run: |
-        git add .
-        git commit -m "Update performance data"
-        git push origin update-files-${{ env.date }}
-
     - name: Create Pull Request
       if: env.has_changes == 'true'
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: update-files-${{ env.date }}
-        base: "main"
+        commit-message: "Update performance data"
         title: "Update performance data"
         body: "This PR updates performance data by running download_user_performance.py"
