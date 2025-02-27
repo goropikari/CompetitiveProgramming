@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc394/tasks/abc394_e*/
-/*2025年02月24日 16時40分23秒*/
+/*https://atcoder.jp/contests/abc217/tasks/abc217_e*/
+/*2025年02月27日 03時07分18秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,41 +52,34 @@ int main() {
 }
 
 void solve() {
-    int n;
-    cin >> n;
-    vector<string> delta(n);
-    rep(i, n) cin >> delta[i];
+    int q;
+    cin >> q;
 
-    vvll dist(n, vll(n, -1));
-    queue<pair<int, int>> que;
+    multiset<int> s;
+    deque<int> deq;
 
-    rep(i, n) {
-        dist[i][i] = 0;
-        que.push({i, i});
-    }
-
-    rep(i, n) rep(j, n) {
-        if (i != j && delta[i][j] != '-') {
-            dist[i][j] = 1;
-            que.push({i, j});
-        }
-    }
-
-    while (que.size()) {
-        auto [i, j] = que.front();
-        que.pop();
-
-        rep(k, n) {
-            rep(l, n) {
-                if (delta[k][i] != '-' && delta[k][i] == delta[j][l] &&
-                    dist[k][l] == -1) {
-                    dist[k][l] = dist[i][j] + 2;
-                    que.push({k, l});
-                }
+    rep(_, q) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            ll x;
+            cin >> x;
+            deq.push_back(x);
+        } else if (t == 2) {
+            int x;
+            if (s.size()) {
+                auto it = s.begin();
+                x = *it;
+                s.erase(it);
+            } else {
+                x = deq.front();
+                deq.pop_front();
             }
+            cout << x << endl;
+        } else {
+            for (auto x : deq)
+                s.insert(x);
+            deq = deque<int>();
         }
     }
-
-    for (auto v : dist)
-        print(v);
 }

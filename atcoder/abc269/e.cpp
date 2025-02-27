@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc394/tasks/abc394_e*/
-/*2025年02月24日 16時40分23秒*/
+/*https://atcoder.jp/contests/abc269/tasks/abc269_e*/
+/*2025年02月25日 04時24分02秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -52,41 +52,53 @@ int main() {
 }
 
 void solve() {
-    int n;
+    ll n;
     cin >> n;
-    vector<string> delta(n);
-    rep(i, n) cin >> delta[i];
 
-    vvll dist(n, vll(n, -1));
-    queue<pair<int, int>> que;
+    ll row = -1;
+    {
+        ll l = 1, r = n + 1;
+        while (r - l > 1) {
+            ll mid = (l + r) / 2;
+            cout << "? " << l << ' ' << mid - 1 << ' ' << 1 << ' ' << n << endl;
+            cout << flush;
 
-    rep(i, n) {
-        dist[i][i] = 0;
-        que.push({i, i});
-    }
-
-    rep(i, n) rep(j, n) {
-        if (i != j && delta[i][j] != '-') {
-            dist[i][j] = 1;
-            que.push({i, j});
-        }
-    }
-
-    while (que.size()) {
-        auto [i, j] = que.front();
-        que.pop();
-
-        rep(k, n) {
-            rep(l, n) {
-                if (delta[k][i] != '-' && delta[k][i] == delta[j][l] &&
-                    dist[k][l] == -1) {
-                    dist[k][l] = dist[i][j] + 2;
-                    que.push({k, l});
-                }
+            int t;
+            cin >> t;
+            if (t == -1) {
+                return;
+            }
+            if (mid - l == t) {
+                l = mid;
+            } else {
+                r = mid;
             }
         }
+        row = l;
     }
 
-    for (auto v : dist)
-        print(v);
+    ll col = -1;
+    {
+        ll l = 1, r = n + 1;
+        while (r - l > 1) {
+            ll mid = (l + r) / 2;
+            cout << "? " << 1 << ' ' << n << ' ' << l << ' ' << mid - 1 << endl;
+            cout << flush;
+
+            int t;
+            cin >> t;
+            if (t == -1) {
+                return;
+            }
+            if (mid - l == t) {
+                l = mid;
+            } else {
+                r = mid;
+            }
+        }
+        col = l;
+    }
+
+    cout << "! " << row << ' ' << col << endl;
+    cout << flush;
 }
