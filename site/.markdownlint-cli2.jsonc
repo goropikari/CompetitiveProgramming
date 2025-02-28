@@ -1,0 +1,15 @@
+{
+    "config": {
+        // https://github.com/DavidAnson/markdownlint/blob/v0.32.1/README.md#rules--aliases
+        "line-length": false,
+        "first-line-heading": false,
+        "single-title": false,
+        "reference-links-images": false,
+        "no-duplicate-heading": false,
+        "fenced-code-language": false
+    },
+    "ignores": [
+        "node_modules",
+        "themes"
+    ]
+}

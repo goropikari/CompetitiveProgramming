@@ -6,12 +6,12 @@ tags = ['atcoder', 'edpc']
 
 # L - Deque
 
-https://atcoder.jp/contests/dp/tasks/dp_l
-
+<https://atcoder.jp/contests/dp/tasks/dp_l>
 
 結局のところ両者ともに自分の得点が最大になるように行動すればよい
 
 ## まずは実験
+
 - 要素が1つのとき
 
 $X = a_1, Y = 0$
@@ -51,7 +51,6 @@ $a_i + \sum_{k=i+1}^{j} a_k - \mathrm{dp}(i+1,j)$ となる。
     \end{aligned}
 \right.
 \end{equation}
-
 
 \begin{equation}
 \therefore \mathrm{dp}(i,j) =
@@ -103,11 +102,10 @@ void solve() {
 
 # M - Candies
 
-
-https://atcoder.jp/contests/dp/tasks/dp_m
+<https://atcoder.jp/contests/dp/tasks/dp_m>
 
 けんちょん氏のブログを読んで理解した
-https://drken1215.hatenablog.com/entry/2023/04/30/170700
+<https://drken1215.hatenablog.com/entry/2023/04/30/170700>
 
 ## 間違い解法
 
@@ -130,7 +128,7 @@ rep2(i, 1, N + 1) {
     rep(j, K + 1) {
         rep(k, A[i] + 1) {
             if (j - k >= 0) {
-                 // i 番目の子供に k 個配ったとき。i-1 番目の子供までで j-k 個配った状態から遷移してくる
+                // i 番目の子供に k 個配ったとき。i-1 番目の子供までで j-k 個配った状態から遷移してくる
                 dp[i][j] += dp[i - 1][j - k];
                 dp[i][j] %= MOD;
             }
@@ -140,7 +138,6 @@ rep2(i, 1, N + 1) {
 ```
 
 ただ、これでも $O(NK^2)$ の計算量がかかるので TLE する。
-
 
 一番内側の loop に着目すると
 
@@ -163,7 +160,6 @@ $S_{i,j} = \sum_{m=0}^{j} dp(i,m)$ とすると
 \end{align}
 
 とかけるので事前に累積和を計算しておけば一番内側の for loop をなくせる
-
 
 ```cpp
 void solve() {
@@ -199,11 +195,11 @@ void solve() {
 
 # N - Slimes
 
-https://atcoder.jp/contests/dp/tasks/dp_n
+<https://atcoder.jp/contests/dp/tasks/dp_n>
 
 連鎖行列積と考え方は同じ
 
-https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/10/ALDS1_10_B
+<https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/10/ALDS1_10_B>
 
 - $N=1$ のとき
 
@@ -217,7 +213,6 @@ $a_1+a_2$ を返す
 
 slime1, slime2 を合体させたあとに slime3 を合体させた場合
 $$(a_1+a_2) + ((a_1+a_2) + a_3)$$
-
 
 slime2, slime3 を合体させたあとに slime1 を合体させた場合
 $$(a_2+a_3) + ((a_2+a_3) + a_1)$$
@@ -273,10 +268,9 @@ void solve() {
 }
 ```
 
-
 # O - Matching
 
-https://atcoder.jp/contests/dp/tasks/dp_o
+<https://atcoder.jp/contests/dp/tasks/dp_o>
 
 ## 間違い解法
 
@@ -323,7 +317,7 @@ void solve() {
 
 ## 解法
 
-参考: https://smijake3.hatenablog.com/entry/2019/01/16/012916
+参考: <https://smijake3.hatenablog.com/entry/2019/01/16/012916>
 
 $dp(i,S)$ を $i-1$ 番目までの男性をマッチングさせてマッチした女性の集合が $S$ のときに $i$ 番目の男性をマッチさせる場合の数とする。
 

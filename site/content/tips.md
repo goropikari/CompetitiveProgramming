@@ -11,7 +11,6 @@ tags = ["algorithm", "cpp"]
 multiset は遅いので二部探索のように使うときは注意する.
 insert, find, erase の計算量は $\log(N)$ ($N$ は要素数)であるが, 定数項が効いているのかなかなかに遅い.
 
-
 ```cpp
 #include <bits/stdc++.h>
 #define all(v) (v).begin(), (v).end()
