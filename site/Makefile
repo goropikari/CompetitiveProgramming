@@ -2,3 +2,7 @@
 format:
 	markdownlint-cli2 --fix content/**/*.md
 	cbfmt -w ./content/**/*.md
+
+.PHONY: lint
+lint:
+	markdownlint-cli2 content/**/*.md
