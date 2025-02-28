@@ -6,7 +6,6 @@ tags = ["algorithm"]
 
 # Algorithm
 
-
 ## int <-> string
 
 ```cpp
@@ -16,10 +15,10 @@ stoi(string) -> int
 stoll(string) -> ll
 ```
 
-
 ## priority queue
 
 昇順
+
 ```cpp
 #include <iostream>
 #include <queue>
@@ -50,6 +49,7 @@ int main()
 ```
 
 降順に出力
+
 ```cpp
 #include <iostream>
 #include <queue>
@@ -78,7 +78,6 @@ int main()
 3
 4
 ```
-
 
 struct で priority queue
 
@@ -225,7 +224,6 @@ f(sx+1) \leq f(P) \\\\
 \therefore   s < f(P)
 $$
 
-
 $(\leftarrow)$
 
 $f(sx) = \floor{ \frac{sx + x-1}{x} } = \floor{ s + \frac{x-1}{x} } = s + \floor{ \frac{x-1}{x} } = s$
@@ -240,7 +238,7 @@ sx+1 \leq P \\\\
 \therefore s < \frac{P}{x}
 $$
 
-ref: https://atcoder.jp/contests/abc384/tasks/abc384_e
+ref: <https://atcoder.jp/contests/abc384/tasks/abc384_e>
 
 ## gcd, lcm
 
@@ -248,13 +246,11 @@ $\mathrm{gcd}(a, b) = \mathrm{gcd}(b, a \\% b)$.
 
 $\displaystyle \mathrm{lcm}(a,b) = \frac{a \times b}{\mathrm{gcd}(a,b)}$
 
-
 Suppose $d = \mathrm{gcd}(a,b)$. This means $a = k_1 d$ and $b = k_2 d$ for some integers $k_1, k_2 \in \Z$.
 
 $a = qb + r$ $(0 \leq r < b)$, for some integer $q$.
 
 Then $a\\% b = r = a - qb = d(k_1 - qk_2)$.
-
 
 ```cpp
 int gcd(int a, int b) {
@@ -283,6 +279,7 @@ vector<T> cumsum(vector<T> v) {
 詳細は [ABC 366]({{< ref "abc/366.md" >}}) に書いた
 
 ## べき乗計算(冪乗)
+
 ### 高速べき乗計算
 
 $x^n$ を高速に求める
@@ -302,11 +299,9 @@ ll intpow(ll x, ll n) {
 
 ref: [逆元](#逆元)
 
-
 ### 逆元
 
 ref: [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆元から離散対数まで 〜](https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a)
-
 
 #### exponential mod
 
@@ -335,7 +330,6 @@ ll modinv(ll x, ll mod) {
 }
 ```
 
-
 ## 素数
 
 ### エラトステネスのふるい
@@ -352,7 +346,6 @@ for (int i = 2; i < MAX; i++) {
     }
 }
 ```
-
 
 ## 行列
 
@@ -391,6 +384,7 @@ j^\prime = j
 $
 
 ### 左右反転
+
 $$
 i^\prime = i \\\\
 j^\prime = W - 1 - j
@@ -525,6 +519,7 @@ int main() {
 ```
 
 output
+
 ```
 original
 a b c
@@ -623,7 +618,6 @@ vector<pair<T, int>> runLengthEncode(const vector<T>& input) {
 - [Qiita - 最長増加部分列(LIS)の長さを求める](https://qiita.com/python_walker/items/d1e2be789f6e7a0851e5)
 - [AOJ - 最長増加部分列](https://onlinejudge.u-aizu.ac.jp/problems/DPL_1_D)
 
-
 ```cpp
 // is_strong = true のとき increasing
 // is_strong = false のとき non-decreasing
@@ -654,7 +648,7 @@ void solve() {
 
 ### ダイクストラ法 (Dijkstra)
 
-https://judge.yosupo.jp/submission/263372
+<https://judge.yosupo.jp/submission/263372>
 
 ```cpp
 const ll INF = (ll)2e18 + 9;
