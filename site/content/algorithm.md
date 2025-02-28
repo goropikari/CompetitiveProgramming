@@ -8,12 +8,10 @@ tags = ["algorithm"]
 
 ## int <-> string
 
-```cpp
-to_string(int) -> string
-to_string(ll) -> string
-stoi(string) -> int
-stoll(string) -> ll
-```
+- `to_string(int)` -> string
+- `to_string(ll)` -> string
+- `stoi(string)` -> int
+- `stoll(string)` -> ll
 
 ## priority queue
 
@@ -23,22 +21,21 @@ stoll(string) -> ll
 #include <iostream>
 #include <queue>
 
-int main()
-{
-  // intを要素に持つ優先順位付きキュー.
-  // 降順に処理する
-  std::priority_queue<int> que;
+int main() {
+    // intを要素に持つ優先順位付きキュー.
+    // 降順に処理する
+    std::priority_queue<int> que;
 
-  // データを追加する
-  que.push(3);
-  que.push(1);
-  que.push(4);
+    // データを追加する
+    que.push(3);
+    que.push(1);
+    que.push(4);
 
-  // 処理順に出力する
-  while (!que.empty()) {
-    std::cout << que.top() << std::endl;
-    que.pop();
-  }
+    // 処理順に出力する
+    while (!que.empty()) {
+        std::cout << que.top() << std::endl;
+        que.pop();
+    }
 }
 ```
 
@@ -54,22 +51,21 @@ int main()
 #include <iostream>
 #include <queue>
 
-int main()
-{
-  // intを要素に持つ優先順位付きキュー.
-  // 降順に処理する
-  std::priority_queue<int, vector<int>, greater<int>> que;
+int main() {
+    // intを要素に持つ優先順位付きキュー.
+    // 降順に処理する
+    std::priority_queue<int, vector<int>, greater<int>> que;
 
-  // データを追加する
-  que.push(3);
-  que.push(1);
-  que.push(4);
+    // データを追加する
+    que.push(3);
+    que.push(1);
+    que.push(4);
 
-  // 降順順に出力する
-  while (!que.empty()) {
-    std::cout << que.top() << std::endl;
-    que.pop();
-  }
+    // 降順順に出力する
+    while (!que.empty()) {
+        std::cout << que.top() << std::endl;
+        que.pop();
+    }
 }
 ```
 
@@ -86,22 +82,19 @@ struct Point {
     int x, y;
 };
 
-bool operator<(const Point& a, const Point& b)
-{
+bool operator<(const Point& a, const Point& b) {
     return a.x < b.x;
 }
 
-bool operator>(const Point& a, const Point& b)
-{
+bool operator>(const Point& a, const Point& b) {
     return a.x > b.x;
 }
 
-void solve()
-{
+void solve() {
     {
         // operator< が必要
         priority_queue<Point> pq;
-        rep(i, 3) pq.push({ i, 3 - i });
+        rep(i, 3) pq.push({i, 3 - i});
 
         while (pq.size()) {
             auto [x, y] = pq.top();
@@ -114,7 +107,7 @@ void solve()
     {
         // operator> が必要
         priority_queue<Point, vector<Point>, greater<Point>> pq;
-        rep(i, 3) pq.push({ i, 3 - i });
+        rep(i, 3) pq.push({i, 3 - i});
 
         while (pq.size()) {
             auto [x, y] = pq.top();
@@ -140,9 +133,9 @@ void solve()
 自作 struct に関して sort する.
 
 ```cpp
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -150,11 +143,12 @@ struct Hoge {
     int x, y;
 };
 
-bool compare(Hoge a, Hoge b) { return a.y > b.y; }
+bool compare(Hoge a, Hoge b) {
+    return a.y > b.y;
+}
 
-int main(int argc, char* argv[])
-{
-    vector<Hoge> v = { {0, 1}, {1, 9} };
+int main(int argc, char* argv[]) {
+    vector<Hoge> v = {{0, 1}, {1, 9}};
 
     sort(v.begin(), v.end(), compare);
 
@@ -189,7 +183,8 @@ ll ceil(ll x, ll y) {
 // floor(x/y)
 ll floor(ll x, ll y) {
     if ((x > 0 && y < 0) || (x > 0 && y < 0)) {
-        if (x % y != 0) return x / y - 1;
+        if (x % y != 0)
+            return x / y - 1;
     }
 
     return x / y;
@@ -254,22 +249,23 @@ Then $a\\% b = r = a - qb = d(k_1 - qk_2)$.
 
 ```cpp
 int gcd(int a, int b) {
-    if (a == 0) return b;
-    return gcd(b, a%b);
+    if (a == 0)
+        return b;
+    return gcd(b, a % b);
 }
 
 int lcm(int a, int b) {
-    return a / gcd(a,b) * b;
+    return a / gcd(a, b) * b;
 }
 ```
 
 ## 累積和 (cumsum)
 
 ```cpp
-template<typename T>
+template <typename T>
 vector<T> cumsum(vector<T> v) {
     int n = v.size();
-    rep2(i,1,n) v[i] += v[i-1];
+    rep2(i, 1, n) v[i] += v[i - 1];
     return v;
 }
 ```
@@ -289,7 +285,8 @@ $x^n$ を高速に求める
 ll intpow(ll x, ll n) {
     long long ret = 1;
     while (n > 0) {
-        if (n & 1) ret *= x;
+        if (n & 1)
+            ret *= x;
         x *= x;
         n >>= 1;
     }
@@ -311,7 +308,8 @@ ref: [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆�
 ll modpow(ll x, ll n, ll mod) {
     long long ret = 1;
     while (n > 0) {
-        if (n & 1) ret = (ret * x) % mod;
+        if (n & 1)
+            ret = (ret * x) % mod;
         x = (x * x) % mod;
         n >>= 1;
     }
@@ -326,7 +324,7 @@ $a^{-1} \equiv a^{p-2} \mod p$
 // べき乗 inv mod
 // x^{-1} mod m
 ll modinv(ll x, ll mod) {
-    return modpow(x, mod-2, mod);
+    return modpow(x, mod - 2, mod);
 }
 ```
 
@@ -340,7 +338,7 @@ vector<int> isprime(MAX, true);
 isprime[0] = isprime[1] = false;
 for (int i = 2; i < MAX; i++) {
     if (isprime[i]) {
-        for (int j = i+i; j < MAX; j+=i) {
+        for (int j = i + i; j < MAX; j += i) {
             isprime[j] = false;
         }
     }
@@ -393,33 +391,33 @@ $$
 ```cpp
 #include <iostream>
 #include <vector>
-#define rep(i,n) for (int i = 0; i < (n); ++i)
+#define rep(i, n) for (int i = 0; i < (n); ++i)
 using namespace std;
 using ll = long long;
-using P = pair<int,int>;
+using P = pair<int, int>;
 
-template<typename T>
+template <typename T>
 struct Matrix {
-    Matrix(int h, int w): isSwap(false), H(h), W(w), grid(h, vector<T>(w,0)), xid(h), yid(w) {
-        rep(i,h) xid[i] = i;
-        rep(i,w) yid[i] = i;
+    Matrix(int h, int w)
+        : isSwap(false), H(h), W(w), grid(h, vector<T>(w, 0)), xid(h), yid(w) {
+        rep(i, h) xid[i] = i;
+        rep(i, w) yid[i] = i;
     }
 
-
     T find(int x, int y) {
-        P p = index(x,y);
+        P p = index(x, y);
         return grid[p.first][p.second];
     }
 
     void set(int x, int y, T val) {
-        P p = index(x,y);
+        P p = index(x, y);
         grid[p.first][p.second] = val;
     }
 
     void rotr90() {
         isSwap = !isSwap;
         vector<int> new_yid(H);
-        rep(i,H) new_yid[i] = H - 1 - xid[i];
+        rep(i, H) new_yid[i] = H - 1 - xid[i];
         swap(H, W);
         xid = yid;
         yid = new_yid;
@@ -428,18 +426,18 @@ struct Matrix {
     void rotl90() {
         isSwap = !isSwap;
         vector<int> new_xid(W);
-        rep(i,W) new_xid[i] = W - 1 - yid[i];
+        rep(i, W) new_xid[i] = W - 1 - yid[i];
         swap(H, W);
         yid = xid;
         xid = new_xid;
     }
 
     void topbottom() {
-        rep(i,H/2) swap(xid[i], xid[H-1-i]);
+        rep(i, H / 2) swap(xid[i], xid[H - 1 - i]);
     }
 
     void leftright() {
-        rep(i,W/2) swap(yid[i], yid[W-1-i]);
+        rep(i, W / 2) swap(yid[i], yid[W - 1 - i]);
     }
 
     void transpose() {
@@ -449,39 +447,40 @@ struct Matrix {
     }
 
     void print() {
-        rep(i,H) {
-            rep(j,W) {
-                cout << find(i,j) << " ";
+        rep(i, H) {
+            rep(j, W) {
+                cout << find(i, j) << " ";
             }
             cout << endl;
         }
     }
 
-    private:
-        bool isSwap;
-        int H, W;
-        vector<vector<T>> grid;
+   private:
+    bool isSwap;
+    int H, W;
+    vector<vector<T>> grid;
 
-        // 新しい行列の index と original の行列の index との対応表
-        // 新しい行列の i, j 成分は
-        // swap is false のとき
-        //   grid[xid[i]][yid[j]]
-        // swap is true のとき
-        //   grid[yid[j]][xid[i]]
-        vector<int> xid, yid;
+    // 新しい行列の index と original の行列の index との対応表
+    // 新しい行列の i, j 成分は
+    // swap is false のとき
+    //   grid[xid[i]][yid[j]]
+    // swap is true のとき
+    //   grid[yid[j]][xid[i]]
+    vector<int> xid, yid;
 
-        pair<int,int> index(int x, int y) {
-            int i = xid[x];
-            int j = yid[y];
-            if (isSwap) swap(i,j);
-            return {i,j};
-        }
+    pair<int, int> index(int x, int y) {
+        int i = xid[x];
+        int j = yid[y];
+        if (isSwap)
+            swap(i, j);
+        return {i, j};
+    }
 };
 
 void solve() {
     int h = 2, w = 3;
     Matrix<char> mat(2, 3);
-    rep(i,h) rep(j,w) mat.set(i, j, 'a' + i*w + j);
+    rep(i, h) rep(j, w) mat.set(i, j, 'a' + i * w + j);
     printf("original\n");
     mat.print();
     cout << endl;
@@ -588,7 +587,6 @@ struct Matrix {
         return res;
     }
 };
-
 ```
 
 ## ランレングス圧縮 (Run Length Encoding)
@@ -625,11 +623,13 @@ int LIS(vector<int>& A, bool is_strong) {
     int n = A.size();
     vector<int> dp(n, INF);
 
-    rep(i,n) {
+    rep(i, n) {
         // A_{i_{k}} < A_{i_{k+1}}
-        if (is_strong) *lower_bound(all(dp), A[i]) = A[i];
+        if (is_strong)
+            *lower_bound(all(dp), A[i]) = A[i];
         // A_{i_{k}} <= A_{i_{k+1}}
-        else *upper_bound(all(dp), A[i]) = A[i];
+        else
+            *upper_bound(all(dp), A[i]) = A[i];
     }
 
     return lower_bound(all(dp), INF) - dp.begin();
@@ -665,13 +665,14 @@ bool operator>(const Edge& a, const Edge& b) {
 using Graph = vector<vector<Edge>>;
 
 struct Dijkstra {
-    int n; // ノード数
+    int n;  // ノード数
     Graph graph;
-    vector<long long int> dist; // start からの最短距離
-    vector<int> from; // from[i]: i 番目のノードにどこから来たか
+    vector<long long int> dist;  // start からの最短距離
+    vector<int> from;            // from[i]: i 番目のノードにどこから来たか
     int start = -1;
 
-    Dijkstra(int n) : n(n), graph(n), dist(n, INF), from(n, -1) {}
+    Dijkstra(int n)
+        : n(n), graph(n), dist(n, INF), from(n, -1) {}
 
     void add_edge(int from, int to, long long int weight) {
         graph[from].push_back({to, weight});
@@ -762,7 +763,7 @@ struct Edge {
     ll cost;
 };
 
-bool operator>(const Edge &a, const Edge &b) {
+bool operator>(const Edge& a, const Edge& b) {
     return a.cost > b.cost;
 }
 
@@ -770,7 +771,7 @@ void solve() {
     int n, m;
     cin >> n >> m;
     vector<vector<Edge>> graph(n);
-    rep(i,m) {
+    rep(i, m) {
         int s, t;
         ll w;
         cin >> s >> t >> w;
@@ -781,15 +782,19 @@ void solve() {
     vint visited(n, 0);
     visited[0] = 1;
     priority_queue<Edge, vector<Edge>, greater<Edge>> pq;
-    for (auto edge : graph[0]) pq.push(edge);
+    for (auto edge : graph[0])
+        pq.push(edge);
     vector<Edge> mst;
     while (pq.size()) {
-        auto t = pq.top(); pq.pop();
-        if (visited[t.to]) continue;
+        auto t = pq.top();
+        pq.pop();
+        if (visited[t.to])
+            continue;
         visited[t.to] = 1;
         mst.push_back(t);
         for (auto edge : graph[t.to]) {
-            if (visited[edge.to]) continue;
+            if (visited[edge.to])
+                continue;
             pq.push(edge);
         }
     }
@@ -814,21 +819,25 @@ struct Edge {
     ll cost;
 };
 
-bool operator<(const Edge &a, const Edge &b) {
+bool operator<(const Edge& a, const Edge& b) {
     return a.cost < b.cost;
 }
 
 struct UnionFind {
     vint d;
-    UnionFind(int n) : d(n, -1) {}
+    UnionFind(int n)
+        : d(n, -1) {}
     int leader(int x) {
-        if (d[x] < 0) return x;
+        if (d[x] < 0)
+            return x;
         return d[x] = leader(d[x]);
     }
     void merge(int x, int y) {
         x = leader(x), y = leader(y);
-        if (x == y) return;
-        if (d[x] < d[y]) swap(x, y);
+        if (x == y)
+            return;
+        if (d[x] < d[y])
+            swap(x, y);
         d[x] += d[y];
         d[y] = x;
     }
@@ -841,7 +850,7 @@ void solve() {
     int n, m;
     cin >> n >> m;
     vector<Edge> edges;
-    rep(i,m) {
+    rep(i, m) {
         int s, t;
         ll w;
         cin >> s >> t >> w;
@@ -860,7 +869,8 @@ void solve() {
     }
 
     ll tot = 0;
-    for (auto edge : mst_edges) tot += edge.cost;
+    for (auto edge : mst_edges)
+        tot += edge.cost;
     cout << tot << endl;
 }
 ```

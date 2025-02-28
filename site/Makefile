@@ -6,3 +6,4 @@ format:
 .PHONY: lint
 lint:
 	markdownlint-cli2 content/**/*.md
+	cbfmt -c ./content/**/*.md
