@@ -3,6 +3,6 @@ ex.cpp
 test.txt
 *out.txt
 .ipynb_checkpoints
-test
-test_*
+sample-*.*
+random-*.*
 a.out
