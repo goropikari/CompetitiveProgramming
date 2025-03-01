@@ -1,4 +1,4 @@
-name: Update Performance Data and Create PR
+name: Update Submissions and Create PR
 
 on:
   workflow_dispatch:
@@ -22,12 +22,8 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-        pip install lxml requests
-
     - name: Run script
-      run: python scripts/download_user_performance.py
+      run: python scripts/submissions.py
 
     - name: Check for changes
       id: git_diff
@@ -46,6 +42,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: update-files-${{ env.date }}
-        commit-message: "Update performance data"
-        title: "Update performance data"
-        body: "This PR updates performance data by running download_user_performance.py"
+        commit-message: "Update submissions data"
+        title: "Update submissions data"
+        body: "This PR updates submissions data by running submissions.py"

@@ -6,6 +6,12 @@
 <button onclick="addPerformances()">パフォーマンスを追加</button>
 <script type="module" src="{{ "js/rating.js" | relURL }}"></script>
 
+<h1>Submissions</h1>
+<div id='submissions'><!-- Plotly chart will be drawn inside this DIV --></div>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src='https://cdn.plot.ly/plotly-3.0.0.min.js'></script>
+<script src="{{ "js/stat.js" | relURL }}"></script>
+
 <style>
 .calculator {
     margin: 20px;
