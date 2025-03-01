@@ -3,7 +3,7 @@ let contestData = [];        // 表示用データ
 
 async function loadData() {
     try {
-        const response = await fetch('/CompetitiveProgramming/js/user.json');
+        const response = await fetch('/CompetitiveProgramming/js/goropikari.json');
         const data = await response.json();
         return data.map(entry => ({
             contest: entry.contest,

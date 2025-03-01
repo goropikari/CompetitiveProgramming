@@ -17,9 +17,10 @@ for tr in l:
         href = children[1].getchildren()[0].get("href")
         performance = int(children[3].getchildren()[0].text)
         rating = int(children[4].getchildren()[1].text)
-        data.append({'contest': contest, 'performance': performance, 'rating': rating, 'url': base_url + href})
+        data.append({'contest': contest, 'performance': performance,
+                    'rating': rating, 'url': base_url + href})
     except:
         continue
 
-with open('site/static/js/user.json', 'w') as f:
+with open('site/static/js/goropikari.json', 'w') as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
