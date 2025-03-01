@@ -44242,5 +44242,17 @@
     "length": 1953,
     "result": "AC",
     "execution_time": 403
+  },
+  {
+    "id": 63315810,
+    "epoch_second": 1740853708,
+    "problem_id": "abc383_a",
+    "contest_id": "abc383",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 150.0,
+    "length": 1363,
+    "result": "AC",
+    "execution_time": 3
   }
 ]
