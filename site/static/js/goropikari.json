@@ -244,5 +244,11 @@
         "performance": 1058,
         "rating": 1009,
         "url": "https://atcoder.jp/contests/abc394"
+    },
+    {
+        "contest": "AtCoder Beginner Contest 395",
+        "performance": 921,
+        "rating": 1001,
+        "url": "https://atcoder.jp/contests/abc395"
     }
 ]
