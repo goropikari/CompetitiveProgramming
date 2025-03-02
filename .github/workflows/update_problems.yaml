@@ -1,4 +1,4 @@
-name: Update Submissions and Create PR
+name: Update problems and Create PR
 
 on:
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
         python-version: '3.x'
 
     - name: Run script
-      run: python scripts/submissions.py
+      run: python scripts/problem_models.py
 
     - name: Check for changes
       id: git_diff
@@ -42,6 +42,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: update-files-${{ env.date }}
-        commit-message: "Update submissions data"
-        title: "Update submissions data"
-        body: "This PR updates submissions data by running submissions.py"
+        commit-message: "Update problems data"
+        title: "Update problems data"
+        body: "This PR updates problems data by running problems.py"
