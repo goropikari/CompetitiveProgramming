@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import urllib.request
-import gzip
 import json
-import time
 import datetime
 
 
