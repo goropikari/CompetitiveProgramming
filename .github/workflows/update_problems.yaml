@@ -41,7 +41,7 @@ jobs:
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        branch: update-files-${{ env.date }}
+        branch: update-problems-${{ env.date }}
         commit-message: "Update problems data"
         title: "Update problems data"
         body: "This PR updates problems data by running problems.py"

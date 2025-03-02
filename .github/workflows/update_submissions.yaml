@@ -23,7 +23,9 @@ jobs:
         python-version: '3.x'
 
     - name: Run script
-      run: python scripts/submissions.py
+      run: |
+        python scripts/submissions.py
+        python scripts/stat.py
 
     - name: Check for changes
       id: git_diff
@@ -41,7 +43,7 @@ jobs:
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        branch: update-files-${{ env.date }}
+        branch: update-submissions-${{ env.date }}
         commit-message: "Update submissions data"
         title: "Update submissions data"
         body: "This PR updates submissions data by running submissions.py"
