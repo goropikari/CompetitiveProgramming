@@ -3,7 +3,7 @@ name: Update Submissions and Create PR
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0' # 毎週日曜日の午前0時に実行(UTC)
+    - cron: '0 0 * * *' # 毎日の午前0時に実行(UTC)
 
 permissions:
   contents: write

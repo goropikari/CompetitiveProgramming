@@ -1,9 +1,11 @@
 name: Update Stat and Create PR
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * 0' # 毎週日曜日の午前0時に実行(UTC)
+  workflow_run:
+    workflows: ["Update Submissions and Create PR"]
+    branches: [main]
+    types:
+      - completed
 
 permissions:
   contents: write
@@ -12,7 +14,7 @@ permissions:
 jobs:
   update-and-pr:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
