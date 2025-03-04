@@ -27,19 +27,12 @@ jobs:
         python scripts/submissions.py
         python scripts/stat.py
 
-    - name: Check for changes
-      id: git_diff
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git diff --exit-code || echo "has_changes=true" >> $GITHUB_ENV
-
     - name: Get current date
       id: date
       run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
     - name: Create Pull Request
-      if: env.has_changes == 'true'
+      id: pr
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -47,3 +40,6 @@ jobs:
         commit-message: "Update submissions data"
         title: "Update submissions data"
         body: "This PR updates submissions data by running submissions.py"
+
+    - name: Merge PR
+      run: gh pr merge --merge --auto ${{ steps.pr.outputs.pull-request-url }}
