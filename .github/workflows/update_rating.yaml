@@ -43,7 +43,7 @@ jobs:
         body: "This PR updates performance data by running download_user_performance.py"
 
     - name: Merge PR
-      if: ${{ steps.cpr.outputs.pull-request-number }}
+      if: ${{ steps.pr.outputs.pull-request-number }}
       run: gh pr merge --merge --auto ${{ steps.pr.outputs.pull-request-url }}
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
