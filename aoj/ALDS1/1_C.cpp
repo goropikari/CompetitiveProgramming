@@ -1,11 +1,10 @@
-// https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_D
-/*2025年01月22日 20時34分16秒*/
+// https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_C
+/*2025年03月05日 23時10分58秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
-#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -53,37 +52,22 @@ int main() {
 }
 
 void solve() {
-    string s;
-    cin >> s;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    // id, size
-    vector<pair<int, int>> ps;
-    vint ls;
-    int n = s.size();
+    ll ans = 0;
+    int n;
+    cin >> n;
     rep(i, n) {
-        if (s[i] == '\\') {
-            ls.push_back(i);
-        } else if (s[i] == '/') {
-            if (ls.size()) {
-                int lid = ls.back();
-                ls.pop_back();
-                int sum = i - lid;
-                while (ps.size() && lid < ps.back().first) {
-                    auto [_, sz] = ps.back();
-                    sum += sz;
-                    ps.pop_back();
-                }
-                ps.push_back({lid, sum});
-            }
+        ll x;
+        cin >> x;
+        int ok = 1;
+        for (ll j = 2; j * j <= x; j++) {
+            if (x % j == 0)
+                ok = 0;
         }
+        if (ok)
+            ans++;
     }
-
-    vint v;
-    for (auto [_, sz] : ps)
-        v.push_back(sz);
-    cout << accumulate(all(v), 0) << '\n';
-    cout << v.size();
-    for (int x : v)
-        cout << ' ' << x;
-    cout << endl;
+    cout << ans << '\n';
 }

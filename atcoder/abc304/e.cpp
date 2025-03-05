@@ -1,11 +1,10 @@
-// https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_D
-/*2025年01月22日 20時34分16秒*/
-// #include <atcoder/all>
-// using namespace atcoder;
+/*https://atcoder.jp/contests/abc304/tasks/abc304_e*/
+/*2025年03月04日 01時17分12秒*/
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
-#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -53,37 +52,41 @@ int main() {
 }
 
 void solve() {
-    string s;
-    cin >> s;
+    int n, m;
+    cin >> n >> m;
 
-    // id, size
-    vector<pair<int, int>> ps;
-    vint ls;
-    int n = s.size();
-    rep(i, n) {
-        if (s[i] == '\\') {
-            ls.push_back(i);
-        } else if (s[i] == '/') {
-            if (ls.size()) {
-                int lid = ls.back();
-                ls.pop_back();
-                int sum = i - lid;
-                while (ps.size() && lid < ps.back().first) {
-                    auto [_, sz] = ps.back();
-                    sum += sz;
-                    ps.pop_back();
-                }
-                ps.push_back({lid, sum});
-            }
-        }
+    set<pair<int, int>> memo;
+    dsu uf(n);
+    rep(i, m) {
+        int u, v;
+        cin >> u >> v;
+        u--, v--;
+        uf.merge(u, v);
     }
 
-    vint v;
-    for (auto [_, sz] : ps)
-        v.push_back(sz);
-    cout << accumulate(all(v), 0) << '\n';
-    cout << v.size();
-    for (int x : v)
-        cout << ' ' << x;
-    cout << endl;
+    int k;
+    cin >> k;
+    rep(i, k) {
+        int x, y;
+        cin >> x >> y;
+        x--, y--;
+        int lx = uf.leader(x), ly = uf.leader(y);
+        if (lx > ly)
+            swap(lx, ly);
+        memo.insert({lx, ly});
+    }
+
+    int q;
+    cin >> q;
+    rep(i, q) {
+        int p, q;
+        cin >> p >> q;
+        p--, q--;
+
+        int lp = uf.leader(p), lq = uf.leader(q);
+        if (lp > lq)
+            swap(lp, lq);
+
+        yesno(!memo.count({lp, lq}));
+    }
 }

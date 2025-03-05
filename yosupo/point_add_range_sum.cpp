@@ -1,11 +1,11 @@
-// https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_D
-/*2025年01月22日 20時34分16秒*/
-// #include <atcoder/all>
-// using namespace atcoder;
+/*https://atcoder.jp/contests/yosupo/tasks/yosupo_point_add_range_sum*/
+/*2025年03月02日 18時19分46秒*/
+#include <atcoder/all>
+#include <atcoder/fenwicktree.hpp>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
-#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -53,37 +53,25 @@ int main() {
 }
 
 void solve() {
-    string s;
-    cin >> s;
+    int n, q;
+    cin >> n >> q;
+    vll a(n);
+    rep(i, n) cin >> a[i];
 
-    // id, size
-    vector<pair<int, int>> ps;
-    vint ls;
-    int n = s.size();
-    rep(i, n) {
-        if (s[i] == '\\') {
-            ls.push_back(i);
-        } else if (s[i] == '/') {
-            if (ls.size()) {
-                int lid = ls.back();
-                ls.pop_back();
-                int sum = i - lid;
-                while (ps.size() && lid < ps.back().first) {
-                    auto [_, sz] = ps.back();
-                    sum += sz;
-                    ps.pop_back();
-                }
-                ps.push_back({lid, sum});
-            }
+    fenwick_tree<ll> ft(n);
+    rep(i, n) ft.add(i, a[i]);
+
+    rep(i, q) {
+        int t;
+        cin >> t;
+        if (t == 0) {
+            ll p, x;
+            cin >> p >> x;
+            ft.add(p, x);
+        } else {
+            int l, r;
+            cin >> l >> r;
+            cout << ft.sum(l, r) << endl;
         }
     }
-
-    vint v;
-    for (auto [_, sz] : ps)
-        v.push_back(sz);
-    cout << accumulate(all(v), 0) << '\n';
-    cout << v.size();
-    for (int x : v)
-        cout << ' ' << x;
-    cout << endl;
 }

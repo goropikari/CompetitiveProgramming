@@ -59,13 +59,13 @@ void solve() {
 
     print(a);
     rep2(i, 1, n) {
-        int t = a[i];
+        int v = a[i];
         int j = i - 1;
-        while (j >= 0 && a[j] > t) {
+        while (j >= 0 && a[j] > v) {
             a[j + 1] = a[j];
             j--;
         }
-        a[j + 1] = t;
+        a[j + 1] = v;
         print(a);
     }
 }

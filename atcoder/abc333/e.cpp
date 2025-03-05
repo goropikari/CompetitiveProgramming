@@ -1,5 +1,5 @@
-// https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_D
-/*2025年01月22日 20時34分16秒*/
+/*https://atcoder.jp/contests/abc333/tasks/abc333_e*/
+/*2025年03月03日 04時30分59秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -53,37 +53,47 @@ int main() {
 }
 
 void solve() {
-    string s;
-    cin >> s;
-
-    // id, size
-    vector<pair<int, int>> ps;
-    vint ls;
-    int n = s.size();
+    int n;
+    cin >> n;
+    vint t(n), x(n);
     rep(i, n) {
-        if (s[i] == '\\') {
-            ls.push_back(i);
-        } else if (s[i] == '/') {
-            if (ls.size()) {
-                int lid = ls.back();
-                ls.pop_back();
-                int sum = i - lid;
-                while (ps.size() && lid < ps.back().first) {
-                    auto [_, sz] = ps.back();
-                    sum += sz;
-                    ps.pop_back();
-                }
-                ps.push_back({lid, sum});
+        cin >> t[i] >> x[i];
+        x[i]--;
+    }
+
+    vint used(n, 0);
+    vvint monstar(n), potion(n);
+    rep(i, n) {
+        if (t[i] == 1) {
+            potion[x[i]].push_back(i);
+        } else {
+            auto& v = potion[x[i]];
+            if (v.size() == 0) {
+                cout << -1 << endl;
+                return;
             }
+            int id = v.back();
+            v.pop_back();
+            used[id]++;
         }
     }
 
-    vint v;
-    for (auto [_, sz] : ps)
-        v.push_back(sz);
-    cout << accumulate(all(v), 0) << '\n';
-    cout << v.size();
-    for (int x : v)
-        cout << ' ' << x;
-    cout << endl;
+    int cnt = 0, mx = 0;
+    vint ans;
+    rep(i, n) {
+        if (t[i] == 1) {
+            if (used[i]) {
+                ans.push_back(1);
+                cnt++;
+                chmax(mx, cnt);
+            } else {
+                ans.push_back(0);
+            }
+        } else {
+            cnt--;
+        }
+    }
+
+    cout << mx << endl;
+    print(ans);
 }

@@ -1,5 +1,5 @@
 /*https://atcoder.jp/contests/abc386/tasks/abc386_d*/
-/*2024年12月28日 21時51分22秒*/
+/*2025年03月05日 21時48分53秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -53,47 +53,29 @@ int main() {
     return 0;
 }
 
-void sort_map(map<ll, vll>& mp) {
-    for (auto it = mp.begin(); it != mp.end(); it++) {
-        sort(all(it->second));
-    }
-}
-
-struct Point {
-    ll x, y;
-    char c;
-};
-
-bool operator<(const Point& a, const Point& b) {
-    if (a.x != b.x)
-        return a.x < b.x;
-    return a.y < b.y;
-}
-
 void solve() {
-    ll N, M;
-    cin >> N >> M;
+    int n, m;
+    cin >> n >> m;
 
-    vector<Point> pt;
-    rep(i, M) {
-        ll x, y;
+    vector<tuple<int, int, char>> qs;
+    rep(i, m) {
+        int x, y;
         char c;
         cin >> x >> y >> c;
-        pt.push_back({x, y, c});
+        qs.emplace_back(x, y, c);
     }
-    sort(all(pt));
+    sort(all(qs));
 
-    ll miny = INF;
-    bool ok = true;
-    for (auto [x, y, c] : pt) {
-        if (c == 'W') {
-            chmin(miny, y);
+    int cnum = INF;
+    for (auto [x, y, c] : qs) {
+        if (c == 'B') {
+            if (cnum <= y) {
+                yesno(false);
+                return;
+            }
         } else {
-            if (y >= miny) {
-                ok = false;
-                break;
-            };
+            chmin(cnum, y);
         }
     }
-    yesno(ok);
+    yesno(true);
 }

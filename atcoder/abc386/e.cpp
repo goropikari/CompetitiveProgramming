@@ -76,14 +76,37 @@ void dfs(int now, int cnt, ll sum) {
 }
 
 void solve() {
-    cin >> N >> K;
-    // vll A(N);
-    A.resize(N);
-    visited.resize(N);
-    rep(i, N) cin >> A[i];
+    int n, k;
+    cin >> n >> k;
 
-    rep(i, N) {
-        dfs(i, 1, 0);
+    vll a(n);
+    rep(i, n) cin >> a[i];
+
+    bool flip = false;
+    if (k > n / 2) {
+        flip = true;
+        k = n - k;
     }
-    cout << ans << endl;
+    ll tot = accumulate(all(a), 0ll, [&](ll acc, ll x) -> ll {
+        return acc ^ x;
+    });
+
+    ll ans = 0;
+    auto dfs = [&](auto dfs, int cnt, int depth, ll sum) {
+        if (cnt == k) {
+            if (flip) {
+                chmax(ans, tot ^ sum);
+            } else {
+                chmax(ans, sum);
+            }
+            return;
+        }
+        if (depth == n)
+            return;
+        dfs(dfs, cnt, depth + 1, sum);
+        dfs(dfs, cnt + 1, depth + 1, sum ^ a[depth]);
+    };
+
+    dfs(dfs, 0, 0, 0);
+    cout << ans << '\n';
 }
