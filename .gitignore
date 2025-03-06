@@ -6,4 +6,5 @@ test.txt
 .ipynb_checkpoints
 sample-*.*
 random-*.*
+example_*
 a.out
