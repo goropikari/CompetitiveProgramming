@@ -8,9 +8,12 @@
 
 <h1>Submissions</h1>
 <div id='submissions'><!-- Plotly chart will be drawn inside this DIV --></div>
+<input type="range" id="displayCountSlider" min="30" max="1000" value="60" oninput="updateDisplayCount(this.value)">
+<input type="text" id="displayCountTextBox" value="100" onchange="updateSliderCount(this.value)">
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src='https://cdn.plot.ly/plotly-3.0.0.min.js'></script>
 <script src="{{ "js/stat.js" | relURL }}"></script>
+
 
 <style>
 .calculator {
