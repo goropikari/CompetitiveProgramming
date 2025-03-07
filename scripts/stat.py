@@ -89,5 +89,14 @@ while ndt < edt:
     for k, v in freq[s].items():
         freq[ns][k] += v
 
+truncate_freq = dict()
+keys = list(freq.keys())
+keys.sort()
+prev = None
+for key in keys:
+    if prev != freq[key]:
+        prev = freq[key]
+        truncate_freq[key] = freq[key]
+
 with open(outdir + '/stat.json', 'w') as f:
-    json.dump(freq, f, indent=2)
+    json.dump(truncate_freq, f, indent=2)
