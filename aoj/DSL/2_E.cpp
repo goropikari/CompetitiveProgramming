@@ -1,5 +1,5 @@
-/*http://localhost:5173/problem/point_add_range_sum*/
-/*2025年03月07日 23時22分36秒*/
+/*https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_E*/
+/*2025年03月08日 00時14分30秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,47 +51,61 @@ int main() {
     return 0;
 }
 
-struct SegmentTree {
+struct RAQ {
     vll seg;
-    int length;
-    SegmentTree(int n) {
+    ll e = 0;
+    int len;
+
+    RAQ(int n) {
         rep(i, 30) {
-            if (n <= (1ll << i)) {
-                length = 1ll << i;
+            if (n <= (1 << i)) {
+                len = 1 << i;
                 break;
             }
         }
-        seg.resize(length * 2);
+        seg.resize(len * 2, e);
     }
 
-    void add(int p, ll x) {
-        p += length;
-        seg[p] += x;
+    ll get(int p) {
+        p += len;
+        ll ans = seg[p];
         while (p / 2) {
             p /= 2;
-            seg[p] += x;
+            ans += seg[p];
         }
+        return ans;
     }
 
-    ll sum(int l, int r) {
-        l += length;
-        r += length;
-
-        ll ans = 0;
+    void add(int l, int r, ll x) {
+        l += len, r += len;
         while (l < r) {
-            if (l % 2 == 1) {
-                ans += seg[l];
+            if (l & 1) {
+                seg[l] += x;
                 l++;
             }
             l /= 2;
-            if (r % 2 == 1) {
-                ans += seg[r - 1];
+            if (r & 1) {
+                seg[r - 1] += x;
                 r--;
             }
             r /= 2;
         }
+    }
 
-        return ans;
+    void add_rec(int l, int r, ll x) {
+        _add_rec(l, r, 0, len, x, 1);
+    }
+
+    void _add_rec(int ql, int qr, int sl, int sr, ll x, int p) {
+        if (sr <= ql || qr <= sl)
+            return;
+        if (ql <= sl && sr <= qr) {
+            seg[p] += x;
+            return;
+        }
+        int sm = (sl + sr) / 2;
+        _add_rec(ql, qr, sl, sm, x, p * 2);
+        _add_rec(ql, qr, sm, sr, x, p * 2 + 1);
     }
 };
 
@@ -102,24 +116,23 @@ void solve() {
     int n, q;
     cin >> n >> q;
 
-    SegmentTree seg(n);
-    rep(i, n) {
-        ll a;
-        cin >> a;
-        seg.add(i, a);
-    }
+    RAQ seg(n);
 
     rep(i, q) {
         int t;
         cin >> t;
         if (t == 0) {
-            ll p, x;
-            cin >> p >> x;
-            seg.add(p, x);
+            int s, t;
+            ll x;
+            cin >> s >> t >> x;
+            s--, t--;
+            // seg.add(s, t + 1, x);
+            seg.add_rec(s, t + 1, x);
         } else {
-            int l, r;
-            cin >> l >> r;
-            cout << seg.sum(l, r) << '\n';
+            int id;
+            cin >> id;
+            id--;
+            cout << seg.get(id) << '\n';
         }
     }
 }

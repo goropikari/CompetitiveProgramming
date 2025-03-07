@@ -874,3 +874,306 @@ void solve() {
     cout << tot << endl;
 }
 ```
+
+## Segment tree (セグメント木)
+
+### RMQ (Range Minimum Query)
+
+一点更新、区間最小値
+
+- <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_A>
+  - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_A/judge/10276099/C++23>
+  - 再帰版
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_A/judge/10276204/C++23>
+
+```cpp
+struct RMQ {
+    vector<ll> data;
+    ll e = (1ll << 31) - 1;
+    int length;
+
+    RMQ(int n) {
+        rep(i, 30) {
+            if (n <= (1 << i)) {
+                length = 1 << i;
+                break;
+            }
+        }
+        data.resize(length * 2, e);
+    }
+
+    void set(int p, ll x) {
+        p += length;
+        data[p] = x;
+        while (p / 2) {
+            p /= 2;
+            data[p] = min(data[2 * p], data[2 * p + 1]);
+        }
+    }
+
+    int prod(int l, int r) {
+        l += length, r += length;
+        ll ans = (1ll << 31) - 1;
+        while (l < r) {
+            if (l % 2 == 1) {
+                ans = min(ans, data[l]);
+                l++;
+            }
+            l /= 2;
+            if (r % 2 == 1) {
+                ans = min(ans, data[r - 1]);
+                r--;
+            }
+            r /= 2;
+        }
+
+        return ans;
+    }
+
+    ll prod_rec(int l, int r) {
+        return _prod_rec(l, r, 0, length, 1);
+    }
+
+    ll _prod_rec(int ql, int qr, int sl, int sr, int p) {
+        if (qr <= sl || sr <= ql)
+            return e;
+        if (ql <= sl && sr <= qr)
+            return data[p];
+        int sm = (sl + sr) / 2;
+        ll lmin = _prod_rec(ql, qr, sl, sm, p * 2);
+        ll rmin = _prod_rec(ql, qr, sm, sr, p * 2 + 1);
+        return min(lmin, rmin);
+    }
+
+};
+```
+
+### RSQ (Range Sum Query)
+
+一点加算、区間和
+
+- <https://onlinejudge.u-aizu.ac.jp/problems/DSL_2_B>
+  - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_B/judge/10276127/C++23>
+  - 再帰版
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_B/judge/10276205/C++23>
+
+```cpp
+struct RSQ {
+    vll seg;
+    ll e = 0;
+    ll len;
+
+    RSQ(int n) {
+        rep(i, n) {
+            if (n <= (1 << i)) {
+                len = 1 << i;
+                break;
+            }
+        }
+
+        seg.resize(len * 2, e);
+    }
+
+    void add(int p, ll x) {
+        p += len;
+        seg[p] += x;
+        while (p / 2) {
+            p /= 2;
+            seg[p] += x;
+        }
+    }
+
+    ll sum(int l, int r) {
+        l += len, r += len;
+        ll ans = e;
+
+        while (l < r) {
+            if (l & 1) {
+                ans += seg[l];
+                l++;
+            }
+            l /= 2;
+            if (r & 1) {
+                ans += seg[r - 1];
+                r--;
+            }
+            r /= 2;
+        }
+
+        return ans;
+    }
+
+    ll sum_rec(int l, int r) {
+        return _sum_rec(l, r, 0, len, 1);
+    }
+
+    ll _sum_rec(int ql, int qr, int sl, int sr, int p) {
+        if (qr <= sl || sr <= ql)
+            return e;
+        if (ql <= sl && sr <= qr)
+            return seg[p];
+        int sm = (sl + sr) / 2;
+        ll lsum = _sum_rec(ql, qr, sl, sm, p * 2);
+        ll rsum = _sum_rec(ql, qr, sm, sr, p * 2 + 1);
+        return lsum + rsum;
+    }
+
+};
+```
+
+### RAQ (Range Add Query)
+
+区間加算、一点取得
+
+- [ABC 340 E](https://atcoder.jp/contests/abc340/tasks/abc340_e)
+- <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_E>
+  - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_E/judge/10276094/C++23>
+  - 再帰版
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_E/judge/10276221/C++23>
+
+```cpp
+struct RAQ {
+    vll seg;
+    ll e = 0;
+    int len;
+
+    RAQ(int n) {
+        rep(i, 30) {
+            if (n <= (1 << i)) {
+                len = 1 << i;
+                break;
+            }
+        }
+        seg.resize(len * 2, e);
+    }
+
+    ll get(int p) {
+        p += len;
+        ll ans = seg[p];
+        while (p / 2) {
+            p /= 2;
+            ans += seg[p];
+        }
+        return ans;
+    }
+
+    void add(int l, int r, ll x) {
+        l += len, r += len;
+        while (l < r) {
+            if (l & 1) {
+                seg[l] += x;
+                l++;
+            }
+            l /= 2;
+            if (r & 1) {
+                seg[r - 1] += x;
+                r--;
+            }
+            r /= 2;
+        }
+    }
+
+    void add_rec(int l, int r, ll x) {
+        _add_rec(l, r, 0, len, x, 1);
+    }
+
+    void _add_rec(int ql, int qr, int sl, int sr, ll x, int p) {
+        if (sr <= ql || qr <= sl)
+            return;
+        if (ql <= sl && sr <= qr) {
+            seg[p] += x;
+            return;
+        }
+        int sm = (sl + sr) / 2;
+        _add_rec(ql, qr, sl, sm, x, p * 2);
+        _add_rec(ql, qr, sm, sr, x, p * 2 + 1);
+    }
+
+};
+```
+
+### RUQ (Range Update Query)
+
+区間更新、一点取得
+
+いつ更新したものかという情報も付け加えて値の更新を管理する
+
+- <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_D>
+  - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_D/judge/10276168/C++23>
+  - 再帰版
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_D/judge/10276215/C++23>
+
+```cpp
+struct RUQ {
+    vector<ll> seg;
+    vint updated_at;
+    ll e = (1ll << 31) - 1;
+    int len;
+    int cnt = 0;
+
+    RUQ(int n) {
+        rep(i, 30) {
+            if (n <= (1 << i)) {
+                len = 1 << i;
+                break;
+            }
+        }
+        seg.resize(len * 2, e);
+        updated_at.resize(len * 2, -1);
+    }
+
+    void update(int l, int r, ll x) {
+        cnt++;
+        l += len, r += len;
+        while (l < r) {
+            if (l & 1) {
+                seg[l] = x;
+                updated_at[l] = cnt;
+                l++;
+            }
+            l /= 2;
+            if (r & 1) {
+                seg[r - 1] = x;
+                updated_at[r - 1] = cnt;
+                r--;
+            }
+            r /= 2;
+        }
+    }
+
+    void update_rec(int l, int r, ll x) {
+        cnt++;
+        _update_rec(l, r, 0, len, x, 1);
+    }
+
+    void _update_rec(int ql, int qr, int sl, int sr, ll x, int p) {
+        if (sr <= ql || qr <= sl)
+            return;
+        if (ql <= sl && sr <= qr) {
+            seg[p] = x;
+            updated_at[p] = cnt;
+            return;
+        }
+        int sm = (sl + sr) / 2;
+        _update_rec(ql, qr, sl, sm, x, p * 2);
+        _update_rec(ql, qr, sm, sr, x, p * 2 + 1);
+    }
+
+
+    ll find(int p) {
+        p += len;
+        ll ans = seg[p];
+        int t = updated_at[p];
+        while (p / 2) {
+            p /= 2;
+            ll nv = seg[p];
+            ll nt = updated_at[p];
+            if (nt > t) {
+                ans = nv;
+                t = nt;
+            }
+        }
+        return ans;
+    }
+};
+```

@@ -1,5 +1,5 @@
-/*http://localhost:5173/problem/point_add_range_sum*/
-/*2025年03月07日 23時22分36秒*/
+/*https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_B*/
+/*2025年03月08日 00時27分29秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,21 +51,24 @@ int main() {
     return 0;
 }
 
-struct SegmentTree {
+struct RSQ {
     vll seg;
-    int length;
-    SegmentTree(int n) {
-        rep(i, 30) {
-            if (n <= (1ll << i)) {
-                length = 1ll << i;
+    ll e = 0;
+    ll len;
+
+    RSQ(int n) {
+        rep(i, n) {
+            if (n <= (1 << i)) {
+                len = 1 << i;
                 break;
             }
         }
-        seg.resize(length * 2);
+
+        seg.resize(len * 2, e);
     }
 
     void add(int p, ll x) {
-        p += length;
+        p += len;
         seg[p] += x;
         while (p / 2) {
             p /= 2;
@@ -74,17 +77,16 @@ struct SegmentTree {
     }
 
     ll sum(int l, int r) {
-        l += length;
-        r += length;
+        l += len, r += len;
+        ll ans = e;
 
-        ll ans = 0;
         while (l < r) {
-            if (l % 2 == 1) {
+            if (l & 1) {
                 ans += seg[l];
                 l++;
             }
             l /= 2;
-            if (r % 2 == 1) {
+            if (r & 1) {
                 ans += seg[r - 1];
                 r--;
             }
@@ -92,6 +94,21 @@ struct SegmentTree {
         }
 
         return ans;
+    }
+
+    ll sum_rec(int l, int r) {
+        return _sum_rec(l, r, 0, len, 1);
+    }
+
+    ll _sum_rec(int ql, int qr, int sl, int sr, int p) {
+        if (qr <= sl || sr <= ql)
+            return e;
+        if (ql <= sl && sr <= qr)
+            return seg[p];
+        int sm = (sl + sr) / 2;
+        ll lsum = _sum_rec(ql, qr, sl, sm, p * 2);
+        ll rsum = _sum_rec(ql, qr, sm, sr, p * 2 + 1);
+        return lsum + rsum;
     }
 };
 
@@ -102,12 +119,7 @@ void solve() {
     int n, q;
     cin >> n >> q;
 
-    SegmentTree seg(n);
-    rep(i, n) {
-        ll a;
-        cin >> a;
-        seg.add(i, a);
-    }
+    RSQ seg(n);
 
     rep(i, q) {
         int t;
@@ -115,11 +127,14 @@ void solve() {
         if (t == 0) {
             ll p, x;
             cin >> p >> x;
+            p--;
             seg.add(p, x);
         } else {
             int l, r;
             cin >> l >> r;
-            cout << seg.sum(l, r) << '\n';
+            l--, r--;
+            // cout << seg.sum(l, r + 1) << '\n';
+            cout << seg.sum_rec(l, r + 1) << '\n';
         }
     }
 }
