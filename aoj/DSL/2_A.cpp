@@ -52,40 +52,36 @@ int main() {
 }
 
 struct RMQ {
-    vector<ll> data;
+    vector<ll> seg;
     ll e = (1ll << 31) - 1;
-    int length;
+    int len = 1;
 
     RMQ(int n) {
-        rep(i, 30) {
-            if (n <= (1 << i)) {
-                length = 1 << i;
-                break;
-            }
-        }
-        data.resize(length * 2, e);
+        while (n > len)
+            len *= 2;
+        seg.resize(len * 2, e);
     }
 
     void set(int p, ll x) {
-        p += length;
-        data[p] = x;
+        p += len;
+        seg[p] = x;
         while (p / 2) {
             p /= 2;
-            data[p] = min(data[2 * p], data[2 * p + 1]);
+            seg[p] = min(seg[2 * p], seg[2 * p + 1]);
         }
     }
 
     ll prod(int l, int r) {
-        l += length, r += length;
+        l += len, r += len;
         ll ans = (1ll << 31) - 1;
         while (l < r) {
             if (l % 2 == 1) {
-                ans = min(ans, data[l]);
+                ans = min(ans, seg[l]);
                 l++;
             }
             l /= 2;
             if (r % 2 == 1) {
-                ans = min(ans, data[r - 1]);
+                ans = min(ans, seg[r - 1]);
                 r--;
             }
             r /= 2;
@@ -95,14 +91,14 @@ struct RMQ {
     }
 
     ll prod_rec(int l, int r) {
-        return _prod_rec(l, r, 0, length, 1);
+        return _prod_rec(l, r, 0, len, 1);
     }
 
     ll _prod_rec(int ql, int qr, int sl, int sr, int p) {
         if (qr <= sl || sr <= ql)
             return e;
         if (ql <= sl && sr <= qr)
-            return data[p];
+            return seg[p];
         int sm = (sl + sr) / 2;
         ll lmin = _prod_rec(ql, qr, sl, sm, p * 2);
         ll rmin = _prod_rec(ql, qr, sm, sr, p * 2 + 1);

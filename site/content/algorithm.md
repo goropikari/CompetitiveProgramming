@@ -882,46 +882,43 @@ void solve() {
 一点更新、区間最小値
 
 - <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_A>
-  - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_A/judge/10276099/C++23>
   - 再帰版
     - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_A/judge/10276204/C++23>
+  - 非再帰版
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_A/judge/10276844/C++23>
 
 ```cpp
 struct RMQ {
-    vector<ll> data;
+    vector<ll> seg;
     ll e = (1ll << 31) - 1;
-    int length;
+    int len = 1;
 
     RMQ(int n) {
-        rep(i, 30) {
-            if (n <= (1 << i)) {
-                length = 1 << i;
-                break;
-            }
-        }
-        data.resize(length * 2, e);
+        while (n > len)
+            len *= 2;
+        seg.resize(len * 2, e);
     }
 
     void set(int p, ll x) {
-        p += length;
-        data[p] = x;
+        p += len;
+        seg[p] = x;
         while (p / 2) {
             p /= 2;
-            data[p] = min(data[2 * p], data[2 * p + 1]);
+            seg[p] = min(seg[2 * p], seg[2 * p + 1]);
         }
     }
 
-    int prod(int l, int r) {
-        l += length, r += length;
+    ll prod(int l, int r) {
+        l += len, r += len;
         ll ans = (1ll << 31) - 1;
         while (l < r) {
             if (l % 2 == 1) {
-                ans = min(ans, data[l]);
+                ans = min(ans, seg[l]);
                 l++;
             }
             l /= 2;
             if (r % 2 == 1) {
-                ans = min(ans, data[r - 1]);
+                ans = min(ans, seg[r - 1]);
                 r--;
             }
             r /= 2;
@@ -931,20 +928,19 @@ struct RMQ {
     }
 
     ll prod_rec(int l, int r) {
-        return _prod_rec(l, r, 0, length, 1);
+        return _prod_rec(l, r, 0, len, 1);
     }
 
     ll _prod_rec(int ql, int qr, int sl, int sr, int p) {
         if (qr <= sl || sr <= ql)
             return e;
         if (ql <= sl && sr <= qr)
-            return data[p];
+            return seg[p];
         int sm = (sl + sr) / 2;
         ll lmin = _prod_rec(ql, qr, sl, sm, p * 2);
         ll rmin = _prod_rec(ql, qr, sm, sr, p * 2 + 1);
         return min(lmin, rmin);
     }
-
 };
 ```
 
@@ -953,24 +949,20 @@ struct RMQ {
 一点加算、区間和
 
 - <https://onlinejudge.u-aizu.ac.jp/problems/DSL_2_B>
-  - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_B/judge/10276127/C++23>
+  - 非再帰版
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_B/judge/10276127/C++23>
   - 再帰版
-    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_B/judge/10276205/C++23>
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_B/judge/10276849/C++23>
 
 ```cpp
 struct RSQ {
     vll seg;
     ll e = 0;
-    ll len;
+    ll len = 1;
 
     RSQ(int n) {
-        rep(i, n) {
-            if (n <= (1 << i)) {
-                len = 1 << i;
-                break;
-            }
-        }
-
+        while (n > len)
+            len *= 2;
         seg.resize(len * 2, e);
     }
 
@@ -1017,7 +1009,6 @@ struct RSQ {
         ll rsum = _sum_rec(ql, qr, sm, sr, p * 2 + 1);
         return lsum + rsum;
     }
-
 };
 ```
 
@@ -1029,21 +1020,17 @@ struct RSQ {
 - <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_E>
   - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_E/judge/10276094/C++23>
   - 再帰版
-    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_E/judge/10276221/C++23>
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_E/judge/10276850/C++23>
 
 ```cpp
 struct RAQ {
     vll seg;
     ll e = 0;
-    int len;
+    int len = 1;
 
     RAQ(int n) {
-        rep(i, 30) {
-            if (n <= (1 << i)) {
-                len = 1 << i;
-                break;
-            }
-        }
+        while (n > len)
+            len *= 2;
         seg.resize(len * 2, e);
     }
 
@@ -1088,7 +1075,6 @@ struct RAQ {
         _add_rec(ql, qr, sl, sm, x, p * 2);
         _add_rec(ql, qr, sm, sr, x, p * 2 + 1);
     }
-
 };
 ```
 
@@ -1101,23 +1087,19 @@ struct RAQ {
 - <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_D>
   - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_D/judge/10276168/C++23>
   - 再帰版
-    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_D/judge/10276215/C++23>
+    - <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_D/judge/10276853/C++23>
 
 ```cpp
 struct RUQ {
     vector<ll> seg;
     vint updated_at;
     ll e = (1ll << 31) - 1;
-    int len;
+    int len = 1;
     int cnt = 0;
 
     RUQ(int n) {
-        rep(i, 30) {
-            if (n <= (1 << i)) {
-                len = 1 << i;
-                break;
-            }
-        }
+        while (n > len)
+            len *= 2;
         seg.resize(len * 2, e);
         updated_at.resize(len * 2, -1);
     }
@@ -1159,7 +1141,6 @@ struct RUQ {
         _update_rec(ql, qr, sm, sr, x, p * 2 + 1);
     }
 
-
     ll find(int p) {
         p += len;
         ll ans = seg[p];
@@ -1174,6 +1155,166 @@ struct RUQ {
             }
         }
         return ans;
+    }
+};
+```
+
+## RSQ and RAQ
+
+区間和、区間加算
+
+<https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_G/judge/10276973/C++23>
+
+```cpp
+struct RSQRAQ {
+    vll seg;
+    vll lazy;
+    int len = 1;
+    ll e = 0;
+    ll id = 0;
+
+    RSQRAQ(int n) {
+        while (n > len)
+            len *= 2;
+        seg.resize(len * 2, e);
+        lazy.resize(len * 2, id);
+    }
+
+    void eval(int sl, int sr, int p) {
+        if (lazy[p] == id)
+            return;
+        seg[p] += lazy[p];
+        if (sr - sl > 1) {
+            ll x = lazy[p];
+            lazy[p * 2] += x / 2;
+            lazy[p * 2 + 1] += x / 2;
+        }
+        lazy[p] = 0;
+    }
+
+    ll sum(int l, int r) {
+        auto rec = [&](auto rec, int ql, int qr, int sl, int sr, int p) -> ll {
+            eval(sl, sr, p);
+            if (sr <= ql || qr <= sl) {
+                return id;
+            }
+            if (ql <= sl && sr <= qr) {
+                return seg[p];
+            }
+            int sm = (sl + sr) / 2;
+            ll lsum = rec(rec, ql, qr, sl, sm, p * 2);
+            ll rsum = rec(rec, ql, qr, sm, sr, p * 2 + 1);
+
+            return lsum + rsum;
+        };
+
+        return rec(rec, l, r, 0, len, 1);
+    }
+
+    void add(int s, int t, ll x) {
+        auto rec = [&](auto rec, int ql, int qr, int sl, int sr, ll x, int p) {
+            eval(sl, sr, p);
+
+            if (qr <= sl || sr <= ql)
+                return;
+            if (ql <= sl && sr <= qr) {
+                lazy[p] += (sr - sl) * x;
+                eval(sl, sr, p);
+                return;
+            }
+
+            int sm = (sl + sr) / 2;
+            rec(rec, ql, qr, sl, sm, x, p * 2);
+            rec(rec, ql, qr, sm, sr, x, p * 2 + 1);
+            seg[p] = seg[p * 2] + seg[p * 2 + 1];
+        };
+
+        rec(rec, s, t, 0, len, x, 1);
+    }
+};
+```
+
+## RMQ and RAQ
+
+区間最小値、区間加算
+
+- <https://onlinejudge.u-aizu.ac.jp/problems/DSL_2_H>
+- <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/DSL_2_H/judge/10277068/C++23>
+
+```cpp
+struct RMQRAQ {
+    vll seg;
+    vll lazy;
+    int len = 1;
+    ll e = 0;
+    ll id = INF;
+
+    RMQRAQ(int n) {
+        while (n > len)
+            len *= 2;
+        seg.resize(len * 2, e);
+        lazy.resize(len * 2, id);
+    }
+
+    void eval(int sl, int sr, int p) {
+        if (lazy[p] == id)
+            return;
+        seg[p] += lazy[p];
+        if (sr - sl > 1) {
+            ll x = lazy[p];
+            if (lazy[p * 2] == id)
+                lazy[p * 2] = x;
+            else
+                lazy[p * 2] += x;
+
+            if (lazy[p * 2 + 1] == id)
+                lazy[p * 2 + 1] = x;
+            else
+                lazy[p * 2 + 1] += x;
+        }
+        lazy[p] = id;
+    }
+
+    ll find(int l, int r) {
+        auto rec = [&](auto rec, int ql, int qr, int sl, int sr, int p) -> ll {
+            eval(sl, sr, p);
+            if (sr <= ql || qr <= sl) {
+                return id;
+            }
+            if (ql <= sl && sr <= qr) {
+                return seg[p];
+            }
+            int sm = (sl + sr) / 2;
+            ll lmin = rec(rec, ql, qr, sl, sm, p * 2);
+            ll rmin = rec(rec, ql, qr, sm, sr, p * 2 + 1);
+
+            return min(lmin, rmin);
+        };
+
+        return rec(rec, l, r, 0, len, 1);
+    }
+
+    void add(int s, int t, ll x) {
+        auto rec = [&](auto rec, int ql, int qr, int sl, int sr, ll x, int p) {
+            eval(sl, sr, p);
+
+            if (qr <= sl || sr <= ql)
+                return;
+            if (ql <= sl && sr <= qr) {
+                if (lazy[p] == id)
+                    lazy[p] = 0;
+                lazy[p] += x;
+                eval(sl, sr, p);
+                return;
+            }
+
+            int sm = (sl + sr) / 2;
+            rec(rec, ql, qr, sl, sm, x, p * 2);
+            rec(rec, ql, qr, sm, sr, x, p * 2 + 1);
+            seg[p] = min(seg[p * 2], seg[p * 2 + 1]);
+        };
+
+        rec(rec, s, t, 0, len, x, 1);
     }
 };
 ```

@@ -54,15 +54,11 @@ int main() {
 struct RAQ {
     vll seg;
     ll e = 0;
-    int len;
+    int len = 1;
 
     RAQ(int n) {
-        rep(i, 30) {
-            if (n <= (1 << i)) {
-                len = 1 << i;
-                break;
-            }
-        }
+        while (n > len)
+            len *= 2;
         seg.resize(len * 2, e);
     }
 

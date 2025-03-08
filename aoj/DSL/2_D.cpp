@@ -55,16 +55,12 @@ struct RUQ {
     vector<ll> seg;
     vint updated_at;
     ll e = (1ll << 31) - 1;
-    int len;
+    int len = 1;
     int cnt = 0;
 
     RUQ(int n) {
-        rep(i, 30) {
-            if (n <= (1 << i)) {
-                len = 1 << i;
-                break;
-            }
-        }
+        while (n > len)
+            len *= 2;
         seg.resize(len * 2, e);
         updated_at.resize(len * 2, -1);
     }

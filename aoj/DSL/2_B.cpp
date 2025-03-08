@@ -54,16 +54,11 @@ int main() {
 struct RSQ {
     vll seg;
     ll e = 0;
-    ll len;
+    ll len = 1;
 
     RSQ(int n) {
-        rep(i, n) {
-            if (n <= (1 << i)) {
-                len = 1 << i;
-                break;
-            }
-        }
-
+        while (n > len)
+            len *= 2;
         seg.resize(len * 2, e);
     }
 
