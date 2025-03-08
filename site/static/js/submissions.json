@@ -44446,5 +44446,77 @@
     "length": 2800,
     "result": "AC",
     "execution_time": 156
+  },
+  {
+    "id": 63465278,
+    "epoch_second": 1741350358,
+    "problem_id": "abc380_a",
+    "contest_id": "abc380",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 100.0,
+    "length": 274,
+    "result": "AC",
+    "execution_time": 2
+  },
+  {
+    "id": 63465634,
+    "epoch_second": 1741351008,
+    "problem_id": "abc380_a",
+    "contest_id": "abc380",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 100.0,
+    "length": 274,
+    "result": "AC",
+    "execution_time": 11
+  },
+  {
+    "id": 63465639,
+    "epoch_second": 1741351015,
+    "problem_id": "abc380_a",
+    "contest_id": "abc380",
+    "user_id": "goropikari",
+    "language": "Python (PyPy 3.10-v7.3.12)",
+    "point": 100.0,
+    "length": 237,
+    "result": "AC",
+    "execution_time": 58
+  },
+  {
+    "id": 63466230,
+    "epoch_second": 1741352179,
+    "problem_id": "abc380_a",
+    "contest_id": "abc380",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 100.0,
+    "length": 274,
+    "result": "AC",
+    "execution_time": 8
+  },
+  {
+    "id": 63466231,
+    "epoch_second": 1741352184,
+    "problem_id": "abc380_a",
+    "contest_id": "abc380",
+    "user_id": "goropikari",
+    "language": "Python (PyPy 3.10-v7.3.12)",
+    "point": 100.0,
+    "length": 237,
+    "result": "AC",
+    "execution_time": 57
+  },
+  {
+    "id": 63469221,
+    "epoch_second": 1741359827,
+    "problem_id": "abc340_e",
+    "contest_id": "abc340",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 475.0,
+    "length": 2542,
+    "result": "AC",
+    "execution_time": 73
   }
 ]
