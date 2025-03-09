@@ -877,6 +877,9 @@ void solve() {
 
 ## Segment tree (セグメント木)
 
+ACL の使い方は別途まとめた
+- [ソラで書くセグメント木から ACL へ移行する](../segment_tree)
+
 ### RMQ (Range Minimum Query)
 
 一点更新、区間最小値
