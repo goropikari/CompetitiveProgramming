@@ -6,6 +6,18 @@ tags = ["algorithm", "cpp"]
 
 # Performance
 
+## 入出力の高速化
+
+他人のコードをみてたまにやっているのを見かける以下のような書き方は入出力を高速化するためにやっているらしい
+
+```cpp
+ios_base::sync_with_stdio(false);
+cin.tie(nullptr);
+cout << val << '\n';
+```
+
+ref: <https://maspypy.com/library-checker-many-a-b#google_vignette>
+
 ## multiset vs vector
 
 multiset は遅いので二部探索のように使うときは注意する.
