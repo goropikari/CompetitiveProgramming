@@ -1,4 +1,3 @@
-// https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_I
 /*https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_I*/
 /*2025年03月09日 23時12分01秒*/
 // #include <atcoder/all>
