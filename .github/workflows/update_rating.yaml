@@ -34,6 +34,7 @@ jobs:
       run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
     - name: Create Pull Request
+      id: pr
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
