@@ -4008,5 +4008,35 @@
     "yellow": 1,
     "orange": 0,
     "red": 0
+  },
+  "20250308": {
+    "gray": 685,
+    "brown": 352,
+    "green": 326,
+    "cyan": 86,
+    "blue": 9,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250309": {
+    "gray": 685,
+    "brown": 352,
+    "green": 326,
+    "cyan": 87,
+    "blue": 9,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250310": {
+    "gray": 685,
+    "brown": 352,
+    "green": 327,
+    "cyan": 87,
+    "blue": 9,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
   }
 }
