@@ -1,5 +1,6 @@
 +++
 date = '{{ .Date }}'
-draft = true
 title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 +++
+
+https://atcoder.jp/contests/abc{{ .File.ContentBaseName }}

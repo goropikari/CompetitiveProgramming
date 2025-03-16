@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc395/tasks/abc395_d*/
-/*2025年03月16日 00時07分03秒*/
+/*https://atcoder.jp/contests/abc397/tasks/abc397_c*/
+/*2025年03月15日 21時09分20秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -55,35 +55,25 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, q;
-    cin >> n >> q;
+    int n;
+    cin >> n;
+    vll a(n);
+    rep(i, n) cin >> a[i];
 
-    vint p2b(n), b2n(n), n2b(n);
-    iota(all(p2b), 0);
-    iota(all(b2n), 0);
-    iota(all(n2b), 0);
-
-    rep(i, q) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
-
-            p2b[a] = n2b[b];
-        } else if (t == 2) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
-
-            swap(n2b[a], n2b[b]);
-            swap(b2n[n2b[a]], b2n[n2b[b]]);
-        } else {
-            int a;
-            cin >> a;
-            a--;
-            cout << b2n[p2b[a]] + 1 << endl;
-        }
+    map<int, int> l, r;
+    rep(i, n) {
+        r[a[i]]++;
     }
+
+    ll ans = 0;
+    rep(i, n) {
+        ll x = a[i];
+        l[x]++;
+        r[x]--;
+        if (r[x] == 0)
+            r.erase(x);
+
+        chmax(ans, (ll)l.size() + (ll)r.size());
+    }
+    cout << ans << endl;
 }

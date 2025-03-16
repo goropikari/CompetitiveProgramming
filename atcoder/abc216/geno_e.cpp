@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc395/tasks/abc395_d*/
-/*2025年03月16日 00時07分03秒*/
+/*https://atcoder.jp/contests/abc216/tasks/abc216_e*/
+/*2025年03月12日 03時11分17秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,39 +51,53 @@ int main() {
     return 0;
 }
 
+ll sum(ll x) {
+    return x * (x + 1) / 2;
+}
+
+ll cal(ll l, ll r) {
+    return sum(r) - sum(l);
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, q;
-    cin >> n >> q;
+    ll n, k;
+    cin >> n >> k;
+    vll a(n);
+    rep(i, n) cin >> a[i];
 
-    vint p2b(n), b2n(n), n2b(n);
-    iota(all(p2b), 0);
-    iota(all(b2n), 0);
-    iota(all(n2b), 0);
+    map<ll, ll> mp;
+    for (ll x : a)
+        mp[x]++;
 
-    rep(i, q) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
+    ll ans = 0;
+    while (mp.rbegin() != mp.rend() && k) {
+        auto it = mp.rbegin();
+        auto nit = next(it);
 
-            p2b[a] = n2b[b];
-        } else if (t == 2) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
+        ll v1 = it->first;
+        ll n1 = it->second;
+        ll v2 = 0;
+        if (nit != mp.rend())
+            v2 = nit->first;
 
-            swap(n2b[a], n2b[b]);
-            swap(b2n[n2b[a]], b2n[n2b[b]]);
+        if ((v1 - v2) * n1 <= k) {
+            k -= (v1 - v2) * n1;
+            ans += cal(v2, v1) * n1;
+            mp.erase(v1);
+            if (v2)
+                mp[v2] += n1;
         } else {
-            int a;
-            cin >> a;
-            a--;
-            cout << b2n[p2b[a]] + 1 << endl;
+            ll q = k / n1;
+            ll r = k % n1;
+            ans += cal(v1 - q, v1) * n1;
+            v1 -= q;
+            ans += v1 * r;
+            k = 0;
         }
     }
+    cout << ans << endl;
 }
+

@@ -1,10 +1,11 @@
-/*https://atcoder.jp/contests/abc395/tasks/abc395_d*/
-/*2025年03月16日 00時07分03秒*/
+/*https://atcoder.jp/contests/abc309/tasks/abc309_e*/
+/*2025年03月16日 23時16分07秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #include <bits/stdc++.h>
+#include <numeric>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -55,35 +56,34 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, q;
-    cin >> n >> q;
-
-    vint p2b(n), b2n(n), n2b(n);
-    iota(all(p2b), 0);
-    iota(all(b2n), 0);
-    iota(all(n2b), 0);
-
-    rep(i, q) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
-
-            p2b[a] = n2b[b];
-        } else if (t == 2) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
-
-            swap(n2b[a], n2b[b]);
-            swap(b2n[n2b[a]], b2n[n2b[b]]);
-        } else {
-            int a;
-            cin >> a;
-            a--;
-            cout << b2n[p2b[a]] + 1 << endl;
-        }
+    int n, m;
+    cin >> n >> m;
+    vvint graph(n);
+    rep2(i, 1, n) {
+        int p;
+        cin >> p;
+        p--;
+        graph[p].push_back(i);
     }
+
+    vint prop(n, -1);
+    rep(i, m) {
+        int x, y;
+        cin >> x >> y;
+        x--;
+        chmax(prop[x], y);
+    }
+
+    auto dfs = [&](auto dfs, int now) -> void {
+        for (int nx : graph[now]) {
+            chmax(prop[nx], prop[now] - 1);
+            dfs(dfs, nx);
+        }
+    };
+
+    dfs(dfs, 0);
+
+    ll ans = 0;
+    rep(i, n) ans += prop[i] != -1;
+    cout << ans << endl;
 }

@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc395/tasks/abc395_d*/
-/*2025年03月16日 00時07分03秒*/
+/*https://atcoder.jp/contests/abc397/tasks/abc397_d*/
+/*2025年03月15日 21時16分42秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,39 +51,37 @@ int main() {
     return 0;
 }
 
+ll sol(ll a, ll b, ll c) {
+    ll wa = -1, ac = INF;
+    while (abs(ac - wa) > 1) {
+        ll wj = (wa + ac) / 2;
+        if (a * wj * wj + b * wj + c >= 0) {
+            ac = wj;
+        } else {
+            wa = wj;
+        }
+    }
+    return ac;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n, q;
-    cin >> n >> q;
+    ll N;
+    cin >> N;
 
-    vint p2b(n), b2n(n), n2b(n);
-    iota(all(p2b), 0);
-    iota(all(b2n), 0);
-    iota(all(n2b), 0);
-
-    rep(i, q) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
-
-            p2b[a] = n2b[b];
-        } else if (t == 2) {
-            int a, b;
-            cin >> a >> b;
-            a--, b--;
-
-            swap(n2b[a], n2b[b]);
-            swap(b2n[n2b[a]], b2n[n2b[b]]);
-        } else {
-            int a;
-            cin >> a;
-            a--;
-            cout << b2n[p2b[a]] + 1 << endl;
+    for (ll d = 1; d * d * d < N; d++) {
+        if (N % d)
+            continue;
+        ll y = sol(3, 3 * d, d * d - N / d);
+        if (y <= 0)
+            continue;
+        ll x = d + y;
+        if (x * x * x - y * y * y == N) {
+            cout << d + y << ' ' << y << endl;
+            return;
         }
     }
+    cout << -1 << endl;
 }

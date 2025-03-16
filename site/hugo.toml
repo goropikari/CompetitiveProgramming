@@ -26,6 +26,16 @@ menu.atcoder = [
     [markup.goldmark.renderHooks]
       [markup.goldmark.renderHooks.image]
         enableDefault = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['$', '$']]
+
+[params]
+  math = true
+
 
 [module]
   [[module.mounts]]
