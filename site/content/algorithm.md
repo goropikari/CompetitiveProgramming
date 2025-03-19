@@ -4,8 +4,6 @@ date = "2021-12-12"
 tags = ["algorithm"]
 +++
 
-# Algorithm
-
 ## int <-> string
 
 - `to_string(int)` -> string

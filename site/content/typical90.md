@@ -5,7 +5,7 @@ title = '競プロ典型 90 問'
 
 <https://atcoder.jp/contests/abctypical90>
 
-# 001. Yokan Party（★4）
+## 001. Yokan Party（★4）
 
 <https://atcoder.jp/contests/typical90/tasks/typical90_a>
 
@@ -57,7 +57,7 @@ void solve() {
 }
 ```
 
-# 002 - Encyclopedia of Parentheses（★3）
+## 002 - Encyclopedia of Parentheses（★3）
 
 <https://atcoder.jp/contests/typical90/tasks/typical90_b>
 
@@ -152,7 +152,7 @@ void solve() {
 }
 ```
 
-# 003 - Longest Circular Road（★4）
+## 003 - Longest Circular Road（★4）
 
 <https://atcoder.jp/contests/typical90/tasks/typical90_c>
 
@@ -201,7 +201,7 @@ void solve() {
 }
 ```
 
-# 004 - Cross Sum（★2）
+## 004 - Cross Sum（★2）
 
 <https://atcoder.jp/contests/typical90/tasks/typical90_d>
 
@@ -231,7 +231,7 @@ void solve() {
 }
 ```
 
-# 005 - Restricted Digits（★7）
+## 005 - Restricted Digits（★7）
 
 昔解説を読んで何を言っているのかわからなかった記憶があるが、3年ぶりに取り組んでなんとか解説読まずに AC できた。
 
@@ -348,3 +348,126 @@ void solve() {
     cout << ans[0].val() << endl;
 }
 ```
+
+## 006 - Smallest Subsequence（★5）
+
+解説 AC.
+
+辞書順最小は貪欲が定石らしい。
+
+文字 $\alpha \in \\\{ a, b, \cdots, z \\\}$ が $i$ 番目以降($i$ 番目も含む)に出る位置を $\mathrm{nex}(\alpha, i)$ とする。
+$i=0$ から始め、各 $i$ について $a$ から見ていき、
+
+- 長さ $K$ の文字列を作れるなら採用。$i$ の値を $\mathrm{nex}(i,a)+1$ に更新。$K$ を 1 減らす。
+- できないなら文字 $b$ について確かめ、それでもできないなら文字 $c$ について確かめる・・・と繰り返す。
+
+$K$ 文字になるまで上記の操作を繰り返すと答えが求まる。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, k;
+    string s;
+    cin >> n >> k >> s;
+
+    vvint nex(26, vint(n + 1, n));
+    for (int id = n - 1; id >= 0; id--) {
+        rep(j, 26) {
+            if (s[id] - 'a' == j) {
+                nex[j][id] = id;
+            } else if (id < n - 1) {
+                nex[j][id] = nex[j][id + 1];
+            }
+        }
+    }
+
+    string ans = "";
+    int i = 0;
+    while (k) {
+        rep(j, 26) {
+            if (n - nex[j][i] >= k) {
+                ans.push_back('a' + j);
+                i = nex[j][i] + 1;
+                break;
+            }
+        }
+        k--;
+    }
+    cout << ans << endl;
+}
+```
+
+## 007 - CP Classes（★3）
+
+$A$ を sort して $B_i$ の値で二分探索して前後にある数字との差の絶対値のうち最小を出力
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vll a(n);
+    rep(i, n) cin >> a[i];
+    int q;
+    cin >> q;
+    vll b(q);
+    rep(i, q) cin >> b[i];
+
+    sort(all(a));
+
+    ll ans = 0;
+    for (ll x : b) {
+        auto it = lower_bound(all(a), x);
+        ll t = INF;
+        if (it != a.begin()) {
+            chmin(t, abs(x - *prev(it)));
+        }
+        if (it != a.end()) {
+            chmin(t, abs(x - *it));
+        }
+        cout << t << endl;
+    }
+}
+```
+
+## 008 - AtCounter（★3）
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    string s;
+    cin >> n >> s;
+
+    vector<vector<mint>> dp(n + 1, vector<mint>(8));
+    rep(i, n + 1) dp[i][0] = 1;
+
+    string atcoder = "_atcoder";
+
+    s = "_" + s;
+
+    rep2(i, 1, n + 1) {
+        rep2(j, 1, 8) {
+            if (s[i] == atcoder[j]) {
+                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+            } else {
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+    cout << dp[n][7].val() << endl;
+}
+```
+
+## 009 - Three Point Angle（★6）
+
+解説 AC.
+
+2つの候補に自分自身が含まれる場合あるけどそれは大丈夫なのか納得できていない
+https://github.com/E869120/kyopro_educational_90/blob/main/sol/009.cpp#L58-L63

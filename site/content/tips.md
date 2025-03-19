@@ -4,7 +4,7 @@ date = "2021-12-12"
 tags = ["algorithm", "cpp"]
 +++
 
-# Performance
+## Performance
 
 ## 入出力の高速化
 

@@ -16,7 +16,7 @@ def gen():
     for problem in problems:
         if problem['contest_id'] == contest_id:
             print(
-                '# {}\n\nhttps://atcoder.jp/contests/{}/tasks/{}\n'.format(
+                '## {}\n\nhttps://atcoder.jp/contests/{}/tasks/{}\n'.format(
                     problem['title'],
                     contest_id,
                     problem['id']

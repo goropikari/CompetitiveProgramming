@@ -4,7 +4,7 @@ title = 'Educational DP Contest'
 tags = ['atcoder', 'edpc']
 +++
 
-# L - Deque
+## L - Deque
 
 <https://atcoder.jp/contests/dp/tasks/dp_l>
 
@@ -100,7 +100,7 @@ void solve() {
 }
 ```
 
-# M - Candies
+## M - Candies
 
 <https://atcoder.jp/contests/dp/tasks/dp_m>
 
@@ -193,7 +193,7 @@ void solve() {
 }
 ```
 
-# N - Slimes
+## N - Slimes
 
 <https://atcoder.jp/contests/dp/tasks/dp_n>
 
@@ -268,7 +268,7 @@ void solve() {
 }
 ```
 
-# O - Matching
+## O - Matching
 
 <https://atcoder.jp/contests/dp/tasks/dp_o>
 
