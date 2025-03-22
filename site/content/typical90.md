@@ -470,4 +470,84 @@ void solve() {
 解説 AC.
 
 2つの候補に自分自身が含まれる場合あるけどそれは大丈夫なのか納得できていない
-https://github.com/E869120/kyopro_educational_90/blob/main/sol/009.cpp#L58-L63
+<https://github.com/E869120/kyopro_educational_90/blob/main/sol/009.cpp#L58-L63>
+
+### 010 - Score Sum Queries（★2）
+
+1組用、2組用の累積和を持っておいてクエリに対して答える。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vll c(n), pt(n);
+    rep(i, n) {
+        cin >> c[i] >> pt[i];
+        c[i]--;
+    }
+
+    vvll cumsum(2, vll(n + 1));
+    rep(i, n) {
+        rep(j, 2) cumsum[j][i + 1] += cumsum[j][i];
+
+        if (c[i] == 0) {
+            cumsum[0][i + 1] += pt[i];
+        } else {
+            cumsum[1][i + 1] += pt[i];
+        }
+    }
+
+    int q;
+    cin >> q;
+    rep(_, q) {
+        int l, r;
+        cin >> l >> r;
+        l--, r--;
+        cout << cumsum[0][r + 1] - cumsum[0][l] << ' ' << cumsum[1][r + 1] - cumsum[1][l] << endl;
+    }
+}
+```
+
+### 011 - Gravy Jobs（★6）
+
+解説 AC
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vector<Work> ws;
+    rep(i, n) {
+        ll d, c, s;
+        cin >> d >> c >> s;
+        ws.emplace_back(d, c, s);
+    }
+    sort(all(ws));
+
+    ws.insert(ws.begin(), {0, 0, 0});
+
+    // dp[i][j]: i 番目までの仕事をこなした状態での j 日目時点での報酬の最大値
+    vvll dp(n + 1, vll(5005, 0));
+    rep2(i, 1, n + 1) {
+        rep2(j, 1, 5005) {
+            // i 番目の仕事をしない
+            chmax(dp[i][j], dp[i - 1][j]);
+
+            // i 番目の仕事をする
+            if (j <= ws[i].d && j - ws[i].c >= 0) {
+                chmax(dp[i][j], dp[i - 1][j - ws[i].c] + ws[i].s);
+            }
+        }
+    }
+
+    ll ans = 0;
+    rep(i, 5005) chmax(ans, dp[n][i]);
+    cout << ans << endl;
+}
+```

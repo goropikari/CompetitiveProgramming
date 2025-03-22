@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/arc182/tasks/arc182_b*/
-/*2025年03月21日 02時15分36秒*/
+// https://atcoder.jp/contests/typical90/tasks/typical90_k
+/*2025年03月20日 23時51分16秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,45 +51,45 @@ int main() {
     return 0;
 }
 
+struct Work {
+    ll d, c, s;
+};
+
+bool operator<(const Work& a, const Work& b) {
+    return a.d < b.d;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vvll tp(31);
-    tp[0].push_back(1);
-    rep2(i, 1, 31) {
-        ll cnt = 0;
-        int ex = 0;
-        rep(j, 2) {
-            for (ll x : tp[i - 1]) {
-                tp[i].push_back((x << 1) + j);
-                cnt++;
-                if (cnt > 2e5 + 5) {
-                    ex = 1;
-                    break;
-                }
+    int n;
+    cin >> n;
+    vector<Work> ws;
+    rep(i, n) {
+        ll d, c, s;
+        cin >> d >> c >> s;
+        ws.emplace_back(d, c, s);
+    }
+    sort(all(ws));
+
+    ws.insert(ws.begin(), {0, 0, 0});
+
+    // dp[i][j]: i 番目までの仕事をこなした状態での j 日目時点での報酬の最大値
+    vvll dp(n + 1, vll(5005, 0));
+    rep2(i, 1, n + 1) {
+        rep2(j, 1, 5005) {
+            // i 番目の仕事をしない
+            chmax(dp[i][j], dp[i - 1][j]);
+
+            // i 番目の仕事をする
+            if (j <= ws[i].d && j - ws[i].c >= 0) {
+                chmax(dp[i][j], dp[i - 1][j - ws[i].c] + ws[i].s);
             }
-            if (ex)
-                break;
         }
     }
 
-    auto cal = [&](ll n, ll k) -> void {
-        vll ans;
-        rep(i, n) {
-            if (i < tp[k - 1].size())
-                ans.push_back(tp[k - 1][i]);
-            else
-                ans.push_back(1);
-        }
-        print(ans);
-    };
-
-    int t;
-    cin >> t;
-    rep(i, t) {
-        ll n, k;
-        cin >> n >> k;
-        cal(n, k);
-    }
+    ll ans = 0;
+    rep(i, 5005) chmax(ans, dp[n][i]);
+    cout << ans << endl;
 }

@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/arc182/tasks/arc182_b*/
-/*2025年03月21日 02時15分36秒*/
+// https://atcoder.jp/contests/typical90/tasks/typical90_j
+/*2025年03月20日 15時40分33秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -55,41 +55,31 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vvll tp(31);
-    tp[0].push_back(1);
-    rep2(i, 1, 31) {
-        ll cnt = 0;
-        int ex = 0;
-        rep(j, 2) {
-            for (ll x : tp[i - 1]) {
-                tp[i].push_back((x << 1) + j);
-                cnt++;
-                if (cnt > 2e5 + 5) {
-                    ex = 1;
-                    break;
-                }
-            }
-            if (ex)
-                break;
+    int n;
+    cin >> n;
+    vll c(n), pt(n);
+    rep(i, n) {
+        cin >> c[i] >> pt[i];
+        c[i]--;
+    }
+
+    vvll cumsum(2, vll(n + 1));
+    rep(i, n) {
+        rep(j, 2) cumsum[j][i + 1] += cumsum[j][i];
+
+        if (c[i] == 0) {
+            cumsum[0][i + 1] += pt[i];
+        } else {
+            cumsum[1][i + 1] += pt[i];
         }
     }
 
-    auto cal = [&](ll n, ll k) -> void {
-        vll ans;
-        rep(i, n) {
-            if (i < tp[k - 1].size())
-                ans.push_back(tp[k - 1][i]);
-            else
-                ans.push_back(1);
-        }
-        print(ans);
-    };
-
-    int t;
-    cin >> t;
-    rep(i, t) {
-        ll n, k;
-        cin >> n >> k;
-        cal(n, k);
+    int q;
+    cin >> q;
+    rep(_, q) {
+        int l, r;
+        cin >> l >> r;
+        l--, r--;
+        cout << cumsum[0][r + 1] - cumsum[0][l] << ' ' << cumsum[1][r + 1] - cumsum[1][l] << endl;
     }
 }
