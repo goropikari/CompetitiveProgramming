@@ -13,12 +13,20 @@
         "ms-vscode.cpptools"
     ],
     "features": {
-        "ghcr.io/goropikari/devcontainer-feature/neovim:1": {}
+        "ghcr.io/goropikari/devcontainer-feature/neovim:1": {},
+        "ghcr.io/devcontainers/features/go:1": {},
+        "ghcr.io/devcontainers/features/python:1": {}
     },
     "mounts": [
         {
-            "source": "${localWorkspaceFolder}/.devcontainer/nvim",
+            // "source": "${localWorkspaceFolder}/.devcontainer/nvim",
+            "source": "${localEnv:HOME}/.config/nvim",
             "target": "/home/vscode/.config/nvim",
+            "type": "bind"
+        },
+        {
+            "source": "${localWorkspaceFolder}/ac-library",
+            "target": "/opt/ac-library",
             "type": "bind"
         }
     ],
