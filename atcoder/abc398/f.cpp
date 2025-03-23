@@ -3,7 +3,7 @@
 #include <atcoder/all>
 using namespace atcoder;
 // using mint = modint998244353;
-using mint = modint1000000007;
+// using mint = modint1000000007;
 #include <bits/stdc++.h>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
@@ -58,42 +58,18 @@ void solve() {
     string s;
     cin >> s;
 
-    string rs = s;
-    reverse(all(rs));
-
-    mint base = 29;
-    vector<mint> power;
-
     int n = s.size();
-    rep(i, n + 1) {
-        power.push_back(base.pow(i));
-    }
+    string t = s;
+    reverse(all(t));
+    string concat = t + s;
 
-    vector<mint> v, rv;
-    for (char c : s) {
-        v.push_back(c - 'A');
-    }
-    rv = v;
-    reverse(all(rv));
-
-    vector<mint> l(n), r(n);
-
-    r[0] = rv[0];
-    l[0] = rv[0];
-    rep2(i, 1, n) {
-        r[i] = r[i - 1] * base + rv[i];
-        l[i] = power[i] * rv[i] + l[i - 1];
-    }
-    reverse(all(l));
-
-    ll common = 0;
+    vint z = z_algorithm(concat);
+    int common = 0;
     rep(i, n) {
-        if (l[n - i - 1].val() == r[i].val()) {
-            common = i + 1;
-        }
+        if (z[n + i] == n - i)
+            chmax(common, z[n + i]);
     }
-    // cout << common << endl;
     cout << s;
-    string b = rs.substr(common, n - common);
-    cout << b << endl;
+    cout << t.substr(common, n - common);
+    cout << endl;
 }
