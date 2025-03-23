@@ -1161,7 +1161,7 @@ struct RUQ {
 };
 ```
 
-## RSQ and RAQ
+### RSQ and RAQ
 
 区間和、区間加算
 
@@ -1236,7 +1236,7 @@ struct RSQRAQ {
 };
 ```
 
-## RMQ and RAQ
+### RMQ and RAQ
 
 区間最小値、区間加算
 
@@ -1317,6 +1317,47 @@ struct RMQRAQ {
         };
 
         rec(rec, s, t, 0, len, x, 1);
+    }
+};
+```
+
+## Rolling Hash
+
+<https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_14_B/judge/10319713/C++23>
+
+```cpp
+ll modpow(ll x, ll n, ll mod) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret = (ret * x) % mod;
+        x = (x * x) % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+
+struct RollingHash {
+    vll data;
+    const ll p = 1000000009;
+    const ll mod = 1000000021;
+
+    RollingHash(vll& v) {
+        int n = v.size();
+        data.resize(n + 1);
+        rep(i, n) {
+            data[i + 1] = (data[i] * p % mod) + v[i];
+            data[i + 1] %= mod;
+        }
+    };
+
+    // [l,r) の範囲の hash 値
+    ll sub(ll l, ll r) {
+        ll m = r - l;
+        ll x = data[r] - data[l] * modpow(p, m, mod) % mod;
+        x += mod;
+        x %= mod;
+        return x;
     }
 };
 ```

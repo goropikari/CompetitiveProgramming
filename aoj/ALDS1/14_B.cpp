@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/abc398/tasks/abc398_f*/
-/*2025年03月22日 21時27分15秒*/
+/*https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/14/ALDS1_14_B*/
+/*2025年03月23日 18時35分28秒*/
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -76,6 +76,7 @@ struct RollingHash {
         }
     };
 
+    // [l,r) の範囲の hash 値
     ll sub(ll l, ll r) {
         ll m = r - l;
         ll x = data[r] - data[l] * modpow(p, m, mod) % mod;
@@ -89,27 +90,23 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string s;
-    cin >> s;
+    string t, p;
+    cin >> t >> p;
 
-    string t = s;
-    reverse(all(t));
-
-    int n = s.size();
-    vll val, rev;
+    vll vt, vp;
+    int n = t.size();
     rep(i, n) {
-        val.push_back(s[i] - 'A');
-        rev.push_back(t[i] - 'A');
+        vt.push_back(t[i]);
+    }
+    int m = p.size();
+    rep(i, m) {
+        vp.push_back(p[i]);
     }
 
-    RollingHash h(val), hr(rev);
-    ll common = 0;
-    rep(i, n) {
-        if (h.sub(n - 1 - i, n) == hr.sub(0, i + 1)) {
-            chmax(common, i + 1);
+    RollingHash ht(vt), hp(vp);
+    rep(i, n - m + 1) {
+        if (ht.sub(i, i + m) == hp.sub(0, m)) {
+            cout << i << '\n';
         }
     }
-    cout << s;
-    cout << t.substr(common, n - common);
-    cout << endl;
 }
