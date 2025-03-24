@@ -6,8 +6,14 @@ ENV CPLUS_INCLUDE_PATH=/opt/ac-library
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
+        git \
         curl \
         time \
         ripgrep \
         fd-find \
         libreadline-dev
+
+RUN mkdir -p /opt && \
+    git clone -b v1.5.1 --depth 1 https://github.com/atcoder/ac-library /opt/ac-library && \
+    cd /usr/include/x86_64-linux-gnu/c++/13/bits && \
+    g++ --std=c++23 stdc++.h

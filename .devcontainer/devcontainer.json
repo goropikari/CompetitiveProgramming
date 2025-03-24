@@ -23,11 +23,6 @@
             "source": "${localEnv:HOME}/.config/nvim",
             "target": "/home/vscode/.config/nvim",
             "type": "bind"
-        },
-        {
-            "source": "${localWorkspaceFolder}/ac-library",
-            "target": "/opt/ac-library",
-            "type": "bind"
         }
     ],
     "postCreateCommand": "bash .devcontainer/post-create.sh",
