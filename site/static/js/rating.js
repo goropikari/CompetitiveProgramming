@@ -6,10 +6,10 @@ async function loadData() {
         const response = await fetch('/CompetitiveProgramming/js/goropikari.json');
         const data = await response.json();
         return data.map(entry => ({
-            contest: entry.contest,
-            performance: entry.performance,
-            rating: entry.rating,
-            url: entry.url
+            contest: entry.ContestName,
+            performance: entry.Performance,
+            rating: entry.NewRating,
+            url: 'https://' + entry.ContestScreenName
         }));
     } catch (error) {
         console.error('Error loading data:', error);
