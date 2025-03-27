@@ -5,11 +5,18 @@ template:
 clean:
 	$(shell find ./atcoder -type f -executable | xargs rm -f)
 
+.PHONY: up
 up:
 	devcontainer up --workspace-folder=.
 
+.PHONY: up-new
 up-new:
 	devcontainer up --workspace-folder=. --remove-existing-container
 
+.PHONY: stop
+stop:
+	docker stop competitive_programming
+
+.PHONY: exec
 exec:
 	devcontainer exec --workspace-folder=. bash
