@@ -538,5 +538,17 @@
         "ContestName": "ユニークビジョンプログラミングコンテスト2025 春（AtCoder Beginner Contest 398）",
         "ContestNameEn": "UNIQUE VISION Programming Contest 2025 Spring (AtCoder Beginner Contest 398)",
         "EndTime": "2025-03-22T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 3520,
+        "OldRating": 1038,
+        "NewRating": 1028,
+        "Performance": 943,
+        "InnerPerformance": 943,
+        "ContestScreenName": "abc399.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 399",
+        "ContestNameEn": "",
+        "EndTime": "2025-03-29T22:40:00+09:00"
     }
 ]
