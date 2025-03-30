@@ -551,3 +551,135 @@ void solve() {
     cout << ans << endl;
 }
 ```
+
+## 012 - Red Painting（★4）
+
+union find で管理
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int h, w;
+    cin >> h >> w;
+    int q;
+    cin >> q;
+
+    auto sub2id = [&](int i, int j) -> int {
+        return i * w + j;
+    };
+
+    vvint grid(h, vint(w, 0));
+    dsu uf(h * w);
+
+    vint di = {0, 1, 0, -1};
+    vint dj = {1, 0, -1, 0};
+
+    rep(i, q) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            int r, c;
+            cin >> r >> c;
+            r--, c--;
+            grid[r][c] = 1;
+
+            rep(d, 4) {
+                int ni = r + di[d], nj = c + dj[d];
+                if (clamp(ni, 0, h - 1) != ni || clamp(nj, 0, w - 1) != nj)
+                    continue;
+                if (grid[ni][nj] == 1)
+                    uf.merge(sub2id(r, c), sub2id(ni, nj));
+            }
+        } else {
+            int ra, ca, rb, cb;
+            cin >> ra >> ca >> rb >> cb;
+            ra--, ca--, rb--, cb--;
+            yesno(grid[ra][ca] == 1 && grid[rb][cb] == 1 && uf.same(sub2id(ra, ca), sub2id(rb, cb)));
+        }
+    }
+}
+```
+
+## 013 - Passing（★5）
+
+start, goal からダイクストラ
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+
+    vector<vector<Edge>> graph(n);
+    rep(i, m) {
+        ll a, b, c;
+        cin >> a >> b >> c;
+        a--, b--;
+        graph[a].push_back({b, c});
+        graph[b].push_back({a, c});
+    }
+
+    vvll dists(2);
+    vint nows = {0, n - 1};
+
+    rep(k, 2) {
+        int now = nows[k];
+
+        vll dist(n, INF);
+        dist[now] = 0;
+
+        // dist, id
+        using P = pair<ll, ll>;
+        priority_queue<P, vector<P>, greater<P>> pq;
+        pq.push({0, now});
+        while (pq.size()) {
+            auto [cost, id] = pq.top();
+            pq.pop();
+
+            if (dist[id] < cost)
+                continue;
+
+            for (auto [nx, w] : graph[id]) {
+                if (dist[nx] <= dist[id] + w)
+                    continue;
+
+                dist[nx] = dist[id] + w;
+                pq.push({dist[nx], nx});
+            }
+        }
+
+        dists[k] = dist;
+    }
+
+    rep(i, n) {
+        cout << dists[0][i] + dists[1][i] << endl;
+    }
+}
+```
+
+## 014 - We Used to Sing a Song Together（★3）
+
+人と学校の結んだ線がクロスしてもいいことないのでどっちも sort して左から割り当てていく。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vll a(n), b(n);
+    rep(i, n) cin >> a[i];
+    rep(i, n) cin >> b[i];
+
+    sort(all(a));
+    sort(all(b));
+    ll ans = 0;
+    rep(i, n) ans += abs(a[i] - b[i]);
+    cout << ans << endl;
+}
+```
