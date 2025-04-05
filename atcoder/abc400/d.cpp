@@ -84,15 +84,13 @@ void solve() {
             continue;
 
         rep(d, 4) {
-            bool wall = false;
-            ll w = cost;
+            int wall = 0;
             for (int k = 1; k <= 2; k++) {
                 int ni = i + di[d] * k, nj = j + dj[d] * k;
                 if (clamp(ni, 0, H - 1) != ni || clamp(nj, 0, W - 1) != nj)
                     continue;
                 wall = wall || grid[ni][nj] == '#';
-                if (wall)
-                    w = cost + 1;
+                ll w = cost + wall;
                 if (dist[ni][nj] > w) {
                     dist[ni][nj] = w;
                     pq.push({w, {ni, nj}});
