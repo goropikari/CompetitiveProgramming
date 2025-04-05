@@ -1,120 +1,56 @@
-+++
-date = '2025-03-30T02:23:40+09:00'
-title = '019'
-tags = ['atcoder', 'past']
-+++
+// https://atcoder.jp/contests/past19-open/tasks/past19_k
+// 2025年03月30日 19時25分26秒
+#include <bits/stdc++.h>
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
+// using mint = modint1000000007;
+#define all(v) (v).begin(), (v).end()
+#define rall(v) (v).rbegin(), (v).rend()
+#define rep(i, n) for (long long int i = 0; i < (n); ++i)
+#define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+using namespace std;
+using ll = long long;
+using vint = vector<int>;
+using vll = vector<ll>;
+using vvint = vector<vector<int>>;
+using vvll = vector<vector<ll>>;
 
-<https://atcoder.jp/contests/past19-open>
+const ll INF = (ll)2e18 + 9;
+// const int INF = (int)2e9 + 7;
 
-## C - 良さそうな数 / Goodish or Not
+template <typename T>
+void chmin(T& a, T b) {
+    a = min(a, b);
+}
+template <typename T>
+void chmax(T& a, T b) {
+    a = max(a, b);
+}
 
-DP で解いたが、解説読んで普通に桁を変えるのを全探索すればいいだけだった
-
-DP で解く場合は `dp[i][j]` を左から $i$ 桁目を $j$ にしたときのそれまで変更回数の最小値とする。
-
-```cpp
-// DP 解放
-void solve() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    string S;
-    cin >> S;
-
-    int n = S.size();
-    if (n == 1) {
-        yesno(true);
-        return;
-    }
-
-    vint v(n);
+template <typename T>
+void print(vector<T> v) {
+    int n = v.size();
     rep(i, n) {
-        v[i] = S[i] - '0';
-    }
-
-    vvint dp(n + 1, vint(10, INF));
-    rep2(i, 1, 10) {
-        if (v[0] != i)
-            dp[0][i] = 1;
+        if (i == 0)
+            cout << v[i];
         else
-            dp[0][i] = 0;
+            cout << ' ' << v[i];
     }
-
-    rep2(i, 1, n) {
-        rep(j, 10) {
-            int change = v[i] != j;
-            if (j - 1 >= 0) {
-                chmin(dp[i][j], dp[i - 1][j - 1] + change);
-            }
-            if (j + 1 <= 9) {
-                chmin(dp[i][j], dp[i - 1][j + 1] + change);
-            }
-            chmin(dp[i][j], dp[i - 1][j] + change);
-        }
-    }
-
-    int ok = 0;
-    rep(i, 10) {
-        if (dp[n - 1][i] <= 1)
-            ok = 1;
-    }
-    yesno(ok);
+    cout << endl;
 }
-```
 
-```cpp
-// 全探索解法
-void solve() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    string S;
-    cin >> S;
-
-    int n = S.size();
-
-    vint v(n);
-    rep(i, n) {
-        v[i] = S[i] - '0';
-    }
-
-    auto check = [](vint& v) -> bool {
-        bool ok = true;
-        int n = v.size();
-        if (n == 1)
-            return true;
-
-        if (v[0] == 0)
-            return false;
-
-        rep(i, n - 1) {
-            if (abs(v[i] - v[i + 1]) > 1)
-                ok = false;
-        }
-
-        return ok;
-    };
-
-    rep(i, n) {
-        vint t = v;
-        rep(j, 10) {
-            t[i] = j;
-            if (check(t)) {
-                yesno(true);
-                return;
-            }
-        }
-    }
-
-    yesno(false);
+void yesno(bool x) {
+    cout << (x ? "Yes" : "No") << '\n';
 }
-```
 
-## K - 隣接禁止
+void solve();
 
-木 DP の問題
+int main() {
+    solve();
+    return 0;
+}
 
-```cpp
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -191,4 +127,3 @@ void solve() {
         ans = -1;
     cout << ans << endl;
 }
-```

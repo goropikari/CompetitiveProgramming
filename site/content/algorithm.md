@@ -343,6 +343,113 @@ for (int i = 2; i < MAX; i++) {
 }
 ```
 
+#### 素因数分解、約数列挙
+
+<https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/NTL_1_A/judge/10351236/C++23>
+
+```cpp
+// https://qiita.com/drken/items/3beb679e54266f20ab63#4-%E6%B4%BB%E7%94%A8%E4%BE%8B-1-%E9%AB%98%E9%80%9F%E7%B4%A0%E5%9B%A0%E6%95%B0%E5%88%86%E8%A7%A3%E9%AB%98%E9%80%9F%E7%B4%84%E6%95%B0%E5%88%97%E6%8C%99
+struct Sieve {
+    vector<bool> isprime;
+
+    // 整数 i を割り切る最小の素数
+    vector<int> minfactor;
+
+    Sieve(int N)
+        : isprime(N + 1, true),
+          minfactor(N + 1, -1) {
+        isprime[1] = false;
+        minfactor[1] = 1;
+
+        for (int p = 2; p <= N; ++p) {
+            // すでに合成数であるものはスキップする
+            if (!isprime[p])
+                continue;
+
+            // p についての情報更新
+            minfactor[p] = p;
+
+            // p 以外の p の倍数から素数ラベルを剥奪
+            for (int q = p * 2; q <= N; q += p) {
+                // q は合成数なのでふるい落とす
+                isprime[q] = false;
+
+                // q は p で割り切れる旨を更新
+                if (minfactor[q] == -1)
+                    minfactor[q] = p;
+            }
+        }
+    }
+
+    // 高速素因数分解
+    // pair (素因子, 指数) の vector を返す
+    vector<pair<ll, ll>> factorize(int n) {
+        vector<pair<ll, ll>> res;
+        while (n > 1) {
+            int p = minfactor[n];
+            int exp = 0;
+
+            // n で割り切れる限り割る
+            while (minfactor[n] == p) {
+                n /= p;
+                ++exp;
+            }
+            res.emplace_back(p, exp);
+        }
+        return res;
+    }
+
+    // 高速約数列挙
+    vector<int> divisors(int n) {
+        vector<int> res({1});
+
+        // n を素因数分解 (メンバ関数使用)
+        auto pf = factorize(n);
+
+        // 約数列挙
+        for (auto p : pf) {
+            int s = (int)res.size();
+            for (int i = 0; i < s; ++i) {
+                int v = 1;
+                for (int j = 0; j < p.second; ++j) {
+                    v *= p.first;
+                    res.push_back(res[i] * v);
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+
+### 素因数分解
+
+計算量 $O(\sqrt{N})$
+
+<https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/NTL_1_A/judge/10351217/C++23>
+
+```cpp
+// prime, cnt
+vector<pair<ll, ll>> factor(ll n) {
+    vector<pair<ll, ll>> ps;
+    ll t = n;
+    for (int i = 2; i * i <= n; i++) {
+        if (t % i == 0) {
+            ll cnt = 0;
+            while (t % i == 0) {
+                t /= i;
+                cnt++;
+            }
+            ps.emplace_back(i, cnt);
+        }
+    }
+    if (t > 1)
+        ps.emplace_back(t, 1);
+
+    return ps;
+}
+```
+
 ## 行列
 
 $H \times W$ の行列 $A$ を考える.
