@@ -70,14 +70,14 @@ void solve() {
     vint graph(H * W);
     // cnt, position
     using P = pair<ll, pair<int, int>>;
-    priority_queue<P, vector<P>, greater<P>> pq;
-    pq.push({0, {A, B}});
+    deque<P> deq;
+    deq.push_back({0, {A, B}});
     vvll dist(H, vll(W, INF));
     dist[A][B] = 0;
 
-    while (pq.size()) {
-        auto [cost, now] = pq.top();
-        pq.pop();
+    while (deq.size()) {
+        auto [cost, now] = deq.front();
+        deq.pop_front();
         auto [i, j] = now;
 
         if (dist[i][j] < cost)
@@ -93,7 +93,11 @@ void solve() {
                 ll w = cost + wall;
                 if (dist[ni][nj] > w) {
                     dist[ni][nj] = w;
-                    pq.push({w, {ni, nj}});
+                    if (wall) {
+                        deq.push_back({w, {ni, nj}});
+                    } else {
+                        deq.push_front({w, {ni, nj}});
+                    }
                 }
             }
         }
