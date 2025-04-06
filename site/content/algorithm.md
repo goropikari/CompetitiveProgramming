@@ -257,6 +257,32 @@ int lcm(int a, int b) {
 }
 ```
 
+## 冪乗根
+
+### 平方根
+
+$x \leq \sqrt{N}$ を満たす最大の非負整数 $x$ を求める
+
+```cpp
+ll isqrt(ll x) {
+    // wa の最大値は x の値によって調整する
+    ll ac = 0, wa = (ll)1e9 + 7;
+    while (wa - ac > 1) {
+        ll wj = (wa + ac) / 2;
+        if (wj * wj <= x) // 3乗根の場合は wj * wj * wj <= x にすれば良い
+            ac = wj;
+        else
+            wa = wj;
+    }
+
+    return ac;
+}
+```
+
+
+ref [ABC 400 C 問題]({{< ref "abc/400.md" >}})
+
+
 ## 累積和 (cumsum)
 
 ```cpp
