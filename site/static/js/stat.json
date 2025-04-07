@@ -4088,5 +4088,45 @@
     "yellow": 1,
     "orange": 0,
     "red": 0
+  },
+  "20250319": {
+    "gray": 685,
+    "brown": 352,
+    "green": 335,
+    "cyan": 87,
+    "blue": 9,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250320": {
+    "gray": 685,
+    "brown": 352,
+    "green": 336,
+    "cyan": 87,
+    "blue": 9,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250325": {
+    "gray": 685,
+    "brown": 352,
+    "green": 337,
+    "cyan": 87,
+    "blue": 9,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250406": {
+    "gray": 685,
+    "brown": 352,
+    "green": 337,
+    "cyan": 88,
+    "blue": 9,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
   }
 }
