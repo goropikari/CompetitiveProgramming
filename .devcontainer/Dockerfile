@@ -11,7 +11,10 @@ RUN apt-get update && \
         time \
         ripgrep \
         fd-find \
-        libreadline-dev
+        libreadline-dev \
+        gcc-12
+
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 20
 
 RUN mkdir -p /opt && \
     git clone -b v1.5.1 --depth 1 https://github.com/atcoder/ac-library /opt/ac-library && \
