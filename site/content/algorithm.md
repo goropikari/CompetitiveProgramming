@@ -269,7 +269,7 @@ ll isqrt(ll x) {
     ll ac = 0, wa = (ll)1e9 + 7;
     while (wa - ac > 1) {
         ll wj = (wa + ac) / 2;
-        if (wj * wj <= x) // 3乗根の場合は wj * wj * wj <= x にすれば良い
+        if (wj * wj <= x)  // 3乗根の場合は wj * wj * wj <= x にすれば良い
             ac = wj;
         else
             wa = wj;
@@ -279,9 +279,7 @@ ll isqrt(ll x) {
 }
 ```
 
-
 ref [ABC 400 C 問題]({{< ref "abc/400.md" >}})
-
 
 ## 累積和 (cumsum)
 
