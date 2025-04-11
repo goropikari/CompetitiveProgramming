@@ -10,10 +10,6 @@
         "--name",
         "competitive_programming"
     ],
-    "settings": {},
-    "extensions": [
-        "ms-vscode.cpptools"
-    ],
     "features": {
         "ghcr.io/goropikari/devcontainer-feature/neovim:1": {},
         "ghcr.io/devcontainers/features/go:1": {},
