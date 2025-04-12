@@ -735,6 +735,20 @@ vector<pair<T, int>> runLengthEncode(const vector<T>& input) {
     }
     return encoded;
 }
+
+vector<pair<char, int>> runLengthEncode(const string& input) {
+    vector<pair<char, int>> encoded;
+    int size = input.size();
+    for (int i = 0; i < size; ++i) {
+        int count = 1;
+        while (i + 1 < size && input[i] == input[i + 1]) {
+            ++i;
+            ++count;
+        }
+        encoded.emplace_back(input[i], count);
+    }
+    return encoded;
+}
 ```
 
 ## 最長増加部分列 (LIS: Longest Increasing Subsequence)
