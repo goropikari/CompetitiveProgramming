@@ -1,10 +1,10 @@
 // https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/5/ALDS1_5_D
-/*2025年01月22日 23時10分23秒*/
+// 2025年04月14日 01時04分23秒
+#include <bits/stdc++.h>
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -41,7 +41,7 @@ void print(vector<T> v) {
 }
 
 void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+    cout << (x ? "Yes" : "No") << '\n';
 }
 
 void solve();
@@ -51,49 +51,68 @@ int main() {
     return 0;
 }
 
-vint L, R;
+struct Segtree {
+    int sz;
+    vll data;
 
-ll merge(vint& v, int l, int mid, int r) {
-    int n1 = mid - l;
-    int n2 = r - mid;
+    Segtree(int n) {
+        int i = 0;
+        while ((1 << i) < n)
+            i++;
+        sz = 1 << i;
+        data.resize(sz * 2);
+    }
 
-    rep(i, n1) L[i] = v[l + i];
-    rep(i, n2) R[i] = v[mid + i];
-    L[n1] = R[n2] = INF;
-
-    int i = 0, j = 0;
-    ll cnt = 0;
-    rep2(k, l, r) {
-        if (L[i] <= R[j]) {
-            v[k] = L[i++];
-        } else {
-            v[k] = R[j++];
-            cnt += n1 - i;
+    void set(int p, ll x) {
+        p += sz;
+        data[p] = x;
+        while (p / 2) {
+            p /= 2;
+            data[p] = data[p * 2] + data[p * 2 + 1];
         }
     }
 
-    return cnt;
-}
-
-ll mergeSort(vint& v, int l, int r) {
-    if (r - l <= 1)
-        return 0;
-    ll mid = (l + r) / 2;
-    ll v1 = mergeSort(v, l, mid);
-    ll v2 = mergeSort(v, mid, r);
-    ll v3 = merge(v, l, mid, r);
-    return v1 + v2 + v3;
-}
+    ll prod(int l, int r) {
+        l += sz, r += sz;
+        ll ans = 0;
+        while (l < r) {
+            if (l % 2 == 1) {
+                ans += data[l];
+                l++;
+            }
+            l /= 2;
+            if (r % 2 == 1) {
+                ans += data[r - 1];
+                r--;
+            }
+            r /= 2;
+        }
+        return ans;
+    }
+};
 
 void solve() {
-    int n;
-    cin >> n;
-    vint a(n);
-    rep(i, n) cin >> a[i];
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    L = vint(n);
-    R = vint(n);
+    int N;
+    cin >> N;
+    vint A(N);
+    rep(i, N) {
+        cin >> A[i];
+    }
 
-    ll cnt = mergeSort(a, 0, n);
-    cout << cnt << endl;
+    vector<pair<int, int>> ids;
+    rep(i, N) {
+        ids.emplace_back(A[i], i);
+    }
+    sort(all(ids));
+
+    Segtree seg(N);
+    ll ans = 0;
+    for (auto [_, i] : ids) {
+        ans += seg.prod(i, N + 1);
+        seg.set(i, 1);
+    }
+    cout << ans << endl;
 }

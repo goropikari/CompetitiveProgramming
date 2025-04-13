@@ -1466,6 +1466,78 @@ struct RMQRAQ {
 };
 ```
 
+### 転倒数
+
+<https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_5_D/judge/10376676/C++23>
+
+```cpp
+struct Segtree {
+    int sz;
+    vll data;
+
+    Segtree(int n) {
+        int i = 0;
+        while ((1 << i) < n)
+            i++;
+        sz = 1 << i;
+        data.resize(sz * 2);
+    }
+
+    void set(int p, ll x) {
+        p += sz;
+        data[p] = x;
+        while (p / 2) {
+            p /= 2;
+            data[p] = data[p * 2] + data[p * 2 + 1];
+        }
+    }
+
+    ll prod(int l, int r) {
+        l += sz, r += sz;
+        ll ans = 0;
+        while (l < r) {
+            if (l % 2 == 1) {
+                ans += data[l];
+                l++;
+            }
+            l /= 2;
+            if (r % 2 == 1) {
+                ans += data[r - 1];
+                r--;
+            }
+            r /= 2;
+        }
+        return ans;
+    }
+};
+
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int N;
+    cin >> N;
+    vint A(N);
+    rep(i, N) {
+        cin >> A[i];
+    }
+
+    vector<pair<int, int>> ids;
+    rep(i, N) {
+        ids.emplace_back(A[i], i);
+    }
+    sort(all(ids));
+
+    Segtree seg(N);
+    ll ans = 0;
+    for (auto [_, i] : ids) {
+        ans += seg.prod(i, N + 1);
+        seg.set(i, 1);
+    }
+    cout << ans << endl;
+}
+```
+
 ## Rolling Hash
 
 <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_14_B/judge/10319713/C++23>
