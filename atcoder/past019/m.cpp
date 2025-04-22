@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/past19-open/tasks/past19_m
+// 2025年04月21日 22時01分50秒
 #include <bits/stdc++.h>
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -49,45 +51,56 @@ int main() {
     return 0;
 }
 
+struct Edge {
+    ll to;
+    double w;
+};
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N;
-    cin >> N;
+    int N, M;
+    cin >> N >> M;
+    vll P(N);
+    rep(i, N) cin >> P[i];
 
-    vll B(N);
-    rep(i, N) cin >> B[i];
-
-    auto f = [&](ll x) -> ll {
-        ll ans = 0;
-        rep(i, 2) {
-            int sw = i;
-            ll sum = 0;
-
-            rep(j, N) {
-                if (sw == 0) {
-                    if (x < B[j]) {
-                        sum++;
-                        sw = 1 - sw;
-                    }
-                } else {
-                    if (B[j] <= x) {
-                        sum++;
-                        sw = 1 - sw;
-                    }
-                }
-            }
-
-            chmax(ans, sum);
-        }
-
-        return ans;
-    };
-
-    ll ans = 0;
-    rep(i, 501) {
-        chmax(ans, f(i));
+    vector<vector<Edge>> graph(N);
+    rep(i, M) {
+        int u, v;
+        double w;
+        cin >> u >> v >> w;
+        u--, v--;
+        graph[v].push_back({u, w});
     }
-    cout << ans << endl;
+
+    vector<double> score(N, 0.0);
+    score[N - 1] = P.back();
+    score[0] = -1;
+    // cost, position
+    priority_queue<tuple<double, int>> pq;
+
+    // N-1 から 0 に向かって進める
+    pq.push({P.back(), N - 1});
+    while (pq.size()) {
+        auto [sc, now] = pq.top();
+        pq.pop();
+
+        if (score[now] > sc)
+            continue;
+        for (auto [nx, w] : graph[now]) {
+            double new_sc = sc * w + (double)P[nx];
+            if (score[nx] >= new_sc)
+                continue;
+            score[nx] = new_sc;
+            pq.push({new_sc, nx});
+        }
+    }
+
+    double ans = score[0];
+    if (score[0] < 0.0) {
+        cout << -1 << endl;
+        return;
+    }
+    printf("%.9lf\n", ans);
 }
