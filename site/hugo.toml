@@ -12,6 +12,7 @@ menu.main = [
 menu.atcoder = [
   { name = "ABC", url = "/tags/abc", weight = 1 },
   { name = "ARC", url = "/tags/arc", weight = 2 },
+  { name = "PAST", url = "/tags/past", weight = 3 },
 ]
 
 [taxonomies]
