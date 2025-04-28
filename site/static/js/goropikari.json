@@ -586,5 +586,17 @@
         "ContestName": "東京海上日動プログラミングコンテスト2025（AtCoder Beginner Contest 402）",
         "ContestNameEn": "Tokio Marine & Nichido Fire Insurance Programming Contest 2025  (AtCoder Beginner Contest 402)",
         "EndTime": "2025-04-19T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 2031,
+        "OldRating": 1068,
+        "NewRating": 1074,
+        "Performance": 1131,
+        "InnerPerformance": 1131,
+        "ContestScreenName": "abc403.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 403（Promotion of AtCoder Career Design DAY）",
+        "ContestNameEn": "AtCoder Beginner Contest 403",
+        "EndTime": "2025-04-27T22:40:00+09:00"
     }
 ]
