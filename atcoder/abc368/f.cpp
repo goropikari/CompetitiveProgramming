@@ -55,27 +55,42 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int mx = (int)1e5 + 5;
-    vint cnts(mx);
-    rep2(i, 1, mx) {
-        for (ll j = i + i; j < mx; j += i) {
-            cnts[j]++;
-        }
-    }
-
-    int N;
+    ll N;
     cin >> N;
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    int num = 0;
-    for (ll i : A) {
-        if (cnts[i] >= 2) {
-            num++;
+    int mx = 1e5 + 5;
+    vll sieve(mx, 0);
+    rep2(i, 2, mx) {
+        for (int j = i; j < mx; j += i) {
+            if (sieve[j] == 0)
+                sieve[j] = i;
         }
     }
+
+    auto factor_sum = [&](int x) -> int {
+        int ans = 0;
+        while (x != 1) {
+            int d = sieve[x];
+            while (x % d == 0) {
+                ans++;
+                x /= d;
+            }
+        }
+        return ans;
+    };
+
+    vll nim;
+    rep(i, N) {
+        nim.push_back(factor_sum(A[i]));
+    }
+
+    ll sum = 0;
+    for (ll x : nim)
+        sum ^= x;
     string ans = "Anna";
-    if (num % 2 == 0) {
+    if (sum == 0) {
         ans = "Bruno";
     }
     cout << ans << endl;
