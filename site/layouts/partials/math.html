@@ -5,7 +5,10 @@
   MathJax = {
     tex: {
       displayMath: [['\\[', '\\]'], ['$$', '$$']],  // block
-      inlineMath: [['$', '$']]                  // inline
+      inlineMath: [['$', '$']],                  // inline
+      macros: {
+          floor: ["\\lfloor #1 \\rfloor", 1],
+      }
     },
     loader:{
       load: ['ui/safe']

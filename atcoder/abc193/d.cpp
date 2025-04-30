@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/past18-open/tasks/past18_k
-// 2025年04月18日 02時07分02秒
+// https://atcoder.jp/contests/abc193/tasks/abc193_d
+// 2025年05月01日 01時34分30秒
 #include <bits/stdc++.h>
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -51,22 +51,56 @@ int main() {
     return 0;
 }
 
+ll intpow(ll x, ll n) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret *= x;
+        x *= x;
+        n >>= 1;
+    }
+    return ret;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    ll K;
+    string S, T;
+    cin >> K >> S >> T;
 
-    // ord2(even + odd) は常に0
-    vll evens, odds;
-    for (ll x : A) {
-        if (x % 2 == 0) {
-            evens.push_back(x);
-        } else {
-            odds.push_back(x);
+    vll cnt(10, K);
+    rep(i, 4) {
+        cnt[S[i] - '0']--;
+        cnt[T[i] - '0']--;
+    }
+
+    auto score = [&](string s) -> ll {
+        vll used(10);
+        for (char c : s)
+            used[c - '0']++;
+        ll ans = 0;
+        rep2(i, 1, 10) {
+            ans += i * intpow(10, used[i]);
+        }
+        return ans;
+    };
+
+    ll ans = 0;
+    S[4] = T[4] = '0';
+    rep2(i, 1, 10) {
+        rep2(j, 1, 10) {
+            S.back() = '0' + i;
+            T.back() = '0' + j;
+
+            if (score(S) <= score(T))
+                continue;
+
+            ans += cnt[i] * (cnt[j] - (i == j));
         }
     }
+
+    ll rem = K * 9 - 8;
+    printf("%.9lf\n", (double)ans / (double)(rem * (rem - 1)));
 }

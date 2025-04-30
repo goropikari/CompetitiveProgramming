@@ -239,7 +239,7 @@ $\mathrm{gcd}(a, b) = \mathrm{gcd}(b, a \\% b)$.
 
 $\displaystyle \mathrm{lcm}(a,b) = \frac{a \times b}{\mathrm{gcd}(a,b)}$
 
-Suppose $d = \mathrm{gcd}(a,b)$. This means $a = k_1 d$ and $b = k_2 d$ for some integers $k_1, k_2 \in \Z$.
+Suppose $d = \mathrm{gcd}(a,b)$. This means $a = k_1 d$ and $b = k_2 d$ for some integers $k_1, k_2 \in \mathbb{Z}$.
 
 $a = qb + r$ $(0 \leq r < b)$, for some integer $q$.
 

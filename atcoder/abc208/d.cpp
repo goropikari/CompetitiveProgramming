@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/past18-open/tasks/past18_k
-// 2025年04月18日 02時07分02秒
+// https://atcoder.jp/contests/abc208/tasks/abc208_d
+// 2025年05月01日 02時08分56秒
 #include <bits/stdc++.h>
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -16,8 +16,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+const ll INF = (ll)2e18 + 9;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -55,18 +55,29 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    int N, M;
+    cin >> N >> M;
+    vector dist(N, vll(N, INF));
+    rep(i, M) {
+        ll u, v, c;
+        cin >> u >> v >> c;
+        u--, v--;
+        dist[u][v] = c;
+    }
+    rep(i, N) dist[i][i] = 0;
 
-    // ord2(even + odd) は常に0
-    vll evens, odds;
-    for (ll x : A) {
-        if (x % 2 == 0) {
-            evens.push_back(x);
-        } else {
-            odds.push_back(x);
+    ll ans = 0;
+    rep(k, N) {
+        rep(i, N) {
+            rep(j, N) {
+                if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+                if (dist[i][j] != INF) {
+                    ans += dist[i][j];
+                }
+            }
         }
     }
+    cout << ans << endl;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/past18-open/tasks/past18_k
-// 2025年04月18日 02時07分02秒
+// https://atcoder.jp/contests/past202005-open/tasks/past202005_a
+// 2025年04月26日 22時11分45秒
 #include <bits/stdc++.h>
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -55,18 +55,21 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    string s, t;
+    cin >> s >> t;
+    if (s == t) {
+        cout << "same" << endl;
+        return;
+    }
 
-    // ord2(even + odd) は常に0
-    vll evens, odds;
-    for (ll x : A) {
-        if (x % 2 == 0) {
-            evens.push_back(x);
-        } else {
-            odds.push_back(x);
-        }
+    int ok = 1;
+    rep(i, s.size()) {
+        if ((s[i] | (1 << 5)) != (t[i] | (1 << 5)))
+            ok = 0;
+    }
+    if (ok) {
+        cout << "case-insensitive" << endl;
+    } else {
+        cout << "different" << endl;
     }
 }
