@@ -51,88 +51,18 @@ int main() {
     return 0;
 }
 
-using P = pair<int, int>;
-
 template <typename T>
-struct Matrix {
-    Matrix(int h, int w)
-        : isSwap(false), H(h), W(w), grid(h, vector<T>(w, 0)), xid(h), yid(w) {
-        rep(i, h) xid[i] = i;
-        rep(i, w) yid[i] = i;
-    }
-
-    T find(int x, int y) {
-        P p = index(x, y);
-        return grid[p.first][p.second];
-    }
-
-    void set(int x, int y, T val) {
-        P p = index(x, y);
-        grid[p.first][p.second] = val;
-    }
-
-    void rotr90() {
-        isSwap = !isSwap;
-        vector<int> new_yid(H);
-        rep(i, H) new_yid[i] = H - 1 - xid[i];
-        swap(H, W);
-        xid = yid;
-        yid = new_yid;
-    }
-
-    void rotl90() {
-        isSwap = !isSwap;
-        vector<int> new_xid(W);
-        rep(i, W) new_xid[i] = W - 1 - yid[i];
-        swap(H, W);
-        yid = xid;
-        xid = new_xid;
-    }
-
-    void topbottom() {
-        rep(i, H / 2) swap(xid[i], xid[H - 1 - i]);
-    }
-
-    void leftright() {
-        rep(i, W / 2) swap(yid[i], yid[W - 1 - i]);
-    }
-
-    void transpose() {
-        isSwap = !isSwap;
-        swap(xid, yid);
-        swap(H, W);
-    }
-
-    void print() {
-        rep(i, H) {
-            rep(j, W) {
-                cout << find(i, j) << " ";
-            }
-            cout << endl;
+vector<vector<T>> rotr90(vector<vector<T>>& mat) {
+    vector<vector<T>> newmat = mat;
+    int N = mat.size();
+    rep(i, N) {
+        rep(j, N) {
+            // newmat[j][N - 1 - i] = mat[i][j];
+            newmat[i][j] = mat[N - j - 1][i];
         }
     }
-
-   private:
-    bool isSwap;
-    int H, W;
-    vector<vector<T>> grid;
-
-    // 新しい行列の index と original の行列の index との対応表
-    // 新しい行列の i, j 成分は
-    // swap is false のとき
-    //   grid[xid[i]][yid[j]]
-    // swap is true のとき
-    //   grid[yid[j]][xid[i]]
-    vector<int> xid, yid;
-
-    pair<int, int> index(int x, int y) {
-        int i = xid[x];
-        int j = yid[y];
-        if (isSwap)
-            swap(i, j);
-        return {i, j};
-    }
-};
+    return newmat;
+}
 
 void solve() {
     ios_base::sync_with_stdio(false);
@@ -140,28 +70,20 @@ void solve() {
 
     int N;
     cin >> N;
-    Matrix<char> S(N, N), T(N, N);
-    rep(i, N) rep(j, N) {
-        char c;
-        cin >> c;
-        S.set(i, j, c);
-    }
-    rep(i, N) rep(j, N) {
-        char c;
-        cin >> c;
-        T.set(i, j, c);
-    }
+    vector S(N, vector<char>(N)), T(N, vector<char>(N));
+    rep(i, N) rep(j, N) cin >> S[i][j];
+    rep(i, N) rep(j, N) cin >> T[i][j];
 
     ll ans = INF;
-    rep(i, 4) {
-        if (i != 0)
-            S.rotr90();
-        ll cnt = 0;
+    rep(k, 4) {
+        if (k)
+            S = rotr90(S);
+        ll cnt = k;
         rep(i, N) rep(j, N) {
-            if (S.find(i, j) != T.find(i, j))
+            if (S[i][j] != T[i][j])
                 cnt++;
         }
-        chmin(ans, cnt + i);
+        chmin(ans, cnt);
     }
     cout << ans << endl;
 }

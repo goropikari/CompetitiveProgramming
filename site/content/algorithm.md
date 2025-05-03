@@ -484,38 +484,57 @@ $A$ に以下の操作を加えたでできた行列を $A^\prime$ とする.
 
 ### rotr90
 
-$
-i^\prime = j \\\\
-j^\prime = H - 1 - i
-$
+\begin{align*}
+    i^\prime &= j \\\\
+    j^\prime &= H - 1 - i
+\end{align*}
+
+$N \times N$ のとき
+
+```cpp
+template <typename T>
+vector<vector<T>> rotr90(vector<vector<T>>& mat) {
+    vector<vector<T>> newmat = mat;
+    int N = mat.size();
+    rep(i, N) {
+        rep(j, N) {
+            // newmat[j][N - 1 - i] = mat[i][j];
+            newmat[i][j] = mat[N - j - 1][i];
+        }
+    }
+    return newmat;
+}
+```
+
+<https://atcoder.jp/contests/abc404/submissions/65484195>
 
 ### rotl90
 
-$
-i^\prime = W - 1 - j \\\\
-j^\prime = i
-$
+\begin{align*}
+    i^\prime &= W - 1 - j \\\\
+    j^\prime &= i
+\end{align*}
 
 ### transpose
 
-$
-i^\prime = j \\\\
-j^\prime = i
-$
+\begin{align*}
+    i^\prime &= j \\\\
+    j^\prime &= i
+\end{align*}
 
 ### 上下反転
 
-$
-i^\prime = H - 1 - i \\\\
-j^\prime = j
-$
+\begin{align*}
+    i^\prime &= H - 1 - i \\\\
+    j^\prime &= j
+\end{align*}
 
 ### 左右反転
 
-$$
-i^\prime = i \\\\
-j^\prime = W - 1 - j
-$$
+\begin{align*}
+    i^\prime &= i \\\\
+    j^\prime &= W - 1 - j
+\end{align*}
 
 ```cpp
 #include <iostream>
