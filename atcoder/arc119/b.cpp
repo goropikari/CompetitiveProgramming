@@ -1,7 +1,8 @@
-// https://atcoder.jp/contests/abc401/tasks/abc401_e
-// 2025年05月05日 16時20分46秒
+// https://atcoder.jp/contests/arc119/tasks/arc119_b
+// 2025年05月06日 15時19分01秒
 #include <bits/stdc++.h>
 #include <atcoder/all>
+#include <atcoder/fenwicktree.hpp>
 using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
@@ -55,40 +56,28 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, M;
-    cin >> N >> M;
-    vvint graph(N);
-    rep(i, M) {
-        int u, v;
-        cin >> u >> v;
-        u--, v--;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
-    }
+    int N;
+    cin >> N;
+    string S, T;
+    cin >> S >> T;
 
-    dsu uf(N);
-    vector<bool> suteru(N);
-
-    ll cnt = 0;
+    vint s, t;
     rep(i, N) {
-        for (int nx : graph[i]) {
-            if (nx < i) {
-                uf.merge(nx, i);
-            } else {
-                if (suteru[nx])
-                    continue;
-                suteru[nx] = 1;
-                cnt++;
-            }
-        }
-
-        if (suteru[i])
-            cnt--;
-
-        ll ans = cnt;
-        if (uf.size(0) != i + 1) {
-            ans = -1;
-        }
-        cout << ans << endl;
+        if (S[i] == '0')
+            s.push_back(i);
+        if (T[i] == '0')
+            t.push_back(i);
     }
+
+    if (s.size() != t.size()) {
+        cout << -1 << endl;
+        return;
+    }
+
+    int ans = 0;
+    rep(i, s.size()) {
+        if (s[i] != t[i])
+            ans++;
+    }
+    cout << ans << endl;
 }

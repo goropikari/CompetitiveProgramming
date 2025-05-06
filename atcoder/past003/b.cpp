@@ -1,7 +1,6 @@
-// https://atcoder.jp/contests/past15-open/tasks/past202306_m
-// 2025年04月15日 05時31分04秒
+// https://atcoder.jp/contests/past202005-open/tasks/past202005_b
+// 2025年05月04日 22時31分44秒
 #include <bits/stdc++.h>
-#include <numeric>
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -17,8 +16,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
-// const int INF = (int)2e9 + 7;
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -56,24 +55,32 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N;
-    cin >> N;
-    vll D(N - 1);
-    rep(i, N - 1) cin >> D[i];
+    int N, M, Q;
+    cin >> N >> M >> Q;
 
-    // d を2つのグループに分けて、それぞれのグループの和の差を最小化したい
-    bitset<4000005> bs;
-    int offset = 2000001;
-    bs.set(offset);
+    vector<set<int>> solved(N);
+    vll score(M, N);
 
-    for (ll d : D) {
-        bs = (bs << d) | (bs >> d);
+    rep(i, Q) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            int x;
+            cin >> x;
+            x--;
+
+            ll sum = 0;
+            for (int p : solved[x]) {
+                sum += score[p];
+            }
+            cout << sum << '\n';
+        } else {
+            int x, y;
+            cin >> x >> y;
+            x--, y--;
+
+            solved[x].insert(y);
+            score[y]--;
+        }
     }
-
-    ll ans = INF;
-    rep(i, 4000005) {
-        if (bs.test(i))
-            chmin(ans, abs(i - offset));
-    }
-    cout << ans << endl;
 }
