@@ -48214,5 +48214,29 @@
     "length": 1717,
     "result": "AC",
     "execution_time": 8
+  },
+  {
+    "id": 65570496,
+    "epoch_second": 1746619758,
+    "problem_id": "arc197_b",
+    "contest_id": "arc197",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 1793,
+    "result": "AC",
+    "execution_time": 50
+  },
+  {
+    "id": 65570888,
+    "epoch_second": 1746620741,
+    "problem_id": "arc197_b",
+    "contest_id": "arc197",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 1811,
+    "result": "AC",
+    "execution_time": 50
   }
 ]
