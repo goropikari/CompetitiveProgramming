@@ -61,7 +61,6 @@ void solve() {
     vector<string> grid(H);
     rep(i, H) cin >> grid[i];
 
-    int si = 0, sj = 0;
     vector<pair<int, int>> doors;
     rep(i, H) rep(j, W) {
         if (grid[i][j] == 'E')

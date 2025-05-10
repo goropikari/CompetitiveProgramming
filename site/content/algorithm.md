@@ -406,7 +406,7 @@ struct Cumsum3d {
 };
 ```
 
-https://atcoder.jp/contests/abc366/submissions/65702920
+<https://atcoder.jp/contests/abc366/submissions/65702920>
 
 ## べき乗計算(冪乗)
 
