@@ -51,6 +51,53 @@ int main() {
     return 0;
 }
 
+template <typename T>
+struct Cumsum3d {
+    vector<vector<vector<T>>> data;
+
+    Cumsum3d(vector<vector<vector<T>>> v) {
+        assert(v.size() != 0);
+        assert(v[0].size() != 0);
+        assert(v[0][0].size() != 0);
+
+        int n = v.size();
+        int m = v[0].size();
+        int l = v[0][0].size();
+
+        data = vector(n + 1, vector(m + 1, vector<T>(l + 1)));
+
+        vector<tuple<ll, ll, ll, ll>> d = {
+            {0, 0, -1, 1},
+            {0, -1, 0, 1},
+            {0, -1, -1, -1},
+            {-1, 0, 0, 1},
+            {-1, 0, -1, -1},
+            {-1, -1, 0, -1},
+            {-1, -1, -1, 1},
+        };
+
+        rep2(i, 1, n + 1) rep2(j, 1, m + 1) rep2(k, 1, l + 1) {
+            data[i][j][k] += v[i - 1][j - 1][k - 1];
+            for (auto [x, y, z, sign] : d) {
+                data[i][j][k] += data[i + x][j + y][k + z] * sign;
+            }
+        }
+    }
+
+    T sum(int si, int sj, int sk, int fi, int fj, int fk) {
+        ll ans = 0;
+        ans += data[fi][fj][fk];
+        ans -= data[fi][fj][sk];
+        ans -= data[fi][sj][fk];
+        ans += data[fi][sj][sk];
+        ans -= data[si][fj][fk];
+        ans += data[si][fj][sk];
+        ans += data[si][sj][fk];
+        ans -= data[si][sj][sk];
+        return ans;
+    }
+};
+
 void solve() {
     ll N;
     cin >> N;
@@ -64,18 +111,7 @@ void solve() {
         }
     }
 
-    vector<tuple<ll, ll, ll, ll>> d = {
-        {0, 0, -1, 1},   {0, -1, 0, 1},   {0, -1, -1, -1}, {-1, 0, 0, 1},
-        {-1, 0, -1, -1}, {-1, -1, 0, -1}, {-1, -1, -1, 1},
-    };
-
-    vector<vvll> cumsum(N + 1, vvll(N + 1, vll(N + 1, 0)));
-    rep2(i, 1, N + 1) rep2(j, 1, N + 1) rep2(k, 1, N + 1) {
-        cumsum[i][j][k] += A[i - 1][j - 1][k - 1];
-        for (auto [x, y, z, sign] : d) {
-            cumsum[i][j][k] += cumsum[i + x][j + y][k + z] * sign;
-        }
-    }
+    Cumsum3d cumsum(A);
 
     ll Q;
     cin >> Q;
@@ -84,15 +120,6 @@ void solve() {
         cin >> a >> x >> b >> y >> c >> z;
         a--, b--, c--;
 
-        ll ans = 0;
-        ans += cumsum[x][y][z];
-        ans -= cumsum[x][y][c];
-        ans -= cumsum[x][b][z];
-        ans += cumsum[x][b][c];
-        ans -= cumsum[a][y][z];
-        ans += cumsum[a][y][c];
-        ans += cumsum[a][b][z];
-        ans -= cumsum[a][b][c];
-        cout << ans << endl;
+        cout << cumsum.sum(a, b, c, x, y, z) << endl;
     }
 }

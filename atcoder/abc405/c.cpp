@@ -1,9 +1,8 @@
 // https://atcoder.jp/contests/abc405/tasks/abc405_c
 // 2025年05月10日 21時06分04秒
 #include <bits/stdc++.h>
-#include <atcoder/all>
-#include <atcoder/fenwicktree.hpp>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 #define all(v) (v).begin(), (v).end()
@@ -52,6 +51,26 @@ int main() {
     return 0;
 }
 
+template <typename T>
+struct Cumsum {
+    vector<T> data;
+
+    Cumsum(vector<T> v) {
+        int n = v.size();
+        data.resize(n + 1);
+
+        data[0] = 1;
+        rep(i, n) {
+            data[i + 1] = data[i] + v[i];
+        }
+    }
+
+    // sum of range [l,r)
+    ll sum(int l, int r) {
+        return data[r] - data[l];
+    }
+};
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -61,11 +80,10 @@ void solve() {
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    fenwick_tree<ll> fw(N);
-    rep(i, N) fw.add(i, A[i]);
+    Cumsum cumsum(A);
     ll ans = 0;
-    rep(i, N - 1) {
-        ans += A[i] * fw.sum(i + 1, N);
+    rep(i, N) {
+        ans += A[i] * cumsum.sum(i + 1, N);
     }
     cout << ans << endl;
 }

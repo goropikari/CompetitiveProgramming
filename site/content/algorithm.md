@@ -283,18 +283,130 @@ ref [ABC 400 C 問題]({{< ref "abc/400.md" >}})
 
 ## 累積和 (cumsum)
 
+### 1次元
+
 ```cpp
 template <typename T>
-vector<T> cumsum(vector<T> v) {
-    int n = v.size();
-    rep2(i, 1, n) v[i] += v[i - 1];
-    return v;
+struct Cumsum {
+    vector<T> data;
+
+    Cumsum(vector<T> v) {
+        int n = v.size();
+        data.resize(n + 1);
+
+        data[0] = 1;
+        rep(i, n) {
+            data[i + 1] = data[i] + v[i];
+        }
+    }
+
+    // sum of range [l,r)
+    ll sum(int l, int r) {
+        return data[r] - data[l];
+    }
+};
+```
+
+```cpp
+void solve() {
+    int n, q;
+    cin >> n >> q;
+    vll a(n);
+    rep(i, n) cin >> a[i];
+
+    Cumsum cumsum(a);
+    rep(_, q) {
+        int l, r;
+        cin >> l >> r;
+        cout << cumsum.sum(l, r) << endl;
+    }
 }
+```
+
+### 2次元
+
+```cpp
+template <typename T>
+struct Cumsum2d {
+    vector<vector<T>> data;
+
+    Cumsum2d(vector<vector<T>> v) {
+        assert(v.size() != 0);
+        assert(v[0].size() != 0);
+        int h = v.size();
+        int w = v[0].size();
+
+        data = vector<vector<T>>(h + 1, vector<T>(w + 1));
+
+        rep(i, h) rep(j, w) {
+            data[i + 1][j + 1] += data[i][j + 1] + data[i + 1][j] - data[i][j] + v[i][j];
+        }
+    }
+
+    T sum(int si, int sj, int fi, int fj) {
+        T ret = data[fi][fj];
+        ret -= data[si][fj];
+        ret -= data[fi][sj];
+        ret += data[si][sj];
+        return ret;
+    }
+};
 ```
 
 ### 3次元
 
-詳細は [ABC 366]({{< ref "abc/366.md" >}}) に書いた
+計算方法の詳細は [ABC 366]({{< ref "abc/366.md" >}}) に書いた
+
+```cpp
+template <typename T>
+struct Cumsum3d {
+    vector<vector<vector<T>>> data;
+
+    Cumsum3d(vector<vector<vector<T>>> v) {
+        assert(v.size() != 0);
+        assert(v[0].size() != 0);
+        assert(v[0][0].size() != 0);
+
+        int n = v.size();
+        int m = v[0].size();
+        int l = v[0][0].size();
+
+        data = vector(n + 1, vector(m + 1, vector<T>(l + 1)));
+
+        vector<tuple<ll, ll, ll, ll>> d = {
+            {0, 0, -1, 1},
+            {0, -1, 0, 1},
+            {0, -1, -1, -1},
+            {-1, 0, 0, 1},
+            {-1, 0, -1, -1},
+            {-1, -1, 0, -1},
+            {-1, -1, -1, 1},
+        };
+
+        rep2(i, 1, n + 1) rep2(j, 1, m + 1) rep2(k, 1, l + 1) {
+            data[i][j][k] += v[i - 1][j - 1][k - 1];
+            for (auto [x, y, z, sign] : d) {
+                data[i][j][k] += data[i + x][j + y][k + z] * sign;
+            }
+        }
+    }
+
+    T sum(int si, int sj, int sk, int fi, int fj, int fk) {
+        ll ans = 0;
+        ans += data[fi][fj][fk];
+        ans -= data[fi][fj][sk];
+        ans -= data[fi][sj][fk];
+        ans += data[fi][sj][sk];
+        ans -= data[si][fj][fk];
+        ans += data[si][fj][sk];
+        ans += data[si][sj][fk];
+        ans -= data[si][sj][sk];
+        return ans;
+    }
+};
+```
+
+https://atcoder.jp/contests/abc366/submissions/65702920
 
 ## べき乗計算(冪乗)
 

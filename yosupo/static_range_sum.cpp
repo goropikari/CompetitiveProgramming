@@ -1,5 +1,5 @@
-/*https://atcoder.jp/contests/yosupo/tasks/yosupo_static_range_sum*/
-/*2025年03月02日 18時09分03秒*/
+// http://localhost:5173/problem/static_range_sum
+// 2025年05月11日 03時09分38秒
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
@@ -51,18 +51,36 @@ int main() {
     return 0;
 }
 
+template <typename T>
+struct Cumsum {
+    vector<T> data;
+
+    Cumsum(vector<T> v) {
+        int n = v.size();
+        data.resize(n + 1);
+
+        data[0] = 1;
+        rep(i, n) {
+            data[i + 1] = data[i] + v[i];
+        }
+    }
+
+    // sum of range [l,r)
+    ll sum(int l, int r) {
+        return data[r] - data[l];
+    }
+};
+
 void solve() {
     int n, q;
     cin >> n >> q;
     vll a(n);
     rep(i, n) cin >> a[i];
 
-    vll cumsum(n + 1, 0);
-    rep(i, n) cumsum[i + 1] = cumsum[i] + a[i];
-
-    rep(i, q) {
+    Cumsum cumsum(a);
+    rep(_, q) {
         int l, r;
         cin >> l >> r;
-        cout << cumsum[r] - cumsum[l] << endl;
+        cout << cumsum.sum(l, r) << endl;
     }
 }

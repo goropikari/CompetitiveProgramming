@@ -63,26 +63,21 @@ void solve() {
         A[i]--;
     }
 
-    vint cnt(M);
-    for (ll a : A)
-        cnt[a]++;
-
-    int sum = 0;
-    rep(i, M) {
-        if (cnt[i] > 0)
-            sum++;
-    }
-
     ll ans = 0;
     rep(i, N) {
-        if (sum != M)
+        vector<bool> cnt(M);
+        for (ll a : A)
+            cnt[a] = true;
+
+        bool ok = false;
+        rep(j, M) {
+            if (cnt[j] == false)
+                ok = true;
+        }
+        if (ok)
             break;
         ans++;
-        ll b = A.back();
         A.pop_back();
-        cnt[b]--;
-        if (cnt[b] == 0)
-            sum--;
     }
     cout << ans << endl;
 }
