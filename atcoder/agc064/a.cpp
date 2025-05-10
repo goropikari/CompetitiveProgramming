@@ -1,0 +1,84 @@
+// https://atcoder.jp/contests/agc064/tasks/agc064_a
+// 2025年05月10日 19時06分14秒
+#include <bits/stdc++.h>
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
+// using mint = modint1000000007;
+#define all(v) (v).begin(), (v).end()
+#define rall(v) (v).rbegin(), (v).rend()
+#define rep(i, n) for (long long int i = 0; i < (n); ++i)
+#define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+using namespace std;
+using ll = long long;
+using vint = vector<int>;
+using vll = vector<ll>;
+using vvint = vector<vector<int>>;
+using vvll = vector<vector<ll>>;
+
+// const ll INF = (ll)2e18+9;
+const int INF = (int)2e9 + 7;
+
+template <typename T>
+void chmin(T& a, T b) {
+    a = min(a, b);
+}
+template <typename T>
+void chmax(T& a, T b) {
+    a = max(a, b);
+}
+
+template <typename T>
+void print(vector<T> v) {
+    int n = v.size();
+    rep(i, n) {
+        if (i == 0)
+            cout << v[i];
+        else
+            cout << ' ' << v[i];
+    }
+    cout << endl;
+}
+
+void yesno(bool x) {
+    cout << (x ? "Yes" : "No") << '\n';
+}
+
+void solve();
+
+int main() {
+    solve();
+    return 0;
+}
+
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int N;
+    cin >> N;
+
+    vint ans(N * 2 - 1, N);
+    for (int i = 1; i < N * 2 - 1; i += 2) {
+        ans[i] = N - 1;
+    }
+
+    for (int i = N - 2; i >= 1; i--) {
+        vint tmp;
+        int cnt = i;
+        int m = ans.size();
+        tmp.push_back(i);
+        cnt--;
+        rep(j, m) {
+            tmp.push_back(ans[j]);
+            if (cnt > 1 && j + 1 < m && tmp.back() != i && ans[j + 1] != i && abs(tmp.back() - i) <= 2 && abs(ans[j + 1] - i) <= 2) {
+                tmp.push_back(i);
+                cnt--;
+            }
+        }
+        if (cnt)
+            tmp.push_back(i);
+        swap(tmp, ans);
+    }
+    print(ans);
+}
