@@ -610,5 +610,17 @@
         "ContestName": "AtCoder Beginner Contest 404（Promotion for Engineer Guild）",
         "ContestNameEn": "AtCoder Beginner Contest 404",
         "EndTime": "2025-05-03T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 2857,
+        "OldRating": 1081,
+        "NewRating": 1080,
+        "Performance": 1068,
+        "InnerPerformance": 1068,
+        "ContestScreenName": "abc405.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 405（Promotion of AtCoder Career Design DAY）",
+        "ContestNameEn": "AtCoder Beginner Contest 405",
+        "EndTime": "2025-05-10T22:40:00+09:00"
     }
 ]
