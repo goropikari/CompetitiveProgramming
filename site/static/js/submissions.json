@@ -48574,5 +48574,89 @@
     "length": 2985,
     "result": "AC",
     "execution_time": 56
+  },
+  {
+    "id": 65724435,
+    "epoch_second": 1746980784,
+    "problem_id": "arc162_b",
+    "contest_id": "arc162",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 3200,
+    "result": "AC",
+    "execution_time": 6
+  },
+  {
+    "id": 65724441,
+    "epoch_second": 1746980843,
+    "problem_id": "arc162_b",
+    "contest_id": "arc162",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 3179,
+    "result": "AC",
+    "execution_time": 6
+  },
+  {
+    "id": 65744947,
+    "epoch_second": 1747066394,
+    "problem_id": "agc058_a",
+    "contest_id": "agc058",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 0.0,
+    "length": 1832,
+    "result": "WA",
+    "execution_time": 19
+  },
+  {
+    "id": 65745082,
+    "epoch_second": 1747067063,
+    "problem_id": "agc058_a",
+    "contest_id": "agc058",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 0.0,
+    "length": 2037,
+    "result": "WA",
+    "execution_time": 19
+  },
+  {
+    "id": 65745295,
+    "epoch_second": 1747068237,
+    "problem_id": "agc058_a",
+    "contest_id": "agc058",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 400.0,
+    "length": 2409,
+    "result": "AC",
+    "execution_time": 14
+  },
+  {
+    "id": 65745585,
+    "epoch_second": 1747070567,
+    "problem_id": "arc118_c",
+    "contest_id": "arc118",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 0.0,
+    "length": 1894,
+    "result": "WA",
+    "execution_time": 19
+  },
+  {
+    "id": 65745615,
+    "epoch_second": 1747070769,
+    "problem_id": "arc118_c",
+    "contest_id": "arc118",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 0.0,
+    "length": 1890,
+    "result": "WA",
+    "execution_time": 19
   }
 ]
