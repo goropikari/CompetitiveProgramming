@@ -1,4 +1,4 @@
 Diagnostics:
   Suppress: -Wc++20-extensions
 CompileFlags:
-  Add: [-Wunused-variable]
+  Add: [-Wunused-variable, -Wsign-compare]
