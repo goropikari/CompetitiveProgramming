@@ -20,3 +20,8 @@ stop:
 .PHONY: exec
 exec:
 	devcontainer exec --workspace-folder=. bash
+
+.PHONY: docker
+docker:
+	docker build -t jupyter -f docker/Dockerfile-jupyter .
+	docker run --rm -it -p 8888:8888 jupyter
