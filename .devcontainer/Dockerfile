@@ -12,7 +12,8 @@ RUN apt-get update && \
         ripgrep \
         fd-find \
         libreadline-dev \
-        gcc-12
+        gcc-12 \
+        libboost-math-dev
 
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 20
 
