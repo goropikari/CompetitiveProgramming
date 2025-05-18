@@ -613,14 +613,26 @@
     },
     {
         "IsRated": true,
-        "Place": 2857,
+        "Place": 2845,
         "OldRating": 1081,
         "NewRating": 1080,
-        "Performance": 1068,
-        "InnerPerformance": 1068,
+        "Performance": 1069,
+        "InnerPerformance": 1069,
         "ContestScreenName": "abc405.contest.atcoder.jp",
         "ContestName": "AtCoder Beginner Contest 405（Promotion of AtCoder Career Design DAY）",
         "ContestNameEn": "AtCoder Beginner Contest 405",
         "EndTime": "2025-05-10T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 1988,
+        "OldRating": 1080,
+        "NewRating": 1096,
+        "Performance": 1227,
+        "InnerPerformance": 1227,
+        "ContestScreenName": "abc406.contest.atcoder.jp",
+        "ContestName": "パナソニックグループ プログラミングコンテスト2025（AtCoder Beginner Contest 406）",
+        "ContestNameEn": "Panasonic Programming Contest 2025（AtCoder Beginner Contest 406）",
+        "EndTime": "2025-05-17T22:40:00+09:00"
     }
 ]
