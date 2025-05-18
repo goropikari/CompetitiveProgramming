@@ -191,6 +191,8 @@ ll floor(ll x, ll y) {
 
 ## 未満
 
+### part 1
+
 $s, x, P$ が正整数のとき
 
 $$
@@ -207,15 +209,15 @@ $$
 
 $f(P) = \floor{ \frac{P+x-1}{x} }$ とすると $f(P)$ は non-decreasing fn だから
 
-$$
-f(sx+1) \leq f(P) \\\\
-\therefore \floor{  \frac{(sx+1)+x-1}{x}  } \leq f(P) \\\\
-\therefore \floor{  \frac{sx + x}{x}  } \leq f(P) \\\\
-\therefore \floor{  s+1  } \leq f(P) \\\\
-\therefore   s+1  \leq f(P) \\\\
-\therefore   s < s+1  \leq f(P) \\\\
-\therefore   s < f(P)
-$$
+\begin{align*}
+    f(sx+1) \leq f(P) \\\\
+    \therefore&~~ \floor{  \frac{(sx+1)+x-1}{x}  } \leq f(P) \\\\
+    \therefore&~~ \floor{  \frac{sx + x}{x}  } \leq f(P) \\\\
+    \therefore&~~ \floor{  s+1  } \leq f(P) \\\\
+    \therefore&~~   s+1  \leq f(P) \\\\
+    \therefore&~~   s < s+1  \leq f(P) \\\\
+    \therefore&~~   s < f(P)
+\end{align*}
 
 $(\leftarrow)$
 
@@ -224,14 +226,40 @@ $f(sx) = \floor{ \frac{sx + x-1}{x} } = \floor{ s + \frac{x-1}{x} } = s + \floor
 $f(sx+1) = s+1$
 
 より $s < f(P)$ ならば
-$$
-sx+1 \leq P \\\\
-\therefore sx < sx+1 \leq P \\\\
-\therefore sx < P \\\\
-\therefore s < \frac{P}{x}
-$$
+\begin{align*}
+    &sx+1 \leq P \\\\
+    \therefore~~ &sx < sx+1 \leq P \\\\
+    \therefore~~ &sx < P \\\\
+    \therefore~~ &s < \frac{P}{x}
+\end{align*}
 
 ref: <https://atcoder.jp/contests/abc384/tasks/abc384_e>
+
+### part 2
+
+$x, a, X$ が正整数のとき
+
+$$
+    x > \frac{M}{a} \iff x > \floor{ \frac{M}{a} }
+$$
+
+($\Rightarrow$)
+
+$\frac{M}{a} \geq \floor{\frac{M}{a}}$ であるから
+\begin{align*}
+    x &> \frac{M}{a} \geq \floor{\frac{M}{a}} \\\\
+    \therefore x &> \floor{\frac{M}{a}}
+\end{align*}
+
+($\Leftarrow$)
+
+\begin{align*}
+    x &> \floor{\frac{M}{a}} \\\\
+    \therefore x &\geq \floor{\frac{M}{a}} + 1  > \frac{M}{a} \\\\
+    \therefore x &> \frac{M}{a} \\\\
+\end{align*}
+
+ref: <https://atcoder.jp/contests/abc406/tasks/abc406_e>
 
 ## gcd, lcm
 
