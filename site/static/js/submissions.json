@@ -49066,5 +49066,101 @@
     "length": 2189,
     "result": "AC",
     "execution_time": 12
+  },
+  {
+    "id": 65982272,
+    "epoch_second": 1747662337,
+    "problem_id": "arc112_b",
+    "contest_id": "arc112",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 400.0,
+    "length": 2321,
+    "result": "AC",
+    "execution_time": 1
+  },
+  {
+    "id": 65982860,
+    "epoch_second": 1747663772,
+    "problem_id": "arc112_b",
+    "contest_id": "arc112",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 0.0,
+    "length": 2309,
+    "result": "WA",
+    "execution_time": 1
+  },
+  {
+    "id": 65982938,
+    "epoch_second": 1747664050,
+    "problem_id": "arc112_b",
+    "contest_id": "arc112",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 400.0,
+    "length": 2177,
+    "result": "AC",
+    "execution_time": 5
+  },
+  {
+    "id": 65983103,
+    "epoch_second": 1747664485,
+    "problem_id": "arc112_b",
+    "contest_id": "arc112",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 400.0,
+    "length": 1871,
+    "result": "AC",
+    "execution_time": 11
+  },
+  {
+    "id": 65984121,
+    "epoch_second": 1747667237,
+    "problem_id": "abc299_e",
+    "contest_id": "abc299",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 3610,
+    "result": "AC",
+    "execution_time": 80
+  },
+  {
+    "id": 65984197,
+    "epoch_second": 1747667463,
+    "problem_id": "abc299_e",
+    "contest_id": "abc299",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 3336,
+    "result": "AC",
+    "execution_time": 77
+  },
+  {
+    "id": 65984235,
+    "epoch_second": 1747667555,
+    "problem_id": "abc299_e",
+    "contest_id": "abc299",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 3318,
+    "result": "AC",
+    "execution_time": 77
+  },
+  {
+    "id": 65986068,
+    "epoch_second": 1747675603,
+    "problem_id": "abc405_f",
+    "contest_id": "abc405",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 525.0,
+    "length": 2495,
+    "result": "AC",
+    "execution_time": 94
   }
 ]
