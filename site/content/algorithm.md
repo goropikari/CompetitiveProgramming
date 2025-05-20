@@ -1697,6 +1697,30 @@ void solve() {
 }
 ```
 
+## Trie
+
+```cpp
+struct Trie {
+    vector<map<char, int>> to;
+
+    Trie()
+        : to(1) {};
+
+    int add(string s) {
+        int v = 0;
+        for (char c : s) {
+            if (to[v].count(c) == 0) {
+                int u = to.size();
+                to.push_back(map<char, int>());
+                to[v][c] = u;
+            }
+            v = to[v][c];
+        }
+        return v;
+    }
+};
+```
+
 ## Rolling Hash
 
 <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ALDS1_14_B/judge/10319713/C++23>
