@@ -1,5 +1,5 @@
 Diagnostics:
   Suppress: -Wc++20-extensions
 CompileFlags:
-  Add: [-Wunused-variable, -Wsign-compare]
+  Add: [-Wunused-variable, -Wsign-compare, --std=c++20]
   Compiler: g++
