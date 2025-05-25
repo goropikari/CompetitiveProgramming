@@ -1,10 +1,12 @@
-// https://atcoder.jp/contests/abc407/tasks/abc407_c
-// 2025年05月24日 21時06分04秒
+// https://atcoder.jp/contests/abc407/tasks/abc407_e
+// 2025年05月25日 16時54分08秒
 #include <bits/stdc++.h>
 #include <atcoder/all>
-using namespace atcoder;
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
+// modint::set_mod(10);
+// using mint = modint;
 #include <boost/multiprecision/cpp_int.hpp>
 using namespace boost::multiprecision;
 using int128 = int128_t;
@@ -60,24 +62,27 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string S;
-    cin >> S;
+    auto cal = []() -> void {
+        int N;
+        cin >> N;
+        vll A(N * 2);
+        rep(i, N * 2) cin >> A[i];
 
-    modint::set_mod(10);
-    using mint = modint;
+        ll ans = 0;
+        ans += A[0];
+        priority_queue<ll> pq;
+        for (int i = 1; i + 1 < N * 2; i += 2) {
+            pq.push(A[i]);
+            pq.push(A[i + 1]);
+            ans += pq.top();
+            pq.pop();
+        }
+        cout << ans << endl;
+    };
 
-    vector<mint> A;
-    for (char c : S) {
-        A.push_back(c - '0');
+    int t;
+    cin >> t;
+    rep(i, t) {
+        cal();
     }
-
-    ll ans = 0;
-    reverse(all(A));
-    int N = A.size();
-    rep(i, N) {
-        mint x = A[i] - ans;
-        ans += x.val();
-    }
-    ans += N;  // 数字を消す操作分を足す
-    cout << ans << endl;
 }

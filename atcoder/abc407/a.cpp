@@ -63,13 +63,6 @@ void solve() {
     ll a, b;
     cin >> a >> b;
 
-    ll mx = INF;
-    ll ans = 0;
-    for (ll i = -1000; i <= 1000; i++) {
-        if (abs(a - i * b) < mx) {
-            ans = i;
-            mx = abs(a - i * b);
-        }
-    }
-    cout << ans << endl;
+    // floor(a/b+1/2) = floor((2a+b)/(2b))
+    cout << (2 * a + b) / (2 * b) << '\n';
 }

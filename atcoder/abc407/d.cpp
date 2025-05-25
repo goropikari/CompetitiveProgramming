@@ -65,63 +65,63 @@ void solve() {
     cin >> H >> W;
     vvll grid(H, vll(W));
     rep(i, H) rep(j, W) cin >> grid[i][j];
-
     ll ans = 0;
-    rep(i, H) rep(j, W) ans ^= grid[i][j];
 
-    set<ll> memo;
-    memo.insert(ll(0));
-
-    queue<ll> que;
-    que.push(ll(0));
-
-    auto toid = [&](int i, int j) -> int {
+    auto to_index = [&](int i, int j) -> int {
         return i * W + j;
     };
 
-    auto has_bit = [](ll x, int i) -> bool {
-        return (x >> i) & 1;
+    auto has_bit = [&](int x, int i, int j) -> bool {
+        int id = to_index(i, j);
+        return (x >> id) & 1;
     };
 
-    auto cal = [&](ll bs) -> void {
+    auto set_bit = [&](int x, int i, int j) -> ll {
+        return x | (1ll << to_index(i, j));
+    };
+
+    auto cal = [&](int bs) -> void {
         ll ret = 0;
         rep(i, H) rep(j, W) {
-            int id = toid(i, j);
-            if (!has_bit(bs, id))
+            if (!has_bit(bs, i, j))
                 ret ^= grid[i][j];
         }
         chmax(ans, ret);
     };
 
+    set<int> memo;
+    memo.insert(0);
+    queue<int> que;
+    que.push(0);
+
     while (que.size()) {
-        auto x = que.front();
+        int state = que.front();
         que.pop();
+        cal(state);
 
         rep(i, H) rep(j, W) {
-            int now = toid(i, j);
-            int nx_yoko = toid(i, j + 1);
-            int nx_tate = toid(i + 1, j);
-            if (j + 1 < W && !has_bit(x, now) && !has_bit(x, nx_yoko)) {
-                auto t = x;
-                t |= 1ll << now;
-                t |= 1ll << nx_yoko;
+            if (has_bit(state, i, j))
+                continue;
+            if (j + 1 < W && !has_bit(state, i, j + 1)) {
+                int t = state;
+                t = set_bit(t, i, j);
+                t = set_bit(t, i, j + 1);
                 if (!memo.count(t)) {
                     memo.insert(t);
                     que.push(t);
-                    cal(t);
                 }
             }
-            if (i + 1 < H && !has_bit(x, now) && !has_bit(x, nx_tate)) {
-                auto t = x;
-                t |= 1ll << now;
-                t |= 1ll << nx_tate;
+            if (i + 1 < H && !has_bit(state, i + 1, j)) {
+                int t = state;
+                t = set_bit(t, i, j);
+                t = set_bit(t, i + 1, j);
                 if (!memo.count(t)) {
                     memo.insert(t);
                     que.push(t);
-                    cal(t);
                 }
             }
         }
     }
+    cout << memo.size() << endl;
     cout << ans << endl;
 }
