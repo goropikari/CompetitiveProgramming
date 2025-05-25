@@ -634,5 +634,17 @@
         "ContestName": "パナソニックグループ プログラミングコンテスト2025（AtCoder Beginner Contest 406）",
         "ContestNameEn": "Panasonic Programming Contest 2025（AtCoder Beginner Contest 406）",
         "EndTime": "2025-05-17T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 2853,
+        "OldRating": 1096,
+        "NewRating": 1091,
+        "Performance": 1050,
+        "InnerPerformance": 1050,
+        "ContestScreenName": "abc407.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 407（Promotion of AtCoderJobs）",
+        "ContestNameEn": "AtCoder Beginner Contest 407",
+        "EndTime": "2025-05-24T22:40:00+09:00"
     }
 ]
