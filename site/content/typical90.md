@@ -238,6 +238,7 @@ void solve() {
 桁数が最大で $10^18$ と大きいのでダブリングを使う。
 $dp(i,j)$ を $2^i$ 桁の $B$ で割ったときの余りが $j$ となる場合の数とすると
 
+<!-- dprint-ignore -->
 \begin{align*}
     dp(i+1,j) = \sum_{j \equiv p \times 10^{2^i} + q \mod B} dp(i,p) \times dp(i,q)
 \end{align*}
@@ -247,6 +248,7 @@ $dp(i,j)$ を $2^i$ 桁の $B$ で割ったときの余りが $j$ となる場�
 具体的に入力例1 のケースで考えてみる。
 $B=7$ なので
 
+<!-- dprint-ignore -->
 \begin{align*}
     1 \equiv 1 \mod 7 \\\\
     4 \equiv 4 \mod 7 \\\\
@@ -257,6 +259,7 @@ $B=7$ なので
 
 $1, 4, 9$ から作られる2桁の数は $11, 14, 19, 41, 44, 49, 91, 94, 99$ の9通りでありそれぞれ $B$ で割ったときの余りは
 
+<!-- dprint-ignore -->
 \begin{align*}
     11 &\equiv (10 \mod 7) + 1           \equiv 4 \mod 7 \\\\
     14 &\equiv (10 \mod 7) + 4           \equiv 0 \mod 7 \\\\
@@ -271,6 +274,7 @@ $1, 4, 9$ から作られる2桁の数は $11, 14, 19, 41, 44, 49, 91, 94, 99$ �
 
 であるので
 
+<!-- dprint-ignore -->
 \begin{align*}
     dp(1, 0) = 3 \\\\
     dp(1, 1) = 1 \\\\
@@ -283,6 +287,7 @@ $1, 4, 9$ から作られる2桁の数は $11, 14, 19, 41, 44, 49, 91, 94, 99$ �
 
 となる。これを一般化すると
 
+<!-- dprint-ignore -->
 \begin{align*}
     dp(i+1,j) = \sum_{j \equiv p \times 10^{2^i} + q \mod B} dp(i,p) \times dp(i,q)
 \end{align*}

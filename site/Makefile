@@ -2,8 +2,7 @@
 format:
 	markdownlint-cli2 --fix ./content/**/*.md
 	markdownlint-cli2 --fix ./content/*.md
-	cbfmt -w ./content/**/*.md
-	cbfmt -w ./content/*.md
+	bin/format.sh
 
 .PHONY: lint
 lint:

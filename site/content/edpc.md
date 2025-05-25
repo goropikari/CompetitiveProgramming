@@ -42,6 +42,7 @@ $\mathrm{dp}(i,j)$ の値は先頭の要素をとった場合と末尾の要素�
 $a_i + \sum_{k=i+1}^{j} a_k - \mathrm{dp}(i+1,j)$ となる。
 同様にして末尾の要素をとったときの得点は $\sum_{k=i}^{j-1} a_k - \mathrm{dp}(i,j-1) + a_j$。
 
+<!-- dprint-ignore -->
 \begin{equation}
 \mathrm{dp}(i,j) =
 \left\\{
@@ -52,6 +53,7 @@ $a_i + \sum_{k=i+1}^{j} a_k - \mathrm{dp}(i+1,j)$ となる。
 \right.
 \end{equation}
 
+<!-- dprint-ignore -->
 \begin{equation}
 \therefore \mathrm{dp}(i,j) =
 \left\\{
@@ -114,6 +116,7 @@ $f(i,\mathrm{rem})$ を $i$ 番目の子供に飴を渡す時点で `rem` 個飴
 $$
 f(i,\mathrm{ rem }) = \sum^{a_i}_{j=0} f(i+1, \mathrm{rem} - j)
 $$
+
 となるので N 重の for loop をしているのと等価であり TLE する。
 
 ## 解法
@@ -141,6 +144,7 @@ rep2(i, 1, N + 1) {
 
 一番内側の loop に着目すると
 
+<!-- dprint-ignore -->
 \begin{equation}
     dp(i,j) =
     \left\\{
@@ -155,6 +159,7 @@ rep2(i, 1, N + 1) {
 
 $S_{i,j} = \sum_{m=0}^{j} dp(i,m)$ とすると
 
+<!-- dprint-ignore -->
 \begin{align}
   dp(i,j) = S_{i-1,j} - S_{i-1,j-a_i-1}
 \end{align}
@@ -223,6 +228,7 @@ $$(a_2+a_3) + ((a_2+a_3) + a_1)$$
 
 $f(i,j)$ を $[i,j)$ の範囲でスライムを合体させたときのコストの最小値とすると
 
+<!-- dprint-ignore -->
 \begin{align}
     f(i,j) = \min_{k \in \\{i+1, \cdots, j-1 \\}} f(i,k) + f(k,j) + \sum_{l=i}^{j-1} a_l \nonumber
 \end{align}
@@ -323,6 +329,7 @@ $dp(i,S)$ を $i-1$ 番目までの男性をマッチングさせてマッチし
 
 まだマッチしていない女性の中から相性の良い女性を選べば良いから
 
+<!-- dprint-ignore -->
 \begin{align}
     dp(i,S) = \sum_{j \notin S \wedge \mathrm{match}(i, j) = 1} dp(i+1, S \cup \\{j \\}) \nonumber
 \end{align}

@@ -209,6 +209,7 @@ $$
 
 $f(P) = \floor{ \frac{P+x-1}{x} }$ とすると $f(P)$ は non-decreasing fn だから
 
+<!-- dprint-ignore -->
 \begin{align*}
     f(sx+1) \leq f(P) \\\\
     \therefore&~~ \floor{  \frac{(sx+1)+x-1}{x}  } \leq f(P) \\\\
@@ -226,6 +227,8 @@ $f(sx) = \floor{ \frac{sx + x-1}{x} } = \floor{ s + \frac{x-1}{x} } = s + \floor
 $f(sx+1) = s+1$
 
 より $s < f(P)$ ならば
+
+<!-- dprint-ignore -->
 \begin{align*}
     &sx+1 \leq P \\\\
     \therefore~~ &sx < sx+1 \leq P \\\\
@@ -246,6 +249,8 @@ $$
 ($\Rightarrow$)
 
 $\frac{M}{a} \geq \floor{\frac{M}{a}}$ であるから
+
+<!-- dprint-ignore -->
 \begin{align*}
     x &> \frac{M}{a} \geq \floor{\frac{M}{a}} \\\\
     \therefore x &> \floor{\frac{M}{a}}
@@ -253,6 +258,7 @@ $\frac{M}{a} \geq \floor{\frac{M}{a}}$ であるから
 
 ($\Leftarrow$)
 
+<!-- dprint-ignore -->
 \begin{align*}
     x &> \floor{\frac{M}{a}} \\\\
     \therefore x &\geq \floor{\frac{M}{a}} + 1  > \frac{M}{a} \\\\
@@ -624,6 +630,7 @@ $A$ に以下の操作を加えたでできた行列を $A^\prime$ とする.
 
 ### rotr90
 
+<!-- dprint-ignore -->
 \begin{align*}
     i^\prime &= j \\\\
     j^\prime &= H - 1 - i
@@ -650,6 +657,7 @@ vector<vector<T>> rotr90(vector<vector<T>>& mat) {
 
 ### rotl90
 
+<!-- dprint-ignore -->
 \begin{align*}
     i^\prime &= W - 1 - j \\\\
     j^\prime &= i
@@ -657,6 +665,7 @@ vector<vector<T>> rotr90(vector<vector<T>>& mat) {
 
 ### transpose
 
+<!-- dprint-ignore -->
 \begin{align*}
     i^\prime &= j \\\\
     j^\prime &= i
@@ -664,6 +673,7 @@ vector<vector<T>> rotr90(vector<vector<T>>& mat) {
 
 ### 上下反転
 
+<!-- dprint-ignore -->
 \begin{align*}
     i^\prime &= H - 1 - i \\\\
     j^\prime &= j
@@ -671,6 +681,7 @@ vector<vector<T>> rotr90(vector<vector<T>>& mat) {
 
 ### 左右反転
 
+<!-- dprint-ignore -->
 \begin{align*}
     i^\prime &= i \\\\
     j^\prime &= W - 1 - j

@@ -3,7 +3,6 @@ date = '2025-03-09T20:54:47+09:00'
 title = 'ソラで書くセグメント木から ACL へ移行する'
 +++
 
-
 ## はじめに
 
 [木マスター養成講座](https://youtu.be/LjhVy1ZJTMc?si=iKiqgeg0nBkg5Dsg)で普通のセグメント木ををソラでかけるようになったあとに、「[遅延評価セグメント木をソラで書きたいあなたに](https://tsutaj.hatenablog.com/entry/2017/03/30/224339)」 (以降ソラ版と呼ぶ)を読んで遅延評価セグメント木をソラでかけるようになった。
@@ -134,7 +133,7 @@ void solve() {
 
 ### 詳細
 
-----
+---
 
 ```cpp
 struct S {
@@ -146,7 +145,7 @@ struct S {
 `S` は data node の型で。値と被覆範囲を持っている。ソラ版では $l$, $r$ の値を使えたので lazy の内容を data node に適用する際に範囲情報を含めて値を更新できたが、ACL 版では `mapping` に範囲情報が渡されないのでどこか別の場所に範囲を持っておく必要がある。
 `F` のほうに範囲をもたせるのは多分無理なので `S` にもたせる
 
-----
+---
 
 ```cpp
 S op(S a, S b) {
@@ -158,7 +157,7 @@ S op(S a, S b) {
 前半の `a.val + b.val` は子の値を合算している。普通のセグメント木でもやっている操作。
 後半の `a.size + b.size` は子のサイズを合算して更新対象の data node が被覆している範囲を計算している。
 
-----
+---
 
 ```cpp
 S e() {
@@ -168,7 +167,7 @@ S e() {
 
 `op(e(), x) = op(x, e()) = x` が成り立つように `e` を定義する
 
-----
+---
 
 ```cpp
 struct F {
@@ -179,7 +178,7 @@ struct F {
 区間適用する操作を表すデータ。
 末端の値に対して $a_i \leftarrow b \times a_i + c$ というデータの更新をするので $b$, $c$ が必要
 
-----
+---
 
 ```cpp
 S mapping(F f, S x) {
@@ -193,6 +192,7 @@ S mapping(F f, S x) {
 `x` はセグメント木の data node のいずれかの値。
 $x = a_i+\cdots + a_{l+\text{(node size)}}$ とすると、$i \in [l, l+\text{(node size)})$ に対して $a_i \leftarrow b \times a_i + c$ を適用したあとの値は
 
+<!-- dprint-ignore -->
 \begin{align}
     &\sum_{i=l}^{l+\text{(node size)}-1} b \times a_i + c \nonumber \\\\
     &= b \left( \sum_{i=l}^{l+\text{(node size)}-1} a_i \right) + c \times \text{(node size)} \nonumber \\\\
@@ -201,7 +201,7 @@ $x = a_i+\cdots + a_{l+\text{(node size)}}$ とすると、$i \in [l, l+\text{(n
 
 となる。
 
-----
+---
 
 ```cpp
 F composition(F f, F g) {
@@ -216,6 +216,7 @@ lazy node の内容を更に合算する操作
 
 $g(x) = b_g  x + c_g$, $f(x) = b_f  x + c_f$ とすると、
 
+<!-- dprint-ignore -->
 \begin{align}
     f(g(x)) &= b_f (b_g  x + c_g) + c_f \nonumber \\\\
         &= b_f b_g x + b_f c_g + c_f \nonumber \\\\
@@ -226,7 +227,7 @@ where $b_{fg} = b_f b_g$, $c_{fg} = b_f c_g + c_f$
 
 となる。
 
-----
+---
 
 ```cpp
 F id() {
