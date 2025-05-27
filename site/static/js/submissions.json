@@ -49810,5 +49810,41 @@
     "length": 1912,
     "result": "AC",
     "execution_time": 37
+  },
+  {
+    "id": 66190595,
+    "epoch_second": 1748279170,
+    "problem_id": "arc116_b",
+    "contest_id": "arc116",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 0.0,
+    "length": 3026,
+    "result": "WA",
+    "execution_time": 173
+  },
+  {
+    "id": 66190641,
+    "epoch_second": 1748279574,
+    "problem_id": "arc116_b",
+    "contest_id": "arc116",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 400.0,
+    "length": 3081,
+    "result": "AC",
+    "execution_time": 126
+  },
+  {
+    "id": 66190720,
+    "epoch_second": 1748280448,
+    "problem_id": "arc116_b",
+    "contest_id": "arc116",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 400.0,
+    "length": 1993,
+    "result": "AC",
+    "execution_time": 24
   }
 ]
