@@ -1,8 +1,7 @@
-// https://atcoder.jp/contests/arc120/tasks/arc120_a
-// 2025年05月28日 02時48分10秒
+// https://atcoder.jp/contests/arc149/tasks/arc149_a
+// 2025年05月29日 22時26分52秒
 #include <bits/stdc++.h>
 #include <atcoder/all>
-#include <atcoder/segtree.hpp>
 using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
@@ -71,22 +70,33 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N;
-    cin >> N;
-    vll A(N + 1);
-    rep(i, N) cin >> A[i + 1];
+    ll N, M;
+    cin >> N >> M;
 
-    vll f(N + 1), amx(N + 1), M(N + 1);
-    rep2(i, 1, N + 1) {
-        int k = i - 1;
-        amx[i] = max(A[i], amx[k]);
-        if (A[i] <= amx[k]) {
-            M[i] = A[i] + M[k];
-            f[i] = f[k] + M[i];
-        } else {
-            M[i] = A[i] + M[k] + (A[i] - amx[k]);
-            f[i] = f[k] + (A[i] - amx[k]) * k + M[i];
+    modint::set_mod(M);
+    using mint = modint;
+
+    auto chmin_string = [](string& a, string& b) -> void {
+        if (a.size() > b.size()) return;
+        if (a.size() < b.size()) {
+            a = b;
+            return;
         }
-        cout << f[i] << endl;
+        if (a < b) a = b;
+    };
+
+    string ans = "";
+    rep2(i, 1, 10) {
+        string s = "";
+        mint x = 0;
+        rep(j, N) {
+            x *= 10;
+            x += i;
+            s.push_back('0' + i);
+            if (x == 0) chmin_string(ans, s);
+        }
     }
+
+    if (ans == "") ans = "-1";
+    cout << ans << endl;
 }
