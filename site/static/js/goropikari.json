@@ -637,14 +637,26 @@
     },
     {
         "IsRated": true,
-        "Place": 2853,
+        "Place": 2824,
         "OldRating": 1096,
         "NewRating": 1091,
-        "Performance": 1050,
-        "InnerPerformance": 1050,
+        "Performance": 1053,
+        "InnerPerformance": 1053,
         "ContestScreenName": "abc407.contest.atcoder.jp",
         "ContestName": "AtCoder Beginner Contest 407（Promotion of AtCoderJobs）",
         "ContestNameEn": "AtCoder Beginner Contest 407",
         "EndTime": "2025-05-24T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 3581,
+        "OldRating": 1091,
+        "NewRating": 1072,
+        "Performance": 886,
+        "InnerPerformance": 886,
+        "ContestScreenName": "abc408.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 408",
+        "ContestNameEn": "",
+        "EndTime": "2025-05-31T22:40:00+09:00"
     }
 ]
