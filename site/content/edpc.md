@@ -10,7 +10,7 @@ tags = ['atcoder', 'edpc']
 
 結局のところ両者ともに自分の得点が最大になるように行動すればよい
 
-## まずは実験
+### まずは実験
 
 - 要素が1つのとき
 
@@ -26,7 +26,7 @@ $X = \max \\{a_1 + (a_2, a_3 \text{の範囲で後手のときの得点}), (a_1,
 
 ...
 
-## 解法
+### 解法
 
 $\mathrm{dp}(i,j)$ を $[i,j]$ の範囲での先手の得点の最大値とすると
 
@@ -119,7 +119,7 @@ $$
 
 となるので N 重の for loop をしているのと等価であり TLE する。
 
-## 解法
+### 解法
 
 $dp(i,j)$ を $i$ 番目の子供までで $j$ 個飴を配ったときの場合の数とすると
 
@@ -278,7 +278,7 @@ void solve() {
 
 <https://atcoder.jp/contests/dp/tasks/dp_o>
 
-## 間違い解法
+### 間違い解法
 
 ```
 2
@@ -321,7 +321,7 @@ void solve() {
 }
 ```
 
-## 解法
+### 解法
 
 参考: <https://smijake3.hatenablog.com/entry/2019/01/16/012916>
 
@@ -368,5 +368,43 @@ void solve() {
 
     dp = vvll(N + 1, vll(1 << N, -INF));
     cout << dfs(0, 0) << endl;
+}
+```
+
+## Q - Flowers
+
+自力 AC
+
+<https://atcoder.jp/contests/dp/tasks/dp_q>
+
+`dp(i)` を残した花の最後が $h_i$ のときの美しさの総和の最大値とすると
+
+\begin{align*}
+    dp(i) = \left( \max_{j < i} dp(j) \right) + a_i
+\end{align*}
+
+となる。
+$i$ を小さい順に計算していけば $i$ 番目より右側にある $h_i$ よりも小さい花の $dp(j)$ ($i < j \wedge h_i > h_j$) の値は 0 になっているので segtree 等を使って max 計算を高速化すれば $O(N \log N)$ で計算できる。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int N;
+    cin >> N;
+    vll H(N), A(N);
+    rep(i, N) cin >> H[i];
+    rep(i, N) cin >> A[i];
+
+    segtree<ll, [](ll a, ll b) -> ll { return max(a, b); }, []() -> ll { return 0; }> dp(N + 1);
+    rep(i, N) {
+        ll h = H[i];
+        ll mx = dp.prod(0, h);
+        dp.set(h, mx + A[i]);
+    }
+
+    ll ans = dp.all_prod();
+    cout << ans << endl;
 }
 ```
