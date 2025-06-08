@@ -3,7 +3,7 @@ name: Update Performance Data and Create PR
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0' # 毎週日曜日の午前0時に実行(UTC)
+    - cron: "0 0 * * 0" # 毎週日曜日の午前0時に実行(UTC)
 
 permissions:
   contents: write
@@ -14,37 +14,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-    - name: Install dependencies
-      run: |
-        pip install lxml requests
+      - name: Install dependencies
+        run: |
+          pip install lxml requests
 
-    - name: Run script
-      run: python scripts/download_user_performance.py
+      - name: Run script
+        run: python scripts/download_user_performance.py
 
-    - name: Get current date
-      id: date
-      run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
-    - name: Create Pull Request
-      id: pr
-      uses: peter-evans/create-pull-request@v7
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: update-rating-${{ env.date }}
-        commit-message: "Update performance data"
-        title: "Update performance data"
-        body: "This PR updates performance data by running download_user_performance.py"
+      - name: Create Pull Request
+        id: pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update-rating-${{ env.date }}
+          commit-message: "Update performance data"
+          title: "Update performance data"
+          body: "This PR updates performance data by running download_user_performance.py"
 
-    - name: Merge PR
-      if: ${{ steps.pr.outputs.pull-request-number }}
-      run: gh pr merge --rebase ${{ steps.pr.outputs.pull-request-url }}
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge PR
+        if: ${{ steps.pr.outputs.pull-request-number }}
+        run: gh pr merge --rebase ${{ steps.pr.outputs.pull-request-url }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
