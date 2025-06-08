@@ -379,6 +379,7 @@ void solve() {
 
 `dp(i)` を残した花の最後が $h_i$ のときの美しさの総和の最大値とすると
 
+<!-- dprint-ignore -->
 \begin{align*}
     dp(i) = \left( \max_{j < i} dp(j) \right) + a_i
 \end{align*}
@@ -406,5 +407,187 @@ void solve() {
 
     ll ans = dp.all_prod();
     cout << ans << endl;
+}
+```
+
+## R - Walk
+
+<https://atcoder.jp/contests/dp/tasks/dp_r>
+
+自力 AC
+
+遷移行列と、行列のべき乗計算を知っていれば簡単に解ける。
+
+```cpp
+struct Matrix {
+    vector<vector<mint>> data;
+
+    Matrix(vector<vector<mint>> data) { this->data = data; }
+
+    Matrix operator*(const Matrix& other) {
+        int n = data.size();
+        int m = other.data[0].size();
+        int l = other.data.size();
+        vector res(n, vector<mint>(m, 0));
+        rep(i, n) rep(j, m) rep(k, l) {
+            res[i][j] += data[i][k] * other.data[k][j];
+        }
+        return Matrix(res);
+    }
+
+    Matrix exp(ll k) {
+        int n = data.size();
+        Matrix res(vector(n, vector<mint>(n, 0)));
+        rep(i, n) res.data[i][i] = 1;
+        Matrix a = *this;
+        while (k > 0) {
+            if (k & 1)
+                res = res * a;
+            a = a * a;
+            k >>= 1;
+        }
+        return res;
+    }
+
+    mint get(int i, int j) {
+        return data[i][j];
+    }
+};
+
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N, K;
+    cin >> N >> K;
+    vector data(N, vector<mint>(N));
+    rep(i, N) rep(j, N) {
+        ll a;
+        cin >> a;
+        data[i][j] = a;
+    }
+    Matrix A(data);
+    Matrix x(vector(N, vector<mint>(1, 1)));
+
+    auto ret = A.exp(K) * x;
+    mint ans = 0;
+    rep(i, N) ans += ret.get(i, 0);
+    cout << ans.val() << endl;
+}
+```
+
+## S - Digit Sum
+
+<https://atcoder.jp/contests/dp/tasks/dp_s>
+
+自力 AC
+
+$dp(i,j)$ を $0$ 以上 $10^i$ 未満の数字のうち、桁の総和が $j \mod D$ となる場合の数とする。
+
+$dp(0,0) = 1$ とすると $i$ 桁目の数字が $j$、$i-1$ 桁目までの桁の総和の $\mod D$ が $k$ のとき、
+$dp(i,(j+k \mod D)) += dp(i-1, k)$ が計上される。
+
+問題の $K$ 以下の数字のうち桁の総和が $D$ の倍数となる場合の数について考える。
+まず、$K$ が $N$ 桁の数字であるとき $K-1$ 桁の数字は全て $K$ 未満であるから $dp(N-1, 0) - 1$ を答えに加える。
+$K$ の最上位の桁を $t$ とする。$N$ 桁の数字のうち最上位の桁が $1$ 以上 $t$ 未満のとき $K$ 未満の数字であるから
+残りの $N-1$ 桁の数字は何を選んでも $K$ 未満の数字となる。
+よって、$j+k \equiv 0 \mod D$ を満たす $1 \leq j < t$, $0 \leq k < D$ の組み合わせについて $dp(i-1, k)$ を答えに加える。
+
+最後に、$K$ の最上位の桁から $i-1$ 番目までは桁の数字が同じで $i$ 番目の桁が $K$ の $i$ 番目の桁より小さいとき、残りの桁は何を選んでも $K$ 未満の数字となるから $K$ の $i$ 番目の桁を $t$ とすると
+$j+k \equiv 0 \mod D$ を満たす $0 \leq j < t$, $0 \leq k < D$ の組み合わせについて $dp(N-i, k)$ を答えに加える。
+最上位の桁との違いは $i$ 番目の桁に $0$ を選ぶことができる点である。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string K;
+    ll D;
+    cin >> K >> D;
+
+    int N = K.size();
+    // dp[i][j]: 0 以上 10^i 未満の数字のうち、(桁の総和 mod D) が j となる場合の数
+    vector dp(N + 1, vector<mint>(D));
+    dp[0][0] = 1;
+    rep2(i, 1, N + 1) {
+        rep(j, 10) {
+            rep(k, D) {
+                int m = (j + k) % D;
+                dp[i][m] += dp[i - 1][k];
+            }
+        }
+    }
+
+    // 1 ~ N-1 桁の数字のうち桁の総和が D の倍数となる場合の数
+    mint ans = dp[N - 1][0] - 1;  // 0 分を 1 個引く
+
+    // N 桁の数字のうち、最上位の桁がもともとの数字未満のときに D の倍数となる場合の数
+    rep2(i, 1, K[0] - '0') {
+        rep(j, D) {
+            if ((i + j) % D == 0) {
+                ans += dp[N - 1][j];
+            }
+        }
+    }
+
+    ll sum = (K[0] - '0') % D;
+    rep2(i, 1, N) {
+        int d = N - i;
+        int upper = K[i] - '0';
+        rep(j, upper) {
+            rep(k, D) {
+                if ((sum + j + k) % D == 0) {
+                    ans += dp[d - 1][k];
+                }
+            }
+        }
+
+        sum += upper;
+        sum %= D;
+    }
+
+    if (sum == 0) ans++;
+
+    cout << ans.val() << endl;
+}
+```
+
+### 桁 DP 解法
+
+[こちらのサイト](https://web.archive.org/web/20170508234139/https://pekempey.hatenablog.com/entry/2015/12/09/000603)で桁 DP に関して勉強した。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string K;
+    ll D;
+    cin >> K >> D;
+
+    int N = K.size();
+
+    // dp[i][j][k]: 左から i 桁までは見て K 未満であることが確定して(j=0 いなくて, j=1 いて) 桁の総和の mod D が k となる場合の数
+    vector dp(N + 1, vector(2, vector<mint>(D)));
+    dp[0][0][0] = 1;
+
+    rep2(i, 1, N + 1) {
+        int t = K[i - 1] - '0';
+
+        rep(d, 10) {
+            rep(k, D) {
+                if (d < t) {
+                    dp[i][1][(d + k) % D] += dp[i - 1][0][k];
+                }
+                if (d == t) {
+                    dp[i][0][(d + k) % D] += dp[i - 1][0][k];
+                }
+                dp[i][1][(d + k) % D] += dp[i - 1][1][k];
+            }
+        }
+    }
+
+    cout << (dp[N][0][0] + dp[N][1][0] - 1).val() << endl;
 }
 ```
