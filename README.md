@@ -1,6 +1,7 @@
 # Competitive Programming
 
 ```sh
+pipx install git+https://github.com/goropikari/oj
 make up exec
 
 nvim
