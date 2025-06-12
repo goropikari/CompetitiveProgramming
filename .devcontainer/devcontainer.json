@@ -14,13 +14,23 @@
     "ghcr.io/goropikari/devcontainer-feature/neovim:1": {},
     "ghcr.io/devcontainers/features/go:1": {},
     "ghcr.io/devcontainers/features/python:1": {},
-    "ghcr.io/devcontainers/features/sshd:1": {}
+    "ghcr.io/devcontainers/features/sshd:1": {},
+    "ghcr.io/devcontainers/features/node:1": {}
   },
   "mounts": [
     {
-      // "source": "${localWorkspaceFolder}/.devcontainer/nvim",
       "source": "${localEnv:HOME}/.config/nvim",
       "target": "/home/vscode/.config/nvim",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}/.config/github-copilot",
+      "target": "/home/vscode/.config/github-copilot",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}/.local/share/online-judge-tools",
+      "target": "/home/vscode/.local/share/online-judge-tools",
       "type": "bind"
     }
   ],

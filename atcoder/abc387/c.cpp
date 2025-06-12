@@ -1,27 +1,32 @@
-/*https://atcoder.jp/contests/abc387/tasks/abc387_c*/
-/*2025年01月05日 21時10分00秒*/
+// https://atcoder.jp/contests/abc387/tasks/abc387_c
+// 2025年06月09日 16時10分05秒
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
-#include <string>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
-#define rep(i, n) for (int i = 0; i < (n); ++i)
-#define rep2(i, k, n) for (int i = (k); i < (n); ++i)
-using namespace std;
+#define rep(i, n) for (long long int i = 0; i < (n); ++i)
+#define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
+#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
 using ll = long long;
-// using P = pair<ll,ll>;
-using P = pair<int, int>;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
-// const ll MOD = (ll)1e9+9;
+// const int INF = (int)2e9 + 7;
+
 template <typename T>
 void chmin(T& a, T b) {
     a = min(a, b);
@@ -44,7 +49,15 @@ void print(vector<T> v) {
 }
 
 void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+    cout << (x ? "Yes" : "No") << '\n';
+}
+
+void Yes() {
+    yesno(true);
+}
+
+void No() {
+    yesno(false);
 }
 
 void solve();
@@ -54,68 +67,45 @@ int main() {
     return 0;
 }
 
-ll L, R;
-vvll keta(20, vll(10, 0));
-
-ll int_pow(ll b, ll n) {
-    ll ans = 1;
-    rep(i, n) ans *= b;
-    return ans;
-}
-
-ll cal(ll x) {
-    string x_str = to_string(x);
-    ll n = x_str.size();
-    ll sum = 0;
-
-    // n 桁未満の snake number の個数
-    rep2(k, 1, n) {
-        // k 桁、leading number が l のときの snake number の個数
-        rep2(l, 1, 10) sum += keta[k][l];
-    }
-
-    // n 桁の先頭の桁が `leading_number` 未満の snake number の個数
-    ll leading_number = x_str[0] - '0';
-    rep2(i, 1, leading_number) {
-        sum += keta[n][i];
-    }
-
-    // x 以下の最大の snake number を生成する
-    int ok = 0;
-    string t_str = x_str;
-    rep2(i, 1, n) {
-        if (ok) {
-            t_str[i] = '0' + (leading_number - 1);
-        } else if (t_str[i] - '0' >= leading_number) {
-            ok = 1;
-            t_str[i] = '0' + (leading_number - 1);
-        }
-    }
-
-    // i-1 桁までは同じな snake number の数
-    x_str = t_str;
-    rep2(i, 1, n) {
-        ll num = x_str[i] - '0';
-        sum += num * int_pow(leading_number, n - (i + 1));
-    }
-
-    bool is_snake = true;
-    rep2(i, 1, n) {
-        if ((x_str[i] - '0') >= leading_number)
-            is_snake = false;
-    }
-    if (is_snake)
-        sum++;
-
-    return sum;
-}
-
 void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll L, R;
     cin >> L >> R;
-    rep2(k, 1, 20) {
-        rep2(ln, 1, 10) {
-            keta[k][ln] = int_pow((ll)ln, (ll)(k - 1));
+
+    auto cal = [](string S) -> ll {
+        int N = S.size();
+
+        // dp[head][is_less][zero seq 続く]
+        vector dp(10, vector(2, vll(2, 0)));
+        dp[0][1][1] = 1;
+        rep2(i, 1, S[0] - '0') dp[i][1][0] = 1;
+        dp[S[0] - '0'][0][0] = 1;
+        rep2(i, 1, N) {
+            int t = S[i] - '0';
+            vector dpn(10, vector(2, vll(2, 0)));
+            rep(head, 10) {
+                rep(is_less, 2) {
+                    rep(zero_seq, 2) {
+                        rep(nx, 10) {
+                            if (!zero_seq && head <= nx) continue;  // ヘビ数を満たさない
+                            if (!is_less && nx > t) continue;       // S を超える
+                            int is_less_n = is_less || nx < t;
+                            int zero_seq_n = zero_seq && nx == 0;
+                            int headn = (zero_seq && nx != 0) ? nx : head;
+                            dpn[headn][is_less_n][zero_seq_n] += dp[head][is_less][zero_seq];
+                        }
+                    }
+                }
+            }
+            swap(dp, dpn);
         }
-    }
-    cout << cal(R) - cal(L - 1) << endl;
+
+        ll ans = 0;
+        rep(i, 10) rep(is_less, 2) ans += dp[i][is_less][0];
+        return ans;
+    };
+
+    cout << cal(to_string(R)) - cal(to_string(L - 1)) << endl;
 }

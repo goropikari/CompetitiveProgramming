@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc341/tasks/abc341_d
-// 2025年06月12日 21時35分31秒
+// https://atcoder.jp/contests/past202212-open/tasks/past202212_b
+// 2025年06月11日 18時00分04秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -24,7 +24,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -71,24 +71,13 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M, K;
-    cin >> N >> M >> K;
+    ll A, B, C, D;
+    cin >> A >> B >> C >> D;
 
-    auto f = [&](ll x) -> ll {
-        ll numn = x / N;
-        ll numm = x / M;
-        ll numc = x / lcm(N, M);
-
-        return numn + numm - numc * 2;
-    };
-
-    ll wa = 0, ac = INF;
-    while (ac - wa > 1) {
-        ll wj = (ac + wa) / 2;
-        if (f(wj) >= K)
-            ac = wj;
-        else
-            wa = wj;
-    }
-    cout << ac << endl;
+    if (B < 0) A *= -1, B *= -1;
+    if (D < 0) C *= -1, D *= -1;
+    char ans = '=';
+    if (A * D < B * C) ans = '<';
+    if (A * D > B * C) ans = '>';
+    cout << ans << endl;
 }

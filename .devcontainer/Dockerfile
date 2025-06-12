@@ -13,7 +13,9 @@ RUN apt-get update && \
         fd-find \
         libreadline-dev \
         gcc-12 \
-        libboost-math-dev
+        libboost-math-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 20
 
@@ -21,3 +23,7 @@ RUN mkdir -p /opt && \
     git clone -b v1.5.1 --depth 1 https://github.com/atcoder/ac-library /opt/ac-library && \
     cd /usr/include/x86_64-linux-gnu/c++/13/bits && \
     g++ --std=c++23 stdc++.h
+
+USER vscode
+RUN mkdir -p ~/.local/share
+RUN mkdir -p ~/.config

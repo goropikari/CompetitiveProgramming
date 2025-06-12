@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc341/tasks/abc341_d
-// 2025年06月12日 21時35分31秒
+// https://atcoder.jp/contests/abc341/tasks/abc341_e
+// 2025年06月12日 21時28分18秒
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -24,7 +24,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -71,24 +71,26 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M, K;
-    cin >> N >> M >> K;
+    int N, Q;
+    cin >> N >> Q;
+    string S;
+    cin >> S;
 
-    auto f = [&](ll x) -> ll {
-        ll numn = x / N;
-        ll numm = x / M;
-        ll numc = x / lcm(N, M);
-
-        return numn + numm - numc * 2;
-    };
-
-    ll wa = 0, ac = INF;
-    while (ac - wa > 1) {
-        ll wj = (ac + wa) / 2;
-        if (f(wj) >= K)
-            ac = wj;
-        else
-            wa = wj;
+    segtree<ll, [](ll a, ll b) -> ll { return a + b; }, []() -> ll { return 0; }> seg(N + 1);
+    rep(i, N - 1) {
+        if (S[i] != S[i + 1]) {
+            seg.set(i + 1, 1);
+        }
     }
-    cout << ac << endl;
+
+    rep(_, Q) {
+        int t, l, r;
+        cin >> t >> l >> r;
+        if (t == 1) {
+            seg.set(l - 1, 1 - seg.get(l - 1));
+            seg.set(r, 1 - seg.get(r));
+        } else {
+            yesno(seg.prod(l, r) == r - l);
+        }
+    }
 }

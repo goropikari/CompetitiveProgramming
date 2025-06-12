@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc341/tasks/abc341_d
-// 2025年06月12日 21時35分31秒
+// https://atcoder.jp/contests/abc007/tasks/abc007_4
+// 2025年06月09日 15時04分23秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -24,7 +24,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -71,24 +71,45 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M, K;
-    cin >> N >> M >> K;
+    string A, B;
+    cin >> A >> B;
 
-    auto f = [&](ll x) -> ll {
-        ll numn = x / N;
-        ll numm = x / M;
-        ll numc = x / lcm(N, M);
+    auto cal = [](string S) -> ll {
+        int N = S.size();
+        vector dp(N + 1, vector(2, vector(2, vll(2))));
+        dp[0][0][0][0] = 1;
 
-        return numn + numm - numc * 2;
+        rep2(i, 1, N + 1) {
+            int t = S[i - 1] - '0';
+            rep(d, 10) {
+                bool has_four = d == 4;
+                bool has_nine = d == 9;
+                if (d < t) {
+                    rep(fr, 2) rep(ni, 2) {
+                        dp[i][1][has_four || fr][has_nine || ni] += dp[i - 1][0][fr][ni];
+                    }
+                }
+                if (t == d) {
+                    rep(fr, 2) rep(ni, 2) {
+                        dp[i][0][has_four || fr][has_nine || ni] += dp[i - 1][0][fr][ni];
+                    }
+                }
+                rep(fr, 2) rep(ni, 2) {
+                    dp[i][1][has_four || fr][has_nine || ni] += dp[i - 1][1][fr][ni];
+                }
+            }
+        }
+
+        ll ret = 0;
+        rep(fr, 2) rep(ni, 2) {
+            if (fr == 0 && ni == 0) continue;
+            ret += dp[N][1][fr][ni] + dp[N][0][fr][ni];
+        }
+
+        return ret;
     };
+    // cout << cal(B) << endl;
+    // cout << cal(A) << endl;
 
-    ll wa = 0, ac = INF;
-    while (ac - wa > 1) {
-        ll wj = (ac + wa) / 2;
-        if (f(wj) >= K)
-            ac = wj;
-        else
-            wa = wj;
-    }
-    cout << ac << endl;
+    cout << cal(B) - cal(to_string(stoll(A) - 1)) << endl;
 }
