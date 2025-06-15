@@ -44438,5 +44438,75 @@
     "irt_loglikelihood": -235.40291082595346,
     "irt_users": 10313,
     "is_experimental": false
+  },
+  "abc410_a": {
+    "slope": -0.0008906493651044767,
+    "intercept": 6.117209718120221,
+    "variance": 0.8267669524227759,
+    "difficulty": -992,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -566.6789552114591,
+    "irt_users": 8450,
+    "is_experimental": false
+  },
+  "abc410_b": {
+    "slope": -0.0009985102460504341,
+    "intercept": 7.075704515009631,
+    "variance": 0.3820219611703226,
+    "difficulty": -380,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -1692.712153956279,
+    "irt_users": 8450,
+    "is_experimental": false
+  },
+  "abc410_c": {
+    "slope": -0.0010733075089925834,
+    "intercept": 7.629227061942517,
+    "variance": 0.5021553714569797,
+    "difficulty": 178,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -4492.266590231532,
+    "irt_users": 10101,
+    "is_experimental": false
+  },
+  "abc410_d": {
+    "slope": -0.0007408038681418798,
+    "intercept": 7.967247857510682,
+    "variance": 0.4989444117552371,
+    "difficulty": 1048,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -3865.536123412395,
+    "irt_users": 10101,
+    "is_experimental": false
+  },
+  "abc410_e": {
+    "slope": -0.0008427651102732551,
+    "intercept": 8.26267735443248,
+    "variance": 0.4604713771643479,
+    "difficulty": 1077,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -3375.6885246624656,
+    "irt_users": 10101,
+    "is_experimental": false
+  },
+  "abc410_f": {
+    "slope": -0.0005370847366531317,
+    "intercept": 8.482286416747616,
+    "variance": 0.3287712156457742,
+    "difficulty": 1732,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -1385.4771383192847,
+    "irt_users": 10101,
+    "is_experimental": false
+  },
+  "abc410_g": {
+    "slope": -0.0005267599985523436,
+    "intercept": 8.617921034405642,
+    "variance": 0.3291661581518003,
+    "difficulty": 2242,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -447.5771890380975,
+    "irt_users": 10101,
+    "is_experimental": false
   }
 }
