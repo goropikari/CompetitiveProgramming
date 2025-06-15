@@ -670,5 +670,17 @@
         "ContestName": "AtCoder Beginner Contest 409",
         "ContestNameEn": "",
         "EndTime": "2025-06-07T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 2857,
+        "OldRating": 1089,
+        "NewRating": 1085,
+        "Performance": 1042,
+        "InnerPerformance": 1042,
+        "ContestScreenName": "abc410.contest.atcoder.jp",
+        "ContestName": "CodeQUEEN 2025 予選 (AtCoder Beginner Contest 410)",
+        "ContestNameEn": "AtCoder Beginner Contest 410",
+        "EndTime": "2025-06-14T22:40:00+09:00"
     }
 ]
