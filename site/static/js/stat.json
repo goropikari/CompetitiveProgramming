@@ -4668,5 +4668,35 @@
     "yellow": 1,
     "orange": 0,
     "red": 0
+  },
+  "20250614": {
+    "gray": 722,
+    "brown": 358,
+    "green": 379,
+    "cyan": 108,
+    "blue": 12,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250615": {
+    "gray": 722,
+    "brown": 358,
+    "green": 380,
+    "cyan": 108,
+    "blue": 12,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250616": {
+    "gray": 722,
+    "brown": 358,
+    "green": 380,
+    "cyan": 109,
+    "blue": 12,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
   }
 }
