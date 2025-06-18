@@ -1,23 +1,31 @@
-/*https://atcoder.jp/contests/abc390/tasks/abc390_e*/
-/*2025年01月25日 23時04分27秒*/
+// https://atcoder.jp/contests/abc390/tasks/abc390_e
+// 2025年06月18日 21時01分41秒
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
+#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
+#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+const ll INF = (ll)2e18 + 9;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -41,7 +49,15 @@ void print(vector<T> v) {
 }
 
 void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+    cout << (x ? "Yes" : "No") << '\n';
+}
+
+void Yes() {
+    yesno(true);
+}
+
+void No() {
+    yesno(false);
 }
 
 void solve();
@@ -52,37 +68,55 @@ int main() {
 }
 
 void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     ll N, X;
     cin >> N >> X;
 
-    vll V(N + 1), A(N + 1), C(N + 1);
+    vector<vector<pair<ll, ll>>> vitamin(3);
     rep(i, N) {
-        cin >> V[i + 1] >> A[i + 1] >> C[i + 1];
-        V[i + 1]--;
+        ll v, a, c;
+        cin >> v >> a >> c;
+        v--;
+        vitamin[v].emplace_back(a, c);
     }
 
-    // dp[i][cal][kind]:
-    // i番目までの食べ物を食べて cal ときの kind の摂取量
-    vector<vvll> dp(N + 1, vvll(X + 1, vll(3, -INF)));
-    rep(j, 3) rep(c, X + 1) {
-        dp[0][c][j] = 0;
-    }
-
-    rep2(i, 1, N + 1) {
-        rep(c, X + 1) {
-            // i 番目のもの食べない
-            rep(j, 3) {
-                chmax(dp[i][c][j], dp[i - 1][c][j]);
-            }
-            if (c - C[i] >= 0) {
-                chmax(dp[i][c][V[i]], dp[i - 1][c - C[i]][V[i]] + A[i]);
+    ll cmax = 5000;
+    vvll dp(3, vll(cmax + 1, -1));
+    rep(i, 3) {
+        dp[i][0] = 0;
+        for (auto [a, c] : vitamin[i]) {
+            for (int j = cmax; j - c >= 0; j--) {
+                if (dp[i][j - c] >= 0)
+                    chmax(dp[i][j], dp[i][j - c] + a);
             }
         }
     }
 
-    ll ans = INF;
-    rep(k, 3) {
-        chmin(ans, dp[N][X][k]);
+    auto f = [&](ll x) -> bool {
+        ll tot = 0;
+        rep(i, 3) {
+            ll t = X + 1;
+            rep(j, cmax + 1) {
+                if (dp[i][j] >= x) {
+                    t = j;
+                    break;
+                }
+            }
+            tot += t;
+        }
+        return tot <= X;
+    };
+
+    ll ac = 0, wa = INF;
+    while (wa - ac > 1) {
+        ll wj = (wa + ac) / 2;
+        if (f(wj)) {
+            ac = wj;
+        } else {
+            wa = wj;
+        }
     }
-    cout << ans << endl;
+    cout << ac << endl;
 }
