@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc362/tasks/abc362_e
-// 2025年06月19日 01時24分16秒
+// https://atcoder.jp/contests/abc411/tasks/abc411_e
+// 2025年06月22日 19時18分22秒
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -71,8 +71,41 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
+    int N;
     cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    vvll dice(N);
+    set<ll> cands;
+    rep(i, N) {
+        rep(j, 6) {
+            ll a;
+            cin >> a;
+            cands.insert(a);
+            dice[i].push_back(a);
+        }
+        sort(all(dice[i]));
+    }
+    sort(all(dice));
+
+    // 最大値が m となる確率
+    // m 以下の確率 - (m 未満の確率)
+    mint ans = 0;
+    mint tot = mint(6).pow(N);
+    for (auto it = cands.rbegin(); it != cands.rend(); it++) {
+        ll m = *it;
+        mint leq_cnt = 1, le_cnt = 1;
+        int ok = 1;
+        rep(i, N) {
+            auto it_leq = upper_bound(all(dice[i]), m);
+            auto it_le = lower_bound(all(dice[i]), m);
+            leq_cnt *= distance(dice[i].begin(), it_leq);
+            le_cnt *= distance(dice[i].begin(), it_le);
+            if (leq_cnt == 0) {
+                ok = 0;
+                break;
+            }
+        }
+        if (!ok) break;
+        ans += (leq_cnt - le_cnt) / tot * m;
+    }
+    cout << ans.val() << endl;
 }

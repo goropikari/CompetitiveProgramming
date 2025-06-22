@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc362/tasks/abc362_e
-// 2025年06月19日 01時24分16秒
+// https://atcoder.jp/contests/abc411/tasks/abc411_c
+// 2025年06月22日 18時21分44秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
-using mint = modint998244353;
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -71,8 +71,31 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    int N, Q;
+    cin >> N >> Q;
+
+    int ans = 0;
+    vint grid(N + 2);
+    rep(_, Q) {
+        int a;
+        cin >> a;
+        if (grid[a] == 0) {
+            grid[a] = 1;
+            if (grid[a - 1] == 1 && grid[a + 1] == 1) {
+                ans--;
+            }
+            if (grid[a - 1] == 0 && grid[a + 1] == 0) {
+                ans++;
+            }
+        } else {  // grid[a] = 1
+            grid[a] = 0;
+            if (grid[a - 1] == 1 && grid[a + 1] == 1) {
+                ans++;
+            }
+            if (grid[a - 1] == 0 && grid[a + 1] == 0) {
+                ans--;
+            }
+        }
+        cout << ans << '\n';
+    }
 }

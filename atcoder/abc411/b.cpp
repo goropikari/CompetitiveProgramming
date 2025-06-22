@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc362/tasks/abc362_e
-// 2025年06月19日 01時24分16秒
+// https://atcoder.jp/contests/abc411/tasks/abc411_b
+// 2025年06月22日 18時18分08秒
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
 using namespace atcoder;
-using mint = modint998244353;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -71,8 +71,18 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
+    int N;
     cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    vll D(N);
+    rep2(i, 1, N) cin >> D[i];
+
+    rep(i, N) {
+        ll sum = 0;
+        vll ans;
+        rep2(j, i + 1, N) {
+            sum += D[j];
+            ans.push_back(sum);
+        }
+        print(ans);
+    }
 }

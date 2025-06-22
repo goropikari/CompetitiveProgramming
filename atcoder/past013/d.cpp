@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc362/tasks/abc362_e
-// 2025年06月19日 01時24分16秒
+// https://atcoder.jp/contests/past202212-open/tasks/past202212_d
+// 2025年06月20日 19時35分35秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
-using mint = modint998244353;
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -71,8 +71,28 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    ll N, M;
+    cin >> N >> M;
+    string S;
+    cin >> S;
+
+    vll ans(N);
+    ll field = 0;
+    rep(i, M) {
+        int pi = i % N;
+        ans[pi]++;
+        char c = S[i];
+        if (c == '+') {
+            ans[pi] += field;
+            field = 0;
+        }
+        if (c == '-') {
+            field += ans[pi];
+            ans[pi] = 0;
+        }
+        if (c == '0') {
+            continue;
+        }
+    }
+    print(ans);
 }

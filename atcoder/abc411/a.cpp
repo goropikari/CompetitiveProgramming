@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc362/tasks/abc362_e
-// 2025年06月19日 01時24分16秒
+// https://atcoder.jp/contests/abc411/tasks/abc411_a
+// 2025年06月22日 18時16分27秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
-using mint = modint998244353;
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -71,8 +71,8 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    string P;
+    int L;
+    cin >> P >> L;
+    yesno((int)P.size() >= L);
 }

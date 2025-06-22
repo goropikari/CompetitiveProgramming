@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc362/tasks/abc362_e
-// 2025年06月19日 01時24分16秒
+// https://atcoder.jp/contests/abc411/tasks/abc411_d
+// 2025年06月22日 18時27分42秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
-using mint = modint998244353;
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -67,12 +67,59 @@ int main() {
     return 0;
 }
 
+struct Node {
+    int id, parent;
+    string data;
+
+    Node() {
+        id = 0;
+        parent = -1;
+        data = "";
+    }
+
+    Node(int id, int parent, string data) : id(id), parent(parent), data(data) {}
+};
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    ll N, Q;
+    cin >> N >> Q;
+
+    vector<Node> nodes(N + 1), tree(1);
+
+    rep(i, Q) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            int p;
+            cin >> p;
+            nodes[p] = nodes[0];
+        }
+        if (t == 2) {
+            int p;
+            string s;
+            cin >> p >> s;
+            Node node(tree.size(), nodes[p].id, s);
+            tree.push_back(node);
+            nodes[p] = node;
+        }
+        if (t == 3) {
+            int p;
+            cin >> p;
+            nodes[0] = nodes[p];
+        }
+    }
+
+    string ans = "";
+    Node node = nodes[0];
+    while (node.parent != -1) {
+        string s = node.data;
+        reverse(all(s));
+        ans += s;
+        node = tree[node.parent];
+    }
+    reverse(all(ans));
+    cout << ans << endl;
 }
