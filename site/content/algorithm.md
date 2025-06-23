@@ -267,6 +267,48 @@ $\frac{M}{a} \geq \floor{\frac{M}{a}}$ であるから
 
 ref: <https://atcoder.jp/contests/abc406/tasks/abc406_e>
 
+## 以下
+
+$x,a,y$ が正整数のとき
+
+\begin{align*}
+    \frac{x}{a} \leq y \iff \lceil \frac{x}{a} \rceil \leq y
+\end{align*}
+
+($\Rightarrow$)
+
+$x = qa + r$ ($q,r \in \mathbb{N}$, $0 \leq r < a$) とする.
+
+(i)
+$r = 0$ のとき $x/a = \lceil x/a \rceil$ より $x/a = \lceil x/a \rceil \leq y$。
+よって $\frac{x}{a} \leq y \Rightarrow \lceil \frac{x}{a} \rceil \leq y$
+
+(ii)
+$0 < r < a$ のとき、$0 < r/a < 1$ であり、$y$ は整数であるから
+$q < q+\frac{r}{a} < q+1 \leq y$.
+ここで $q + 1 = \lceil \frac{x}{a} \rceil$ であるから
+$\frac{x}{a} \leq y \Rightarrow \lceil \frac{x}{a} \rceil \leq y$
+
+(i), (ii) より、
+$\frac{x}{a} \leq y \Rightarrow \lceil \frac{x}{a} \rceil \leq y$
+
+($\Leftarrow$)
+
+$\frac{x}{a} \leq \lceil \frac{x}{a} \rceil$ であるから
+\begin{align*}
+    \lceil \frac{x}{a} \rceil \leq y \Rightarrow \frac{x}{a} \leq y
+\end{align*}
+
+以上より
+
+\begin{align*}
+    \frac{x}{a} \leq y \iff \lceil \frac{x}{a} \rceil \leq y
+\end{align*}
+
+が成り立つ。
+
+ref: <https://atcoder.jp/contests/past202212-open/tasks/past202212_f>
+
 ## gcd, lcm
 
 $\mathrm{gcd}(a, b) = \mathrm{gcd}(b, a \\% b)$.
