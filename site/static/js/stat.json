@@ -4738,5 +4738,25 @@
     "yellow": 1,
     "orange": 0,
     "red": 0
+  },
+  "20250627": {
+    "gray": 725,
+    "brown": 359,
+    "green": 381,
+    "cyan": 115,
+    "blue": 12,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250628": {
+    "gray": 725,
+    "brown": 359,
+    "green": 381,
+    "cyan": 116,
+    "blue": 12,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
   }
 }
