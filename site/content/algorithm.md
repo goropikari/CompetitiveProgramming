@@ -271,6 +271,7 @@ ref: <https://atcoder.jp/contests/abc406/tasks/abc406_e>
 
 $x,a,y$ が正整数のとき
 
+<!-- dprint-ignore -->
 \begin{align*}
     \frac{x}{a} \leq y \iff \lceil \frac{x}{a} \rceil \leq y
 \end{align*}
@@ -295,12 +296,14 @@ $\frac{x}{a} \leq y \Rightarrow \lceil \frac{x}{a} \rceil \leq y$
 ($\Leftarrow$)
 
 $\frac{x}{a} \leq \lceil \frac{x}{a} \rceil$ であるから
+<!-- dprint-ignore -->
 \begin{align*}
     \lceil \frac{x}{a} \rceil \leq y \Rightarrow \frac{x}{a} \leq y
 \end{align*}
 
 以上より
 
+<!-- dprint-ignore -->
 \begin{align*}
     \frac{x}{a} \leq y \iff \lceil \frac{x}{a} \rceil \leq y
 \end{align*}

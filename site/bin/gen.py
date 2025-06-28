@@ -1,7 +1,6 @@
-import json
 import sys
-import urllib.request
-import gzip
+from bs4 import BeautifulSoup
+from urllib import request
 
 args = sys.argv
 
@@ -12,26 +11,37 @@ def gen():
         return
     s = args[1].split('/')
     contest_id = ''.join(s[-2:])
-    problems = get_problems()
+    problems = get_problems(contest_id)
     for problem in problems:
-        if problem['contest_id'] == contest_id:
-            print(
-                '## {}\n\nhttps://atcoder.jp/contests/{}/tasks/{}\n'.format(
-                    problem['title'],
-                    contest_id,
-                    problem['id']
-                )
+        print(
+            '## {}\n\nhttps://atcoder.jp/contests/{}/tasks/{}\n'.format(
+                problem['title'],
+                contest_id,
+                problem['id']
             )
+        )
 
 
-def get_problems():
-    url = 'https://kenkoooo.com/atcoder/resources/problems.json'
-    req = urllib.request.Request(url, headers={'Accept-Encoding': 'gzip'})
-    with urllib.request.urlopen(req) as res:
-        dec = gzip.GzipFile(fileobj=res)
-        body = dec.read().decode('utf-8')
+def get_problems(contest_id):
+    url = 'https://atcoder.jp/contests/{}/tasks'.format(contest_id)
 
-    return json.loads(body)
+    response = request.urlopen(url)
+    soup = BeautifulSoup(response, 'lxml')
+    response.close()
+    problems = []
+    for tr in soup.find('tbody').find_all('tr'):
+        tds = tr.find_all('td')
+        ls = []
+        for td in tds:
+            ls.append(td.text.strip())
+        ls.append(tds[0].a['href'])
+
+        problem = {}
+        problem['title'] = "{}. {}".format(ls[0], ls[1])
+        problem['id'] = ls[-1].split('/')[-1]
+        problems.append(problem)
+
+    return problems
 
 
 if __name__ == '__main__':

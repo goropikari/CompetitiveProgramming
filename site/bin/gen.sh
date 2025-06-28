@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 basepath=$(cd `dirname $0`; pwd)
 
 hugo new content $1.md
