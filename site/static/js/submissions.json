@@ -51982,5 +51982,89 @@
     "length": 2559,
     "result": "AC",
     "execution_time": 21
+  },
+  {
+    "id": 67178476,
+    "epoch_second": 1751174039,
+    "problem_id": "abc412_c",
+    "contest_id": "abc412",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 300.0,
+    "length": 2660,
+    "result": "AC",
+    "execution_time": 115
+  },
+  {
+    "id": 67178493,
+    "epoch_second": 1751174109,
+    "problem_id": "abc412_c",
+    "contest_id": "abc412",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 300.0,
+    "length": 2633,
+    "result": "AC",
+    "execution_time": 113
+  },
+  {
+    "id": 67183272,
+    "epoch_second": 1751191285,
+    "problem_id": "abc361_e",
+    "contest_id": "abc361",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 2669,
+    "result": "AC",
+    "execution_time": 101
+  },
+  {
+    "id": 67183342,
+    "epoch_second": 1751191588,
+    "problem_id": "abc361_e",
+    "contest_id": "abc361",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 500.0,
+    "length": 2632,
+    "result": "AC",
+    "execution_time": 194
+  },
+  {
+    "id": 67188056,
+    "epoch_second": 1751207678,
+    "problem_id": "abc412_b",
+    "contest_id": "abc412",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 200.0,
+    "length": 1963,
+    "result": "AC",
+    "execution_time": 4
+  },
+  {
+    "id": 67188554,
+    "epoch_second": 1751209380,
+    "problem_id": "abc412_d",
+    "contest_id": "abc412",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 425.0,
+    "length": 3049,
+    "result": "AC",
+    "execution_time": 895
+  },
+  {
+    "id": 67188619,
+    "epoch_second": 1751209635,
+    "problem_id": "abc412_d",
+    "contest_id": "abc412",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 425.0,
+    "length": 3065,
+    "result": "AC",
+    "execution_time": 880
   }
 ]
