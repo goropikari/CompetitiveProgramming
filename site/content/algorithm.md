@@ -1817,3 +1817,158 @@ struct RollingHash {
     }
 };
 ```
+
+## 全探索
+
+### 組み合わせ
+
+$N$ 個から $M$ を選ぶ組み合わせ
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    // 選んだ ID に対して何かしらの操作をする関数
+    auto f = [](vint ids) -> void {
+        print(ids);
+    };
+
+    auto dfs = [&](auto dfs, int n, int m, int used = 0) -> void {
+        if (__builtin_popcount(used) == m) {
+            vint ids;
+            rep(i, n) {
+                if (used >> i & 1) {
+                    ids.push_back(i);
+                }
+            }
+            f(ids);
+            return;
+        }
+
+        int s = -1;
+        rep(i, n) {
+            if (used >> i & 1) {
+                s = i;
+            }
+        }
+        s++;
+
+        rep2(i, s, n) {
+            dfs(dfs, n, m, used | (1 << i));
+        }
+    };
+
+    int n = 5, m = 3;
+    dfs(dfs, n, m);
+}
+
+// 0 1 2
+// 0 1 3
+// 0 1 4
+// 0 2 3
+// 0 2 4
+// 0 3 4
+// 1 2 3
+// 1 2 4
+// 1 3 4
+// 2 3 4
+```
+
+### 重複順列
+
+$N$ 種類のものから重複を許して $M$ 個選ぶ順列
+多重ループ相当
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    auto f = [](vint ids) -> void {
+        print(ids);
+    };
+
+    auto dfs = [&](auto dfs, int n, int m, vint& ids) -> void {
+        if (ids.size() == m) {
+            f(ids);
+            return;
+        }
+
+        rep(i, n) {
+            ids.push_back(i);
+            dfs(dfs, n, m, ids);
+            ids.pop_back();
+        }
+    };
+
+    vint ids;
+    int n = 4, m = 3;
+    dfs(dfs, n, m, ids);
+}
+
+// 0 0 0
+// 0 0 1
+// 0 0 2
+// 0 0 3
+// 0 1 0
+// 0 1 1
+// 0 1 2
+// 0 1 3
+// 0 2 0
+// 0 2 1
+// 0 2 2
+// 0 2 3
+// 0 3 0
+// 0 3 1
+// 0 3 2
+// 0 3 3
+// 1 0 0
+// 1 0 1
+// 1 0 2
+// 1 0 3
+// 1 1 0
+// 1 1 1
+// 1 1 2
+// 1 1 3
+// 1 2 0
+// 1 2 1
+// 1 2 2
+// 1 2 3
+// 1 3 0
+// 1 3 1
+// 1 3 2
+// 1 3 3
+// 2 0 0
+// 2 0 1
+// 2 0 2
+// 2 0 3
+// 2 1 0
+// 2 1 1
+// 2 1 2
+// 2 1 3
+// 2 2 0
+// 2 2 1
+// 2 2 2
+// 2 2 3
+// 2 3 0
+// 2 3 1
+// 2 3 2
+// 2 3 3
+// 3 0 0
+// 3 0 1
+// 3 0 2
+// 3 0 3
+// 3 1 0
+// 3 1 1
+// 3 1 2
+// 3 1 3
+// 3 2 0
+// 3 2 1
+// 3 2 2
+// 3 2 3
+// 3 3 0
+// 3 3 1
+// 3 3 2
+// 3 3 3
+```

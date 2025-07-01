@@ -80,7 +80,7 @@ void solve() {
     int ok = 1;
     rep2(i, 1, (ll)S.size()) {
         if (isupper(S[i])) {
-            if (!tset.count(S[i - 1])) ok = 0;
+            if (T.find(S[i - 1]) == string::npos) ok = 0;
         }
     }
     yesno(ok);

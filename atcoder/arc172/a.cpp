@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc412/tasks/abc412_d
-// 2025年06月28日 21時20分10秒
+// https://atcoder.jp/contests/arc172/tasks/arc172_a
+// 2025年06月30日 17時17分09秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -24,7 +24,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -71,66 +71,45 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
-    vvint grid(N, vint(N));
-    rep(i, M) {
-        int a, b;
-        cin >> a >> b;
-        a--, b--;
-        grid[a][b] = grid[b][a] = 1;
+    ll H, W, N;
+    cin >> H >> W >> N;
+    vll A(N);
+    rep(i, N) cin >> A[i];
+
+    sort(rall(A));
+
+    rep(i, N) {
+        A[i] = 1 << A[i];
     }
 
-    using P = pair<int, int>;
-    vector<P> es;
-    rep(i, N) rep2(j, i + 1, N) es.push_back({i, j});
+    using P = tuple<ll, ll, ll>;
+    priority_queue<P> pq;
+    pq.push({min(H, W), H, W});
 
-    ll ans = INF;
-    int m = N * (N - 1) / 2;
-
-    auto judge = [&](int used) -> void {
-        vector<P> edges;
-        rep(i, m) {
-            if (used >> i & 1) edges.push_back(es[i]);
+    int ok = 1;
+    rep(i, N) {
+        if (pq.size() == 0) {
+            ok = 0;
+            break;
         }
-        vector tmp(N, vint(N));
-        for (auto [u, v] : edges) {
-            tmp[u][v] = 1;
-            tmp[v][u] = 1;
-        }
+        auto [_, h, w] = pq.top();
+        pq.pop();
 
-        rep(i, N) {
-            ll deg = 0;
-            rep(j, N) {
-                deg += tmp[i][j];
+        if (A[i] <= min(h, w)) {
+            ll dw = w - A[i], dh = h - A[i];
+            if (dw > 0) {
+                pq.push({min(A[i], dw), A[i], dw});
             }
-            if (deg != 2) return;
+            if (dh > 0) {
+                pq.push({min(dh, A[i]), dh, A[i]});
+            }
+            if (dw > 0 && dh > 0) {
+                pq.push({min(dh, dw), dh, dw});
+            }
+        } else {
+            ok = 0;
         }
+    }
 
-        ll sum = 0;
-        rep(i, N) rep2(j, i + 1, N) {
-            if (grid[i][j] != tmp[i][j]) sum++;
-        }
-        chmin(ans, sum);
-        return;
-    };
-
-    auto dfs = [&](auto dfs, int used) -> void {
-        if (__builtin_popcount(used) == N) {
-            judge(used);
-            return;
-        }
-
-        int s = -1;
-        rep(i, m) {
-            if (used >> i & 1) s = i;
-        }
-        s++;
-        rep2(i, s, m) {
-            dfs(dfs, used | (1 << i));
-        }
-    };
-
-    dfs(dfs, 0);
-    cout << ans << endl;
+    yesno(ok);
 }

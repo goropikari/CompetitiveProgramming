@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc412/tasks/abc412_d
-// 2025年06月28日 21時20分10秒
+// https://atcoder.jp/contests/arc174/tasks/arc174_b
+// 2025年07月01日 03時02分31秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -71,66 +71,34 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
-    vvint grid(N, vint(N));
-    rep(i, M) {
-        int a, b;
-        cin >> a >> b;
-        a--, b--;
-        grid[a][b] = grid[b][a] = 1;
-    }
-
-    using P = pair<int, int>;
-    vector<P> es;
-    rep(i, N) rep2(j, i + 1, N) es.push_back({i, j});
-
-    ll ans = INF;
-    int m = N * (N - 1) / 2;
-
-    auto judge = [&](int used) -> void {
-        vector<P> edges;
-        rep(i, m) {
-            if (used >> i & 1) edges.push_back(es[i]);
-        }
-        vector tmp(N, vint(N));
-        for (auto [u, v] : edges) {
-            tmp[u][v] = 1;
-            tmp[v][u] = 1;
-        }
-
-        rep(i, N) {
-            ll deg = 0;
-            rep(j, N) {
-                deg += tmp[i][j];
-            }
-            if (deg != 2) return;
-        }
-
-        ll sum = 0;
-        rep(i, N) rep2(j, i + 1, N) {
-            if (grid[i][j] != tmp[i][j]) sum++;
-        }
-        chmin(ans, sum);
-        return;
+    auto ceil = [](ll x, ll y) -> ll {
+        return (x + y - 1) / y;
     };
 
-    auto dfs = [&](auto dfs, int used) -> void {
-        if (__builtin_popcount(used) == N) {
-            judge(used);
-            return;
-        }
+    auto cal = [&]() -> void {
+        int n = 5;
+        vll A(n + 1), P(n + 1);
+        rep(i, n) cin >> A[i + 1];
+        rep(i, n) cin >> P[i + 1];
 
-        int s = -1;
-        rep(i, m) {
-            if (used >> i & 1) s = i;
-        }
-        s++;
-        rep2(i, s, m) {
-            dfs(dfs, used | (1 << i));
-        }
+        ll a = 0, b = 0;
+        rep(i, n) a += (i + 1) * A[i + 1];
+        rep(i, n) b += A[i + 1];
+
+        ll ans = INF;
+        ll x = max(3 * b - a, 0ll);
+        chmin(ans, x * P[4]);
+
+        ll y = max(ceil(3 * b - a, 2), 0ll);
+        chmin(ans, y * P[5]);
+
+        ll z = max(ceil(3 * b - a - 1, 2), 0ll);
+        chmin(ans, P[4] + z * P[5]);
+
+        cout << ans << endl;
     };
 
-    dfs(dfs, 0);
-    cout << ans << endl;
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }
