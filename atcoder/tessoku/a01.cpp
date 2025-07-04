@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc372/tasks/abc372_d
-// 2025年07月04日 08時39分18秒
+// https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_a
+// 2025年07月04日 08時26分42秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -73,17 +73,5 @@ void solve() {
 
     int N;
     cin >> N;
-    vll H(N);
-    rep(i, N) cin >> H[i];
-
-    vint ans(N);
-    vll st;
-    for (int i = N - 1; i >= 0; i--) {
-        ans[i] = st.size();
-        while (st.size() && st.back() < H[i]) {
-            st.pop_back();
-        }
-        st.push_back(H[i]);
-    }
-    print(ans);
+    cout << N * N << endl;
 }

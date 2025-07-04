@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc372/tasks/abc372_d
-// 2025年07月04日 08時39分18秒
+// https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_c
+// 2025年07月04日 08時30分33秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -71,19 +71,13 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N;
-    cin >> N;
-    vll H(N);
-    rep(i, N) cin >> H[i];
+    int N, K;
+    cin >> N >> K;
+    vint P(N), Q(N);
+    rep(i, N) cin >> P[i];
+    rep(i, N) cin >> Q[i];
 
-    vint ans(N);
-    vll st;
-    for (int i = N - 1; i >= 0; i--) {
-        ans[i] = st.size();
-        while (st.size() && st.back() < H[i]) {
-            st.pop_back();
-        }
-        st.push_back(H[i]);
-    }
-    print(ans);
+    int ok = 0;
+    rep(i, N) rep(j, N) if (P[i] + Q[j] == K) ok = 1;
+    yesno(ok);
 }
