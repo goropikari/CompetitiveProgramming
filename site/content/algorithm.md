@@ -296,6 +296,7 @@ $\frac{x}{a} \leq y \Rightarrow \lceil \frac{x}{a} \rceil \leq y$
 ($\Leftarrow$)
 
 $\frac{x}{a} \leq \lceil \frac{x}{a} \rceil$ であるから
+
 <!-- dprint-ignore -->
 \begin{align*}
     \lceil \frac{x}{a} \rceil \leq y \Rightarrow \frac{x}{a} \leq y

@@ -8,3 +8,5 @@ find content -name '*.md' | while read -r file; do
   { print; prev = $0 }
   ' "$file" > "$file.tmp" && mv "$file.tmp" "$file"
 done
+
+dprint fmt ./content/**/*.md
