@@ -7,13 +7,13 @@ import time
 outdir = 'site/static/js'
 path = outdir + '/submissions.json'
 
-submissions = []
+raw_submissions = []
 start = 1514540441
 
 try:
     with open(path, 'r') as f:
-        submissions = json.load(f)
-    start = submissions[-1]['epoch_second'] + 1
+        raw_submissions = json.load(f)
+    start = raw_submissions[-1]['epoch_second'] + 1
 except:
     pass
 
@@ -30,11 +30,23 @@ while True:
     res = json.loads(gzip.decompress(data).decode('utf8'))
     if len(res) == 0:
         break
-    submissions.extend(res)
+    raw_submissions.extend(res)
 
-    start = submissions[-1]['epoch_second']+1
+    start = raw_submissions[-1]['epoch_second']+1
     print(start)
     time.sleep(1)
+
+submissions = []
+ac_problems = set()
+
+for sub in raw_submissions:
+    problem_id = sub['problem_id']
+    if problem_id in ac_problems:
+        continue
+    if sub['result'] == 'AC':
+        ac_problems.add(problem_id)
+        submissions.append(sub)
+
 
 with open(path, 'w') as f:
     json.dump(submissions, f, indent=2)
