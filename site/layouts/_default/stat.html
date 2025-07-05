@@ -6,6 +6,48 @@
 <button onclick="addPerformances()">パフォーマンスを追加</button>
 <script type="module" src="{{ "js/rating.js" | relURL }}"></script>
 
+<h1>Rating Estimator</h1>
+<!-- https://github.com/koba-e964/atcoder-rating-estimator -->
+<script language="javascript" src="https://koba-e964.github.io/atcoder-rating-estimator/atcoder_rating.js"></script>
+<script language="javascript">
+function calc(last, n, goal_rating) {
+	goal_rating = unpositivize_rating(goal_rating);
+	last = unpositivize_rating(last);
+	if (n == 0) {
+		return goal_rating + 1200.0; // corner case
+	}
+	// binary search
+	var lo = -10000.0;
+	var hi = 10000.0;
+	for (var i = 0; i < 100; ++i) {
+		var mid = (hi + lo) / 2;
+		var r = calc_rating_from_last(last, mid, n);
+		if (r >= goal_rating) {
+			hi = mid;
+		} else {
+			lo = mid;
+		}
+	}
+	return hi;
+}
+
+async function calculatePerformance() {
+    var contestData = getContestData();
+    var len = contestData.length;
+    var lastContest = contestData[0];
+
+	var goal_rating = document.getElementById("goal_rating").value;
+	goal_rating = parseInt(goal_rating, 10);
+	document.getElementById("goal_performance").textContent =
+		calc(lastContest.rating, len, goal_rating).toString();
+}
+</script>
+
+<p>目標レーティング<input type="text" id="goal_rating"></p>
+<p>必要なパフォーマンス<div id="goal_performance">???</div>
+<button type="submit" id="calculate" onclick="calculatePerformance();">計算する</button>
+</p>
+
 <h1>Submissions</h1>
 <div id='submissions'><!-- Plotly chart will be drawn inside this DIV --></div>
 <input type="range" id="displayCountSlider" min="30" max="1000" value="60" oninput="updateDisplayCount(this.value)">
