@@ -685,14 +685,26 @@
     },
     {
         "IsRated": true,
-        "Place": 1301,
+        "Place": 1284,
         "OldRating": 1085,
         "NewRating": 1124,
-        "Performance": 1425,
-        "InnerPerformance": 1425,
+        "Performance": 1429,
+        "InnerPerformance": 1429,
         "ContestScreenName": "abc412.contest.atcoder.jp",
         "ContestName": "日本最強プログラマー学生選手権～Advance～ -予選- （AtCoder Beginner Contest 412）",
         "ContestNameEn": "AtCoder Beginner Contest 412",
         "EndTime": "2025-06-28T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 1546,
+        "OldRating": 1124,
+        "NewRating": 1148,
+        "Performance": 1342,
+        "InnerPerformance": 1342,
+        "ContestScreenName": "abc413.contest.atcoder.jp",
+        "ContestName": "デンソークリエイトプログラミングコンテスト2025（AtCoder Beginner Contest 413）",
+        "ContestNameEn": "Denso Create Programming Contest 2025（AtCoder Beginner Contest 413）",
+        "EndTime": "2025-07-05T22:40:00+09:00"
     }
 ]
