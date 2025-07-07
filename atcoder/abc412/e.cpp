@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc413/tasks/abc413_g
-// 2025年07月06日 11時15分02秒
+// https://atcoder.jp/contests/abc412/tasks/abc412_e
+// 2025年07月07日 09時21分33秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -16,8 +16,6 @@ using int128 = int128_t;
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
-#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -71,47 +69,38 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, K;
-    cin >> H >> W >> K;
-    vll R(K), C(K);
-    rep(i, K) {
-        cin >> R[i] >> C[i];
+    ll L, R;
+    cin >> L >> R;
+
+    // L+1 ~ R にある素冪の個数を数える
+    L++;
+    ll W = R - L + 1;
+
+    vll x(W), cnt(W);
+    rep(i, W) {
+        x[i] = L + i;
     }
 
-    using P = pair<int, int>;
-    map<P, int> mp;
-    rep(i, K) {
-        mp[{R[i], C[i]}] = i + 1;
-    }
+    int M = 1e7;
+    vector<bool> isprime(M, true);
+    isprime[0] = isprime[1] = false;
+    rep2(i, 2, M) {
+        if (!isprime[i]) continue;
+        for (int j = i + i; j < M; j += i) {
+            isprime[j] = false;
+        }
 
-    dsu uf(K + 2);
-    rep(i, K) {
-        int r = R[i], c = C[i];
-        P p = {r, c};
-        int id = mp[p];
-
-        // 上辺、左辺の id は 0 とする
-        if (r == 1) uf.merge(id, 0);
-        if (c == W) uf.merge(id, 0);
-
-        // 右辺、下辺の id は K+1 とする
-        if (r == H) uf.merge(id, K + 1);
-        if (c == 1) uf.merge(id, K + 1);
-    }
-
-    rep(i, K) {
-        ll r = R[i], c = C[i];
-        ll now = mp[{r, c}];
-        for (int rd = -1; rd <= 1; rd++) {
-            for (int cd = -1; cd <= 1; cd++) {
-                ll nr = r + rd, nc = c + cd;
-                if (!mp.count({nr, nc})) continue;
-                ll nx = mp[{nr, nc}];
-                uf.merge(now, nx);
-            }
+        // (L+i-1)/i * i = (L を超える最小の i の倍数)
+        for (ll j = (L + i - 1) / i * i; j <= R; j += i) {
+            while (x[j - L] % i == 0) x[j - L] /= i;
+            cnt[j - L]++;  // j の値が何個の素数で構成されるかカウント
         }
     }
 
-    bool ans = !uf.same(0, K + 1);
-    yesno(ans);
+    ll ans = 1;
+    rep(i, W) {
+        if (x[i] != 1) cnt[i]++;
+        if (cnt[i] == 1) ans++;  // 1種類の素数だけからなる
+    }
+    cout << ans << endl;
 }

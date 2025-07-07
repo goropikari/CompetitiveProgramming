@@ -55,9 +55,33 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    string s;
-    cin >> n >> s;
+    int N;
+    string S;
+    cin >> N >> S;
 
-    reverse(all(s));
+    reverse(all(S));
+
+    ll sum = 0;
+    rep(i, N) {
+        ll x = S[i] - '0';
+        sum += x * (N - i);
+    }
+
+    vll ans(N + 1);
+    rep(i, N) {
+        ans[i] = sum;
+        ll x = S[i] - '0';
+        sum -= x * (N - i);
+    }
+
+    rep(i, N) {
+        ll q = ans[i] / 10;
+        ans[i + 1] += q;
+        ans[i] %= 10;
+    }
+    if (ans.back() == 0) ans.pop_back();
+
+    reverse(all(ans));
+    for (ll x : ans) cout << x;
+    cout << endl;
 }

@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc413/tasks/abc413_g
-// 2025年07月06日 11時15分02秒
+// https://atcoder.jp/contests/arc178/tasks/arc178_a
+// 2025年07月07日 00時15分29秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -71,47 +71,41 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, K;
-    cin >> H >> W >> K;
-    vll R(K), C(K);
-    rep(i, K) {
-        cin >> R[i] >> C[i];
-    }
+    ll N, M;
+    cin >> N >> M;
+    vll A(M);
+    rep(i, M) cin >> A[i];
 
-    using P = pair<int, int>;
-    map<P, int> mp;
-    rep(i, K) {
-        mp[{R[i], C[i]}] = i + 1;
-    }
-
-    dsu uf(K + 2);
-    rep(i, K) {
-        int r = R[i], c = C[i];
-        P p = {r, c};
-        int id = mp[p];
-
-        // 上辺、左辺の id は 0 とする
-        if (r == 1) uf.merge(id, 0);
-        if (c == W) uf.merge(id, 0);
-
-        // 右辺、下辺の id は K+1 とする
-        if (r == H) uf.merge(id, K + 1);
-        if (c == 1) uf.merge(id, K + 1);
-    }
-
-    rep(i, K) {
-        ll r = R[i], c = C[i];
-        ll now = mp[{r, c}];
-        for (int rd = -1; rd <= 1; rd++) {
-            for (int cd = -1; cd <= 1; cd++) {
-                ll nr = r + rd, nc = c + cd;
-                if (!mp.count({nr, nc})) continue;
-                ll nx = mp[{nr, nc}];
-                uf.merge(now, nx);
-            }
+    {
+        int ok = 1;
+        rep(i, M) {
+            if (A[i] == 1 || A[i] == N) ok = 0;
+        }
+        if (!ok) {
+            cout << -1 << endl;
+            return;
         }
     }
 
-    bool ans = !uf.same(0, K + 1);
-    yesno(ans);
+    vll ans(N + 1, -1);
+    vint used(N + 1);
+    for (int a : A) {
+        ans[a] = a + 1;
+        used[a + 1] = 1;
+    }
+
+    queue<int> que;
+    rep2(i, 1, N + 1) {
+        if (!used[i]) que.push(i);
+    }
+
+    rep2(i, 1, N + 1) {
+        if (ans[i] < 0) {
+            ans[i] = que.front();
+            que.pop();
+        }
+    }
+
+    ans.erase(ans.begin(), ans.begin() + 1);
+    print(ans);
 }

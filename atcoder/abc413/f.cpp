@@ -88,7 +88,7 @@ void solve() {
     vint di = {0, 1, 0, -1};
     vint dj = {1, 0, -1, 0};
 
-    vector track(H + 2, vector(W + 2, vll()));
+    vvint cnt(H + 2, vint(W + 2));
     deque<pair<ll, ll>> deq;
     rep(i, K) deq.emplace_back(R[i], C[i]);
     while (deq.size()) {
@@ -97,10 +97,9 @@ void solve() {
         rep(d, 4) {
             int ni = r + di[d], nj = c + dj[d];
             if (grid[ni][nj] >= 0) continue;
-            track[ni][nj].push_back(grid[r][c] + 1);
-            if (track[ni][nj].size() == 2) {
-                auto v = track[ni][nj];
-                grid[ni][nj] = max(v[0], v[1]);
+            cnt[ni][nj]++;
+            if (cnt[ni][nj] == 2) {
+                grid[ni][nj] = grid[r][c] + 1;
                 deq.push_back({ni, nj});
             }
         }
