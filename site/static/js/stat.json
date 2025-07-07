@@ -4932,9 +4932,29 @@
   "20250705": {
     "gray": 738,
     "brown": 365,
-    "green": 402,
-    "cyan": 120,
+    "green": 403,
+    "cyan": 121,
     "blue": 12,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250706": {
+    "gray": 738,
+    "brown": 365,
+    "green": 403,
+    "cyan": 122,
+    "blue": 14,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250707": {
+    "gray": 738,
+    "brown": 366,
+    "green": 403,
+    "cyan": 122,
+    "blue": 14,
     "yellow": 1,
     "orange": 0,
     "red": 0
