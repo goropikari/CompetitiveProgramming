@@ -4953,7 +4953,17 @@
     "gray": 738,
     "brown": 366,
     "green": 403,
-    "cyan": 122,
+    "cyan": 123,
+    "blue": 14,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250708": {
+    "gray": 739,
+    "brown": 366,
+    "green": 403,
+    "cyan": 123,
     "blue": 14,
     "yellow": 1,
     "orange": 0,
