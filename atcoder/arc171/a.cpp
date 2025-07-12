@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/arc171/tasks/arc171_a
+// 2025年07月10日 00時31分01秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -5,6 +7,8 @@ using namespace std;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
 #include <boost/multiprecision/cpp_int.hpp>
 using namespace boost::multiprecision;
 using int128 = int128_t;
@@ -12,13 +16,15 @@ using int128 = int128_t;
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
+#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -64,4 +70,25 @@ int main() {
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
+
+    auto cal = []() -> void {
+        ll N, A, B;
+        cin >> N >> A >> B;
+
+        bool ans = true;
+        if (A > N) ans = false;
+
+        // ポーンは奇数行目、ルークは偶数行目に置くのが最適
+        // ルークを偶数行目においてもまだ余っている場合は奇数行目におく
+        // 開いてる行数 * (N-A) が B 以上であれば良い配置にできる。そうでなければできない。
+        ll mx = (N + 1) / 2 * (N - A);
+        if (A > N / 2) {
+            mx -= (A - N / 2) * (N - A);
+        }
+        yesno(ans && B <= mx);
+    };
+
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }

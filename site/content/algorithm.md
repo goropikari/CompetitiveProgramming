@@ -938,11 +938,11 @@ struct Matrix {
 
 ```cpp
 template <typename T>
-vector<pair<T, int>> runLengthEncode(const vector<T>& input) {
-    vector<pair<T, int>> encoded;
+vector<pair<T, ll>> runLengthEncode(const vector<T>& input) {
+    vector<pair<T, ll>> encoded;
     int size = input.size();
     for (int i = 0; i < size; ++i) {
-        int count = 1;
+        long long int count = 1;
         while (i + 1 < size && input[i] == input[i + 1]) {
             ++i;
             ++count;
@@ -952,11 +952,11 @@ vector<pair<T, int>> runLengthEncode(const vector<T>& input) {
     return encoded;
 }
 
-vector<pair<char, int>> runLengthEncode(const string& input) {
-    vector<pair<char, int>> encoded;
+vector<pair<char, long long int>> runLengthEncode(const string& input) {
+    vector<pair<char, long long int>> encoded;
     int size = input.size();
     for (int i = 0; i < size; ++i) {
-        int count = 1;
+        long long int count = 1;
         while (i + 1 < size && input[i] == input[i + 1]) {
             ++i;
             ++count;

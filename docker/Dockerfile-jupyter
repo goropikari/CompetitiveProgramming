@@ -1,6 +1,6 @@
 FROM quay.io/jupyter/base-notebook:notebook-7.3.2
 
-ENV JULIA_VERSION=1.11.5
+ENV JULIA_VERSION=1.11.6
 ENV PATH=$PATH:/home/jovyan/.juliaup/bin
 USER root
 RUN apt-get update && \
