@@ -706,5 +706,17 @@
         "ContestName": "デンソークリエイトプログラミングコンテスト2025（AtCoder Beginner Contest 413）",
         "ContestNameEn": "Denso Create Programming Contest 2025（AtCoder Beginner Contest 413）",
         "EndTime": "2025-07-05T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 4077,
+        "OldRating": 1148,
+        "NewRating": 1120,
+        "Performance": 826,
+        "InnerPerformance": 826,
+        "ContestScreenName": "abc414.contest.atcoder.jp",
+        "ContestName": "ミラティブ プログラミングコンテスト2025（AtCoder Beginner Contest 414）",
+        "ContestNameEn": " Mirrativ Programming Contest 2025 (AtCoder Beginner Contest 414)",
+        "EndTime": "2025-07-12T22:40:00+09:00"
     }
 ]
