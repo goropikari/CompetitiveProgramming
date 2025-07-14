@@ -1,15 +1,21 @@
-/*https://atcoder.jp/contests/abc284/tasks/abc284_d*/
-/*2025年01月21日 09時10分44秒*/
+// https://atcoder.jp/contests/abc284/tasks/abc284_d
+// 2025年07月14日 22時39分42秒
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -17,7 +23,7 @@ using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -41,7 +47,25 @@ void print(vector<T> v) {
 }
 
 void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+    cout << (x ? "Yes" : "No") << '\n';
+}
+
+void Yes() {
+    yesno(true);
+}
+
+void No() {
+    yesno(false);
+}
+
+// ceil(a/b)
+ll ceil(ll a, ll b) {
+    return (a + b - 1) / b;
+}
+
+// floor(a/b)
+ll floor(ll a, ll b) {
+    return a / b;
 }
 
 void solve();
@@ -51,42 +75,55 @@ int main() {
     return 0;
 }
 
-vector<bool> prime((ll)5e6, true);
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-vll cal(ll N) {
-    rep2(i, 2, (ll)5e6) {
-        if (prime[i] && N % i == 0) {
-            N /= i;
+    using ull = unsigned long long int;
 
-            if (N % i == 0) {
-                return vll({i, N / i});
+    auto kth_root = [](ull x, int k) -> ull {
+        assert(k != 0);
+        if (x == 1 || k == 1) return x;
+        ull l = 0, r = x;
+        while (r - l > 1) {
+            ull m = (r - l) / 2 + l;
+            ull t = x;
+            rep(i, k) t /= m;
+            if (1 > t) {
+                r = m;
             } else {
-                ll p, q;
-                q = i;
-                p = sqrt(N);
-                return vll({p, q});
+                l = m;
             }
         }
-    }
-    return vll();
-}
+        return l;
+    };
 
-void solve() {
-    ll T;
-    cin >> T;
+    // 平方根
+    auto isqrt = [&](ull x) -> ull {
+        return kth_root(x, 2);
+    };
 
-    prime[0] = prime[1] = false;
-    rep2(i, 2, (ll)5e6) {
-        if (!prime[i])
-            continue;
-        for (ll j = i + i; j <= (ll)5e6; j += i) {
-            prime[j] = false;
-        }
-    }
-
-    rep(i, T) {
+    auto cal = [&]() -> void {
         ll N;
         cin >> N;
-        print(cal(N));
-    }
+
+        ll p, q;
+        for (ll x = 2; x * x * x <= N; x++) {
+            if (N % x != 0) continue;
+            N /= x;
+            if (N % x == 0) {
+                p = x;
+                q = N / x;
+            } else {
+                q = x;
+                p = isqrt(N);
+            }
+            break;
+        }
+        cout << p << ' ' << q << endl;
+    };
+
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }

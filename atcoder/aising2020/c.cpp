@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc330/tasks/abc330_c
-// 2025年07月14日 00時36分46秒
+// https://atcoder.jp/contests/aising2020/tasks/aising2020_c
+// 2025年07月14日 10時11分38秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,30 +79,19 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll D;
-    cin >> D;
+    ll N;
+    cin >> N;
 
-    auto sqrt_ll = [](ll X) -> ll {
-        ll l = 0, r = X;
-        while (r - l > 1) {
-            ll m = (r + l) / 2;
-            if (m > X / m) {
-                r = m;
-            } else {
-                l = m;
+    vll ans(N);
+    for (ll x = 1; x * x <= N; x++) {
+        for (ll y = 1; y * y <= N - x * x; y++) {
+            for (ll z = 1; z * z <= N - x * x - y * y; z++) {
+                ll t = x * x + y * y + z * z + x * y + y * z + z * x;
+                if (t <= N) {
+                    ans[t - 1]++;
+                }
             }
         }
-
-        return l;
-    };
-
-    ll ans = D;
-    for (ll x = 0; x * x <= D; x++) {
-        ll y = sqrt_ll(D - x * x);
-        rep(i, 2) {
-            ll yt = y + i;
-            chmin(ans, abs(x * x + yt * yt - D));
-        }
     }
-    cout << ans << endl;
+    for (ll x : ans) cout << x << endl;
 }

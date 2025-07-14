@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc330/tasks/abc330_c
-// 2025年07月14日 00時36分46秒
+// http://localhost:5173/problem/kth_root_integer
+// 2025年07月14日 01時35分38秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -9,9 +9,9 @@ using namespace std;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using ull = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,30 +79,32 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll D;
-    cin >> D;
+    using ull = unsigned long long int;
 
-    auto sqrt_ll = [](ll X) -> ll {
-        ll l = 0, r = X;
+    auto kth_root = [](ull x, int k) -> ull {
+        if (x == 1 || k == 1) return x;
+        ull l = 0, r = x;
         while (r - l > 1) {
-            ll m = (r + l) / 2;
-            if (m > X / m) {
+            ull m = (r - l) / 2 + l;
+            ull t = x;
+            rep(i, k) t /= m;
+            if (1 > t) {
                 r = m;
             } else {
                 l = m;
             }
         }
-
         return l;
     };
 
-    ll ans = D;
-    for (ll x = 0; x * x <= D; x++) {
-        ll y = sqrt_ll(D - x * x);
-        rep(i, 2) {
-            ll yt = y + i;
-            chmin(ans, abs(x * x + yt * yt - D));
-        }
+    int t;
+    cin >> t;
+    rep(i, t) {
+        ull A;
+        int K;
+        cin >> A >> K;
+
+        ull ans = kth_root(A, K);
+        cout << ans << '\n';
     }
-    cout << ans << endl;
 }

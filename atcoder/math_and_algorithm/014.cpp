@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc330/tasks/abc330_c
-// 2025年07月14日 00時36分46秒
+// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_n
+// 2025年07月13日 22時26分13秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,30 +79,17 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll D;
-    cin >> D;
+    ll N;
+    cin >> N;
 
-    auto sqrt_ll = [](ll X) -> ll {
-        ll l = 0, r = X;
-        while (r - l > 1) {
-            ll m = (r + l) / 2;
-            if (m > X / m) {
-                r = m;
-            } else {
-                l = m;
-            }
-        }
-
-        return l;
-    };
-
-    ll ans = D;
-    for (ll x = 0; x * x <= D; x++) {
-        ll y = sqrt_ll(D - x * x);
-        rep(i, 2) {
-            ll yt = y + i;
-            chmin(ans, abs(x * x + yt * yt - D));
+    ll t = N;
+    vll ans;
+    for (ll d = 2; d * d <= N; d++) {
+        while (t % d == 0) {
+            ans.push_back(d);
+            t /= d;
         }
     }
-    cout << ans << endl;
+    if (t != 1) ans.push_back(t);
+    print(ans);
 }

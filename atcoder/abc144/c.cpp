@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc330/tasks/abc330_c
-// 2025年07月14日 00時36分46秒
+// https://atcoder.jp/contests/abc144/tasks/abc144_c
+// 2025年07月14日 00時27分47秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,29 +79,14 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll D;
-    cin >> D;
+    ll N;
+    cin >> N;
 
-    auto sqrt_ll = [](ll X) -> ll {
-        ll l = 0, r = X;
-        while (r - l > 1) {
-            ll m = (r + l) / 2;
-            if (m > X / m) {
-                r = m;
-            } else {
-                l = m;
-            }
-        }
-
-        return l;
-    };
-
-    ll ans = D;
-    for (ll x = 0; x * x <= D; x++) {
-        ll y = sqrt_ll(D - x * x);
-        rep(i, 2) {
-            ll yt = y + i;
-            chmin(ans, abs(x * x + yt * yt - D));
+    ll ans = INF;
+    for (ll i = 1; i * i <= N; i++) {
+        if (N % i == 0) {
+            ll l = i, r = N / i;
+            chmin(ans, (l - 1) + (r - 1));
         }
     }
     cout << ans << endl;

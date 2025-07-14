@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc330/tasks/abc330_c
-// 2025年07月14日 00時36分46秒
+// https://atcoder.jp/contests/abc193/tasks/abc193_c
+// 2025年07月14日 02時47分32秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -75,34 +75,33 @@ int main() {
     return 0;
 }
 
+ll intpow(ll x, ll n) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret *= x;
+        x *= x;
+        n >>= 1;
+    }
+    return ret;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll D;
-    cin >> D;
+    ll N;
+    cin >> N;
 
-    auto sqrt_ll = [](ll X) -> ll {
-        ll l = 0, r = X;
-        while (r - l > 1) {
-            ll m = (r + l) / 2;
-            if (m > X / m) {
-                r = m;
-            } else {
-                l = m;
-            }
-        }
-
-        return l;
-    };
-
-    ll ans = D;
-    for (ll x = 0; x * x <= D; x++) {
-        ll y = sqrt_ll(D - x * x);
-        rep(i, 2) {
-            ll yt = y + i;
-            chmin(ans, abs(x * x + yt * yt - D));
+    set<ll> memo;
+    for (ll i = 2; i * i <= N; i++) {
+        ll base = i;
+        rep(j, 60) {
+            base *= i;
+            if (base > N) break;
+            memo.insert(base);
         }
     }
-    cout << ans << endl;
+
+    cout << N - (ll)memo.size() << endl;
 }

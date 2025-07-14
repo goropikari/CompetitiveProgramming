@@ -337,29 +337,40 @@ int lcm(int a, int b) {
 }
 ```
 
-## 冪乗根
+## 冪乗根 / 平方根
 
-### 平方根
-
-$x \leq \sqrt{N}$ を満たす最大の非負整数 $x$ を求める
+$\floor{\sqrt[\leftroot{-3}\uproot{3}k]{x}}$ を求める関数
 
 ```cpp
-ll isqrt(ll x) {
-    // wa の最大値は x の値によって調整する
-    ll ac = 0, wa = (ll)1e9 + 7;
-    while (wa - ac > 1) {
-        ll wj = (wa + ac) / 2;
-        if (wj * wj <= x)  // 3乗根の場合は wj * wj * wj <= x にすれば良い
-            ac = wj;
-        else
-            wa = wj;
-    }
+using ull = unsigned long long int;
 
-    return ac;
-}
+auto kth_root = [](ull x, int k) -> ull {
+    assert(k != 0);
+    if (x == 1 || k == 1) return x;
+    ull l = 0, r = x;
+    while (r - l > 1) {
+        ull m = (r - l) / 2 + l;
+        ull t = x;
+        rep(i, k) t /= m;
+        if (1 > t) {
+            r = m;
+        } else {
+            l = m;
+        }
+    }
+    return l;
+};
+
+// 平方根
+auto isqrt = [&](ull x) -> ull {
+    return kth_root(x, 2);
+};
 ```
 
-ref [ABC 400 C 問題]({{< ref "abc/400.md" >}})
+ref
+
+- [ABC 400 C 問題]({{< ref "abc/400.md" >}})
+- <https://judge.yosupo.jp/submission/299508>
 
 ## 累積和 (cumsum)
 
