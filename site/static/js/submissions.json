@@ -24670,5 +24670,53 @@
     "length": 2198,
     "result": "AC",
     "execution_time": 26
+  },
+  {
+    "id": 67584734,
+    "epoch_second": 1752412979,
+    "problem_id": "tessoku_book_fb",
+    "contest_id": "tessoku-book",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 1000.0,
+    "length": 2243,
+    "result": "AC",
+    "execution_time": 199
+  },
+  {
+    "id": 67590026,
+    "epoch_second": 1752453346,
+    "problem_id": "abc193_c",
+    "contest_id": "abc193",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 300.0,
+    "length": 2164,
+    "result": "AC",
+    "execution_time": 9
+  },
+  {
+    "id": 67605656,
+    "epoch_second": 1752500053,
+    "problem_id": "aising2020_c",
+    "contest_id": "aising2020",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 300.0,
+    "length": 2265,
+    "result": "AC",
+    "execution_time": 377
+  },
+  {
+    "id": 67608981,
+    "epoch_second": 1752516847,
+    "problem_id": "joisc2007_fermat",
+    "contest_id": "joisc2007",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 100.0,
+    "length": 2165,
+    "result": "AC",
+    "execution_time": 285
   }
 ]
