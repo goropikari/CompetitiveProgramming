@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc400/tasks/abc400_e
-// 2025年07月18日 01時16分06秒
+// https://atcoder.jp/contests/joisc2007/tasks/joisc2007_fermat
+// 2025年07月15日 03時03分05秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -75,12 +75,12 @@ int main() {
     return 0;
 }
 
-ll intpow(ll x, ll n) {
+ll modpow(ll x, ll n, ll mod) {
     long long ret = 1;
     while (n > 0) {
         if (n & 1)
-            ret *= x;
-        x *= x;
+            ret = (ret * x) % mod;
+        x = (x * x) % mod;
         n >>= 1;
     }
     return ret;
@@ -90,30 +90,19 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vll cand;
-    {
-        int m = (int)1e6 + 5;
-        vll cnt(m);
-        rep2(i, 2, m) {
-            if (cnt[i] != 0) continue;
-            for (ll j = i + i; j < m; j += i) {
-                cnt[j]++;
-            }
-        }
-        rep2(i, 2, m) {
-            if (cnt[i] == 2) cand.push_back(i * i);
-        }
+    ll P, N;
+    cin >> P >> N;
+
+    vll mod(P);
+    rep(i, P) {
+        mod[modpow(i, N, P)]++;
     }
 
-    auto cal = [&]() -> void {
-        ll A;
-        cin >> A;
-
-        auto it = prev(upper_bound(all(cand), A));
-        cout << *it << endl;
-    };
-
-    int q;
-    cin >> q;
-    rep(i, q) cal();
+    ll ans = 0;
+    rep(x, P) rep(y, P) {
+        ll z = (x + y) % P;
+        ll tmp = mod[x] * mod[y] * mod[z];
+        ans += tmp;
+    }
+    cout << ans << endl;
 }

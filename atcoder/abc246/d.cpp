@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc400/tasks/abc400_e
-// 2025年07月18日 01時16分06秒
+// https://atcoder.jp/contests/abc246/tasks/abc246_d
+// 2025年07月16日 22時41分26秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -75,45 +75,30 @@ int main() {
     return 0;
 }
 
-ll intpow(ll x, ll n) {
-    long long ret = 1;
-    while (n > 0) {
-        if (n & 1)
-            ret *= x;
-        x *= x;
-        n >>= 1;
-    }
-    return ret;
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vll cand;
-    {
-        int m = (int)1e6 + 5;
-        vll cnt(m);
-        rep2(i, 2, m) {
-            if (cnt[i] != 0) continue;
-            for (ll j = i + i; j < m; j += i) {
-                cnt[j]++;
-            }
-        }
-        rep2(i, 2, m) {
-            if (cnt[i] == 2) cand.push_back(i * i);
-        }
-    }
+    ll N;
+    cin >> N;
 
-    auto cal = [&]() -> void {
-        ll A;
-        cin >> A;
-
-        auto it = prev(upper_bound(all(cand), A));
-        cout << *it << endl;
+    auto f = [](ll a, ll b) -> ll {
+        return a * a * a + a * a * b + a * b * b + b * b * b;
     };
 
-    int q;
-    cin >> q;
-    rep(i, q) cal();
+    ll ans = (ll)1e18;
+    rep(a, (ll)1e6 + 1) {
+        if (a * a * a > N) break;
+        ll wa = -1, ac = (ll)1e6;
+        while (ac - wa > 1) {
+            ll wj = (ac + wa) / 2;
+            if (f(a, wj) < N) {
+                wa = wj;
+            } else {
+                ac = wj;
+            }
+        }
+        chmin(ans, f(a, ac));
+    }
+    cout << ans << endl;
 }

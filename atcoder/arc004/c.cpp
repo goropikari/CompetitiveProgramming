@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc400/tasks/abc400_e
-// 2025年07月18日 01時16分06秒
+// https://atcoder.jp/contests/arc004/tasks/arc004_3
+// 2025年07月16日 23時30分14秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -75,45 +75,33 @@ int main() {
     return 0;
 }
 
-ll intpow(ll x, ll n) {
-    long long ret = 1;
-    while (n > 0) {
-        if (n & 1)
-            ret *= x;
-        x *= x;
-        n >>= 1;
-    }
-    return ret;
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vll cand;
-    {
-        int m = (int)1e6 + 5;
-        vll cnt(m);
-        rep2(i, 2, m) {
-            if (cnt[i] != 0) continue;
-            for (ll j = i + i; j < m; j += i) {
-                cnt[j]++;
-            }
-        }
-        rep2(i, 2, m) {
-            if (cnt[i] == 2) cand.push_back(i * i);
+    ll X, Y;
+    char c;
+    cin >> X >> c >> Y;
+
+    ll g = gcd(X, Y);
+    X /= g;
+    Y /= g;
+
+    ll k1 = (4 * X - 2 * Y) / Y / Y;
+    ll k2 = (4 * X + 2 * Y) / Y / Y + 1;
+    vector<pair<ll, ll>> ans;
+    rep2(k, k1, k2 + 1) {
+        ll N = k * Y / 2;
+        ll M = (N * (N + 1) - k * X) / 2;
+        if (N > 0 && M > 0 && M <= N && 2 * N == k * Y && N * (N + 1) - 2 * M == k * X) {
+            ans.emplace_back(N, M);
         }
     }
+    sort(all(ans));
 
-    auto cal = [&]() -> void {
-        ll A;
-        cin >> A;
-
-        auto it = prev(upper_bound(all(cand), A));
-        cout << *it << endl;
-    };
-
-    int q;
-    cin >> q;
-    rep(i, q) cal();
+    if (ans.size()) {
+        for (auto [N, M] : ans) cout << N << ' ' << M << endl;
+    } else {
+        cout << "Impossible" << endl;
+    }
 }

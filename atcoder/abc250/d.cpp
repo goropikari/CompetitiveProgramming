@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc400/tasks/abc400_e
-// 2025年07月18日 01時16分06秒
+// https://atcoder.jp/contests/abc250/tasks/abc250_d
+// 2025年07月14日 23時02分25秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -75,45 +75,56 @@ int main() {
     return 0;
 }
 
-ll intpow(ll x, ll n) {
-    long long ret = 1;
-    while (n > 0) {
-        if (n & 1)
-            ret *= x;
-        x *= x;
-        n >>= 1;
-    }
-    return ret;
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vll cand;
-    {
-        int m = (int)1e6 + 5;
-        vll cnt(m);
-        rep2(i, 2, m) {
-            if (cnt[i] != 0) continue;
-            for (ll j = i + i; j < m; j += i) {
-                cnt[j]++;
-            }
-        }
-        rep2(i, 2, m) {
-            if (cnt[i] == 2) cand.push_back(i * i);
+    ll N;
+    cin >> N;
+
+    int mx = (int)1e6 + 5;
+    vector<bool> is_prime(mx, true);
+    is_prime[0] = is_prime[1] = false;
+
+    rep2(i, 2, mx) {
+        for (int j = i + i; j < mx; j += i) {
+            is_prime[j] = false;
         }
     }
 
-    auto cal = [&]() -> void {
-        ll A;
-        cin >> A;
+    vll primes;
+    rep(i, mx) if (is_prime[i]) primes.push_back(i);
 
-        auto it = prev(upper_bound(all(cand), A));
-        cout << *it << endl;
+    using ull = unsigned long long int;
+
+    auto kth_root = [](ull x, int k) -> ull {
+        assert(k != 0);
+        if (x == 1 || k == 1) return x;
+        ull l = 0, r = x;
+        while (r - l > 1) {
+            ull m = (r - l) / 2 + l;
+            ull t = x;
+            rep(i, k) t /= m;
+            if (1 > t) {
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+        return l;
     };
 
-    int q;
-    cin >> q;
-    rep(i, q) cal();
+    ll ans = 0;
+    rep(i, (ll)primes.size()) {
+        ll p = primes[i];
+        ll qupper = kth_root(N / p, 3);
+
+        // p < q <= qupper となる q の数を数える
+        auto it = upper_bound(all(primes), qupper);
+        if (it == primes.begin()) continue;
+        it = prev(it);
+        if (p >= *it) continue;
+        ans += it - (primes.begin() + i);
+    }
+    cout << ans << endl;
 }

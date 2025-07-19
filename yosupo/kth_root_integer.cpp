@@ -79,14 +79,14 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    using ull = unsigned long long int;
-
-    auto kth_root = [](ull x, int k) -> ull {
+    using Int = unsigned long long int;
+    auto kth_root = [](Int x, Int k) -> Int {
+        assert(k != 0);
         if (x == 1 || k == 1) return x;
-        ull l = 0, r = x;
+        Int l = 0, r = x;
         while (r - l > 1) {
-            ull m = (r - l) / 2 + l;
-            ull t = x;
+            Int m = (r - l) / 2 + l;
+            Int t = x;
             rep(i, k) t /= m;
             if (1 > t) {
                 r = m;
@@ -100,11 +100,11 @@ void solve() {
     int t;
     cin >> t;
     rep(i, t) {
-        ull A;
+        Int A;
         int K;
         cin >> A >> K;
 
-        ull ans = kth_root(A, K);
+        Int ans = kth_root(A, K);
         cout << ans << '\n';
     }
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc400/tasks/abc400_e
-// 2025年07月18日 01時16分06秒
+// https://atcoder.jp/contests/arc153/tasks/arc153_a
+// 2025年07月17日 21時06分14秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -75,45 +75,31 @@ int main() {
     return 0;
 }
 
-ll intpow(ll x, ll n) {
-    long long ret = 1;
-    while (n > 0) {
-        if (n & 1)
-            ret *= x;
-        x *= x;
-        n >>= 1;
-    }
-    return ret;
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vll cand;
-    {
-        int m = (int)1e6 + 5;
-        vll cnt(m);
-        rep2(i, 2, m) {
-            if (cnt[i] != 0) continue;
-            for (ll j = i + i; j < m; j += i) {
-                cnt[j]++;
-            }
-        }
-        rep2(i, 2, m) {
-            if (cnt[i] == 2) cand.push_back(i * i);
-        }
+    ll N;
+    cin >> N;
+    N--;
+
+    ll x = 100000 + N;
+
+    vll v;
+    while (x) {
+        v.push_back(x % 10);
+        x /= 10;
     }
+    reverse(all(v));
 
-    auto cal = [&]() -> void {
-        ll A;
-        cin >> A;
+    vint ans(9);
+    ans[0] = ans[1] = v[0];
+    ans[2] = v[1];
+    ans[3] = v[2];
+    ans[4] = ans[5] = v[3];
+    ans[6] = ans[8] = v[4];
+    ans[7] = v[5];
 
-        auto it = prev(upper_bound(all(cand), A));
-        cout << *it << endl;
-    };
-
-    int q;
-    cin >> q;
-    rep(i, q) cal();
+    for (int a : ans) cout << a;
+    cout << endl;
 }
