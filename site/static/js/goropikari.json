@@ -709,14 +709,26 @@
     },
     {
         "IsRated": true,
-        "Place": 4077,
+        "Place": 4076,
         "OldRating": 1148,
         "NewRating": 1120,
-        "Performance": 826,
-        "InnerPerformance": 826,
+        "Performance": 827,
+        "InnerPerformance": 827,
         "ContestScreenName": "abc414.contest.atcoder.jp",
         "ContestName": "ミラティブ プログラミングコンテスト2025（AtCoder Beginner Contest 414）",
         "ContestNameEn": " Mirrativ Programming Contest 2025 (AtCoder Beginner Contest 414)",
         "EndTime": "2025-07-12T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 4118,
+        "OldRating": 1120,
+        "NewRating": 1091,
+        "Performance": 797,
+        "InnerPerformance": 797,
+        "ContestScreenName": "abc415.contest.atcoder.jp",
+        "ContestName": "日本レジストリサービス（JPRS）プログラミングコンテスト2025#2（AtCoder Beginner Contest 415）",
+        "ContestNameEn": "Japan Registry Services (JPRS) Programming Contest 2025#2 (AtCoder Beginner Contest 415)",
+        "EndTime": "2025-07-19T22:40:00+09:00"
     }
 ]
