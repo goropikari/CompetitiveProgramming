@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/aising2020/tasks/aising2020_c
-// 2025年07月14日 10時11分38秒
+// 2025年07月20日 02時42分22秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -83,15 +83,12 @@ void solve() {
     cin >> N;
 
     vll ans(N);
-    for (ll x = 1; x * x <= N; x++) {
-        for (ll y = 1; y * y <= N - x * x; y++) {
-            for (ll z = 1; z * z <= N - x * x - y * y; z++) {
-                ll t = x * x + y * y + z * z + x * y + y * z + z * x;
-                if (t <= N) {
-                    ans[t - 1]++;
-                }
-            }
-        }
+    rep2(x, 1, 101)
+        rep2(y, 1, 101)
+            rep2(z, 1, 101) {
+        ll sum = x * x + y * y + z * z + x * y + y * z + z * x;
+        if (sum <= N) ans[sum]++;
     }
-    for (ll x : ans) cout << x << endl;
+
+    rep2(i, 1, N + 1) cout << ans[i] << '\n';
 }

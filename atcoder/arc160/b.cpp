@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc383/tasks/abc383_d
-// 2025年07月20日 04時15分52秒
+// https://atcoder.jp/contests/arc160/tasks/arc160_b
+// 2025年07月20日 03時29分06秒
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -79,32 +79,44 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
+    using Int = unsigned long long int;
 
-    ll mx = (ll)2e6 + 5;
-    // ll mx = 5;
-    vll p(mx, true);
-    p[0] = p[1] = false;
-    rep2(i, 2, mx) {
-        for (int j = i + i; j < mx; j += i) {
-            p[j] = false;
+    auto kth_root = [](Int x, Int k) -> Int {
+        assert(k != 0);
+        if (x == 1 || k == 1) return x;
+        Int l = 0, r = x;
+        while (r - l > 1) {
+            Int m = (r - l) / 2 + l;
+            Int t = x;
+            rep(i, k) t /= m;
+            if (1 > t) {
+                r = m;
+            } else {
+                l = m;
+            }
         }
-    }
+        return l;
+    };
 
-    vll primes;
-    rep(i, mx) if (p[i]) primes.push_back(i * i);
+    // 平方根
+    auto isqrt = [&](Int x) -> Int {
+        return kth_root(x, 2);
+    };
 
-    ll ans = 0;
-    for (ll p : primes) {
-        ll t = N;
-        rep(i, 4) t /= p;
-        if (t) ans++;
-    }
+    auto cal = [&]() -> void {
+        ll N;
+        cin >> N;
 
-    for (ll psq : primes) {
-        ll upper = N / psq;
-    }
+        ll M = isqrt(N);
 
-    cout << ans << endl;
+        mint ans = (mint)M * M * M;
+        for (ll i = M + 1; i <= N; i++) {
+            ans += (N / i) * (N / i) * 3;
+        }
+        cout << ans.val() << endl;
+    };
+
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc383/tasks/abc383_d
-// 2025年07月20日 04時15分52秒
+// https://atcoder.jp/contests/aising2020/tasks/aising2020_c
+// 2025年07月14日 10時11分38秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -82,29 +82,16 @@ void solve() {
     ll N;
     cin >> N;
 
-    ll mx = (ll)2e6 + 5;
-    // ll mx = 5;
-    vll p(mx, true);
-    p[0] = p[1] = false;
-    rep2(i, 2, mx) {
-        for (int j = i + i; j < mx; j += i) {
-            p[j] = false;
+    vll ans(N);
+    for (ll x = 1; x * x <= N; x++) {
+        for (ll y = 1; y * y <= N - x * x; y++) {
+            for (ll z = 1; z * z <= N - x * x - y * y; z++) {
+                ll t = x * x + y * y + z * z + x * y + y * z + z * x;
+                if (t <= N) {
+                    ans[t - 1]++;
+                }
+            }
         }
     }
-
-    vll primes;
-    rep(i, mx) if (p[i]) primes.push_back(i * i);
-
-    ll ans = 0;
-    for (ll p : primes) {
-        ll t = N;
-        rep(i, 4) t /= p;
-        if (t) ans++;
-    }
-
-    for (ll psq : primes) {
-        ll upper = N / psq;
-    }
-
-    cout << ans << endl;
+    for (ll x : ans) cout << x << endl;
 }
