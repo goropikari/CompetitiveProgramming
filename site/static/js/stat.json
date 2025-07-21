@@ -5060,10 +5060,20 @@
     "red": 0
   },
   "20250719": {
-    "gray": 751,
-    "brown": 374,
-    "green": 404,
-    "cyan": 123,
+    "gray": 753,
+    "brown": 375,
+    "green": 405,
+    "cyan": 124,
+    "blue": 16,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250720": {
+    "gray": 753,
+    "brown": 375,
+    "green": 405,
+    "cyan": 125,
     "blue": 16,
     "yellow": 1,
     "orange": 0,
