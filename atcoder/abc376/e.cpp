@@ -1,15 +1,21 @@
-/*https://atcoder.jp/contests/abc376/tasks/abc376_e*/
-/*2025年02月26日 01時25分46秒*/
+// https://atcoder.jp/contests/abc376/tasks/abc376_e
+// 2025年07月20日 22時18分19秒
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -41,7 +47,25 @@ void print(vector<T> v) {
 }
 
 void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+    cout << (x ? "Yes" : "No") << '\n';
+}
+
+void Yes() {
+    yesno(true);
+}
+
+void No() {
+    yesno(false);
+}
+
+// ceil(a/b)
+ll ceil(ll a, ll b) {
+    return (a + b - 1) / b;
+}
+
+// floor(a/b)
+ll floor(ll a, ll b) {
+    return a / b;
 }
 
 void solve();
@@ -52,46 +76,43 @@ int main() {
 }
 
 void solve() {
-    int T;
-    cin >> T;
-    rep(_, T) {
-        int n, k;
-        cin >> n >> k;
-        vll A(n), B(n);
-        rep(i, n) cin >> A[i];
-        rep(i, n) cin >> B[i];
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-        vector<pair<ll, ll>> ps;
-        rep(i, n) {
-            ps.emplace_back(A[i], B[i]);
+    using P = pair<ll, ll>;
+
+    auto cal = []() -> void {
+        ll N, K;
+        cin >> N >> K;
+        vector<P> ps(N);
+        rep(i, N) {
+            cin >> ps[i].first;
         }
+        rep(i, N) {
+            cin >> ps[i].second;
+        }
+
         sort(all(ps));
 
-        multiset<ll> store;
-        ll sum = 0;
-        rep(i, k - 1) {
-            ll x = ps[i].second;
-            store.insert(x);
-            sum += x;
-        }
-
         ll ans = INF;
-        rep2(i, k - 1, n) {
-            auto [a, b] = ps[i];
-            if ((int)store.size() == k - 1) {
-                store.insert(b);
-                sum += b;
-            } else {
-                auto it = prev(store.end());
-                ll mx = *it;
-                if (mx < b)
-                    continue;
-                store.erase(it);
-                store.insert(b);
-                sum = sum - mx + b;
+        priority_queue<ll> pq;
+        ll sum = 0;
+        for (auto [a, b] : ps) {
+            if ((ll)pq.size() == K - 1) {
+                chmin(ans, a * (sum + b));
             }
-            chmin(ans, a * sum);
+
+            pq.push(b);
+            sum += b;
+            if ((ll)pq.size() == K) {
+                sum -= pq.top();
+                pq.pop();
+            }
         }
         cout << ans << endl;
-    }
+    };
+
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }

@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/arc160/tasks/arc160_b
-// 2025年07月20日 03時29分06秒
+// 2025年07月20日 13時00分05秒
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -109,11 +109,15 @@ void solve() {
 
         ll M = isqrt(N);
 
-        mint ans = (mint)M * M * M;
-        for (ll i = M + 1; i <= N; i++) {
-            ans += (N / i) * (N / i) * 3;
+        mint ans = M * M * M;
+        for (ll t = 1; t * t < N; t++) {
+            ll l = N / (t + 1) + 1;
+            if (l == M) continue;
+
+            ll r = N / t;
+            ans += 3ll * (r - l + 1) * t * t;
         }
-        cout << ans.val() << endl;
+        cout << ans.val() << '\n';
     };
 
     int t;

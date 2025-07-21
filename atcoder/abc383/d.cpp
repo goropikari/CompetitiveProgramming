@@ -84,26 +84,32 @@ void solve() {
 
     ll mx = (ll)2e6 + 5;
     // ll mx = 5;
-    vll p(mx, true);
-    p[0] = p[1] = false;
+    vll is_primes(mx, true);
+    is_primes[0] = is_primes[1] = false;
     rep2(i, 2, mx) {
         for (int j = i + i; j < mx; j += i) {
-            p[j] = false;
+            is_primes[j] = false;
         }
     }
 
-    vll primes;
-    rep(i, mx) if (p[i]) primes.push_back(i * i);
-
     ll ans = 0;
-    for (ll p : primes) {
+
+    rep(i, mx) {
+        if (!is_primes[i]) continue;
         ll t = N;
-        rep(i, 4) t /= p;
+        rep(j, 8) t /= i;
         if (t) ans++;
     }
 
-    for (ll psq : primes) {
-        ll upper = N / psq;
+    vll prime_sqs;
+    rep(i, mx) if (is_primes[i]) prime_sqs.push_back(i * i);
+
+    int r = prime_sqs.size() - 1;
+    rep(l, (ll)prime_sqs.size()) {
+        ll psq = prime_sqs[l];
+        while (psq * prime_sqs[r] > N && l < r) r--;
+        if (l >= r) break;
+        ans += r - l;
     }
 
     cout << ans << endl;

@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc372/tasks/abc372_e
-// 2025年07月21日 05時25分35秒
+// https://atcoder.jp/contests/abc379/tasks/abc379_c
+// 2025年07月20日 19時47分05秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,44 +79,53 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, Q;
-    cin >> N >> Q;
+    ll N, M;
+    cin >> N >> M;
+    vll X(M), A(M);
+    rep(i, M) cin >> X[i];
+    rep(i, M) cin >> A[i];
 
-    vvint memo(N);
-    rep(i, N) memo[i].push_back(i);
-    dsu uf(N);
-
-    rep(i, Q) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            int u, v;
-            cin >> u >> v;
-            u--, v--;
-
-            u = uf.leader(u);
-            v = uf.leader(v);
-            if (u == v) continue;
-
-            vint vec;
-            {
-                vint uvec = memo[u], vvec = memo[v];
-                vec = uvec;
-                for (int x : vvec) vec.push_back(x);
-            }
-            int l = uf.merge(u, v);
-            memo[l] = vec;
-            sort(rall(memo[l]));
-            while (memo[l].size() > 10) memo[l].pop_back();
-        } else {
-            int v, k;
-            cin >> v >> k;
-            v--, k--;
-            int l = uf.leader(v);
-            if ((int)memo[l].size() < k + 1)
-                cout << -1 << endl;
-            else
-                cout << memo[l][k] + 1 << endl;
-        }
+    ll sum = accumulate(all(A), 0ll);
+    if (sum != N) {
+        cout << -1 << endl;
+        return;
     }
+
+    vector<pair<ll, ll>> ps;
+    rep(i, M) ps.push_back({X[i], A[i]});
+    sort(all(ps));
+
+    if (ps.back().first == N && ps.back().second > 1) {
+        cout << -1 << endl;
+        return;
+    }
+    if (ps.front().first != 1) {
+        cout << -1 << endl;
+        return;
+    }
+
+    ps.push_back({N, 0});
+
+    int ok = 1;
+    ll ans = 0;
+    int sz = ps.size();
+    rep(i, sz - 1) {
+        auto [now, c] = ps[i];
+        auto [nx, nxc] = ps[i + 1];
+
+        ll m = nx - now - 1;
+        if (c - m <= 0) {
+            ok = 0;
+            break;
+        }
+
+        c -= m;
+        ps[i + 1].second += c - 1;
+
+        ans += m * (m + 1) / 2;
+        ans += (c - 1) * (m + 1);
+    }
+
+    if (!ok) ans = -1;
+    cout << ans << endl;
 }

@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc372/tasks/abc372_e
-// 2025年07月21日 05時25分35秒
+// https://atcoder.jp/contests/abc377/tasks/abc377_d
+// 2025年07月20日 20時13分39秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,44 +79,30 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, Q;
-    cin >> N >> Q;
-
-    vvint memo(N);
-    rep(i, N) memo[i].push_back(i);
-    dsu uf(N);
-
-    rep(i, Q) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            int u, v;
-            cin >> u >> v;
-            u--, v--;
-
-            u = uf.leader(u);
-            v = uf.leader(v);
-            if (u == v) continue;
-
-            vint vec;
-            {
-                vint uvec = memo[u], vvec = memo[v];
-                vec = uvec;
-                for (int x : vvec) vec.push_back(x);
-            }
-            int l = uf.merge(u, v);
-            memo[l] = vec;
-            sort(rall(memo[l]));
-            while (memo[l].size() > 10) memo[l].pop_back();
-        } else {
-            int v, k;
-            cin >> v >> k;
-            v--, k--;
-            int l = uf.leader(v);
-            if ((int)memo[l].size() < k + 1)
-                cout << -1 << endl;
-            else
-                cout << memo[l][k] + 1 << endl;
-        }
+    ll N, M;
+    cin >> N >> M;
+    vll v(M + 1, INF);
+    rep(i, N) {
+        ll l, r;
+        cin >> l >> r;
+        chmin(v[l], r);
     }
+
+    multiset<ll> right;
+    rep2(i, 1, M + 1) {
+        if (v[i] == INF) continue;
+        right.insert(v[i]);
+    }
+    ll ans = M * (M - 1) / 2 + M;
+    int i = 1;
+    while (right.size()) {
+        auto it = right.begin();
+        ans -= M - *it + 1;
+        if (v[i] != INF) {
+            auto erase_it = right.lower_bound(v[i]);
+            right.erase(erase_it);
+        }
+        i++;
+    }
+    cout << ans << endl;
 }

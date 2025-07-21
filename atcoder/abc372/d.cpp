@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc372/tasks/abc372_d
-// 2025年07月04日 08時39分18秒
+// 2025年07月21日 02時55分38秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -16,15 +16,13 @@ using int128 = int128_t;
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
-#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -60,6 +58,16 @@ void No() {
     yesno(false);
 }
 
+// ceil(a/b)
+ll ceil(ll a, ll b) {
+    return (a + b - 1) / b;
+}
+
+// floor(a/b)
+ll floor(ll a, ll b) {
+    return a / b;
+}
+
 void solve();
 
 int main() {
@@ -73,17 +81,21 @@ void solve() {
 
     int N;
     cin >> N;
-    vll H(N);
-    rep(i, N) cin >> H[i];
 
-    vint ans(N);
-    vll st;
-    for (int i = N - 1; i >= 0; i--) {
-        ans[i] = st.size();
-        while (st.size() && st.back() < H[i]) {
-            st.pop_back();
-        }
-        st.push_back(H[i]);
+    vll H(N + 1);
+    rep(i, N) cin >> H[i + 1];
+    H[0] = INF;
+
+    vll ans(N + 1);
+    stack<int> st;
+    st.push(0);
+    rep2(i, 1, N + 1) {
+        while (H[st.top()] < H[i]) st.pop();
+        ans[st.top()]++;
+        ans[i]--;
+        st.push(i);
     }
+    rep(i, N) ans[i + 1] += ans[i];
+    ans.erase(ans.begin(), ans.begin() + 1);
     print(ans);
 }

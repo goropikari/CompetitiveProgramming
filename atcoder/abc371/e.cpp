@@ -1,15 +1,21 @@
-/*https://atcoder.jp/contests/abc371/tasks/abc371_e*/
-/*2025年02月27日 23時55分16秒*/
+// https://atcoder.jp/contests/abc371/tasks/abc371_e
+// 2025年07月21日 13時17分46秒
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -17,7 +23,7 @@ using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
 void chmin(T& a, T b) {
@@ -41,7 +47,25 @@ void print(vector<T> v) {
 }
 
 void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+    cout << (x ? "Yes" : "No") << '\n';
+}
+
+void Yes() {
+    yesno(true);
+}
+
+void No() {
+    yesno(false);
+}
+
+// ceil(a/b)
+ll ceil(ll a, ll b) {
+    return (a + b - 1) / b;
+}
+
+// floor(a/b)
+ll floor(ll a, ll b) {
+    return a / b;
 }
 
 void solve();
@@ -52,34 +76,36 @@ int main() {
 }
 
 void solve() {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    rep(i, n) cin >> a[i];
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    set<int> memo;
-    vector<deque<int>> deq(n + 1);
-    ll sum = 0;
-    rep(i, n) {
-        int x = a[i];
-        memo.insert(x);
-        sum += memo.size();
-        deq[x].push_back(i);
+    ll N;
+    cin >> N;
+    vll A(N);
+    rep(i, N) {
+        cin >> A[i];
+        A[i]--;
     }
 
+    vector<deque<ll>> ids(N);
+    ll sum = 0;
+    set<ll> memo;
+    rep(i, N) {
+        ids[A[i]].push_back(i);
+        memo.insert(A[i]);
+        sum += (ll)memo.size();
+    }
+    rep(i, N) ids[i].push_back(N);
+
     ll ans = sum;
-    rep2(i, 1, n) {
-        int x = a[i - 1];
-        if (deq[x].size() == 1) {
-            sum = sum - (n - i + 1);
-            ans += sum;
-            deq[x].pop_front();
-        } else {
-            ll d = deq[x][1] - deq[x][0];
-            deq[x].pop_front();
-            sum -= d;
-            ans += sum;
-        }
+
+    rep(i, N - 1) {
+        ll l = ids[A[i]].front();
+        ids[A[i]].pop_front();
+        ll r = ids[A[i]].front();
+
+        sum -= r - l;
+        ans += sum;
     }
     cout << ans << endl;
 }

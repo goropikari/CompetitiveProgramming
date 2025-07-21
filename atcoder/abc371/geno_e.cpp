@@ -1,9 +1,7 @@
-// https://atcoder.jp/contests/abc372/tasks/abc372_e
-// 2025年07月21日 05時25分35秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,44 +77,18 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, Q;
-    cin >> N >> Q;
+    int N;
+    cin >> N;
+    vll A(N);
+    rep(i, N) cin >> A[i];
 
-    vvint memo(N);
-    rep(i, N) memo[i].push_back(i);
-    dsu uf(N);
-
-    rep(i, Q) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            int u, v;
-            cin >> u >> v;
-            u--, v--;
-
-            u = uf.leader(u);
-            v = uf.leader(v);
-            if (u == v) continue;
-
-            vint vec;
-            {
-                vint uvec = memo[u], vvec = memo[v];
-                vec = uvec;
-                for (int x : vvec) vec.push_back(x);
-            }
-            int l = uf.merge(u, v);
-            memo[l] = vec;
-            sort(rall(memo[l]));
-            while (memo[l].size() > 10) memo[l].pop_back();
-        } else {
-            int v, k;
-            cin >> v >> k;
-            v--, k--;
-            int l = uf.leader(v);
-            if ((int)memo[l].size() < k + 1)
-                cout << -1 << endl;
-            else
-                cout << memo[l][k] + 1 << endl;
+    ll ans = 0;
+    rep(i, N) {
+        set<ll> memo;
+        rep2(j, i, N) {
+            memo.insert(A[j]);
+            ans += (ll)memo.size();
         }
     }
+    cout << ans << endl;
 }
