@@ -24838,5 +24838,41 @@
     "length": 2590,
     "result": "AC",
     "execution_time": 23
+  },
+  {
+    "id": 67803250,
+    "epoch_second": 1753080601,
+    "problem_id": "abc354_e",
+    "contest_id": "abc354",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 475.0,
+    "length": 2780,
+    "result": "AC",
+    "execution_time": 147
+  },
+  {
+    "id": 67806109,
+    "epoch_second": 1753087029,
+    "problem_id": "tdpc_contest",
+    "contest_id": "tdpc",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 2.0,
+    "length": 2060,
+    "result": "AC",
+    "execution_time": 11
+  },
+  {
+    "id": 67814949,
+    "epoch_second": 1753111841,
+    "problem_id": "abc381_b",
+    "contest_id": "abc381",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 150.0,
+    "length": 1982,
+    "result": "AC",
+    "execution_time": 6
   }
 ]
