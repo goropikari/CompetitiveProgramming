@@ -24874,5 +24874,29 @@
     "length": 1982,
     "result": "AC",
     "execution_time": 6
+  },
+  {
+    "id": 67835668,
+    "epoch_second": 1753192013,
+    "problem_id": "tdpc_game",
+    "contest_id": "tdpc",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 3.0,
+    "length": 2412,
+    "result": "AC",
+    "execution_time": 21
+  },
+  {
+    "id": 67837288,
+    "epoch_second": 1753199683,
+    "problem_id": "abc382_b",
+    "contest_id": "abc382",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 200.0,
+    "length": 1946,
+    "result": "AC",
+    "execution_time": 6
   }
 ]
