@@ -730,5 +730,17 @@
         "ContestName": "日本レジストリサービス（JPRS）プログラミングコンテスト2025#2（AtCoder Beginner Contest 415）",
         "ContestNameEn": "Japan Registry Services (JPRS) Programming Contest 2025#2 (AtCoder Beginner Contest 415)",
         "EndTime": "2025-07-19T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 1226,
+        "OldRating": 1091,
+        "NewRating": 1133,
+        "Performance": 1454,
+        "InnerPerformance": 1454,
+        "ContestScreenName": "abc416.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 416",
+        "ContestNameEn": "",
+        "EndTime": "2025-07-26T22:40:00+09:00"
     }
 ]
