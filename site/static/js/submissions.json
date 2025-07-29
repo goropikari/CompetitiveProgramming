@@ -25006,5 +25006,29 @@
     "length": 1835,
     "result": "AC",
     "execution_time": 1
+  },
+  {
+    "id": 68016297,
+    "epoch_second": 1753712008,
+    "problem_id": "arc154_a",
+    "contest_id": "arc154",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 300.0,
+    "length": 1951,
+    "result": "AC",
+    "execution_time": 4
+  },
+  {
+    "id": 68018853,
+    "epoch_second": 1753724595,
+    "problem_id": "past202209_a",
+    "contest_id": "past202209-open",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 9.0,
+    "length": 1793,
+    "result": "AC",
+    "execution_time": 1
   }
 ]
