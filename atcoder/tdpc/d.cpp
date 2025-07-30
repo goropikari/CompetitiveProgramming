@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/dp/tasks/dp_e
-// 2025年07月21日 17時16分18秒
+// https://atcoder.jp/contests/tdpc/tasks/tdpc_dice
+// 2025年07月23日 00時04分58秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,24 +79,47 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, W;
-    cin >> N >> W;
-    vll weight(N), value(N);
-    rep(i, N) cin >> weight[i] >> value[i];
+    ll N, D;
+    cin >> N >> D;
 
-    int mx = (int)1e5 + 5;
-    vll dp(mx, INF);
-    dp[0] = 0;
-    rep(i, N) {
-        for (ll v = mx - 1; v >= 0; v--) {
-            if (v - value[i] >= 0)
-                chmin(dp[v], dp[v - value[i]] + weight[i]);
+    if (D == 1) {
+        cout << 1 << endl;
+        return;
+    }
+
+    {
+        ll g = gcd(D, 30);
+        if (g == 1) {
+            cout << 0 << endl;
+            return;
         }
     }
 
-    ll ans = 0;
-    rep(i, mx) {
-        if (dp[i] <= W) chmax(ans, i);
+    ll nfive = 0;
+    while (D % 5 == 0) {
+        nfive++;
+        D /= 5;
     }
-    cout << ans << endl;
+
+    rep(n4, 31) {
+        rep(n6, 28) {
+            ll t = D;
+            vll num(7);
+            num[5] = nfive;
+            rep(i, n4) t /= 4;
+            rep(i, n6) t /= 6;
+            if (t == 0) continue;
+
+            while (t % 2 == 0) {
+                t /= 2;
+                num[2]++;
+            }
+            while (t % 3 == 0) {
+                t /= 3;
+                num[3]++;
+            }
+
+            ll sum = accumulate(all(num), 0ll);
+        }
+    }
 }

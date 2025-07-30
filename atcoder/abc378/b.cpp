@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/dp/tasks/dp_e
-// 2025年07月21日 17時16分18秒
+// https://atcoder.jp/contests/abc378/tasks/abc378_b
+// 2025年07月26日 00時02分27秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,24 +79,28 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, W;
-    cin >> N >> W;
-    vll weight(N), value(N);
-    rep(i, N) cin >> weight[i] >> value[i];
+    ll N;
+    cin >> N;
+    vll q(N), r(N);
+    rep(i, N) cin >> q[i] >> r[i];
 
-    int mx = (int)1e5 + 5;
-    vll dp(mx, INF);
-    dp[0] = 0;
-    rep(i, N) {
-        for (ll v = mx - 1; v >= 0; v--) {
-            if (v - value[i] >= 0)
-                chmin(dp[v], dp[v - value[i]] + weight[i]);
+    int Q;
+    cin >> Q;
+    vll t(Q), d(Q);
+    rep(i, Q) {
+        cin >> t[i] >> d[i];
+        t[i]--;
+    }
+
+    rep(i, Q) {
+        int id = t[i];
+        ll rem = d[i] % q[id];
+        ll ans = 0;
+        if (rem <= r[id]) {
+            ans = r[id] - rem + d[i];
+        } else {
+            ans = q[id] - rem + r[id] + d[i];
         }
+        cout << ans << '\n';
     }
-
-    ll ans = 0;
-    rep(i, mx) {
-        if (dp[i] <= W) chmax(ans, i);
-    }
-    cout << ans << endl;
 }

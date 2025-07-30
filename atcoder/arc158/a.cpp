@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/dp/tasks/dp_e
-// 2025年07月21日 17時16分18秒
+// https://atcoder.jp/contests/arc158/tasks/arc158_a
+// 2025年07月24日 00時19分46秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,24 +79,41 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, W;
-    cin >> N >> W;
-    vll weight(N), value(N);
-    rep(i, N) cin >> weight[i] >> value[i];
+    auto f = [](auto f, vll& v) -> ll {
+        sort(all(v));
 
-    int mx = (int)1e5 + 5;
-    vll dp(mx, INF);
-    dp[0] = 0;
-    rep(i, N) {
-        for (ll v = mx - 1; v >= 0; v--) {
-            if (v - value[i] >= 0)
-                chmin(dp[v], dp[v - value[i]] + weight[i]);
+        if ((v[1] - v[0]) % 2 != 0 || (v[2] - v[1]) % 2 != 0) return -1;
+        if (v[0] == v[1] && v[1] == v[2]) return 0;
+        if (v[0] != v[1] && v[1] == v[2]) {
+            if ((v[1] - v[0]) % 6 != 0) return -1;
+            return (v[1] - v[0]) / 6 * 2;
         }
-    }
+        if (v[0] == v[1] && v[1] != v[2]) {
+            if ((v[2] - v[1]) % 6 != 0) return -1;
+            return (v[2] - v[1]) / 6 * 2;
+        }
 
-    ll ans = 0;
-    rep(i, mx) {
-        if (dp[i] <= W) chmax(ans, i);
-    }
-    cout << ans << endl;
+        ll l = v[1] - v[0], r = v[2] - v[1];
+        ll mi = min(l, r);
+        ll p = mi / 2;
+        v[0] += 7 * p;
+        v[1] += 5 * p;
+        v[2] += 3 * p;
+
+        ll nx = f(f, v);
+        if (nx < 0) return -1;
+
+        return p + nx;
+    };
+
+    auto cal = [&]() -> void {
+        vll x(3);
+        rep(i, 3) cin >> x[i];
+
+        cout << f(f, x) << endl;
+    };
+
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }

@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/dp/tasks/dp_e
-// 2025年07月21日 17時16分18秒
+// https://atcoder.jp/contests/arc154/tasks/arc154_a
+// 2025年07月29日 01時41分35秒
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,24 +79,20 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, W;
-    cin >> N >> W;
-    vll weight(N), value(N);
-    rep(i, N) cin >> weight[i] >> value[i];
+    ll N;
+    string A, B;
+    cin >> N >> A >> B;
 
-    int mx = (int)1e5 + 5;
-    vll dp(mx, INF);
-    dp[0] = 0;
     rep(i, N) {
-        for (ll v = mx - 1; v >= 0; v--) {
-            if (v - value[i] >= 0)
-                chmin(dp[v], dp[v - value[i]] + weight[i]);
-        }
+        if (A[i] > B[i]) swap(A[i], B[i]);
     }
 
-    ll ans = 0;
-    rep(i, mx) {
-        if (dp[i] <= W) chmax(ans, i);
+    mint a = 0, b = 0;
+    rep(i, N) {
+        a *= 10;
+        a += A[i] - '0';
+        b *= 10;
+        b += B[i] - '0';
     }
-    cout << ans << endl;
+    cout << (a * b).val() << endl;
 }

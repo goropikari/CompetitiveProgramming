@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc362/tasks/abc362_e
-// 2025年06月19日 01時24分16秒
+// 2025年07月22日 23時49分21秒
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -75,4 +75,16 @@ void solve() {
     cin >> N;
     vll A(N);
     rep(i, N) cin >> A[i];
+
+    map<ll, vint> mp;
+    rep(i, N) {
+        mp[A[i]].push_back(i);
+    }
+
+    set<ll> ds;
+    rep(i, N) rep2(j, i + 1, N) {
+        ds.insert(A[j] - A[i]);
+    }
+
+    vll ans(N + 1);
 }

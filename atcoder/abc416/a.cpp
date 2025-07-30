@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/dp/tasks/dp_e
-// 2025年07月21日 17時16分18秒
+// https://atcoder.jp/contests/abc416/tasks/abc416_a
+// 2025年07月26日 20時42分50秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,24 +79,14 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, W;
-    cin >> N >> W;
-    vll weight(N), value(N);
-    rep(i, N) cin >> weight[i] >> value[i];
-
-    int mx = (int)1e5 + 5;
-    vll dp(mx, INF);
-    dp[0] = 0;
-    rep(i, N) {
-        for (ll v = mx - 1; v >= 0; v--) {
-            if (v - value[i] >= 0)
-                chmin(dp[v], dp[v - value[i]] + weight[i]);
-        }
+    int N, L, R;
+    cin >> N >> L >> R;
+    L--, R--;
+    string S;
+    cin >> S;
+    int ok = 1;
+    for (int i = L; i <= R; i++) {
+        if (S[i] != 'o') ok = 0;
     }
-
-    ll ans = 0;
-    rep(i, mx) {
-        if (dp[i] <= W) chmax(ans, i);
-    }
-    cout << ans << endl;
+    yesno(ok);
 }

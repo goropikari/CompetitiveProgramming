@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/dp/tasks/dp_e
-// 2025年07月21日 17時16分18秒
+// https://atcoder.jp/contests/tdpc/tasks/tdpc_game
+// 2025年07月21日 17時37分57秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,24 +79,28 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, W;
-    cin >> N >> W;
-    vll weight(N), value(N);
-    rep(i, N) cin >> weight[i] >> value[i];
+    ll N, M;
+    cin >> N >> M;
+    vll A(N + 1), B(M + 1);
+    rep(i, N) cin >> A[i + 1];
+    rep(i, M) cin >> B[i + 1];
 
-    int mx = (int)1e5 + 5;
-    vll dp(mx, INF);
-    dp[0] = 0;
-    rep(i, N) {
-        for (ll v = mx - 1; v >= 0; v--) {
-            if (v - value[i] >= 0)
-                chmin(dp[v], dp[v - value[i]] + weight[i]);
-        }
-    }
+    ll sum = accumulate(all(A), 0ll) + accumulate(all(B), 0ll);
 
-    ll ans = 0;
-    rep(i, mx) {
-        if (dp[i] <= W) chmax(ans, i);
-    }
-    cout << ans << endl;
+    vvll memo(N + 1, vll(M + 1));
+
+    auto f = [&](auto f, ll rem, int a = 0, int b = 0) -> ll {
+        if (memo[a][b]) return memo[a][b];
+        if (a == N && b == M) return 0;
+
+        ll l = INF, r = INF;
+        if (a + 1 <= N)
+            l = f(f, rem - A[a + 1], a + 1, b);
+        if (b + 1 <= M)
+            r = f(f, rem - B[b + 1], a, b + 1);
+
+        return memo[a][b] = rem - min(l, r);
+    };
+
+    cout << f(f, sum) << endl;
 }
