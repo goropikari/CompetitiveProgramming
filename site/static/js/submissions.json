@@ -25042,5 +25042,17 @@
     "length": 2094,
     "result": "AC",
     "execution_time": 14
+  },
+  {
+    "id": 68067890,
+    "epoch_second": 1753961557,
+    "problem_id": "arc143_a",
+    "contest_id": "arc143",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 300.0,
+    "length": 2180,
+    "result": "AC",
+    "execution_time": 1
   }
 ]
