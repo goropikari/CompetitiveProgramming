@@ -25306,5 +25306,53 @@
     "length": 2210,
     "result": "AC",
     "execution_time": 109
+  },
+  {
+    "id": 68512890,
+    "epoch_second": 1755345692,
+    "problem_id": "abc419_a",
+    "contest_id": "abc419",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 100.0,
+    "length": 1813,
+    "result": "AC",
+    "execution_time": 1
+  },
+  {
+    "id": 68517971,
+    "epoch_second": 1755345807,
+    "problem_id": "abc419_b",
+    "contest_id": "abc419",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 200.0,
+    "length": 1885,
+    "result": "AC",
+    "execution_time": 1
+  },
+  {
+    "id": 68547079,
+    "epoch_second": 1755347425,
+    "problem_id": "abc419_d",
+    "contest_id": "abc419",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 400.0,
+    "length": 2081,
+    "result": "AC",
+    "execution_time": 30
+  },
+  {
+    "id": 68552003,
+    "epoch_second": 1755347935,
+    "problem_id": "abc419_c",
+    "contest_id": "abc419",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 300.0,
+    "length": 2502,
+    "result": "AC",
+    "execution_time": 38
   }
 ]
