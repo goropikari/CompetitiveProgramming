@@ -5298,5 +5298,25 @@
     "yellow": 1,
     "orange": 0,
     "red": 0
+  },
+  "20250820": {
+    "gray": 775,
+    "brown": 378,
+    "green": 407,
+    "cyan": 127,
+    "blue": 16,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20250821": {
+    "gray": 775,
+    "brown": 379,
+    "green": 407,
+    "cyan": 127,
+    "blue": 16,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
   }
 }
