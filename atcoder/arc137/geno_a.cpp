@@ -1,5 +1,3 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -81,15 +79,9 @@ void solve() {
 
     ll L, R;
     cin >> L >> R;
-
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
-        }
+    ll ans = 1;
+    rep2(i, L, R) rep2(j, i + 1, R + 1) {
+        if (gcd(i, j) == 1) chmax(ans, j - i);
     }
+    cout << ans << endl;
 }

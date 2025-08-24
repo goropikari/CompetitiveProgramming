@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/arc114/tasks/arc114_a
+// 2025年08月21日 19時54分17秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,17 +79,42 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N;
+    cin >> N;
+    vll X(N);
+    rep(i, N) cin >> X[i];
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
+    vint used(55);
+    for (ll x : X) {
+        ll t = x;
+        rep2(i, 2, t + 1) {
+            if (x % i == 0) {
+                used[i] = 1;
+                while (x % i == 0) x /= i;
             }
         }
     }
+
+    vll primes;
+    rep(i, 50) {
+        if (used[i]) primes.push_back(i);
+    }
+
+    ll ans = INF;
+    int sz = primes.size();
+    rep(state, 1ll << sz) {
+        ll y = 1;
+        rep(i, sz) {
+            if ((state >> i) & 1) y *= primes[i];
+        }
+        int ok = 1;
+        for (ll x : X) {
+            if (gcd(y, x) == 1) {
+                ok = 0;
+                break;
+            }
+        }
+        if (ok) chmin(ans, y);
+    }
+    cout << ans << endl;
 }

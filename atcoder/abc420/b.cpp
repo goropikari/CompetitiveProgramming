@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/abc420/tasks/abc420_b
+// 2025年08月24日 21時01分47秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,17 +79,43 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, M;
+    cin >> N >> M;
+    vector<string> S(N);
+    rep(i, N) cin >> S[i];
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
+    vll scores(N);
+    rep(j, M) {
+        ll x = 0, y = 0;
+        rep(i, N) {
+            if (S[i][j] == '0')
+                x++;
+            else
+                y++;
+        }
+
+        if (x == 0 || y == 0) {
+            rep(i, N) scores[i]++;
+            continue;
+        }
+
+        if (x < y) {
+            rep(i, N) {
+                if (S[i][j] == '0') scores[i]++;
+            }
+        } else {
+            rep(i, N) {
+                if (S[i][j] == '1') scores[i]++;
             }
         }
     }
+
+    ll mx = 0;
+    rep(i, N) {
+        chmax(mx, scores[i]);
+    }
+
+    vll ans;
+    rep(i, N) if (scores[i] == mx) ans.push_back(i + 1);
+    print(ans);
 }

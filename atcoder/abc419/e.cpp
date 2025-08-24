@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/abc419/tasks/abc419_e
+// 2025年08月16日 21時31分16秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,17 +79,28 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, M, L;
+    cin >> N >> M >> L;
+    vll A(N);
+    rep(i, N) cin >> A[i];
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
+    // cost[i][r]: i 文字目を M で割った余りを r にするのにかかるコスト
+    vector cost(L + 1, vll(M));
+    rep(i, L) {
+        for (int j = i; j < N; j += L) {
+            rep(k, M) {
+                cost[i + 1][(A[j] + k) % M] += k;
             }
         }
     }
+
+    // dp[i][r]: i 文字目まで見たときの和の mod M が r となるときのコスト
+    vector dp(L + 1, vll(M, INF));
+    rep(i, M) dp[0][0] = 0;
+    rep2(i, 1, L + 1) {
+        rep(j, M) rep(k, M) {
+            chmin(dp[i][(j + k) % M], dp[i - 1][j] + cost[i][k]);
+        }
+    }
+    cout << dp[L][0] << endl;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/abc419/tasks/abc419_d
+// 2025年08月16日 21時19分59秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,17 +79,34 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, M;
+    cin >> N >> M;
+    string S, T;
+    cin >> S >> T;
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
-        }
+    vll flip(N + 1);
+    rep(i, M) {
+        ll l, r;
+        cin >> l >> r;
+        l--;
+        r--;
+        flip[l]++;
+        flip[r + 1]--;
     }
+
+    rep2(i, 1, N + 1) {
+        flip[i] += flip[i - 1];
+    }
+    rep(i, N) {
+        flip[i] %= 2;
+    }
+
+    string ans = "";
+    rep(i, N) {
+        if (flip[i] == 0)
+            ans.push_back(S[i]);
+        else
+            ans.push_back(T[i]);
+    }
+    cout << ans << endl;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/past202203-open/tasks/past202203_d
+// 2025年08月23日 20時38分08秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,17 +79,17 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    int T, N;
+    cin >> T >> N;
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
+    vll pts(N);
+    rep(i, T) {
+        rep(j, N) {
+            ll x;
+            cin >> x;
+            chmax(pts[j], x);
         }
+        ll ans = accumulate(all(pts), 0ll);
+        cout << ans << endl;
     }
 }

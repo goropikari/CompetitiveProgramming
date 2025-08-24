@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/arc113/tasks/arc113_b
+// 2025年08月20日 19時57分25秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -75,21 +75,48 @@ int main() {
     return 0;
 }
 
+ll modpow(ll x, ll n, ll mod) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret = (ret * x) % mod;
+        x = (x * x) % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll A, B, C;
+    cin >> A >> B >> C;
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
+    A %= 10;
+
+    vint len(11, -1);
+    len[A] = 0;
+    ll a = A;
+    ll cyc = -1;
+    rep(i, 10) {
+        a *= A;
+        a %= 10;
+        if (len[a] >= 0) {
+            cyc = (i + 1) - len[a];
+            break;
         }
+        len[a] = i + 1;
     }
+
+    ll p = modpow(B, C, cyc);
+    if (p == 0) {
+        p = cyc;
+    }
+    ll ans = 1;
+    rep(i, p) {
+        ans *= A;
+        ans %= 10;
+    }
+    cout << ans << endl;
 }

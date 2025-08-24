@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/abc307/tasks/abc307_e
+// 2025年08月23日 19時27分48秒
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -79,17 +79,17 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, M;
+    cin >> N >> M;
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
-        }
+    if (M == 2) {
+        ll ans = 2;
+        if (N % 2 == 1) ans = 0;
+        cout << ans << endl;
+        return;
     }
+
+    mint ans = mint(M) * mint(M - 1).pow(N - 2);
+    ans += mint(M) * mint(M - 1).pow(N - 2) * (M - 3);
+    cout << ans.val() << endl;
 }

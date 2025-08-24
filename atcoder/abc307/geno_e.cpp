@@ -1,10 +1,8 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -79,17 +77,27 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, M;
+    cin >> N >> M;
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
+    ll p = 1;
+    rep(i, N) p *= M;
+
+    mint ans = 0;
+    rep(state, p) {
+        vint v;
+        ll tmp = state;
+        rep(i, N) {
+            v.push_back(tmp % M);
+            tmp /= M;
         }
+        v.push_back(v[0]);
+
+        int ok = 1;
+        rep(i, N) {
+            if (v[i] == v[i + 1]) ok = 0;
+        }
+        if (ok) ans++;
     }
+    cout << ans.val() << endl;
 }

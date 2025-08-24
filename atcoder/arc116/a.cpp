@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/arc116/tasks/arc116_a
+// 2025年08月17日 11時08分00秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,17 +79,22 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
-
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
+    auto cal = []() -> void {
+        ll N;
+        cin >> N;
+        string ans = "Same";
+        if (N % 2 == 1) {
+            ans = "Odd";
+        } else {
+            N /= 2;
+            if (N % 2 != 1) {
+                ans = "Even";
             }
         }
-    }
+        cout << ans << endl;
+    };
+
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }

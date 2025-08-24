@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/abc419/tasks/abc419_b
+// 2025年08月16日 21時01分44秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,17 +79,21 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll Q;
+    cin >> Q;
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
+    priority_queue<ll, vll, greater<ll>> pq;
+    rep(i, Q) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            ll x;
+            cin >> x;
+            pq.push(x);
+        } else {
+            ll x = pq.top();
+            pq.pop();
+            cout << x << endl;
         }
     }
 }

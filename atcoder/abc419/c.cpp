@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/abc419/tasks/abc419_c
+// 2025年08月16日 21時03分34秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,17 +79,29 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N;
+    cin >> N;
+    vll R(N), C(N);
+    rep(i, N) cin >> R[i] >> C[i];
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
-            }
-        }
+    ll targetR = 0, targetC = 0;
+    {
+        ll mx = *max_element(all(R));
+        ll mi = *min_element(all(R));
+        targetR = (mx + mi) / 2;
     }
+    {
+        ll mx = *max_element(all(C));
+        ll mi = *min_element(all(C));
+        targetC = (mx + mi) / 2;
+    }
+
+    ll ans = 0;
+    rep(i, N) {
+        ll l = abs(R[i] - targetR);
+        ll r = abs(C[i] - targetC);
+        chmax(ans, max(l, r));
+    }
+
+    cout << ans << endl;
 }

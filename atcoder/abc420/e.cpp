@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/arc137/tasks/arc137_a
-// 2025年08月03日 19時02分25秒
+// https://atcoder.jp/contests/abc420/tasks/abc420_e
+// 2025年08月24日 21時35分32秒
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,17 +79,48 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, Q;
+    cin >> N >> Q;
 
-    ll sz = R - L;
-    for (ll l = sz; l > 0; l--) {
-        rep2(i, L, R) {
-            if (i + l > R) break;
-            if (gcd(i, i + l) == 1) {
-                cout << l << endl;
-                return;
+    dsu uf(N);
+    vll cntb(N, 0);
+    vint color(N);
+
+    rep(i, Q) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            int u, v;
+            cin >> u >> v;
+            u--, v--;
+
+            if (uf.same(u, v)) {
+                continue;
             }
+            int l = uf.leader(u), r = uf.leader(v);
+            ll lnum = cntb[l], rnum = cntb[r];
+            int leader = uf.merge(u, v);
+            cntb[leader] = lnum + rnum;
+        } else if (t == 2) {
+            int v;
+            cin >> v;
+            v--;
+
+            int leader = uf.leader(v);
+            if (color[v] == 1) {
+                cntb[leader]--;
+            } else {
+                cntb[leader]++;
+            }
+
+            color[v] = 1 - color[v];
+        } else {
+            int v;
+            cin >> v;
+            v--;
+
+            int leader = uf.leader(v);
+            yesno(cntb[leader] > 0);
         }
     }
 }
