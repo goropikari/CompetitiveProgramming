@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc307/tasks/abc307_e
-// 2025年08月23日 19時27分48秒
+// https://atcoder.jp/contests/past202005-open/tasks/past202005_c
+// 2025年08月25日 23時06分41秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
-using mint = modint998244353;
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -75,24 +75,36 @@ int main() {
     return 0;
 }
 
+ll intpow(ll x, ll n) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret *= x;
+        x *= x;
+        n >>= 1;
+    }
+    return ret;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
+    ll A, R, N;
+    cin >> A >> R >> N;
 
-    // dp[i][f]: i 番目の数が 0 番目の数と同じ(f=1)/違う(f=0)ときの場合の数
-    vector dp(N, vector<mint>(2));
-    dp[0][1] = M;
-    rep2(i, 1, N) {
-        // i 番目は 0 番目と同じ数字になる、かつ、同じ数字が連続してはいけないので i-1 番目の数は 0 番目の数とは違う
-        dp[i][1] += dp[i - 1][0];
-
-        // i 番目が 0 番目と異なる数字のとき、i-1 番目の数は 0 番目と同じか異なるのどちらでもいける。
-        // i-1 番目の数が 0 番目と同じ時、i 番目の数は 0 番目とは違う M-1 通りが考えられる
-        // i-1 番目の数が 0 番目と異なる時、i 番目の数は 0 番目とは異なり i-1 番目の数とも異なるから M-2 通りが考えられる
-        dp[i][0] += dp[i - 1][1] * (M - 1) + dp[i - 1][0] * (M - 2);
+    if (R == 1) {
+        cout << A << endl;
+        return;
     }
-    cout << dp[N - 1][0].val() << endl;
+
+    ll ans = A;
+    rep(i, N - 1) {
+        ans *= R;
+        if (ans > (ll)1e9) {
+            cout << "large" << endl;
+            return;
+        }
+    }
+    cout << ans << endl;
 }
