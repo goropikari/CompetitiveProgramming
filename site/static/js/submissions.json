@@ -25582,5 +25582,17 @@
     "length": 1961,
     "result": "AC",
     "execution_time": 12
+  },
+  {
+    "id": 68864399,
+    "epoch_second": 1756382926,
+    "problem_id": "past202012_c",
+    "contest_id": "past202012-open",
+    "user_id": "goropikari",
+    "language": "C++ 23 (gcc 12.2)",
+    "point": 8.0,
+    "length": 2118,
+    "result": "AC",
+    "execution_time": 3
   }
 ]
