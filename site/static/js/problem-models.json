@@ -45538,5 +45538,15 @@
     "irt_loglikelihood": -635.7041514190645,
     "irt_users": 2543,
     "is_experimental": false
+  },
+  "ahc053_a": {
+    "slope": null,
+    "intercept": null,
+    "variance": null,
+    "difficulty": 3839,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -3.9611793276877543,
+    "irt_users": 878,
+    "is_experimental": false
   }
 }
