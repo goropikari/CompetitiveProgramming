@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc154/tasks/abc154_e
-// 2025年09月14日 18時28分19秒
+// https://atcoder.jp/contests/abc423/tasks/abc423_d
+// 2025年09月14日 21時21分30秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,31 +79,42 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string S;
-    ll K;
-    cin >> S >> K;
+    ll N, K;
+    cin >> N >> K;
 
-    ll N = S.size();
+    vll A(N), B(N), C(N);
+    rep(i, N) cin >> A[i] >> B[i] >> C[i];
 
-    // dp[is_less][# of non zero]
-    vector dp(2, vll(K + 2));
-    dp[0][0] = 1;
+    // 退出時間, 人数
+    using P = pair<ll, ll>;
+    priority_queue<P, vector<P>, greater<P>> pq;
 
-    rep(i, N) {
-        int t = S[i] - '0';
-        vector dpn(2, vll(K + 2));
+    ll nump = 0;
 
-        rep(d, 10) rep(is_less, 2) rep(num_non_zero, K + 1) {
-            if (!is_less && d > t) continue;
+    int id = 0;
 
-            int non_zero = d != 0;
-            int is_less_n = is_less || d < t;
+    vll ans(N);
 
-            dpn[is_less_n][num_non_zero + non_zero] += dp[is_less][num_non_zero];
-        }
-
-        swap(dp, dpn);
+    while (nump + C[id] <= K && id < N) {
+        pq.push({A[id] + B[id], C[id]});
+        ans[id] = A[id];
+        nump += C[id];
+        id++;
     }
 
-    cout << dp[0][K] + dp[1][K] << endl;
+    while (pq.size()) {
+        auto [exit_time, exit_num] = pq.top();
+        pq.pop();
+
+        nump -= exit_num;
+        while (nump + C[id] <= K && id < N) {
+            ll enter_time = max(A[id], exit_time);
+            pq.push({enter_time + B[id], C[id]});
+            nump += C[id];
+            ans[id] = enter_time;
+            id++;
+        }
+    }
+
+    for (ll x : ans) cout << x << '\n';
 }

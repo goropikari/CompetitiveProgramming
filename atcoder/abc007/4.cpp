@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc406/tasks/abc406_e
-// 2025年09月18日 01時27分42秒
+// https://atcoder.jp/contests/abc007/tasks/abc007_4
+// 2025年09月14日 18時39分07秒
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
-using mint = modint998244353;
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -79,61 +79,34 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    auto cal = []() -> void {
-        ll N, K;
-        cin >> N >> K;
+    auto f = [](ll X) -> ll {
+        string S = to_string(X);
+        int N = S.size();
 
-        int ndigit = 60;
-
-        vint bits;
-        {
-            ll tmp = N;
-            rep(i, ndigit) {
-                bits.push_back(tmp & 1);
-                tmp /= 2;
-            }
-        }
-
-        reverse(all(bits));
-
-        int M = K + 1;
-
-        // dp[is_less][num of one]
-        vector dp(2, vll(M));
-        // sumdp[is_less][num of one]
-        vector sumdp(2, vector<mint>(M));
-
+        // dp[is_less][used_banned_number]
+        vector dp(2, vll(2));
         dp[0][0] = 1;
 
-        rep(i, ndigit) {
-            int t = bits[i];
-            vector dpn(2, vll(M));
-            vector sumdpn(2, vector<mint>(M));
+        rep(i, N) {
+            int t = S[i] - '0';
+            vector dpn(2, vll(2));
 
-            rep(d, 2) rep(is_less, 2) rep(num, M) {
+            rep(d, 10) rep(is_less, 2) rep(used, 2) {
                 if (!is_less && d > t) continue;
-                if (dp[is_less][num] == 0) continue;
-
-                int num_n = num + (d == 1);
-                if (num_n > K) continue;
 
                 int is_less_n = is_less || d < t;
-
-                ll cur_cnt = dp[is_less][num];
-                mint cur_sum = sumdp[is_less][num];
-
-                dpn[is_less_n][num_n] += cur_cnt;
-                sumdpn[is_less_n][num_n] += cur_sum * 2 + cur_cnt * d;
+                int used_n = used || d == 4 || d == 9;
+                dpn[is_less_n][used_n] += dp[is_less][used];
             }
 
             swap(dp, dpn);
-            swap(sumdp, sumdpn);
         }
 
-        cout << (sumdp[0][K] + sumdp[1][K]).val() << '\n';
+        return dp[0][1] + dp[1][1];
     };
 
-    int t;
-    cin >> t;
-    rep(i, t) cal();
+    ll A, B;
+    cin >> A >> B;
+
+    cout << f(B) - f(A - 1) << endl;
 }

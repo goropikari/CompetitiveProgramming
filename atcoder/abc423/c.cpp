@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc154/tasks/abc154_e
-// 2025年09月14日 18時28分19秒
+// https://atcoder.jp/contests/abc423/tasks/abc423_c
+// 2025年09月14日 21時07分39秒
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -79,31 +79,39 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string S;
-    ll K;
-    cin >> S >> K;
+    ll N, R;
+    cin >> N >> R;
 
-    ll N = S.size();
+    vint keys(N);
+    rep(i, N) cin >> keys[i];
 
-    // dp[is_less][# of non zero]
-    vector dp(2, vll(K + 2));
-    dp[0][0] = 1;
+    fenwick_tree<ll> fw(N);
+    rep(i, N) fw.add(i, keys[i]);
 
-    rep(i, N) {
-        int t = S[i] - '0';
-        vector dpn(2, vll(K + 2));
+    ll lid = INF, rid = -1;
 
-        rep(d, 10) rep(is_less, 2) rep(num_non_zero, K + 1) {
-            if (!is_less && d > t) continue;
-
-            int non_zero = d != 0;
-            int is_less_n = is_less || d < t;
-
-            dpn[is_less_n][num_non_zero + non_zero] += dp[is_less][num_non_zero];
+    rep(i, R) {
+        if (keys[i] == 0) {
+            lid = i;
+            break;
         }
-
-        swap(dp, dpn);
+    }
+    rep2(i, R, N) {
+        if (keys[i] == 0) rid = i;
     }
 
-    cout << dp[0][K] + dp[1][K] << endl;
+    ll ans = 0;
+
+    if (lid != INF) {
+        ll w = R - lid;
+        ll cnt = fw.sum(lid, R);
+        ans += w + cnt;
+    }
+
+    if (rid != -1) {
+        ll w = rid + 1 - R;
+        ll cnt = fw.sum(R, rid + 1);
+        ans += w + cnt;
+    }
+    cout << ans << endl;
 }

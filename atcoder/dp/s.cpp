@@ -1,10 +1,12 @@
 // https://atcoder.jp/contests/dp/tasks/dp_s
-// 2025年06月07日 19時44分37秒
+// 2025年09月14日 18時01分35秒
 #include <bits/stdc++.h>
+using namespace std;
 #include <atcoder/all>
 using namespace atcoder;
 // using mint = modint998244353;
 using mint = modint1000000007;
+// using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
 #include <boost/multiprecision/cpp_int.hpp>
@@ -14,9 +16,6 @@ using int128 = int128_t;
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
-#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -59,6 +58,16 @@ void No() {
     yesno(false);
 }
 
+// ceil(a/b)
+ll ceil(ll a, ll b) {
+    return (a + b - 1) / b;
+}
+
+// floor(a/b)
+ll floor(ll a, ll b) {
+    return a / b;
+}
+
 void solve();
 
 int main() {
@@ -74,27 +83,25 @@ void solve() {
     ll D;
     cin >> K >> D;
 
-    int N = K.size();
+    ll N = K.size();
 
-    // dp[i][j][k]: 左から i 桁までは見て K 未満であることが確定して(j=0 いなくて, j=1 いて) 桁の総和の mod D が k となる場合の数
-    vector dp(N + 1, vector(2, vector<mint>(D)));
-    dp[0][0][0] = 1;
+    // dp[is_less][mod]
+    vector dp(2, vector<mint>(D));
+    dp[0][0] = 1;
 
-    rep2(i, 1, N + 1) {
-        int t = K[i - 1] - '0';
+    rep(i, N) {
+        vector dpn(2, vector<mint>(D));
+        int t = K[i] - '0';
 
-        rep(d, 10) {
-            rep(k, D) {
-                if (d < t) {
-                    dp[i][1][(d + k) % D] += dp[i - 1][0][k];
-                }
-                if (d == t) {
-                    dp[i][0][(d + k) % D] += dp[i - 1][0][k];
-                }
-                dp[i][1][(d + k) % D] += dp[i - 1][1][k];
-            }
+        rep(d, 10) rep(is_less, 2) rep(m, D) {
+            if (!is_less && d > t) continue;
+            int is_less_n = is_less || d < t;
+            int r = (d + m) % D;
+            dpn[is_less_n][r] += dp[is_less][m];
         }
+
+        swap(dp, dpn);
     }
 
-    cout << (dp[N][0][0] + dp[N][1][0] - 1).val() << endl;
+    cout << (dp[0][0] + dp[1][0] - 1).val() << endl;
 }

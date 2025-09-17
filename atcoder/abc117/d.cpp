@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc117/tasks/abc117_d
-// 2025年06月10日 18時32分56秒
+// 2025年09月15日 03時02分56秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -16,8 +16,6 @@ using int128 = int128_t;
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
-#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -60,6 +58,16 @@ void No() {
     yesno(false);
 }
 
+// ceil(a/b)
+ll ceil(ll a, ll b) {
+    return (a + b - 1) / b;
+}
+
+// floor(a/b)
+ll floor(ll a, ll b) {
+    return a / b;
+}
+
 void solve();
 
 int main() {
@@ -71,56 +79,52 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int m = 60;
+
+    auto f = [&](ll x) -> vint {
+        vint v;
+        rep(i, m) {
+            v.push_back(x % 2);
+            x /= 2;
+        }
+        reverse(all(v));
+        return v;
+    };
+
     ll N, K;
     cin >> N >> K;
-    vll A(N);
-    rep(i, N) cin >> A[i];
 
-    vint Kbit;
-    vvint Abit(N);
-    int mx = 60;
-
-    {
-        ll t = K;
-        rep(i, mx) {
-            Kbit.push_back(t % 2);
-            t /= 2;
-        }
-        reverse(all(Kbit));
-
-        rep(i, N) {
-            ll a = A[i];
-            rep(j, mx) {
-                Abit[i].push_back(a % 2);
-                a /= 2;
-            }
-            reverse(all(Abit[i]));
-        }
+    vint kbit = f(K);
+    vvint abits(N);
+    rep(i, N) {
+        ll a;
+        cin >> a;
+        abits[i] = f(a);
     }
 
-    vector dp(mx + 1, vll(2));
-    rep2(i, 1, mx + 1) {
-        int t = Kbit[i - 1];
-        ll cnt = 0;
-        rep(j, N) {
-            cnt += Abit[j][i - 1];
+    // dp[is_less]
+    vll dp(2, -1);
+    dp[0] = 0;
+
+    rep(i, m) {
+        int t = kbit[i];
+        vll dpn(2, -1);
+
+        rep(d, 2) rep(is_less, 2) {
+            if (!is_less && d > t) continue;  // K 超える数は NG
+            if (dp[is_less] == -1) continue;  // 未到達な状態からの遷移は NG
+            int is_less_n = is_less || d < t;
+
+            ll cnt = 0;
+            for (vint& a : abits) {
+                cnt += a[i] ^ d;
+            }
+
+            chmax(dpn[is_less_n], dp[is_less] * 2 + cnt);
         }
 
-        rep(d, 2) {
-            if (d < t) {
-                chmax(dp[i][1], dp[i - 1][0] * 2 + cnt);
-            }
-            if (d == t) {
-                if (d == 0)
-                    chmax(dp[i][0], dp[i - 1][0] * 2 + cnt);
-                else
-                    chmax(dp[i][0], dp[i - 1][0] * 2 + N - cnt);
-            }
-            if (dp[i - 1][1]) {
-                chmax(dp[i][1], dp[i - 1][1] * 2 + max(N - cnt, cnt));
-            }
-        }
+        swap(dp, dpn);
     }
 
-    cout << max(dp[mx][0], dp[mx][1]) << endl;
+    cout << max(dp[0], dp[1]) << endl;
 }

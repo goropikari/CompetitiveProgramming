@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc154/tasks/abc154_e
-// 2025年09月14日 18時28分19秒
+// https://atcoder.jp/contests/abc336/tasks/abc336_e
+// 2025年09月18日 03時35分12秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,31 +79,49 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string S;
-    ll K;
-    cin >> S >> K;
+    ll N;
+    cin >> N;
 
-    ll N = S.size();
+    vint v;
+    {
+        ll tmp = N;
+        while (tmp) {
+            v.push_back(tmp % 10);
+            tmp /= 10;
+        }
+        reverse(all(v));
+    }
 
-    // dp[is_less][# of non zero]
-    vector dp(2, vll(K + 2));
-    dp[0][0] = 1;
+    // 桁和の最大値 9*14=126
+    int max_sum = 9 * 14;
+    int MOD = max_sum + 1;
 
-    rep(i, N) {
-        int t = S[i] - '0';
-        vector dpn(2, vll(K + 2));
+    // dp[is_less][sum of digit][m][mod]
+    vector dp(2, vector(max_sum + 1, vector(MOD, vll(MOD))));
+    rep(i, MOD) dp[0][0][i][0] = 1;
+    int L = v.size();
 
-        rep(d, 10) rep(is_less, 2) rep(num_non_zero, K + 1) {
+    rep(i, L) {
+        int t = v[i];
+        vector dpn(2, vector(max_sum + 1, vector(MOD, vll(MOD))));
+
+        rep(d, 10) rep(is_less, 2) rep(sum, max_sum + 1) rep2(div, 1, MOD) rep(mod, MOD) {
             if (!is_less && d > t) continue;
+            if (dp[is_less][sum][div][mod] == 0) continue;
 
-            int non_zero = d != 0;
             int is_less_n = is_less || d < t;
+            int sum_n = sum + d;
+            int rem_n = (mod * 10 + d) % div;
 
-            dpn[is_less_n][num_non_zero + non_zero] += dp[is_less][num_non_zero];
+            dpn[is_less_n][sum_n][div][rem_n] += dp[is_less][sum][div][mod];
         }
 
         swap(dp, dpn);
     }
 
-    cout << dp[0][K] + dp[1][K] << endl;
+    ll ans = 0;
+    rep2(sum, 1, max_sum + 1) rep(is_less, 2) {
+        ans += dp[is_less][sum][sum][0];
+    }
+    cout << ans << endl;
 }

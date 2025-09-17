@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc154/tasks/abc154_e
-// 2025年09月14日 18時28分19秒
+// https://atcoder.jp/contests/abc423/tasks/abc423_b
+// 2025年09月14日 21時03分42秒
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,31 +79,31 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string S;
-    ll K;
-    cin >> S >> K;
+    ll N;
+    cin >> N;
 
-    ll N = S.size();
+    vint keys(N);
+    rep(i, N) cin >> keys[i];
 
-    // dp[is_less][# of non zero]
-    vector dp(2, vll(K + 2));
-    dp[0][0] = 1;
+    vll visited(N + 1);
+    visited[0] = visited[N] = 1;
 
     rep(i, N) {
-        int t = S[i] - '0';
-        vector dpn(2, vll(K + 2));
-
-        rep(d, 10) rep(is_less, 2) rep(num_non_zero, K + 1) {
-            if (!is_less && d > t) continue;
-
-            int non_zero = d != 0;
-            int is_less_n = is_less || d < t;
-
-            dpn[is_less_n][num_non_zero + non_zero] += dp[is_less][num_non_zero];
+        if (keys[i] == 0) {
+            visited[i + 1] = 1;
+        } else {
+            break;
         }
-
-        swap(dp, dpn);
     }
 
-    cout << dp[0][K] + dp[1][K] << endl;
+    for (int i = N - 1; i >= 0; i--) {
+        if (keys[i] == 0)
+            visited[i] = 1;
+        else
+            break;
+    }
+
+    ll cnt = 0;
+    rep(i, N + 1) if (!visited[i]) cnt++;
+    cout << cnt << endl;
 }

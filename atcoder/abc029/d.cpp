@@ -1,10 +1,12 @@
 // https://atcoder.jp/contests/abc029/tasks/abc029_d
-// 2025年06月08日 16時27分37秒
+// 2025年09月14日 18時17分44秒
 #include <bits/stdc++.h>
-#include <atcoder/all>
-using namespace atcoder;
+using namespace std;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
-using mint = modint1000000007;
+// using mint = modint1000000007;
+// using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
 #include <boost/multiprecision/cpp_int.hpp>
@@ -14,9 +16,6 @@ using int128 = int128_t;
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-#define repinc(i, n, inc) for (long long int i = (k); i < (n); i += (inc))
-#define OUTSIDE(i, j, h, w) (((i) < 0) || ((i) >= (h)) || ((j) < 0) || ((j) >= (w)))
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -59,6 +58,16 @@ void No() {
     yesno(false);
 }
 
+// ceil(a/b)
+ll ceil(ll a, ll b) {
+    return (a + b - 1) / b;
+}
+
+// floor(a/b)
+ll floor(ll a, ll b) {
+    return a / b;
+}
+
 void solve();
 
 int main() {
@@ -70,37 +79,33 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string N;
-    cin >> N;
+    string S;
+    cin >> S;
 
-    int sz = N.size();
+    int N = S.size();
 
-    int mx = 15;
-    vector dp(sz + 1, vector(2, vector<mint>(mx)));
-    dp[0][0][0] = 1;
+    // dp[is_less][num of one]
+    vector dp(2, vll(15));
+    dp[0][0] = 1;
 
-    rep2(i, 1, sz + 1) {
-        int t = N[i - 1] - '0';
-        rep(d, 10) {
-            bool is_one = d == 1;
-            rep(c, mx) {
-                if (d < t) {
-                    dp[i][1][c + is_one] += dp[i - 1][0][c];
-                }
-                if (d == t) {
-                    dp[i][0][c + is_one] += dp[i - 1][0][c];
-                }
-                dp[i][1][c + is_one] += dp[i - 1][1][c];
-            }
+    rep(i, N) {
+        int t = S[i] - '0';
+        vector dpn(2, vll(15));
+
+        rep(d, 10) rep(is_less, 2) rep(num, 10) {
+            if (!is_less && d > t) continue;
+
+            int is_less_n = is_less || d < t;
+            int add = d == 1;
+            dpn[is_less_n][num + add] += dp[is_less][num];
         }
+
+        swap(dp, dpn);
     }
 
-    mint ans = 0;
-    rep2(c, 1, mx) {
-        ans += dp[sz][1][c] * c;
+    ll ans = 0;
+    rep(num, 10) {
+        ans += (dp[0][num] + dp[1][num]) * num;
     }
-    for (char c : N) {
-        if (c == '1') ans++;
-    }
-    cout << ans.val() << endl;
+    cout << ans << endl;
 }

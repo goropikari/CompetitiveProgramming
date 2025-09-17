@@ -591,3 +591,36 @@ void solve() {
     cout << (dp[N][0][0] + dp[N][1][0] - 1).val() << endl;
 }
 ```
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string K;
+    ll D;
+    cin >> K >> D;
+
+    ll N = K.size();
+
+    // dp[is_less][mod]
+    vector dp(2, vector<mint>(D));
+    dp[0][0] = 1;
+
+    rep(i, N) {
+        int t = K[i] - '0';
+        vector dpn(2, vector<mint>(D));
+        rep(d, 10) rep(is_less, 2) rep(k, D) {
+            if (!is_less && d > t) continue;
+
+            int is_less_n = is_less || d < t;
+            int m = (d + k) % D;
+            dpn[is_less_n][m] += dp[is_less][k];
+        }
+
+        swap(dp, dpn);
+    }
+
+    cout << (dp[0][0] + dp[1][0] - 1).val() << endl;
+}
+```
