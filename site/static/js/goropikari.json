@@ -790,5 +790,29 @@
         "ContestName": "AtCoder Beginner Contest 420",
         "ContestNameEn": "",
         "EndTime": "2025-08-24T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 1898,
+        "OldRating": 1210,
+        "NewRating": 1206,
+        "Performance": 1164,
+        "InnerPerformance": 1164,
+        "ContestScreenName": "abc423.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 423",
+        "ContestNameEn": "",
+        "EndTime": "2025-09-14T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 3681,
+        "OldRating": 1206,
+        "NewRating": 1168,
+        "Performance": 760,
+        "InnerPerformance": 760,
+        "ContestScreenName": "abc424.contest.atcoder.jp",
+        "ContestName": "AtCoder × Engineer Guild オンサイトコンテスト ～集結！高レート人材～予選（AtCoder Beginner Contest 424）",
+        "ContestNameEn": "AtCoder Beginner Contest 424",
+        "EndTime": "2025-09-20T22:40:00+09:00"
     }
 ]
