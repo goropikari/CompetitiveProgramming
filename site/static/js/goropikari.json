@@ -814,5 +814,17 @@
         "ContestName": "AtCoder × Engineer Guild オンサイトコンテスト ～集結！高レート人材～予選（AtCoder Beginner Contest 424）",
         "ContestNameEn": "AtCoder Beginner Contest 424",
         "EndTime": "2025-09-20T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 2193,
+        "OldRating": 1168,
+        "NewRating": 1163,
+        "Performance": 1120,
+        "InnerPerformance": 1120,
+        "ContestScreenName": "abc425.contest.atcoder.jp",
+        "ContestName": "ユニークビジョンプログラミングコンテスト2025 秋（AtCoder Beginner Contest 425）",
+        "ContestNameEn": "UNIQUE VISION Programming Contest 2025 Autumn (AtCoder Beginner Contest 425)",
+        "EndTime": "2025-09-27T22:40:00+09:00"
     }
 ]
