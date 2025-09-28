@@ -45548,5 +45548,125 @@
     "irt_loglikelihood": -3.9611793276877543,
     "irt_users": 878,
     "is_experimental": false
+  },
+  "arc206_a": {
+    "slope": -0.0009998473258786276,
+    "intercept": 8.286231882815802,
+    "variance": 0.5626622881494914,
+    "difficulty": 554,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -474.6696690873378,
+    "irt_users": 1401,
+    "is_experimental": false
+  },
+  "arc206_b": {
+    "slope": -0.0010293545070299214,
+    "intercept": 8.633346136108038,
+    "variance": 0.3965687545834636,
+    "difficulty": 1059,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -583.0799396242832,
+    "irt_users": 1401,
+    "is_experimental": false
+  },
+  "arc206_c": {
+    "slope": -0.0008687458910032449,
+    "intercept": 9.146378513728775,
+    "variance": 0.26547485105294993,
+    "difficulty": 1461,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -641.1986938557021,
+    "irt_users": 1401,
+    "is_experimental": false
+  },
+  "arc206_d": {
+    "slope": -0.0003799532902280654,
+    "intercept": 8.773532282825775,
+    "variance": 0.18830383832751205,
+    "difficulty": 1930,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -530.2873942496848,
+    "irt_users": 1401,
+    "is_experimental": false
+  },
+  "arc206_e": {
+    "slope": -0.00033029101661986534,
+    "intercept": 9.086841836041732,
+    "variance": 0.10062164129727823,
+    "difficulty": 2902,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -76.67270057889979,
+    "irt_users": 1401,
+    "is_experimental": false
+  },
+  "abc425_a": {
+    "slope": -0.000938144077050698,
+    "intercept": 6.151115384307743,
+    "variance": 0.8380419454893493,
+    "difficulty": -968,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -387.1928776242836,
+    "irt_users": 6696,
+    "is_experimental": false
+  },
+  "abc425_b": {
+    "slope": -0.0010465637670656746,
+    "intercept": 7.20265091712114,
+    "variance": 0.42065311645384335,
+    "difficulty": -233,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -1445.287837074474,
+    "irt_users": 6696,
+    "is_experimental": false
+  },
+  "abc425_c": {
+    "slope": -0.0010706412058880826,
+    "intercept": 7.716146444388489,
+    "variance": 0.4485367828464637,
+    "difficulty": 304,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -3755.5587043659907,
+    "irt_users": 7938,
+    "is_experimental": false
+  },
+  "abc425_d": {
+    "slope": -0.0007242215046149756,
+    "intercept": 8.167824465095324,
+    "variance": 0.2697467134858093,
+    "difficulty": 882,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -3503.2785021819936,
+    "irt_users": 7938,
+    "is_experimental": false
+  },
+  "abc425_e": {
+    "slope": -0.0006148141354223171,
+    "intercept": 7.977189276811502,
+    "variance": 0.5833595650261362,
+    "difficulty": 1221,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -2893.8127586413552,
+    "irt_users": 7938,
+    "is_experimental": false
+  },
+  "abc425_f": {
+    "slope": -0.0004772414647682762,
+    "intercept": 8.033034038449193,
+    "variance": 0.5095541777704896,
+    "difficulty": 1831,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -1218.8286905844577,
+    "irt_users": 7938,
+    "is_experimental": false
+  },
+  "abc425_g": {
+    "slope": -0.00011600459716700329,
+    "intercept": 7.793313517526164,
+    "variance": 0.31869218609541805,
+    "difficulty": 2205,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -560.4533407381919,
+    "irt_users": 7938,
+    "is_experimental": false
   }
 }
