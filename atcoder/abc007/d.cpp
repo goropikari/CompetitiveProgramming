@@ -108,8 +108,6 @@ void solve() {
 
         return ret;
     };
-    // cout << cal(B) << endl;
-    // cout << cal(A) << endl;
 
     cout << cal(B) - cal(to_string(stoll(A) - 1)) << endl;
 }

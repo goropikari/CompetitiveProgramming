@@ -1,4 +1,7 @@
 ```bash
+# https://gohugo.io/installation/linux/
+CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest
+
 npm install markdownlint-cli2 --global
 cargo install cbfmt
 sudo apt install -y clang-format
