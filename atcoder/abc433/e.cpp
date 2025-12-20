@@ -73,10 +73,11 @@ void solve() {
         rep(i, N) cin >> X[i];
         rep(i, M) cin >> Y[i];
 
+        ll mat_sz = N * M;
+
         vvll upper_grid(N, vll(M)), ans(N, vll(M));
-        ll mx = N * M + 1;
-        vll kakutei(mx);
-        vector<vector<pair<ll, ll>>> cand(mx);
+        vll kakutei(mat_sz + 1);
+        vector<vector<pair<ll, ll>>> cand(mat_sz + 1);
         rep(i, N) rep(j, M) {
             ll mi = min(X[i], Y[j]);
             upper_grid[i][j] = mi;
@@ -94,45 +95,41 @@ void solve() {
             for (auto x : Y) appear.insert(x);
         }
 
-        for (ll x = mx; x > 0; x--) {
+        for (ll x = mat_sz; x > 0; x--) {
             if (kakutei[x]) continue;
             if (appear.count(x)) {
-                vector<tuple<ll, ll, ll>> tmp;
                 for (auto [i, j] : cand[x]) {
                     if (ans[i][j]) continue;
-                    tmp.emplace_back(max(X[i], Y[j]), i, j);
-                }
-                sort(rall(tmp));
-                for (auto [_, i, j] : tmp) {
-                    kakutei[x] = 1;
                     ans[i][j] = x;
+                    kakutei[x] = 1;
                     break;
                 }
             }
         }
 
-        vector<tuple<ll, ll, ll>> tmp;
-        rep(i, N) rep(j, M) {
-            if (!ans[i][j]) {
-                tmp.emplace_back(upper_grid[i][j], i, j);
+        {
+            vector<tuple<ll, ll, ll>> tmp;
+            rep(i, N) rep(j, M) {
+                if (!ans[i][j]) tmp.emplace_back(upper_grid[i][j], i, j);
             }
-        }
-        sort(all(tmp));
-        ll target = mx - 1;
-        while (target > 0 && tmp.size()) {
-            if (kakutei[target]) {
-                target--;
-                continue;
-            }
+            sort(all(tmp));
 
-            auto [_, i, j] = tmp.back();
-            tmp.pop_back();
-            ans[i][j] = target;
-            target--;
+            int now = mat_sz;
+            while (now) {
+                if (kakutei[now]) {
+                    now--;
+                    continue;
+                }
+                if (!tmp.size()) break;
+                auto [_, i, j] = tmp.back();
+                tmp.pop_back();
+                ans[i][j] = now;
+                now--;
+            }
         }
 
         auto check = [&](vvll& grid) -> bool {
-            vint used(mx);
+            vint used(mat_sz + 1);
             vll x(N), y(M);
             rep(i, N) rep(j, M) {
                 chmax(x[i], grid[i][j]);

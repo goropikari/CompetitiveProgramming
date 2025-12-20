@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc433/tasks/abc433_d
-// Sat 22 Nov 2025 09:12:14 PM JST
+// https://atcoder.jp/contests/abc434/tasks/abc434_c
+// Sun 30 Nov 2025 06:54:33 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -61,50 +61,43 @@ int main() {
     return 0;
 }
 
-using mint = modint;
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
-    vector<ll> A(N);
-    rep(i, N) cin >> A[i];
+    auto cal = []() -> void {
+        ll N, H;
+        cin >> N >> H;
 
-    modint::set_mod(M);
-
-    int upper_pow = 11;
-    vector<mint> mtens(upper_pow);
-    {
-        mint mtenp = 1;
-        rep(i, upper_pow) {
-            mtens[i] = mtenp;
-            mtenp *= 10;
-        }
-    }
-
-    vvll leftp(upper_pow), rightp(upper_pow);
-    for (auto a : A) {
-        mint x = a;
-        rep2(i, 1, upper_pow) {
-            leftp[i].push_back((x * mtens[i]).val());
+        vector<tuple<ll, ll, ll>> times;
+        rep(i, N) {
+            ll t, l, u;
+            cin >> t >> l >> u;
+            times.emplace_back(t, l, u);
         }
 
-        rightp[to_string(a).size()].push_back(x.val());
-    }
+        int ok = 1;
+        ll now = 0, l = H, u = H;
+        for (auto [tt, tl, tu] : times) {
+            ll dt = tt - now;
+            l = max(1ll, l - dt);
+            u += dt;
 
-    rep2(i, 1, upper_pow) {
-        sort(all(leftp[i]));
-        sort(all(rightp[i]));
-    }
+            if (tu < l || u < tl) {
+                ok = 0;
+                break;
+            }
 
-    ll ans = 0;
-    rep2(i, 1, upper_pow) {
-        for (auto k : rightp[i]) {
-            ll target = (M - k) % M;
-            ans += lower_bound(all(leftp[i]), target + 1) - lower_bound(all(leftp[i]), target);
+            chmax(l, tl);
+            chmin(u, tu);
+
+            now = tt;
         }
-    }
-    cout << ans << endl;
+
+        yesno(ok);
+    };
+
+    int t;
+    cin >> t;
+    rep(i, t) cal();
 }

@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc433/tasks/abc433_d
-// Sat 22 Nov 2025 09:12:14 PM JST
+// https://atcoder.jp/contests/abc437/tasks/abc437_e
+// Sat 20 Dec 2025 09:26:22 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -61,50 +61,41 @@ int main() {
     return 0;
 }
 
-using mint = modint;
+struct Node {
+    vll ids;
+    map<ll, Node*> next_node;
+};
 
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
-    vector<ll> A(N);
-    rep(i, N) cin >> A[i];
+    ll N;
+    cin >> N;
+    vector<Node*> nodes(N + 1, new Node());
 
-    modint::set_mod(M);
-
-    int upper_pow = 11;
-    vector<mint> mtens(upper_pow);
-    {
-        mint mtenp = 1;
-        rep(i, upper_pow) {
-            mtens[i] = mtenp;
-            mtenp *= 10;
+    rep(i, N) {
+        int id = i + 1;
+        ll x, y;
+        cin >> x >> y;
+        Node* node = nodes[x];
+        auto& next_node = node->next_node;
+        if (next_node.count(y)) {
+            next_node[y]->ids.push_back(id);
+        } else {
+            Node* tmp_node = new Node();
+            tmp_node->ids.push_back(id);
+            next_node[y] = tmp_node;
         }
+        nodes[id] = next_node[y];
     }
 
-    vvll leftp(upper_pow), rightp(upper_pow);
-    for (auto a : A) {
-        mint x = a;
-        rep2(i, 1, upper_pow) {
-            leftp[i].push_back((x * mtens[i]).val());
-        }
+    vll ans;
+    auto dfs = [&](auto dfs, Node* now) -> void {
+        for (auto x : now->ids) ans.push_back(x);
+        for (auto [k, v] : now->next_node) dfs(dfs, v);
+    };
+    dfs(dfs, nodes[0]);
 
-        rightp[to_string(a).size()].push_back(x.val());
-    }
-
-    rep2(i, 1, upper_pow) {
-        sort(all(leftp[i]));
-        sort(all(rightp[i]));
-    }
-
-    ll ans = 0;
-    rep2(i, 1, upper_pow) {
-        for (auto k : rightp[i]) {
-            ll target = (M - k) % M;
-            ans += lower_bound(all(leftp[i]), target + 1) - lower_bound(all(leftp[i]), target);
-        }
-    }
-    cout << ans << endl;
+    print(ans);
 }

@@ -342,29 +342,29 @@ int lcm(int a, int b) {
 $\floor{\sqrt[\leftroot{-3}\uproot{3}k]{x}}$ を求める関数
 
 ```cpp
-    using Int = unsigned long long int;
+using Int = unsigned long long int;
 
-    auto kth_root = [](Int x, Int k) -> Int {
-        assert(k != 0);
-        if (x == 1 || k == 1) return x;
-        Int l = 0, r = x;
-        while (r - l > 1) {
-            Int m = (r - l) / 2 + l;
-            Int t = x;
-            rep(i, k) t /= m;
-            if (1 > t) {
-                r = m;
-            } else {
-                l = m;
-            }
+auto kth_root = [](Int x, Int k) -> Int {
+    assert(k != 0);
+    if (x == 1 || k == 1) return x;
+    Int l = 0, r = x;
+    while (r - l > 1) {
+        Int m = (r - l) / 2 + l;
+        Int t = x;
+        rep(i, k) t /= m;
+        if (1 > t) {
+            r = m;
+        } else {
+            l = m;
         }
-        return l;
-    };
+    }
+    return l;
+};
 
-    // 平方根
-    auto isqrt = [&](Int x) -> Int {
-        return kth_root(x, 2);
-    };
+// 平方根
+auto isqrt = [&](Int x) -> Int {
+    return kth_root(x, 2);
+};
 ```
 
 ref

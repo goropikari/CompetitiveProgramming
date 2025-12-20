@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc433/tasks/abc433_d
-// Sat 22 Nov 2025 09:12:14 PM JST
+// https://atcoder.jp/contests/abc435/tasks/abc435_b
+// Thu 18 Dec 2025 09:08:44 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -61,50 +61,27 @@ int main() {
     return 0;
 }
 
-using mint = modint;
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
-    vector<ll> A(N);
+    ll N;
+    cin >> N;
+
+    vll A(N);
     rep(i, N) cin >> A[i];
 
-    modint::set_mod(M);
-
-    int upper_pow = 11;
-    vector<mint> mtens(upper_pow);
-    {
-        mint mtenp = 1;
-        rep(i, upper_pow) {
-            mtens[i] = mtenp;
-            mtenp *= 10;
-        }
-    }
-
-    vvll leftp(upper_pow), rightp(upper_pow);
-    for (auto a : A) {
-        mint x = a;
-        rep2(i, 1, upper_pow) {
-            leftp[i].push_back((x * mtens[i]).val());
-        }
-
-        rightp[to_string(a).size()].push_back(x.val());
-    }
-
-    rep2(i, 1, upper_pow) {
-        sort(all(leftp[i]));
-        sort(all(rightp[i]));
-    }
+    fenwick_tree<ll> fw(N);
+    rep(i, N) fw.add(i, A[i]);
 
     ll ans = 0;
-    rep2(i, 1, upper_pow) {
-        for (auto k : rightp[i]) {
-            ll target = (M - k) % M;
-            ans += lower_bound(all(leftp[i]), target + 1) - lower_bound(all(leftp[i]), target);
+    rep(i, N) rep2(j, i, N) {
+        ll sum = fw.sum(i, j + 1);
+        int div = 0;
+        rep2(k, i, j + 1) {
+            if (sum % A[k] == 0) div = 1;
         }
+        if (!div) ans++;
     }
     cout << ans << endl;
 }

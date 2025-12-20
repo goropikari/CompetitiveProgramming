@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc433/tasks/abc433_d
-// Sat 22 Nov 2025 09:12:14 PM JST
+// https://atcoder.jp/contests/abc436/tasks/abc436_b
+// Mon 15 Dec 2025 12:06:55 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -61,50 +61,39 @@ int main() {
     return 0;
 }
 
-using mint = modint;
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
-    vector<ll> A(N);
-    rep(i, N) cin >> A[i];
+    ll N;
+    cin >> N;
+    modint::set_mod(N);
+    using mint = modint;
 
-    modint::set_mod(M);
+    vvll grid(N, vll(N));
+    queue<pair<int, int>> que;
+    que.push({0, (N - 1) / 2});
 
-    int upper_pow = 11;
-    vector<mint> mtens(upper_pow);
-    {
-        mint mtenp = 1;
-        rep(i, upper_pow) {
-            mtens[i] = mtenp;
-            mtenp *= 10;
+    grid[0][(N - 1) / 2] = 1;
+
+    int nx = 2;
+
+    int rem = N * N - 1;
+    while (rem) {
+        auto [tr, tc] = que.front();
+        mint r = tr, c = tc;
+        que.pop();
+        if (grid[(r - 1).val()][(c + 1).val()] == 0) {
+            grid[(r - 1).val()][(c + 1).val()] = nx;
+            que.push({(r - 1).val(), (c + 1).val()});
+        } else {
+            grid[(r + 1).val()][c.val()] = nx;
+            que.push({(r + 1).val(), c.val()});
         }
+
+        nx++;
+        rem--;
     }
 
-    vvll leftp(upper_pow), rightp(upper_pow);
-    for (auto a : A) {
-        mint x = a;
-        rep2(i, 1, upper_pow) {
-            leftp[i].push_back((x * mtens[i]).val());
-        }
-
-        rightp[to_string(a).size()].push_back(x.val());
-    }
-
-    rep2(i, 1, upper_pow) {
-        sort(all(leftp[i]));
-        sort(all(rightp[i]));
-    }
-
-    ll ans = 0;
-    rep2(i, 1, upper_pow) {
-        for (auto k : rightp[i]) {
-            ll target = (M - k) % M;
-            ans += lower_bound(all(leftp[i]), target + 1) - lower_bound(all(leftp[i]), target);
-        }
-    }
-    cout << ans << endl;
+    for (auto v : grid) print(v);
 }

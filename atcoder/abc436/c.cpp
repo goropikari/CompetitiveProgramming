@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc433/tasks/abc433_d
-// Sat 22 Nov 2025 09:12:14 PM JST
+// https://atcoder.jp/contests/abc436/tasks/abc436_c
+// Mon 15 Dec 2025 12:16:57 AM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -61,50 +61,32 @@ int main() {
     return 0;
 }
 
-using mint = modint;
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
     ll N, M;
     cin >> N >> M;
-    vector<ll> A(N);
-    rep(i, N) cin >> A[i];
+    set<pair<ll, ll>> mass;
 
-    modint::set_mod(M);
+    auto check = [&](ll r, ll c) -> bool {
+        if (clamp(r + 1, 0ll, N - 1) != r + 1 || clamp(c + 1, 0ll, N - 1) != c + 1) return false;
 
-    int upper_pow = 11;
-    vector<mint> mtens(upper_pow);
-    {
-        mint mtenp = 1;
-        rep(i, upper_pow) {
-            mtens[i] = mtenp;
-            mtenp *= 10;
+        rep(i, 2) rep(j, 2) {
+            if (mass.count({r + i, c + j})) return false;
+        }
+        return true;
+    };
+
+    rep(i, M) {
+        ll r, c;
+        cin >> r >> c;
+        r--, c--;
+
+        if (check(r, c)) {
+            rep(i, 2) rep(j, 2) mass.insert({r + i, c + j});
         }
     }
 
-    vvll leftp(upper_pow), rightp(upper_pow);
-    for (auto a : A) {
-        mint x = a;
-        rep2(i, 1, upper_pow) {
-            leftp[i].push_back((x * mtens[i]).val());
-        }
-
-        rightp[to_string(a).size()].push_back(x.val());
-    }
-
-    rep2(i, 1, upper_pow) {
-        sort(all(leftp[i]));
-        sort(all(rightp[i]));
-    }
-
-    ll ans = 0;
-    rep2(i, 1, upper_pow) {
-        for (auto k : rightp[i]) {
-            ll target = (M - k) % M;
-            ans += lower_bound(all(leftp[i]), target + 1) - lower_bound(all(leftp[i]), target);
-        }
-    }
-    cout << ans << endl;
+    cout << mass.size() / 4 << endl;
 }
