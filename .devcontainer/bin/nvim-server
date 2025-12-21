@@ -1,0 +1,5 @@
+#!/bin/bash
+
+while true; do
+    nvim --headless --listen 0.0.0.0:22222
+done

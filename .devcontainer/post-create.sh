@@ -2,5 +2,6 @@ cd ~
 python3 -m venv venv
 source venv/bin/activate
 echo "source ~/venv/bin/activate" >> ~/.bashrc
+echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 
-pip3 install git+https://github.com/goropikari/oj@main
+pipx install git+https://github.com/goropikari/oj@main

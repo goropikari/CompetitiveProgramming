@@ -25,3 +25,7 @@ exec:
 docker:
 	docker build -t jupyter -f docker/Dockerfile-jupyter .
 	docker run --rm -it -p 8888:8888 jupyter
+
+.PHONY: docker-cpp
+docker-cpp:
+	docker build -t docker-cpp -f docker/Dockerfile-gcc .

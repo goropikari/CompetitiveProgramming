@@ -8,13 +8,19 @@
     "--security-opt",
     "seccomp=unconfined",
     "--name",
-    "competitive_programming"
+    "competitive_programming",
+    "--add-host=host.docker.internal:host-gateway"
   ],
   "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
     "ghcr.io/goropikari/devcontainer-feature/neovim:1": {},
-    "ghcr.io/devcontainers/features/go:1": {},
-    "ghcr.io/devcontainers/features/python:1": {},
-    "ghcr.io/devcontainers/features/sshd:1": {},
+    "ghcr.io/goropikari/devcontainer-feature/tree-sitter:1": {},
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.25.1"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.13.7"
+    },
     "ghcr.io/devcontainers/features/node:1": {}
   },
   "mounts": [
