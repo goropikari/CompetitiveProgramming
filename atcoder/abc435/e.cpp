@@ -2,8 +2,8 @@
 // Thu 18 Dec 2025 09:29:24 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -61,6 +61,35 @@ int main() {
     return 0;
 }
 
+struct S {
+    ll num_white;
+};
+
+S op(S a, S b) {
+    return S{
+        a.num_white + b.num_white,
+    };
+}
+
+S e() {
+    return S{0};
+}
+
+using F = ll;
+
+S mapping(F f, S x) {
+    if (f == 1) return S{0};  // 区間を黒く塗る
+    return x;                 // 区間に対して何もしない
+}
+
+F composition(F f, F g) {
+    return f | g;
+}
+
+F id() {
+    return 0;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -68,23 +97,31 @@ void solve() {
     ll N, Q;
     cin >> N >> Q;
 
-    using P = pair<ll, ll>;
-    set<ll> ss;
-    vector<P> ps;
+    vll L(Q), R(Q);
     rep(i, Q) {
-        ll l, r;
-        cin >> l >> r;
-        ps.emplace_back(l, r);
-        ss.insert(l);
-        ss.insert(r);
+        cin >> L[i] >> R[i];
+        L[i]--;
     }
 
-    map<ll, ll> ids;
-    {
-        int i = 0;
-        for (ll x : ss) {
-            ids[x] = i;
-            i++;
-        }
+    vll pos = {0, N};
+    for (auto x : L) pos.push_back(x);
+    for (auto x : R) pos.push_back(x);
+    sort(all(pos));
+    pos.erase(unique(all(pos)), pos.end());
+
+    int sz = (int)pos.size() - 1;
+    vector<S> a(sz);
+    rep(i, sz) {
+        ll len = pos[i + 1] - pos[i];
+        a[i] = S{len};
+    }
+    lazy_segtree<S, op, e, F, mapping, composition, id> seg(a);
+
+    rep(i, Q) {
+        int l = lower_bound(all(pos), L[i]) - pos.begin();
+        int r = lower_bound(all(pos), R[i]) - pos.begin();
+        seg.apply(l, r, 1);
+        S ret = seg.prod(0, sz);
+        cout << ret.num_white << '\n';
     }
 }
