@@ -5468,5 +5468,25 @@
     "yellow": 1,
     "orange": 0,
     "red": 0
+  },
+  "20251224": {
+    "gray": 802,
+    "brown": 388,
+    "green": 412,
+    "cyan": 136,
+    "blue": 18,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
+  },
+  "20251225": {
+    "gray": 802,
+    "brown": 388,
+    "green": 412,
+    "cyan": 136,
+    "blue": 19,
+    "yellow": 1,
+    "orange": 0,
+    "red": 0
   }
 }
