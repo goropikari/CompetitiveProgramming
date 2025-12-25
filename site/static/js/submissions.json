@@ -26206,5 +26206,29 @@
     "length": 1872,
     "result": "AC",
     "execution_time": 1
+  },
+  {
+    "id": 71953608,
+    "epoch_second": 1766585863,
+    "problem_id": "abc432_c",
+    "contest_id": "abc432",
+    "user_id": "goropikari",
+    "language": "C++23 (GCC 15.2.0)",
+    "point": 350.0,
+    "length": 1988,
+    "result": "AC",
+    "execution_time": 22
+  },
+  {
+    "id": 71954596,
+    "epoch_second": 1766590296,
+    "problem_id": "abc432_d",
+    "contest_id": "abc432",
+    "user_id": "goropikari",
+    "language": "C++23 (GCC 15.2.0)",
+    "point": 425.0,
+    "length": 4501,
+    "result": "AC",
+    "execution_time": 3
   }
 ]
