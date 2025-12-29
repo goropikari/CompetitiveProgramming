@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc437/tasks/abc437_e
-// Mon 29 Dec 2025 03:07:23 PM JST
+// https://atcoder.jp/contests/abc438/tasks/abc438_c
+// Sat 27 Dec 2025 09:05:43 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -61,56 +61,65 @@ int main() {
     return 0;
 }
 
-struct Trie {
-    vector<map<int, int>> to;
-    vint node_id;  // node_id[i]: 数列 i の末端の node id
-    vvint ids;     // ids[i]: node_id i を末端とする数列の id
-
-    Trie() {
-        to.resize(1);
-        ids.resize(1);
-        node_id.resize(1, 0);
-    }
-
-    void add(int x, int y, int id) {
-        int xnode = node_id[x];
-        if (!to[xnode].count(y)) {
-            int n = to.size();
-            to[xnode][y] = n;
-            to.push_back(map<int, int>());
-            ids.push_back(vint({id}));
-            node_id.push_back(n);
-            return;
+template <typename T>
+vector<pair<T, ll>> runLengthEncode(const vector<T>& input) {
+    vector<pair<T, ll>> encoded;
+    int size = input.size();
+    for (int i = 0; i < size; ++i) {
+        long long int count = 1;
+        while (i + 1 < size && input[i] == input[i + 1]) {
+            ++i;
+            ++count;
         }
-
-        auto& nid = to[xnode][y];
-        node_id.push_back(nid);
-        ids[nid].push_back(id);
+        encoded.emplace_back(input[i], count);
     }
+    return encoded;
+}
 
-    void collect(int now, vint& ans) {
-        for (int x : ids[now]) ans.push_back(x);
-        for (auto [_, v] : to[now]) {
-            collect(v, ans);
+vector<pair<char, long long int>> runLengthEncode(const string& input) {
+    vector<pair<char, long long int>> encoded;
+    int size = input.size();
+    for (int i = 0; i < size; ++i) {
+        long long int count = 1;
+        while (i + 1 < size && input[i] == input[i + 1]) {
+            ++i;
+            ++count;
         }
+        encoded.emplace_back(input[i], count);
     }
-};
+    return encoded;
+}
 
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    Trie trie;
-
-    int N;
+    ll N;
     cin >> N;
-    rep(i, N) {
-        int x, y;
-        cin >> x >> y;
-        trie.add(x, y, i + 1);
+    vll A(N);
+    rep(i, N) cin >> A[i];
+
+    auto vs = runLengthEncode(A);
+    using P = pair<ll, ll>;
+    vector<P> pr = vs;
+
+    int sz = pr.size();
+    rep(i, sz) {
+        pr[i].second %= 4;
+    }
+    vector<P> nx;
+    rep(i, sz) {
+        if (pr[i].second % 4 == 0) continue;
+        if (nx.size() && nx.back().first == pr[i].first) {
+            nx.back().second += pr[i].second;
+            nx.back().second %= 4;
+            if (nx.back().second % 4 == 0) nx.pop_back();
+        } else {
+            nx.push_back(pr[i]);
+        }
     }
 
-    vint ans;
-    trie.collect(0, ans);
-    print(ans);
+    ll ans = 0;
+    rep(i, (ll)nx.size()) ans += nx[i].second;
+    cout << ans << endl;
 }

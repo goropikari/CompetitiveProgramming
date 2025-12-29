@@ -51,55 +51,57 @@ int main() {
     return 0;
 }
 
+struct Node {
+    ll num;
+    map<char, Node*> to;
+
+    Node() {
+        num = 0;
+        to = map<char, Node*>();
+    }
+};
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-    vector<pair<string, int>> ps;
-    rep(i, n) {
-        string s;
-        cin >> s;
-        ps.emplace_back(s, i);
-    }
+    ll N;
+    cin >> N;
+    vector<string> S(N);
+    rep(i, N) cin >> S[i];
 
-    sort(all(ps));
-    ps.insert(ps.begin(), {"_", -1});
+    auto root = new Node();
 
-    vint ans(n);
-    n++;
-    rep2(i, 1, n) {
-        int mx = 0;
-        auto [s, id] = ps[i];
-        {
-            auto [pr, _] = ps[i - 1];
-            int cnt = 0;
-            int len = min(s.size(), pr.size());
-            rep(j, len) {
-                if (s[j] == pr[j])
-                    cnt++;
-                else
-                    break;
-                ;
+    auto add = [&](string s) -> void {
+        auto now = root;
+        for (char c : s) {
+            if (now->to.count(c)) {
+                now = now->to[c];
+                now->num++;
+            } else {
+                auto tmp = new Node();
+                tmp->num = 1;
+                now->to[c] = tmp;
+                now = tmp;
             }
-            chmax(mx, cnt);
         }
-        if (i + 1 < n) {
-            auto [nx, _] = ps[i + 1];
-            int cnt = 0;
-            int len = min(s.size(), nx.size());
-            rep(j, len) {
-                if (s[j] == nx[j])
-                    cnt++;
-                else
-                    break;
-                ;
-            }
-            chmax(mx, cnt);
+    };
+
+    for (auto s : S) add(s);
+
+    ll ans = 0;
+    auto dfs = [&](auto dfs, Node* now, string& s, ll depth) -> void {
+        if ((ll)s.size() == depth) return;
+        auto nx = now->to[s[depth]];
+        if (nx->num >= 2) {
+            chmax(ans, depth + 1);
+            dfs(dfs, nx, s, depth + 1);
         }
-        ans[id] = mx;
+    };
+
+    for (auto s : S) {
+        ans = 0;
+        dfs(dfs, root, s, 0);
+        cout << ans << endl;
     }
-    for (int x : ans)
-        cout << x << endl;
 }

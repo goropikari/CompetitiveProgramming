@@ -4,6 +4,75 @@ title = 'Educational DP Contest'
 tags = ['atcoder', 'edpc']
 +++
 
+## I - Coins
+
+$dp(i,num)$ を $i$ 番目までのコインを投げたときに表が `num` 枚となる確率とすると
+
+\begin{align*}
+    dp(i,num) &+= dp(i-1,num-1) \times p_i \\\\
+    dp(i,num-1) &= dp(i-1,num-1) \times (1 - p_i) \\\\
+    dp(0,0) &= 1
+\end{align*}
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N;
+    cin >> N;
+    vector<double> p(N);
+    rep(i, N) cin >> p[i];
+
+    // dp[i][num]: i 枚目まで見て表の枚数が num 枚となる確率
+    vector dp(N + 1, vector<double>(N + 1));
+    dp[0][0] = 1.0;
+
+    rep2(i, 1, N + 1) {
+        double pi = p[i - 1];
+        for (int num = N; num > 0; num--) {
+            dp[i][num] += dp[i - 1][num - 1] * pi;
+            dp[i][num - 1] = dp[i - 1][num - 1] * (1.0 - pi);
+        }
+    }
+
+    double ans = 0.0;
+    rep2(num, (N + 1) / 2, N + 1) {
+        ans += dp[N][num];
+    }
+    printf("%.15lf\n", ans);
+}
+```
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N;
+    cin >> N;
+    vector<double> p(N);
+    rep(i, N) cin >> p[i];
+
+    // dp[i]: 表の枚数が i 枚となる確率
+    vector<double> dp(N + 1);
+    dp[0] = 1.0;
+
+    for (auto pi : p) {
+        for (int num = N; num > 0; num--) {
+            dp[num] += dp[num - 1] * pi;
+            dp[num - 1] *= (1.0 - pi);
+        }
+    }
+
+    double ans = 0.0;
+    rep2(i, (N + 1) / 2, N + 1) {
+        ans += dp[i];
+    }
+    printf("%.15lf\n", ans);
+}
+```
+
 ## L - Deque
 
 <https://atcoder.jp/contests/dp/tasks/dp_l>
@@ -18,11 +87,11 @@ $X = a_1, Y = 0$
 
 - 要素が2つのとき
 
-$X = \max\\{ {a_1, a_2} \\}, Y = \min \\{ a_1, a_2 \\}$
+$X = \max\left\{ {a_1, a_2} \right\}, Y = \min \{ a_1, a_2 \}$
 
 - 要素が3つのとき
 
-$X = \max \\{a_1 + (a_2, a_3 \text{の範囲で後手のときの得点}), (a_1, a_2 \text{の範囲で後手のときの得点}) + a_3 \\}$
+$X = \max \{a_1 + (a_2, a_3 \text{の範囲で後手のときの得点}), (a_1, a_2 \text{の範囲で後手のときの得点}) + a_3 \}$
 
 ...
 
@@ -30,10 +99,10 @@ $X = \max \\{a_1 + (a_2, a_3 \text{の範囲で後手のときの得点}), (a_1,
 
 $\mathrm{dp}(i,j)$ を $[i,j]$ の範囲での先手の得点の最大値とすると
 
-$$
-    X = \mathrm{dp}(i,j) \\\\
-    Y = \left( \sum_{k=i}^{j} a_k \right) - \mathrm{dp}(i,j)
-$$
+\begin{align*}
+    X &= \mathrm{dp}(i,j), \\\\
+    Y &= \left( \sum_{k=i}^{j} a_k \right) - \mathrm{dp}(i,j)
+\end{align*}
 
 となる。
 
@@ -119,7 +188,7 @@ $$
 
 となるので N 重の for loop をしているのと等価であり TLE する。
 
-### 解法
+### 解法 1
 
 $dp(i,j)$ を $i$ 番目の子供までで $j$ 個飴を配ったときの場合の数とすると
 
@@ -195,6 +264,44 @@ void solve() {
     }
 
     cout << dp[N][K] << endl;
+}
+```
+
+### 解法 2
+
+2025/12/29 での解法
+
+$i$ 番目の子供まで飴を配って残りが $k$ 個となる場合の数を $dp(i,k)$ とする。
+$i+1$ 番目の子供に飴を配ると残りの数は $\max(0, k-a_i) \sim k$ 個となる。
+
+これより $dp(i+1,j)$, $j \in [\max(0, k-a_i), k]$ へはそれぞれ $dp(i,k)$ 分寄与される。
+愚直に全ての $j$ について更新を行うと TLE をするのでいもす法で区間更新を行う。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N, K;
+    cin >> N >> K;
+    vll A(N + 1);
+    rep(i, N) cin >> A[i + 1];
+
+    // dp[i][k]: i 人目までの子供に飴を配って、残りが k となる場合の数
+    vector dp(N + 1, vector<mint>(K + 5));
+    dp[0][K] = 1;
+
+    rep2(i, 1, N + 1) {
+        rep(num, K + 1) {
+            dp[i][max(0ll, num - A[i])] += dp[i - 1][num];
+            dp[i][num + 1] -= dp[i - 1][num];
+        }
+        rep2(j, 1, K + 1) {
+            dp[i][j] += dp[i][j - 1];
+        }
+    }
+
+    cout << dp[N][0].val() << endl;
 }
 ```
 

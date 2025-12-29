@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc437/tasks/abc437_e
-// Mon 29 Dec 2025 03:07:23 PM JST
+// https://atcoder.jp/contests/abc377/tasks/abc377_g
+// Sun 28 Dec 2025 12:21:07 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -61,38 +61,14 @@ int main() {
     return 0;
 }
 
-struct Trie {
-    vector<map<int, int>> to;
-    vint node_id;  // node_id[i]: 数列 i の末端の node id
-    vvint ids;     // ids[i]: node_id i を末端とする数列の id
+struct Node {
+    ll fin, len;
+    map<char, Node*> to;
 
-    Trie() {
-        to.resize(1);
-        ids.resize(1);
-        node_id.resize(1, 0);
-    }
-
-    void add(int x, int y, int id) {
-        int xnode = node_id[x];
-        if (!to[xnode].count(y)) {
-            int n = to.size();
-            to[xnode][y] = n;
-            to.push_back(map<int, int>());
-            ids.push_back(vint({id}));
-            node_id.push_back(n);
-            return;
-        }
-
-        auto& nid = to[xnode][y];
-        node_id.push_back(nid);
-        ids[nid].push_back(id);
-    }
-
-    void collect(int now, vint& ans) {
-        for (int x : ids[now]) ans.push_back(x);
-        for (auto [_, v] : to[now]) {
-            collect(v, ans);
-        }
+    Node() {
+        fin = 0;
+        len = INF;
+        to = map<char, Node*>();
     }
 };
 
@@ -100,17 +76,47 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    Trie trie;
-
-    int N;
+    ll N;
     cin >> N;
-    rep(i, N) {
-        int x, y;
-        cin >> x >> y;
-        trie.add(x, y, i + 1);
-    }
+    vector<string> S(N);
+    rep(i, N) cin >> S[i];
 
-    vint ans;
-    trie.collect(0, ans);
-    print(ans);
+    auto root = new Node();
+
+    auto add = [&](string s) -> void {
+        auto now = root;
+        rep(i, (int)s.size()) {
+            char c = s[i];
+            if (now->to.count(c)) {
+                now = now->to[c];
+            } else {
+                auto tmp = new Node();
+                now->to[c] = tmp;
+                now = tmp;
+            }
+            chmin(now->len, (ll)s.size());
+            if (i == (int)s.size() - 1) {
+                now->fin = 1;
+            }
+        }
+    };
+
+    auto dfs = [&](auto dfs, Node* now, string& s, ll depth, ll ans) -> ll {
+        if (depth == (ll)s.size()) return ans;
+        char c = s[depth];
+        if (!now->to.count(c)) return ans;
+        now = now->to[c];
+        if (now->fin) {
+            chmin(ans, (ll)s.size() - (depth + 1));
+        }
+        chmin(ans, (now->len - depth - 1) + ((ll)s.size() - depth - 1));
+        chmin(ans, dfs(dfs, now, s, depth + 1, ans));
+        return ans;
+    };
+
+    for (auto s : S) {
+        ll ans = dfs(dfs, root, s, 0, s.size());
+        cout << ans << endl;
+        add(s);
+    }
 }

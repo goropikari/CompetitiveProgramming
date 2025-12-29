@@ -1,5 +1,3 @@
-// https://atcoder.jp/contests/abc437/tasks/abc437_e
-// Mon 29 Dec 2025 03:07:23 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -61,38 +59,23 @@ int main() {
     return 0;
 }
 
-struct Trie {
-    vector<map<int, int>> to;
-    vint node_id;  // node_id[i]: 数列 i の末端の node id
-    vvint ids;     // ids[i]: node_id i を末端とする数列の id
+template <typename T>
+struct Cumsum {
+    vector<T> data;
 
-    Trie() {
-        to.resize(1);
-        ids.resize(1);
-        node_id.resize(1, 0);
+    Cumsum(vector<T> v) {
+        int n = v.size();
+        data.resize(n + 1);
+
+        data[0] = 1;
+        rep(i, n) {
+            data[i + 1] = data[i] + v[i];
+        }
     }
 
-    void add(int x, int y, int id) {
-        int xnode = node_id[x];
-        if (!to[xnode].count(y)) {
-            int n = to.size();
-            to[xnode][y] = n;
-            to.push_back(map<int, int>());
-            ids.push_back(vint({id}));
-            node_id.push_back(n);
-            return;
-        }
-
-        auto& nid = to[xnode][y];
-        node_id.push_back(nid);
-        ids[nid].push_back(id);
-    }
-
-    void collect(int now, vint& ans) {
-        for (int x : ids[now]) ans.push_back(x);
-        for (auto [_, v] : to[now]) {
-            collect(v, ans);
-        }
+    // sum of range [l,r)
+    ll sum(int l, int r) {
+        return data[r] - data[l];
     }
 };
 
@@ -100,17 +83,19 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    Trie trie;
-
-    int N;
+    ll N;
     cin >> N;
-    rep(i, N) {
-        int x, y;
-        cin >> x >> y;
-        trie.add(x, y, i + 1);
-    }
 
-    vint ans;
-    trie.collect(0, ans);
-    print(ans);
+    vll A(N), B(N), C(N);
+    rep(i, N) cin >> A[i];
+    rep(i, N) cin >> B[i];
+    rep(i, N) cin >> C[i];
+
+    Cumsum ca = Cumsum(A), cb = Cumsum(B), cc = Cumsum(C);
+
+    ll ans = 0;
+    rep2(i, 1, N) rep2(j, i + 1, N) {
+        chmax(ans, ca.sum(0, i) + cb.sum(i, j) + cc.sum(j, N));
+    }
+    cout << ans << endl;
 }
