@@ -4,7 +4,6 @@
 test.txt
 *out.txt
 .ipynb_checkpoints
-sample-*.*
 random-*.*
 example_*
 a.out
