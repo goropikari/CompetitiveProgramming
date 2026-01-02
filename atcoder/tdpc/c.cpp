@@ -1,11 +1,11 @@
-// https://atcoder.jp/contests/dp/tasks/dp_p
-// Thu 01 Jan 2026 04:38:35 PM JST
+// https://atcoder.jp/contests/tdpc/tasks/tdpc_tournament
+// Fri 02 Jan 2026 12:19:13 AM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
-using mint = modint1000000007;
+// using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
@@ -65,48 +65,44 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vvint graph(N);
-    rep(i, N - 1) {
-        int u, v;
-        cin >> u >> v;
-        u--, v--;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
-    }
+    ll K;
+    cin >> K;
+    vll R(1 << K);
+    rep(i, 1ll << K) cin >> R[i];
 
-    vector<vector<mint>> cnt(2, vector<mint>(N));
-    vvint used(2, vint(N));
+    vector<vector<double>> dp(K + 1, vector<double>(1 << K));
+    rep(i, 1 << K) dp[0][i] = 1;
 
-    int white = 0, black = 1;
-
-    auto dfs = [&](auto dfs, int now, int p, int color) -> mint {
-        if (used[color][now]) return cnt[color][now];
-        used[color][now] = 1;
-
-        mint ret = 0;
-        for (int nx : graph[now]) {
-            if (nx == p) continue;
-            rep(col, 2) dfs(dfs, nx, now, col);
-        }
-
-        ret = 1;
-        for (int nx : graph[now]) {
-            if (nx == p) continue;
-            mint sum = 0;
-            sum += dfs(dfs, nx, now, white);
-            if (color == white)
-                sum += dfs(dfs, nx, now, black);
-            ret *= sum;
-        }
-
-        return cnt[color][now] = ret;
+    auto prob = [](ll rp, ll rq) -> double {
+        double den = 1.0 + pow(10, (double)(rq - rp) / 400.0);
+        return 1.0 / den;
     };
 
-    mint ans = 0;
-    ans += dfs(dfs, 0, -1, 0);
-    ans += dfs(dfs, 0, -1, 1);
+    auto dfs = [&](auto dfs, int l, int r, int k) -> void {
+        if (k == 0) return;
 
-    cout << ans.val() << endl;
+        int m = (l + r) / 2;
+        dfs(dfs, l, m, k - 1);
+        dfs(dfs, m, r, k - 1);
+
+        rep2(i, l, m) {
+            rep2(j, m, r) {
+                double p = prob(R[i], R[j]);
+                dp[k][i] += dp[k - 1][j] * p;
+            }
+            dp[k][i] *= dp[k - 1][i];
+        }
+        rep2(i, m, r) {
+            rep2(j, l, m) {
+                dp[k][i] += dp[k - 1][j] * prob(R[i], R[j]);
+            }
+            dp[k][i] *= dp[k - 1][i];
+        }
+    };
+
+    dfs(dfs, 0, 1 << K, K);
+
+    for (auto x : dp[K]) {
+        printf("%.9lf\n", x);
+    }
 }

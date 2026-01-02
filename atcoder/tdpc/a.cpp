@@ -84,19 +84,14 @@ void solve() {
     vll P(N);
     rep(i, N) cin >> P[i];
 
-    int mx = (int)1e5 + 5;
-    vector<bool> dp(mx);
-    dp[0] = true;
-
-    rep(i, N) {
-        for (ll p = mx - 1; p >= 0; p--) {
-            if (p - P[i] >= 0 && dp[p - P[i]]) {
-                dp[p] = true;
-            }
+    int mx = 10000;
+    vll sum(mx + 1);
+    sum[0] = 1;
+    for (auto p : P) {
+        for (int i = mx; i >= 0; i--) {
+            if (i - p >= 0 && sum[i - p]) sum[i] = 1;
         }
     }
 
-    ll ans = 0;
-    rep(i, mx) ans += dp[i];
-    cout << ans << endl;
+    cout << accumulate(all(sum), 0ll) << endl;
 }

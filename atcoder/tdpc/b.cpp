@@ -79,28 +79,29 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M;
-    cin >> N >> M;
-    vll A(N + 1), B(M + 1);
-    rep(i, N) cin >> A[i + 1];
-    rep(i, M) cin >> B[i + 1];
+    ll A, B;
+    cin >> A >> B;
+    vll a(A), b(B);
+    rep(i, A) cin >> a[i];
+    rep(i, B) cin >> b[i];
 
-    ll sum = accumulate(all(A), 0ll) + accumulate(all(B), 0ll);
+    vvll dp(A + 1, vll(B + 1, -INF));
 
-    vvll memo(N + 1, vll(M + 1));
+    auto dfs = [&](auto dfs, int i, int j) -> ll {
+        if (dp[i][j] != -INF) return dp[i][j];
 
-    auto f = [&](auto f, ll rem, int a = 0, int b = 0) -> ll {
-        if (memo[a][b]) return memo[a][b];
-        if (a == N && b == M) return 0;
+        ll ret = -INF;
+        if (i < A)
+            chmax(ret, -dfs(dfs, i + 1, j) + a[i]);
+        if (j < B)
+            chmax(ret, -dfs(dfs, i, j + 1) + b[j]);
+        if (ret == -INF) ret = 0;
 
-        ll l = INF, r = INF;
-        if (a + 1 <= N)
-            l = f(f, rem - A[a + 1], a + 1, b);
-        if (b + 1 <= M)
-            r = f(f, rem - B[b + 1], a, b + 1);
-
-        return memo[a][b] = rem - min(l, r);
+        return dp[i][j] = ret;
     };
 
-    cout << f(f, sum) << endl;
+    ll xmy = dfs(dfs, 0, 0);
+    ll xpy = accumulate(all(a), 0ll) + accumulate(all(b), 0ll);
+
+    cout << (xpy + xmy) / 2 << endl;
 }

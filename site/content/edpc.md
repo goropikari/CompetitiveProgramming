@@ -8,6 +8,7 @@ tags = ['atcoder', 'edpc']
 
 $dp(i,num)$ を $i$ 番目までのコインを投げたときに表が `num` 枚となる確率とすると
 
+<!-- dprint-ignore -->
 \begin{align*}
     dp(i,num) &+= dp(i-1,num-1) \times p_i \\\\
     dp(i,num-1) &= dp(i-1,num-1) \times (1 - p_i) \\\\
@@ -99,6 +100,7 @@ $X = \max \{a_1 + (a_2, a_3 \text{の範囲で後手のときの得点}), (a_1, 
 
 $\mathrm{dp}(i,j)$ を $[i,j]$ の範囲での先手の得点の最大値とすると
 
+<!-- dprint-ignore -->
 \begin{align*}
     X &= \mathrm{dp}(i,j), \\\\
     Y &= \left( \sum_{k=i}^{j} a_k \right) - \mathrm{dp}(i,j)
@@ -475,6 +477,71 @@ void solve() {
 
     dp = vvll(N + 1, vll(1 << N, -INF));
     cout << dfs(0, 0) << endl;
+}
+```
+
+## P - Independent Set
+
+<https://atcoder.jp/contests/dp/tasks/dp_p>
+
+$dp(i,color)$ を 頂点 $i$ を根とし色を `color` に塗ったときの場合の数とすると
+
+<!-- dprint-ignore -->
+\begin{align*}
+    dp(i, \text{white}) &= \prod_{x \in \mathrm{children}(i)} (dp(x, \text{white}) + dp(x, \text{black})) \\\\
+    dp(i, \text{black}) &= \prod_{x \in \mathrm{children}(i)} dp(x, \text{white}) \\\\
+    dp(i, color) &= 1 \text{ if } i \text{ is a leaf.}
+\end{align*}
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N;
+    cin >> N;
+    vvint graph(N);
+    rep(i, N - 1) {
+        int u, v;
+        cin >> u >> v;
+        u--, v--;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+
+    vector<vector<mint>> cnt(2, vector<mint>(N));
+    vvint used(2, vint(N));
+
+    int white = 0, black = 1;
+
+    auto dfs = [&](auto dfs, int now, int p, int color) -> mint {
+        if (used[color][now]) return cnt[color][now];
+        used[color][now] = 1;
+
+        mint ret = 0;
+        for (int nx : graph[now]) {
+            if (nx == p) continue;
+            rep(col, 2) dfs(dfs, nx, now, col);
+        }
+
+        ret = 1;
+        for (int nx : graph[now]) {
+            if (nx == p) continue;
+            mint sum = 0;
+            sum += dfs(dfs, nx, now, white);
+            if (color == white)
+                sum += dfs(dfs, nx, now, black);
+            ret *= sum;
+        }
+
+        return cnt[color][now] = ret;
+    };
+
+    mint ans = 0;
+    ans += dfs(dfs, 0, -1, 0);
+    ans += dfs(dfs, 0, -1, 1);
+
+    cout << ans.val() << endl;
 }
 ```
 
