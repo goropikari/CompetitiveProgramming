@@ -1251,9 +1251,7 @@ ACL の使い方は別途まとめた
 
 - [ソラで書くセグメント木から ACL へ移行する](../segment_tree)
 
-### RMQ (Range Minimum Query)
-
-一点更新、区間最小値
+### RMQ (Range Minimum Query)  一点更新 区間最小値
 
 - <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_A>
   - 再帰版
@@ -1318,9 +1316,7 @@ struct RMQ {
 };
 ```
 
-### RSQ (Range Sum Query)
-
-一点加算、区間和
+### RSQ (Range Sum Query) 一点加算 区間和
 
 - <https://onlinejudge.u-aizu.ac.jp/problems/DSL_2_B>
   - 非再帰版
@@ -1386,9 +1382,7 @@ struct RSQ {
 };
 ```
 
-### RAQ (Range Add Query)
-
-区間加算、一点取得
+### RAQ (Range Add Query) 区間加算 一点取得
 
 - [ABC 340 E](https://atcoder.jp/contests/abc340/tasks/abc340_e)
 - <https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_2_E>
@@ -1452,9 +1446,7 @@ struct RAQ {
 };
 ```
 
-### RUQ (Range Update Query)
-
-区間更新、一点取得
+### RUQ (Range Update Query) 区間更新 一点取得
 
 いつ更新したものかという情報も付け加えて値の更新を管理する
 
@@ -1691,6 +1683,68 @@ struct RMQRAQ {
         rec(rec, s, t, 0, len, x, 1);
     }
 };
+```
+
+ac-library の lazy_segtree を使う場合
+
+<https://judge.yosupo.jp/submission/342749>
+
+- $[l,r)$ の範囲に対して $a_i \leftarrow a_i + x$
+- $[l,r)$ の範囲の最小値を求める
+
+```cpp
+using S = ll;
+
+S op(S a, S b) {
+    return min(a, b);
+}
+
+S e() {
+    return INF;
+}
+
+using F = ll;
+
+S mapping(F f, S x) {
+    return x + f;
+}
+
+F composition(F f, F g) {
+    return f + g;
+}
+
+F id() {
+    return 0;
+}
+
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N, Q;
+    cin >> N >> Q;
+    vector<S> A(N);
+    rep(i, N) {
+        ll a;
+        cin >> a;
+        A[i] = a;
+    }
+
+    lazy_segtree<S, op, e, F, mapping, composition, id> seg(A);
+
+    rep(i, Q) {
+        int t, l, r;
+        cin >> t >> l >> r;
+        if (t == 0) {
+            ll x;
+            cin >> x;
+            seg.apply(l, r, x);
+        }
+        if (t == 1) {
+            cout << seg.prod(l, r) << endl;
+        }
+    }
+}
 ```
 
 ### 転倒数

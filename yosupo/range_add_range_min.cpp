@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/practice2/tasks/practice2_b
-// Sat 03 Jan 2026 11:59:44 AM JST
+// http://localhost:5173/problem/range_add_range_min
+// Sat 03 Jan 2026 07:29:00 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -9,9 +9,9 @@ using namespace atcoder;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -61,31 +61,53 @@ int main() {
     return 0;
 }
 
+using S = ll;
+
+S op(S a, S b) {
+    return min(a, b);
+}
+
+S e() {
+    return INF;
+}
+
+using F = ll;
+
+S mapping(F f, S x) {
+    return x + f;
+}
+
+F composition(F f, F g) {
+    return f + g;
+}
+
+F id() {
+    return 0;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, Q;
+    ll N, Q;
     cin >> N >> Q;
-
-    fenwick_tree<ll> a(N);
+    vector<S> A(N);
     rep(i, N) {
-        ll x;
-        cin >> x;
-        a.add(i, x);
+        cin >> A[i];
     }
 
+    lazy_segtree<S, op, e, F, mapping, composition, id> seg(A);
+
     rep(i, Q) {
-        int t;
-        cin >> t;
+        int t, l, r;
+        cin >> t >> l >> r;
         if (t == 0) {
-            ll p, x;
-            cin >> p >> x;
-            a.add(p, x);
-        } else {
-            ll l, r;
-            cin >> l >> r;
-            cout << a.sum(l, r) << endl;
+            ll x;
+            cin >> x;
+            seg.apply(l, r, x);
+        }
+        if (t == 1) {
+            cout << seg.prod(l, r) << endl;
         }
     }
 }
