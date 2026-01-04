@@ -862,5 +862,17 @@
         "ContestName": "AtCoder Beginner Contest 438",
         "ContestNameEn": "",
         "EndTime": "2025-12-27T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 2552,
+        "OldRating": 1118,
+        "NewRating": 1119,
+        "Performance": 1127,
+        "InnerPerformance": 1127,
+        "ContestScreenName": "abc439.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 439（Promotion of AtCoderJobs）",
+        "ContestNameEn": "AtCoder Beginner Contest 439",
+        "EndTime": "2026-01-03T22:40:00+09:00"
     }
 ]
