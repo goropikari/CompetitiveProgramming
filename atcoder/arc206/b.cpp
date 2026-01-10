@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc368/tasks/abc368_d
-// Sun 04 Jan 2026 09:06:28 PM JST
+// https://atcoder.jp/contests/arc206/tasks/arc206_b
+// Sun 04 Jan 2026 06:21:21 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,38 +65,37 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K;
-    cin >> N >> K;
-    vvint graph(N);
-    rep(i, N - 1) {
-        int u, v;
-        cin >> u >> v;
-        u--, v--;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
+    ll N;
+    cin >> N;
+    vll P(N), C(N);
+    rep(i, N) {
+        cin >> P[i];
+    }
+    rep(i, N) {
+        cin >> C[i];
+        C[i]--;
     }
 
-    set<int> vs;
-    rep(i, K) {
-        int x;
-        cin >> x;
-        x--;
-        vs.insert(x);
+    vvint cs(N);
+    rep(i, N) {
+        cs[C[i]].push_back(P[i]);
     }
 
-    vint used(N);
+    auto cal = [&](ll c) -> ll {
+        ll sz = cs[c].size();
 
-    auto dfs = [&](auto dfs, int now, int p) -> int {
-        int found = vs.count(now);
-        for (int nx : graph[now]) {
-            if (nx == p) continue;
-            found = dfs(dfs, nx, now) || found;
+        ll inf = 1ll << 60;
+        vll dp(sz, inf);
+        for (ll x : cs[c]) {
+            auto it = upper_bound(all(dp), x);
+            *it = x;
         }
 
-        return used[now] = found;
+        ll id = lower_bound(all(dp), inf) - dp.begin();
+        return (sz - id) * (c + 1);
     };
 
-    dfs(dfs, *vs.begin(), -1);
-
-    cout << accumulate(all(used), 0ll) << endl;
+    ll ans = 0;
+    rep(i, N) ans += cal(i);
+    cout << ans << endl;
 }

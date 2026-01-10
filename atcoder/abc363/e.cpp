@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc368/tasks/abc368_d
-// Sun 04 Jan 2026 09:06:28 PM JST
+// https://atcoder.jp/contests/abc363/tasks/abc363_e
+// Wed 07 Jan 2026 12:19:44 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,38 +65,43 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K;
-    cin >> N >> K;
-    vvint graph(N);
-    rep(i, N - 1) {
-        int u, v;
-        cin >> u >> v;
-        u--, v--;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
+    ll H, W, Y;
+    cin >> H >> W >> Y;
+    vvll grid(H, vll(W));
+    rep(i, H) rep(j, W) cin >> grid[i][j];
+
+    vvint used(H, vint(W));
+
+    // height, i, j
+    using P = tuple<ll, ll, ll>;
+    priority_queue<P, vector<P>, greater<P>> pq;
+    rep(i, H) rep(j, W) {
+        if (clamp(i, 1ll, H - 2) == i && clamp(j, 1ll, W - 2) == j) continue;
+        pq.emplace(grid[i][j], i, j);
+        used[i][j] = 1;
     }
 
-    set<int> vs;
-    rep(i, K) {
-        int x;
-        cin >> x;
-        x--;
-        vs.insert(x);
-    }
+    vint di = {0, 1, 0, -1};
+    vint dj = {1, 0, -1, 0};
 
-    vint used(N);
+    ll ans = H * W;
 
-    auto dfs = [&](auto dfs, int now, int p) -> int {
-        int found = vs.count(now);
-        for (int nx : graph[now]) {
-            if (nx == p) continue;
-            found = dfs(dfs, nx, now) || found;
+    rep2(y, 1, Y + 1) {
+        while (pq.size()) {
+            auto [h, i, j] = pq.top();
+            if (h > y) break;
+            used[i][j] = 1;
+            pq.pop();
+            ans--;
+
+            rep(d, 4) {
+                ll ni = i + di[d], nj = j + dj[d];
+                if (clamp(ni, 0ll, H - 1) != ni || clamp(nj, 0ll, W - 1) != nj) continue;
+                if (used[ni][nj]) continue;
+                used[ni][nj] = 1;
+                pq.emplace(grid[ni][nj], ni, nj);
+            }
         }
-
-        return used[now] = found;
-    };
-
-    dfs(dfs, *vs.begin(), -1);
-
-    cout << accumulate(all(used), 0ll) << endl;
+        cout << ans << endl;
+    }
 }

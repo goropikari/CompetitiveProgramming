@@ -76,15 +76,45 @@ void solve() {
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    map<ll, vint> mp;
+    vll diffs;
+    rep(i, N) rep2(j, i + 1, N) diffs.push_back(A[j] - A[i]);
+    sort(all(diffs));
+    diffs.erase(unique(all(diffs)), diffs.end());
+
+    ll dsz = diffs.size();
+
+    // dp[i][L][d]: i 番目の数字から初めて長さ L、公差 d の数列の場合の数
+    vector dp(N, vector(N + 1, vector<mint>(dsz)));
+
     rep(i, N) {
-        mp[A[i]].push_back(i);
+        rep(di, dsz) {
+            dp[i][1][di] = 1;
+        }
     }
 
-    set<ll> ds;
-    rep(i, N) rep2(j, i + 1, N) {
-        ds.insert(A[j] - A[i]);
+    rep2(L, 2, N + 1) {
+        rep(i, N) {
+            rep2(j, i + 1, N) {
+                auto di = lower_bound(all(diffs), A[j] - A[i]) - diffs.begin();
+                dp[i][L][di] += dp[j][L - 1][di];
+            }
+        }
     }
 
-    vll ans(N + 1);
+    vector<mint> ans = {N};
+    rep2(L, 2, N + 1) {
+        mint tmp = 0;
+        rep(i, N) rep(di, dsz) {
+            tmp += dp[i][L][di];
+        }
+        ans.push_back(tmp);
+    }
+
+    rep(i, N) {
+        if (i == 0)
+            cout << ans[i].val();
+        else
+            cout << ' ' << ans[i].val();
+    }
+    cout << endl;
 }

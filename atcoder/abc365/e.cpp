@@ -1,15 +1,21 @@
-/*https://atcoder.jp/contests/abc365/tasks/abc365_e*/
-/*2025年02月28日 23時36分12秒*/
-// #include <atcoder/all>
-// using namespace atcoder;
+// https://atcoder.jp/contests/abc365/tasks/abc365_e
+// Mon 05 Jan 2026 10:33:35 PM JST
+#include <bits/stdc++.h>
+using namespace std;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -17,16 +23,12 @@ using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -40,9 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    puts(x ? "Yes" : "No");
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
+
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -52,36 +62,54 @@ int main() {
 }
 
 void solve() {
-    int n;
-    cin >> n;
-    vll a(n);
-    rep(i, n) cin >> a[i];
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    vll ones(60, 0);
-    ll xorsum = 0;
-    ll sum = 0;
-    for (ll x : a) {
-        xorsum ^= x;
-        sum += xorsum;
-        rep(i, 60) {
-            if ((xorsum >> i) & 1) {
-                ones[i]++;
-            }
-        }
-    }
+    ll N;
+    cin >> N;
+    vll A(N);
+    rep(i, N) cin >> A[i];
 
     ll ans = 0;
-    rep(i, n) {
-        sum -= a[i];
-        ans += sum;
-
-        sum = 0;
-        rep(j, 60) {
-            if ((a[i] >> j) & 1) {
-                ones[j] = n - i - 1 - (ones[j] - 1);
-            }
-            sum += (1ll << j) * ones[j];
+    rep(d, 30) {
+        vll v;
+        rep(i, N) {
+            v.push_back((A[i] >> d) & 1);
         }
+
+        ll x = v[0];
+        vll tmp;
+        rep2(i, 1, N) {
+            x ^= v[i];
+            tmp.push_back(x);
+        }
+        // print(tmp);
+
+        ll one = 0, zero = 0;
+        one = accumulate(all(tmp), 0ll);
+        zero = (ll)tmp.size() - one;
+
+        ll cnt = one;
+        int flag = 0;
+        rep(i, N - 1) {
+            if (v[i] == 1) {
+                if ((flag ^ tmp[i]) == 1) {
+                    one--;
+                } else {
+                    zero--;
+                }
+                swap(one, zero);
+                flag = 1 - flag;
+            } else {
+                if ((flag ^ tmp[i]) == 1) {
+                    one--;
+                } else {
+                    zero--;
+                }
+            }
+            cnt += one;
+        }
+        ans += (1ll << d) * cnt;
     }
     cout << ans << endl;
 }
