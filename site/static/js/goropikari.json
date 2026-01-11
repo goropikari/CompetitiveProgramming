@@ -874,5 +874,17 @@
         "ContestName": "AtCoder Beginner Contest 439（Promotion of AtCoderJobs）",
         "ContestNameEn": "AtCoder Beginner Contest 439",
         "EndTime": "2026-01-03T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 5601,
+        "OldRating": 1119,
+        "NewRating": 1081,
+        "Performance": 665,
+        "InnerPerformance": 665,
+        "ContestScreenName": "abc440.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 440 (Promotion of Engineer Guild Fes)",
+        "ContestNameEn": "AtCoder Beginner Contest 440",
+        "EndTime": "2026-01-10T22:40:00+09:00"
     }
 ]
