@@ -88,19 +88,20 @@ void solve() {
     auto cal = []() -> void {
         ll N, W;
         cin >> N >> W;
-        vll C(N + W * 2);
-        rep(i, N) cin >> C[i];
-        N += W * 2;
+        vll C(W * 4);
+        rep(i, N) {
+            ll c;
+            cin >> c;
+            C[i % (W * 2)] += c;
+            C[i % (W * 2) + W * 2] += c;
+        }
 
-        Cumsum cm(C);
-
-        ll ans = INF;
-        rep2(fin, 1, W * 2 + 1) {
-            ll tmp = 0;
-            for (ll r = fin; r < N; r += W * 2) {
-                tmp += cm.sum(max(0ll, r - W), r);
-            }
-            chmin(ans, tmp);
+        ll ans = accumulate(C.begin(), C.begin() + W, 0ll);
+        ll sum = ans;
+        rep2(i, 1, W * 2 + 1) {
+            sum -= C[i - 1];
+            sum += C[i + W - 1];
+            chmin(ans, sum);
         }
         cout << ans << endl;
     };
