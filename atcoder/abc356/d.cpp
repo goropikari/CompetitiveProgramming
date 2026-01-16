@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc346/tasks/abc346_e
-// Fri 16 Jan 2026 08:44:19 PM JST
+// https://atcoder.jp/contests/abc356/tasks/abc356_d
+// Tue 13 Jan 2026 01:35:44 AM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -65,44 +65,47 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, M;
-    cin >> H >> W >> M;
+    ll N, M;
+    cin >> N >> M;
 
-    vint usedr(H), usedc(W);
-    vll numcolor((int)2e5 + 5);
-    ll numr = 0, numc = 0;
+    // 0:  0000
+    // 1:  0001
+    // 2:  0010
+    // 3:  0011
+    // 4:  0100
+    // 5:  0101
+    // 6:  0110
+    // 7:  0111
+    // 8:  1000
+    // 9:  1001
+    // 10: 1010
+    // 11: 1011
+    // 12: 1100
+    // 13: 1101
 
-    vector<tuple<ll, ll, ll>> qs;
-    rep(i, M) {
-        ll t, a, x;
-        cin >> t >> a >> x;
-        a--;
-        qs.emplace_back(t, a, x);
-    }
+    auto top_bit = [](ll x) -> ll {
+        ll id = 0;
+        rep(i, 60) {
+            if (x >> i & 1) id = i;
+        }
+        return id;
+    };
 
-    reverse(all(qs));
-    for (auto [t, a, x] : qs) {
-        if (t == 1) {
-            if (usedr[a]) continue;
-            usedr[a] = 1;
-            numcolor[x] += W - numc;
-            numr++;
-        } else {
-            if (usedc[a]) continue;
-            usedc[a] = 1;
-            numcolor[x] += H - numr;
-            numc++;
+    auto f = [&](auto f, ll N, ll k) -> mint {
+        if ((1ll << k) > N) return 0;
+        ll d = top_bit(N);
+        if (k == d) {
+            return (mint)N - (1ll << d) + 1;
+        }
+
+        return (mint)(1ll << (d - 1)) + f(f, N - (1ll << d), k);
+    };
+
+    mint ans = 0;
+    rep(i, 60) {
+        if (M >> i & 1) {
+            ans += f(f, N, i);
         }
     }
-
-    numcolor[0] += (H - numr) * (W - numc);
-    vector<pair<ll, ll>> ans;
-    rep(i, (ll)numcolor.size()) {
-        if (numcolor[i]) {
-            ans.emplace_back(i, numcolor[i]);
-        }
-    }
-
-    cout << ans.size() << endl;
-    for (auto [c, num] : ans) cout << c << ' ' << num << '\n';
+    cout << ans.val() << endl;
 }

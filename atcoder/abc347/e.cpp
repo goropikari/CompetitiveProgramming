@@ -1,15 +1,21 @@
-/*https://atcoder.jp/contests/abc347/tasks/abc347_e*/
-/*2025年03月01日 04時00分54秒*/
+// https://atcoder.jp/contests/abc347/tasks/abc347_e
+// Thu 15 Jan 2026 08:33:50 PM JST
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -17,16 +23,12 @@ using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -40,9 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    puts(x ? "Yes" : "No");
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
+
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -51,45 +61,60 @@ int main() {
     return 0;
 }
 
-void solve() {
-    int n, q;
-    cin >> n >> q;
+void naive() {
+    ll N, Q;
+    cin >> N >> Q;
 
-    vint x(q);
-    vvint ids(n);
-    vint freq(n);
-    vint cnts;
-    int sum = 0;
-    rep(i, q) {
-        cin >> x[i];
-        x[i]--;
-        ids[x[i]].push_back(i);
+    vll X(Q);
+    rep(i, Q) {
+        cin >> X[i];
+        X[i]--;
+    }
 
-        if (freq[x[i]]) {
-            sum--;
+    set<ll> S;
+    vll A(N);
+    for (ll x : X) {
+        if (S.count(x)) {
+            S.erase(x);
         } else {
-            sum++;
-        }
-        freq[x[i]] = 1 - freq[x[i]];
-        cnts.push_back(sum);
-    }
-
-    vll cumsum(q + 1, 0);
-    rep(i, q) cumsum[i + 1] = cumsum[i] + cnts[i];
-
-    vll ans(n);
-    rep(i, n) {
-        vint v = ids[i];
-        if (v.size() == 0)
-            continue;
-        if (v.size() % 2 == 1) {
-            v.push_back(q);
+            S.insert(x);
         }
 
-        int m = v.size();
-        for (int j = 0; j < m; j += 2) {
-            ans[i] += cumsum[v[j + 1]] - cumsum[v[j]];
+        for (ll s : S) {
+            A[s] += S.size();
         }
     }
-    print(ans);
+
+    print(A);
+}
+
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N, Q;
+    cin >> N >> Q;
+
+    vll A(N);
+    unordered_set<ll> st;
+    ll sum = 0;
+
+    rep(i, Q) {
+        ll x;
+        cin >> x;
+        x--;
+
+        if (st.count(x)) {
+            st.erase(x);
+            A[x] += sum;
+        } else {
+            st.insert(x);
+            A[x] -= sum;
+        }
+
+        sum += st.size();
+    }
+
+    for (ll i : st) A[i] += sum;
+    print(A);
 }

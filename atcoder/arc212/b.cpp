@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc346/tasks/abc346_e
-// Fri 16 Jan 2026 08:44:19 PM JST
+// https://atcoder.jp/contests/arc212/tasks/arc212_b
+// Sun 11 Jan 2026 11:37:04 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -65,44 +65,48 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, M;
-    cin >> H >> W >> M;
+    // cost, to
+    using Edge = pair<ll, ll>;
 
-    vint usedr(H), usedc(W);
-    vll numcolor((int)2e5 + 5);
-    ll numr = 0, numc = 0;
+    ll N, M;
+    cin >> N >> M;
 
-    vector<tuple<ll, ll, ll>> qs;
+    int s, f, init_c;
+
+    vector<vector<Edge>> graph(N);
     rep(i, M) {
-        ll t, a, x;
-        cin >> t >> a >> x;
-        a--;
-        qs.emplace_back(t, a, x);
+        ll x, y, c;
+        cin >> x >> y >> c;
+        x--, y--;
+        if (i == 0) {
+            s = x, f = y, init_c = c;
+        }
+        graph[x].push_back({c, y});
     }
 
-    reverse(all(qs));
-    for (auto [t, a, x] : qs) {
-        if (t == 1) {
-            if (usedr[a]) continue;
-            usedr[a] = 1;
-            numcolor[x] += W - numc;
-            numr++;
-        } else {
-            if (usedc[a]) continue;
-            usedc[a] = 1;
-            numcolor[x] += H - numr;
-            numc++;
+    // cost, now
+    using P = pair<ll, ll>;
+    priority_queue<P, vector<P>, greater<P>> pq;
+
+    vll dist(N, INF);
+    dist[f] = 0;
+    pq.push({0, f});
+
+    while (pq.size()) {
+        auto [cost, now] = pq.top();
+        pq.pop();
+
+        if (dist[now] < cost) continue;
+
+        for (auto [c, nx] : graph[now]) {
+            if (dist[nx] <= c + cost) continue;
+            dist[nx] = c + cost;
+            pq.push({dist[nx], nx});
         }
     }
 
-    numcolor[0] += (H - numr) * (W - numc);
-    vector<pair<ll, ll>> ans;
-    rep(i, (ll)numcolor.size()) {
-        if (numcolor[i]) {
-            ans.emplace_back(i, numcolor[i]);
-        }
-    }
+    ll ans = init_c + dist[s];
+    if (dist[s] == INF) ans = -1;
 
-    cout << ans.size() << endl;
-    for (auto [c, num] : ans) cout << c << ' ' << num << '\n';
+    cout << ans << endl;
 }

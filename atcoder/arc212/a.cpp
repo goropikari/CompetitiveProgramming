@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc346/tasks/abc346_e
-// Fri 16 Jan 2026 08:44:19 PM JST
+// https://atcoder.jp/contests/arc212/tasks/arc212_a
+// Sun 11 Jan 2026 11:22:13 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -65,44 +65,17 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, M;
-    cin >> H >> W >> M;
+    ll K;
+    cin >> K;
 
-    vint usedr(H), usedc(W);
-    vll numcolor((int)2e5 + 5);
-    ll numr = 0, numc = 0;
-
-    vector<tuple<ll, ll, ll>> qs;
-    rep(i, M) {
-        ll t, a, x;
-        cin >> t >> a >> x;
-        a--;
-        qs.emplace_back(t, a, x);
-    }
-
-    reverse(all(qs));
-    for (auto [t, a, x] : qs) {
-        if (t == 1) {
-            if (usedr[a]) continue;
-            usedr[a] = 1;
-            numcolor[x] += W - numc;
-            numr++;
-        } else {
-            if (usedc[a]) continue;
-            usedc[a] = 1;
-            numcolor[x] += H - numr;
-            numc++;
+    mint ans = 0;
+    rep2(a, 2, K) {
+        rep2(b, 2, K) {
+            ll c = K - a - b;
+            if (c < 2) continue;
+            mint fg = K - max(a, max(b, c));
+            ans += fg * (a - 1) * (b - 1) * (c - 1);
         }
     }
-
-    numcolor[0] += (H - numr) * (W - numc);
-    vector<pair<ll, ll>> ans;
-    rep(i, (ll)numcolor.size()) {
-        if (numcolor[i]) {
-            ans.emplace_back(i, numcolor[i]);
-        }
-    }
-
-    cout << ans.size() << endl;
-    for (auto [c, num] : ans) cout << c << ' ' << num << '\n';
+    cout << ans.val() << endl;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc346/tasks/abc346_e
-// Fri 16 Jan 2026 08:44:19 PM JST
+// https://atcoder.jp/contests/abc349/tasks/abc349_e
+// Thu 15 Jan 2026 09:03:19 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,44 +65,56 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, M;
-    cin >> H >> W >> M;
+    int N = 3;
+    vvll A(N, vll(3));
+    rep(i, N) rep(j, N) cin >> A[i][j];
 
-    vint usedr(H), usedc(W);
-    vll numcolor((int)2e5 + 5);
-    ll numr = 0, numc = 0;
+    auto win = [&](vvll b) -> bool {
+        rep(ri, 2) {
+            rep(i, N) {
+                int ok = 1;
+                rep(j, N) if (b[i][j] != 1) ok = 0;
+                if (ok) return true;
+            }
 
-    vector<tuple<ll, ll, ll>> qs;
-    rep(i, M) {
-        ll t, a, x;
-        cin >> t >> a >> x;
-        a--;
-        qs.emplace_back(t, a, x);
-    }
+            int ok = 1;
+            rep(i, N) if (b[i][i] != 1) ok = 0;
+            if (ok) return true;
 
-    reverse(all(qs));
-    for (auto [t, a, x] : qs) {
-        if (t == 1) {
-            if (usedr[a]) continue;
-            usedr[a] = 1;
-            numcolor[x] += W - numc;
-            numr++;
-        } else {
-            if (usedc[a]) continue;
-            usedc[a] = 1;
-            numcolor[x] += H - numr;
-            numc++;
+            vvll old = b;
+            rep(i, N) rep(j, N) {
+                b[i][j] = old[N - j - 1][i];
+            }
         }
-    }
 
-    numcolor[0] += (H - numr) * (W - numc);
-    vector<pair<ll, ll>> ans;
-    rep(i, (ll)numcolor.size()) {
-        if (numcolor[i]) {
-            ans.emplace_back(i, numcolor[i]);
+        return false;
+    };
+
+    auto f = [&](auto f, vvll b) -> bool {
+        bool end = true;
+        rep(i, N) rep(j, N) {
+            if (b[i][j] == 0) end = false;
         }
-    }
 
-    cout << ans.size() << endl;
-    for (auto [c, num] : ans) cout << c << ' ' << num << '\n';
+        if (end) {
+            ll sum = 0;
+            rep(i, N) rep(j, N) sum += A[i][j] * b[i][j];
+            return sum > 0;
+        }
+        rep(i, N) rep(j, N) {
+            if (b[i][j] != 0) continue;
+
+            vvll nb = b;
+            nb[i][j] = 1;
+            if (win(nb)) return true;
+
+            rep(i, N) rep(j, N) nb[i][j] = -nb[i][j];
+            if (!(f(f, nb))) return true;
+        }
+        return false;
+    };
+
+    string ans = "Aoki";
+    if (f(f, vvll(3, vll(3)))) ans = "Takahashi";
+    cout << ans << endl;
 }

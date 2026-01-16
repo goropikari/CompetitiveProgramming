@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc346/tasks/abc346_e
-// Fri 16 Jan 2026 08:44:19 PM JST
+// https://atcoder.jp/contests/abc357/tasks/abc357_d
+// Mon 12 Jan 2026 11:53:46 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -65,44 +65,19 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, M;
-    cin >> H >> W >> M;
+    ll N;
+    cin >> N;
 
-    vint usedr(H), usedc(W);
-    vll numcolor((int)2e5 + 5);
-    ll numr = 0, numc = 0;
-
-    vector<tuple<ll, ll, ll>> qs;
-    rep(i, M) {
-        ll t, a, x;
-        cin >> t >> a >> x;
-        a--;
-        qs.emplace_back(t, a, x);
-    }
-
-    reverse(all(qs));
-    for (auto [t, a, x] : qs) {
-        if (t == 1) {
-            if (usedr[a]) continue;
-            usedr[a] = 1;
-            numcolor[x] += W - numc;
-            numr++;
-        } else {
-            if (usedc[a]) continue;
-            usedc[a] = 1;
-            numcolor[x] += H - numr;
-            numc++;
+    ll d = 0;
+    {
+        ll t = N;
+        while (t) {
+            t /= 10;
+            d++;
         }
     }
 
-    numcolor[0] += (H - numr) * (W - numc);
-    vector<pair<ll, ll>> ans;
-    rep(i, (ll)numcolor.size()) {
-        if (numcolor[i]) {
-            ans.emplace_back(i, numcolor[i]);
-        }
-    }
-
-    cout << ans.size() << endl;
-    for (auto [c, num] : ans) cout << c << ' ' << num << '\n';
+    mint ans = N, ten = 10;
+    ans *= (ten.pow(d).pow(N) - 1) / (ten.pow(d) - 1);
+    cout << ans.val() << endl;
 }

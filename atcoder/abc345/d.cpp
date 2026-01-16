@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc346/tasks/abc346_e
-// Fri 16 Jan 2026 08:44:19 PM JST
+// https://atcoder.jp/contests/abc345/tasks/abc345_d
+// Fri 16 Jan 2026 09:30:54 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,44 +65,54 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, M;
-    cin >> H >> W >> M;
+    ll N, H, W;
+    cin >> N >> H >> W;
 
-    vint usedr(H), usedc(W);
-    vll numcolor((int)2e5 + 5);
-    ll numr = 0, numc = 0;
+    vll A(N), B(N);
+    rep(i, N) cin >> A[i] >> B[i];
 
-    vector<tuple<ll, ll, ll>> qs;
-    rep(i, M) {
-        ll t, a, x;
-        cin >> t >> a >> x;
-        a--;
-        qs.emplace_back(t, a, x);
-    }
+    vvint grid(H, vint(W, -1));
 
-    reverse(all(qs));
-    for (auto [t, a, x] : qs) {
-        if (t == 1) {
-            if (usedr[a]) continue;
-            usedr[a] = 1;
-            numcolor[x] += W - numc;
-            numr++;
-        } else {
-            if (usedc[a]) continue;
-            usedc[a] = 1;
-            numcolor[x] += H - numr;
-            numc++;
+    auto dfs = [&](auto dfs, int used, int curi, int curj) -> bool {
+        while (grid[curi][curj] != -1) {
+            curj++;
+            if (curj == W) {
+                curi++;
+                curj = 0;
+            }
+            if (curi == H) break;
         }
-    }
+        if (curi == H)
+            return true;
 
-    numcolor[0] += (H - numr) * (W - numc);
-    vector<pair<ll, ll>> ans;
-    rep(i, (ll)numcolor.size()) {
-        if (numcolor[i]) {
-            ans.emplace_back(i, numcolor[i]);
+        rep(k, N) {
+            if (used >> k & 1) continue;
+
+            ll a = A[k], b = B[k];
+            rep(_, 2) {
+                int ok = 1;
+                rep(i, a) rep(j, b) {
+                    int ni = curi + i, nj = curj + j;
+                    if (ni < H && nj < W && grid[ni][nj] < 0) {
+                        grid[ni][nj] = k;
+                    } else {
+                        ok = 0;
+                    }
+                }
+                if (ok && dfs(dfs, used | 1ll << k, curi, curj))
+                    return true;
+                rep(i, a) rep(j, b) {
+                    int ni = curi + i, nj = curj + j;
+                    if (ni < H && nj < W && grid[ni][nj] == k) {
+                        grid[ni][nj] = -1;
+                    }
+                }
+                swap(a, b);
+            }
         }
-    }
 
-    cout << ans.size() << endl;
-    for (auto [c, num] : ans) cout << c << ' ' << num << '\n';
+        return false;
+    };
+
+    yesno(dfs(dfs, 0, 0, 0));
 }

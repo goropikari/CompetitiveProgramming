@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc346/tasks/abc346_e
-// Fri 16 Jan 2026 08:44:19 PM JST
+// https://atcoder.jp/contests/abc359/tasks/abc359_c
+// Mon 12 Jan 2026 10:50:26 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,44 +65,24 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll H, W, M;
-    cin >> H >> W >> M;
-
-    vint usedr(H), usedc(W);
-    vll numcolor((int)2e5 + 5);
-    ll numr = 0, numc = 0;
-
-    vector<tuple<ll, ll, ll>> qs;
-    rep(i, M) {
-        ll t, a, x;
-        cin >> t >> a >> x;
-        a--;
-        qs.emplace_back(t, a, x);
+    vll x(2), y(2);
+    rep(i, 2) cin >> x[i] >> y[i];
+    rep(i, 2) {
+        if ((x[i] + y[i]) % 2 == 1) x[i]--;
+    }
+    if (x[0] > x[1]) {
+        swap(x[0], x[1]);
+        swap(y[0], y[1]);
     }
 
-    reverse(all(qs));
-    for (auto [t, a, x] : qs) {
-        if (t == 1) {
-            if (usedr[a]) continue;
-            usedr[a] = 1;
-            numcolor[x] += W - numc;
-            numr++;
-        } else {
-            if (usedc[a]) continue;
-            usedc[a] = 1;
-            numcolor[x] += H - numr;
-            numc++;
-        }
+    ll ans = 0;
+    ll absy = abs(y[0] - y[1]);
+
+    x[0] += absy;
+    if (x[0] < x[1]) {
+        ans += abs(x[0] - x[1]) / 2;
     }
 
-    numcolor[0] += (H - numr) * (W - numc);
-    vector<pair<ll, ll>> ans;
-    rep(i, (ll)numcolor.size()) {
-        if (numcolor[i]) {
-            ans.emplace_back(i, numcolor[i]);
-        }
-    }
-
-    cout << ans.size() << endl;
-    for (auto [c, num] : ans) cout << c << ' ' << num << '\n';
+    ans += absy;
+    cout << ans << endl;
 }
