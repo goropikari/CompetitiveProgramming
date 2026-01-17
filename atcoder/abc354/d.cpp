@@ -1,15 +1,21 @@
-/*https://atcoder.jp/contests/abc354/tasks/abc354_d*/
-/*2025年02月22日 16時56分23秒*/
+// https://atcoder.jp/contests/abc354/tasks/abc354_d
+// Sat 17 Jan 2026 01:54:43 PM JST
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -17,16 +23,12 @@ using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -40,9 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    puts(x ? "Yes" : "No");
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
+
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -52,61 +62,60 @@ int main() {
 }
 
 void solve() {
-    ll a, b, c, d;
-    cin >> a >> b >> c >> d;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    ll h = d - b, w = c - a;
-    vll cnt(4, 0);
+    ll A, B, C, D;
+    cin >> A >> B >> C >> D;
+
+    vvll areas = {
+        {2, 1, 0, 1},
+        {1, 2, 1, 0},
+    };
+
     {
-        ll ta = abs(a), tb = abs(b);
-        ta %= 4;
-        tb %= 2;
-        if (a < 0)
-            ta = (4 - ta) % 4;
-        if (b < 0)
-            tb = (2 - tb) % 2;
-        if (ta == 0) {
-            cnt[0] += h / 2;
-            cnt[3] += h / 2;
-            if (tb == 0)
-                cnt[0] += h % 2;
-            else
-                cnt[3] += h % 2;
+        ll r = ((A % 4) + 4) % 4;
+        ll c = ((B % 2) + 2) % 2;
+        vvll tmp(2, vll(4));
+        rep(i, 2) {
+            rep(j, 4) {
+                tmp[i][j] = areas[(i + c) % 2][(j + r) % 4];
+            }
         }
-        if (ta == 1) {
-            cnt[0] += h / 2;
-            cnt[1] += h / 2;
-            if (tb == 0)
-                cnt[1] += h % 2;
-            else
-                cnt[0] += h % 2;
+        swap(areas, tmp);
+    }
+
+    vvll cnt(2, vll(4));
+    {
+        ll c = (C - A) / 4;
+        ll r = (D - B) / 2;
+        rep(i, 2) rep(j, 4) {
+            cnt[i][j] += c * r;
         }
-        if (ta == 2) {
-            cnt[1] += h / 2;
-            cnt[2] += h / 2;
-            if (tb == 0)
-                cnt[2] += h % 2;
-            else
-                cnt[1] += h % 2;
+
+        rep(i, (D - B) % 2) {
+            rep(j, 4) {
+                cnt[i][j] += c;
+            }
         }
-        if (ta == 3) {
-            cnt[2] += h / 2;
-            cnt[3] += h / 2;
-            if (tb == 0)
-                cnt[3] += h % 2;
-            else
-                cnt[2] += h % 2;
+    }
+    {
+        ll c = (C - A) % 4;
+        ll r = (D - B) / 2;
+        rep(i, 2) rep(j, c) {
+            cnt[i][j] += r;
+        }
+
+        rep(i, (D - B) % 2) {
+            rep(j, c) {
+                cnt[i][j] += 1;
+            }
         }
     }
 
-    vll area = {2, 1, 0, 1, 2, 1, 0, 1};
     ll ans = 0;
-    rep(i, 4) {
-        ans += cnt[i] * (w / 4 * 4);
-        ll m = w % 4;
-        rep2(j, i, i + m) {
-            ans += area[j] * cnt[i];
-        }
+    rep(i, 2) rep(j, 4) {
+        ans += cnt[i][j] * areas[i][j];
     }
     cout << ans << endl;
 }
