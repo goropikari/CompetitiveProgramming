@@ -47268,5 +47268,135 @@
     "irt_loglikelihood": -72.13725795815415,
     "irt_users": 9283,
     "is_experimental": false
+  },
+  "arc212_a": {
+    "slope": -0.0009471213444715644,
+    "intercept": 8.59213909528291,
+    "variance": 0.48894389288451484,
+    "difficulty": 957,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -584.1813546277522,
+    "irt_users": 1184,
+    "is_experimental": false
+  },
+  "arc212_b": {
+    "slope": -0.0009434905368405235,
+    "intercept": 8.6631992740032,
+    "variance": 0.4360666463065737,
+    "difficulty": 962,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -454.4373119034255,
+    "irt_users": 1184,
+    "is_experimental": false
+  },
+  "arc212_c": {
+    "slope": -0.0004106143328079654,
+    "intercept": 8.2626153426226,
+    "variance": 0.42558163349680744,
+    "difficulty": 1825,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -603.5524771345875,
+    "irt_users": 1184,
+    "is_experimental": false
+  },
+  "arc212_d": {
+    "slope": -0.00036261618015713087,
+    "intercept": 7.942182715685589,
+    "variance": 0.6170906484932882,
+    "difficulty": 2018,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -689.0342997750006,
+    "irt_users": 1184,
+    "is_experimental": false
+  },
+  "arc212_e": {
+    "slope": -0.000373192853690815,
+    "intercept": 8.493565556918576,
+    "variance": 0.20220550377767588,
+    "difficulty": 2324,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -292.5498204981285,
+    "irt_users": 1184,
+    "is_experimental": false
+  },
+  "arc212_f": {
+    "slope": -0.00012792816172853546,
+    "intercept": 7.869174278059656,
+    "variance": 0.20208677712791245,
+    "difficulty": 2735,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -115.93892845637018,
+    "irt_users": 1184,
+    "is_experimental": false
+  },
+  "abc441_a": {
+    "slope": -0.0010285677902740003,
+    "intercept": 6.888556843773488,
+    "variance": 0.77626680760667,
+    "difficulty": -630,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -1012.1580648863383,
+    "irt_users": 7684,
+    "is_experimental": false
+  },
+  "abc441_b": {
+    "slope": -0.0008842458998855501,
+    "intercept": 7.136551751673064,
+    "variance": 0.32621496825029705,
+    "difficulty": -298,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -1718.4007695393911,
+    "irt_users": 7684,
+    "is_experimental": false
+  },
+  "abc441_c": {
+    "slope": -0.0008395832844121042,
+    "intercept": 7.6306928305025625,
+    "variance": 0.5752831650974136,
+    "difficulty": 406,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -5081.479181904303,
+    "irt_users": 9165,
+    "is_experimental": false
+  },
+  "abc441_d": {
+    "slope": -0.0008184705656017119,
+    "intercept": 7.805693786875777,
+    "variance": 0.3774542656338686,
+    "difficulty": 732,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -3947.326684680093,
+    "irt_users": 9165,
+    "is_experimental": false
+  },
+  "abc441_e": {
+    "slope": -0.0008624865457341087,
+    "intercept": 7.964117516526456,
+    "variance": 0.47500458365052095,
+    "difficulty": 969,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -3164.8958866085386,
+    "irt_users": 9165,
+    "is_experimental": false
+  },
+  "abc441_f": {
+    "slope": -0.0003769155468244149,
+    "intercept": 7.847829345911037,
+    "variance": 0.3374011550306177,
+    "difficulty": 1455,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -2015.1515295256786,
+    "irt_users": 9165,
+    "is_experimental": false
+  },
+  "abc441_g": {
+    "slope": -0.00021491105760379974,
+    "intercept": 7.976272968749248,
+    "variance": 0.27145753459067434,
+    "difficulty": 1985,
+    "discrimination": 0.004479398673070138,
+    "irt_loglikelihood": -917.7572027730981,
+    "irt_users": 9165,
+    "is_experimental": false
   }
 }
