@@ -1,32 +1,34 @@
-/*https://atcoder.jp/contests/abc336/tasks/abc336_d*/
-/*2025年02月04日 02時14分09秒*/
+// https://atcoder.jp/contests/abc336/tasks/abc336_d
+// Sun 18 Jan 2026 02:45:37 PM JST
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+const ll INF = (ll)2e18 + 9;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -40,9 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    puts(x ? "Yes" : "No");
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
+
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -52,28 +62,29 @@ int main() {
 }
 
 void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     ll N;
     cin >> N;
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    A.push_back(0);
-    A.insert(A.begin(), 0);
-
-    N += 2;
-    vll dl(N, 0), dr(N, 0);
-    rep2(i, 1, N) {
-        dl[i] = min(dl[i - 1] + 1, A[i]);
+    vll L(N), R(N);
+    rep(_, 2) {
+        ll H = 0;
+        rep(i, N) {
+            L[i] = min(A[i], H + 1);
+            H = L[i];
+        }
+        reverse(all(A));
+        swap(L, R);
     }
+    reverse(all(R));
 
-    rep(i, N - 1) {
-        int k = N - 1 - i;
-        dr[k - 1] = min(dr[k] + 1, A[k - 1]);
-    }
-
-    ll ans = 0;
+    ll ans = 1;
     rep(i, N) {
-        chmax(ans, min(dr[i], dl[i]));
+        chmax(ans, min(L[i], R[i]));
     }
     cout << ans << endl;
 }
