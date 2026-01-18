@@ -79,42 +79,22 @@ void solve() {
         cm[i] = cm[i - 1] + x;
     }
 
-    map<ll, ll> cnts;
-    rep(i, N) {
-        cnts[cm[i]]++;
-    }
+    rep(i, N) cm[i] += N;
 
-    int m = cnts.size();
-    fenwick_tree<ll> fw(m);
+    vll freq(N * 2 + 1);
+    for (auto x : cm) freq[x]++;
+    fenwick_tree<ll> fw(N * 2 + 1);
+    rep(i, N * 2 + 1) fw.add(i, freq[i]);
 
-    vll ks;
-    {
-        int i = 0;
-        for (auto [key, freq] : cnts) {
-            ks.push_back(key);
-            fw.add(i, freq);
-            i++;
-        }
-    }
-
-    ll offset = 0;
     ll ans = 0;
+    ll offset = N;
     rep(i, N) {
-        char c = S[i];
-        auto it = upper_bound(all(ks), offset);
-        if (it != ks.end()) {
-            ll l = it - ks.begin();
-            ans += fw.sum(l, m);
-        }
-
-        if (c == 'A') {
+        ans += fw.sum(offset + 1, N * 2 + 1);
+        if (S[i] == 'A')
             offset++;
-        }
-        if (c == 'B') {
+        else if (S[i] == 'B')
             offset--;
-        }
-        ll l = lower_bound(all(ks), cm[i]) - ks.begin();
-        fw.add(l, -1);
+        fw.add(cm[i], -1);
     }
     cout << ans << endl;
 }
