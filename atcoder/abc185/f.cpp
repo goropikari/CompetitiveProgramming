@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc441/tasks/abc441_e
-// Mon 19 Jan 2026 09:36:59 AM JST
+// https://atcoder.jp/contests/abc185/tasks/abc185_f
+// Mon 19 Jan 2026 12:39:10 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -65,22 +65,32 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    string S;
-    cin >> N >> S;
+    ll N, Q;
+    cin >> N >> Q;
 
-    fenwick_tree<ll> fw(N * 2 + 1);
-    ll offset = N;
-    ll ans = 0;
-    rep(i, N) {
-        fw.add(offset, 1);
-        if (S[i] == 'A') {
-            offset++;
+    auto op = [](ll a, ll b) -> ll {
+        return a ^ b;
+    };
+
+    auto e = []() -> ll {
+        return 0;
+    };
+
+    vll A(N);
+    rep(i, N) cin >> A[i];
+
+    segtree<ll, op, e> seg(A);
+
+    rep(i, Q) {
+        ll t, x, y;
+        cin >> t >> x >> y;
+        if (t == 1) {
+            x--;
+            ll val = seg.get(x);
+            seg.set(x, val ^ y);
+        } else {
+            x--;
+            cout << seg.prod(x, y) << endl;
         }
-        if (S[i] == 'B') {
-            offset--;
-        }
-        ans += fw.sum(0, offset);
     }
-    cout << ans << endl;
 }

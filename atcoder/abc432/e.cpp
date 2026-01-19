@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc432/tasks/abc432_e
-// Tue 30 Dec 2025 02:01:21 PM JST
+// Mon 19 Jan 2026 09:58:45 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -61,12 +61,72 @@ int main() {
     return 0;
 }
 
+struct S {
+    ll v, cnt;
+};
+
+S op(S a, S b) {
+    return {a.v * a.cnt + b.v * b.cnt, 1};
+}
+
+S e() {
+    return {0, 0};
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N, Q;
+    ll N, Q;
     cin >> N >> Q;
     vll A(N);
     rep(i, N) cin >> A[i];
+
+    ll m = (ll)5e5 + 5;
+    fenwick_tree<ll> fw(m);
+    for (auto a : A) fw.add(a, 1);
+
+    segtree<S, op, e> seg(m);
+    rep(i, m) seg.set(i, {i, 0});
+    rep(i, N) {
+        S now = seg.get(A[i]);
+        now.cnt++;
+        seg.set(A[i], now);
+    }
+
+    while (Q--) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            ll x, y;
+            cin >> x >> y;
+            x--;
+            fw.add(A[x], -1);
+            fw.add(y, 1);
+            {
+                S now = seg.get(A[x]);
+                now.cnt--;
+                seg.set(A[x], now);
+            }
+            {
+                S now = seg.get(y);
+                now.cnt++;
+                seg.set(y, now);
+            }
+            A[x] = y;
+        } else {
+            ll l, r;
+            cin >> l >> r;
+
+            ll ans = 0;
+            if (r <= l) {
+                ans += l * N;
+            } else {
+                ans += fw.sum(0, l) * l;
+                ans += fw.sum(r + 1, m) * r;
+                ans += seg.prod(l, r + 1).v;
+            }
+            cout << ans << endl;
+        }
+    }
 }

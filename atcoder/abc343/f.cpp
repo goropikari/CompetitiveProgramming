@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc441/tasks/abc441_e
-// Mon 19 Jan 2026 09:36:59 AM JST
+// https://atcoder.jp/contests/abc343/tasks/abc343_f
+// Mon 19 Jan 2026 11:38:09 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -61,26 +61,57 @@ int main() {
     return 0;
 }
 
+struct S {
+    ll fir, fn;
+    ll sec, sn;
+};
+
+S op(S a, S b) {
+    map<ll, ll> mp;
+    mp[a.fir] += a.fn;
+    mp[a.sec] += a.sn;
+    mp[b.fir] += b.fn;
+    mp[b.sec] += b.sn;
+
+    auto it = mp.rbegin();
+    ll fir = it->first, fn = it->second;
+    it++;
+    ll sec = it->first, sn = it->second;
+    return {fir, fn, sec, sn};
+}
+
+S e() {
+    return S({0, 0, 0, 0});
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    string S;
-    cin >> N >> S;
+    ll N, Q;
+    cin >> N >> Q;
+    vll A(N);
+    rep(i, N) cin >> A[i];
 
-    fenwick_tree<ll> fw(N * 2 + 1);
-    ll offset = N;
-    ll ans = 0;
+    segtree<S, op, e> seg(N);
     rep(i, N) {
-        fw.add(offset, 1);
-        if (S[i] == 'A') {
-            offset++;
-        }
-        if (S[i] == 'B') {
-            offset--;
-        }
-        ans += fw.sum(0, offset);
+        seg.set(i, {A[i], 1, 0, 0});
     }
-    cout << ans << endl;
+
+    while (Q--) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            ll p, x;
+            cin >> p >> x;
+            p--;
+            seg.set(p, {x, 1, 0, 0});
+        } else {
+            ll l, r;
+            cin >> l >> r;
+            l--;
+            S v = seg.prod(l, r);
+            cout << v.sn << endl;
+        }
+    }
 }

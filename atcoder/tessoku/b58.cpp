@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc441/tasks/abc441_e
-// Mon 19 Jan 2026 09:36:59 AM JST
+// https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_ee
+// Mon 19 Jan 2026 01:53:07 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -65,22 +65,33 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    string S;
-    cin >> N >> S;
+    ll N, L, R;
+    cin >> N >> L >> R;
 
-    fenwick_tree<ll> fw(N * 2 + 1);
-    ll offset = N;
-    ll ans = 0;
-    rep(i, N) {
-        fw.add(offset, 1);
-        if (S[i] == 'A') {
-            offset++;
-        }
-        if (S[i] == 'B') {
-            offset--;
-        }
-        ans += fw.sum(0, offset);
+    vll X(N);
+    rep(i, N) cin >> X[i];
+
+    auto op = [](ll a, ll b) -> ll {
+        return min(a, b);
+    };
+
+    auto e = []() -> ll {
+        return INF;
+    };
+
+    segtree<ll, op, e> seg(N);
+    seg.set(0, 0);
+
+    rep2(i, 1, N) {
+        ll x = X[i];
+        ll l = x - R;
+        ll r = x - L;
+        auto lit = lower_bound(all(X), l);
+        auto rit = upper_bound(all(X), r);
+        if (lit == rit) continue;
+        ll mi = seg.prod(lit - X.begin(), rit - X.begin());
+        seg.set(i, mi + 1);
     }
-    cout << ans << endl;
+
+    cout << seg.get(N - 1) << endl;
 }

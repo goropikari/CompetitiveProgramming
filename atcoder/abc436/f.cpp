@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc441/tasks/abc441_e
-// Mon 19 Jan 2026 09:36:59 AM JST
+// https://atcoder.jp/contests/abc436/tasks/abc436_f
+// Mon 19 Jan 2026 11:09:08 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -66,21 +66,35 @@ void solve() {
     cin.tie(nullptr);
 
     ll N;
-    string S;
-    cin >> N >> S;
-
-    fenwick_tree<ll> fw(N * 2 + 1);
-    ll offset = N;
-    ll ans = 0;
+    cin >> N;
+    vll B(N);
     rep(i, N) {
-        fw.add(offset, 1);
-        if (S[i] == 'A') {
-            offset++;
+        cin >> B[i];
+        B[i]--;
+    }
+
+    // number, id
+    using P = pair<ll, ll>;
+    vector<P> ps;
+    rep(i, N) ps.emplace_back(B[i], i);
+    sort(rall(ps), [](P a, P b) -> bool {
+        return a.first < b.first;
+    });
+
+    fenwick_tree<ll> fw(N);
+    rep(i, N) fw.add(i, 1);
+
+    ll ans = 0;
+    for (auto [_, id] : ps) {
+        ll l = 1, r = 1;
+        if (0 < id) {
+            l += fw.sum(0, id);
         }
-        if (S[i] == 'B') {
-            offset--;
+        if (id + 1 < N) {
+            r += fw.sum(id + 1, N);
         }
-        ans += fw.sum(0, offset);
+        ans += l * r;
+        fw.add(id, -1);
     }
     cout << ans << endl;
 }

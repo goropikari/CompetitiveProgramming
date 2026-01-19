@@ -1,6 +1,7 @@
 +++
 date = '2025-03-17T00:46:28+09:00'
 title = '競プロ典型 90 問'
+tags = ['atcoder', 'typical90', '典型90問']
 +++
 
 <https://atcoder.jp/contests/abctypical90>
@@ -685,6 +686,59 @@ void solve() {
     sort(all(b));
     ll ans = 0;
     rep(i, n) ans += abs(a[i] - b[i]);
+    cout << ans << endl;
+}
+```
+
+## 037 - Don't Leave the Spice（★5）
+
+<https://atcoder.jp/contests/typical90/tasks/typical90_ak>
+
+2026/1/19 segment tree の問題であるということを知った状態で自力 AC
+
+$dp(i,w)$ を $i$ 個目までの香辛料を使って重さ $w$ を作るときの価値の最大値とすると
+
+\begin{align*}
+    dp(i,w) = \max(dp(i-1,w), \max_{L_i \leq l \leq R_i} dp(i-1,w-l) + V_i)
+\end{align*}
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll W, N;
+    cin >> W >> N;
+
+    auto op = [](ll a, ll b) -> ll {
+        return max(a, b);
+    };
+
+    auto e = []() -> ll {
+        return -1;
+    };
+
+    segtree<ll, op, e> seg(W + 1);
+    seg.set(0, 0);
+
+    rep(i, N) {
+        ll L, R, V;
+        cin >> L >> R >> V;
+        for (ll j = W; j >= 1; j--) {
+            if (j - L < 0) continue;
+            ll l = max(0ll, j - R);
+            ll r = j - L + 1;
+
+            if (seg.prod(l, r) < 0) continue;
+
+            ll mx = seg.prod(l, r);
+            ll now = seg.get(j);
+            seg.set(j, max(now, mx + V));
+        }
+    }
+
+    ll ans = seg.get(W);
+    if (ans < 0) ans = -1;
     cout << ans << endl;
 }
 ```
