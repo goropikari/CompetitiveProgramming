@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc341/tasks/abc341_e
-// Wed 21 Jan 2026 12:48:05 AM JST
+// https://atcoder.jp/contests/abc437/tasks/abc437_f
+// Thu 22 Jan 2026 12:03:14 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -61,49 +61,61 @@ int main() {
     return 0;
 }
 
+struct S {
+    ll mx, mi;
+};
+
+S op(S a, S b) {
+    return {max(a.mx, b.mx), min(a.mi, b.mi)};
+}
+
+S e() {
+    return {-INF, INF};
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
     ll N, Q;
     cin >> N >> Q;
-    string S;
-    cin >> S;
+    vll X(N), Y(N);
+    rep(i, N) cin >> X[i] >> Y[i];
 
-    vll d;
-    rep(i, N - 1) {
-        d.push_back(abs(S[i] - S[i + 1]));
+    segtree<S, op, e> xpy(N), xmy(N);
+    rep(i, N) {
+        xpy.set(i, {X[i] + Y[i], X[i] + Y[i]});
+        xmy.set(i, {X[i] - Y[i], X[i] - Y[i]});
     }
 
-    auto op = [](ll a, ll b) -> ll {
-        return a + b;
-    };
-
-    auto e = []() -> ll {
-        return 0;
-    };
-
-    segtree<ll, op, e> seg(d);
-
-    rep(i, Q) {
-        ll t, l, r;
-        cin >> t >> l >> r;
-        l--, r--;
+    while (Q--) {
+        int t;
+        cin >> t;
         if (t == 1) {
-            if (0 < l) {
-                ll now = seg.get(l - 1);
-                seg.set(l - 1, 1 - now);
-            }
-            if (r < N - 1) {
-                ll now = seg.get(r);
-                seg.set(r, 1 - now);
-            }
+            ll i, x, y;
+            cin >> i >> x >> y;
+            i--;
+
+            ll xx = x + y, yy = x - y;
+            xpy.set(i, {xx, xx});
+            xmy.set(i, {yy, yy});
         } else {
-            if (r - l == 0) {
-                Yes();
-            } else {
-                yesno(seg.prod(l, r) == r - l);
-            }
+            ll l, r, x, y;
+            cin >> l >> r >> x >> y;
+            l--;
+
+            ll xx = x + y, yy = x - y;
+
+            ll ans = 0;
+
+            auto p = xpy.prod(l, r);
+            auto m = xmy.prod(l, r);
+            chmax(ans, p.mx - xx);
+            chmax(ans, -p.mi + xx);
+            chmax(ans, m.mx - yy);
+            chmax(ans, -m.mi + yy);
+
+            cout << ans << endl;
         }
     }
 }

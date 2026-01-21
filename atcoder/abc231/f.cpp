@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc341/tasks/abc341_e
-// Wed 21 Jan 2026 12:48:05 AM JST
+// https://atcoder.jp/contests/abc231/tasks/abc231_f
+// Wed 21 Jan 2026 01:00:53 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -65,45 +65,44 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, Q;
-    cin >> N >> Q;
-    string S;
-    cin >> S;
+    ll N;
+    cin >> N;
+    vll A(N), B(N);
+    rep(i, N) cin >> A[i];
+    rep(i, N) cin >> B[i];
 
-    vll d;
-    rep(i, N - 1) {
-        d.push_back(abs(S[i] - S[i + 1]));
-    }
+    // Ai >= Aj && Bi <= Bj
 
-    auto op = [](ll a, ll b) -> ll {
-        return a + b;
+    vll posa = A;
+    sort(all(posa));
+    posa.erase(unique(all(posa)), posa.end());
+
+    auto id = [&](ll a) -> ll {
+        return lower_bound(all(posa), a) - posa.begin();
     };
 
-    auto e = []() -> ll {
-        return 0;
-    };
+    using P = pair<ll, ll>;
+    vector<P> ps;
+    rep(i, N) ps.emplace_back(A[i], B[i]);
 
-    segtree<ll, op, e> seg(d);
+    map<P, ll> mp;
+    for (auto p : ps) mp[p]++;
 
-    rep(i, Q) {
-        ll t, l, r;
-        cin >> t >> l >> r;
-        l--, r--;
-        if (t == 1) {
-            if (0 < l) {
-                ll now = seg.get(l - 1);
-                seg.set(l - 1, 1 - now);
-            }
-            if (r < N - 1) {
-                ll now = seg.get(r);
-                seg.set(r, 1 - now);
-            }
-        } else {
-            if (r - l == 0) {
-                Yes();
-            } else {
-                yesno(seg.prod(l, r) == r - l);
-            }
-        }
+    sort(all(ps), [](P a, P b) -> bool {
+        if (a.second != b.second) return a.second < b.second;
+        return a.first > b.first;
+    });
+
+    ll m = posa.size();
+    fenwick_tree<ll> fw(m);
+    ll ans = 0;
+    for (auto [a, b] : ps) {
+        ll i = id(a);
+        fw.add(i, 1);
+        ans += fw.sum(i, m);
+
+        mp[{a, b}]--;
+        ans += mp[{a, b}];
     }
+    cout << ans << endl;
 }

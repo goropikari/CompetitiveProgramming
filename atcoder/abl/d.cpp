@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc341/tasks/abc341_e
-// Wed 21 Jan 2026 12:48:05 AM JST
+// https://atcoder.jp/contests/abl/tasks/abl_d
+// Wed 21 Jan 2026 10:48:53 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -65,45 +65,29 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, Q;
-    cin >> N >> Q;
-    string S;
-    cin >> S;
-
-    vll d;
-    rep(i, N - 1) {
-        d.push_back(abs(S[i] - S[i + 1]));
+    ll N, K;
+    cin >> N >> K;
+    vll A(N);
+    rep(i, N) {
+        cin >> A[i];
     }
 
     auto op = [](ll a, ll b) -> ll {
-        return a + b;
+        return max(a, b);
     };
 
     auto e = []() -> ll {
         return 0;
     };
 
-    segtree<ll, op, e> seg(d);
+    ll m = (ll)6e5 + 5;
+    segtree<ll, op, e> seg(m);
 
-    rep(i, Q) {
-        ll t, l, r;
-        cin >> t >> l >> r;
-        l--, r--;
-        if (t == 1) {
-            if (0 < l) {
-                ll now = seg.get(l - 1);
-                seg.set(l - 1, 1 - now);
-            }
-            if (r < N - 1) {
-                ll now = seg.get(r);
-                seg.set(r, 1 - now);
-            }
-        } else {
-            if (r - l == 0) {
-                Yes();
-            } else {
-                yesno(seg.prod(l, r) == r - l);
-            }
-        }
+    for (ll a : A) {
+        ll l = max(0ll, a - K);
+        ll r = a + K + 1;
+        seg.set(a, seg.prod(l, r) + 1);
     }
+
+    cout << seg.all_prod() << endl;
 }

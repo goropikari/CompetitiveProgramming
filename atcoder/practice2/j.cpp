@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/practice2/tasks/practice2_j
-// Sat 03 Jan 2026 12:07:55 PM JST
+// Wed 21 Jan 2026 11:14:24 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -73,37 +73,33 @@ void solve() {
         return -1;
     };
 
-    int N, Q;
+    ll N, Q;
     cin >> N >> Q;
-
     vll A(N);
     rep(i, N) cin >> A[i];
 
     segtree<ll, op, e> seg(A);
 
-    rep(i, Q) {
+    while (Q--) {
         int t;
         cin >> t;
-
         if (t == 1) {
             ll x, v;
             cin >> x >> v;
             x--;
             seg.set(x, v);
-        }
-        if (t == 2) {
+        } else if (t == 2) {
             ll l, r;
             cin >> l >> r;
             l--;
             cout << seg.prod(l, r) << endl;
-        }
-        if (t == 3) {
+        } else {
             ll x, v;
             cin >> x >> v;
             x--;
 
-            auto f = [&](ll y) -> bool {
-                return y < v;
+            auto f = [&](ll a) -> bool {
+                return v > a;
             };
 
             cout << seg.max_right(x, f) + 1 << endl;
