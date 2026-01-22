@@ -26926,5 +26926,29 @@
     "length": 2502,
     "result": "AC",
     "execution_time": 281
+  },
+  {
+    "id": 72626236,
+    "epoch_second": 1768993037,
+    "problem_id": "tessoku_book_ef",
+    "contest_id": "tessoku-book",
+    "user_id": "goropikari",
+    "language": "C++23 (GCC 15.2.0)",
+    "point": 1000.0,
+    "length": 1891,
+    "result": "AC",
+    "execution_time": 11
+  },
+  {
+    "id": 72629963,
+    "epoch_second": 1769004808,
+    "problem_id": "abl_d",
+    "contest_id": "abl",
+    "user_id": "goropikari",
+    "language": "C++23 (GCC 15.2.0)",
+    "point": 400.0,
+    "length": 2062,
+    "result": "AC",
+    "execution_time": 62
   }
 ]
