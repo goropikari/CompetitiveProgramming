@@ -494,6 +494,7 @@ tags = ["atcoder", "tessoku", "鉄則"]
 
 $dp(i)$ を $i$ 番目の地点に到達するまでの最小ジャンプ回数とする。
 
+<!-- dprint-ignore -->
 \begin{align}
     dp(i) = \min_{X_j \in [X_i - R, X_i - L]} (dp(j)) + 1
 \end{align}

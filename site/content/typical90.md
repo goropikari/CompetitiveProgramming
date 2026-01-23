@@ -698,6 +698,7 @@ void solve() {
 
 $dp(i,w)$ を $i$ 個目までの香辛料を使って重さ $w$ を作るときの価値の最大値とすると
 
+<!-- dprint-ignore -->
 \begin{align*}
     dp(i,w) = \max(dp(i-1,w), \max_{L_i \leq l \leq R_i} dp(i-1,w-l) + V_i)
 \end{align*}

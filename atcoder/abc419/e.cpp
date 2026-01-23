@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc419/tasks/abc419_e
-// 2025年08月16日 21時31分16秒
+// Fri 23 Jan 2026 01:06:12 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -26,13 +26,9 @@ const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -46,27 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void Yes() {
-    yesno(true);
-}
+void Yes() { yesno(true); }
 
-void No() {
-    yesno(false);
-}
+void No() { yesno(false); }
 
 // ceil(a/b)
-ll ceil(ll a, ll b) {
-    return (a + b - 1) / b;
-}
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-ll floor(ll a, ll b) {
-    return a / b;
-}
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -82,25 +68,42 @@ void solve() {
     ll N, M, L;
     cin >> N >> M >> L;
     vll A(N);
-    rep(i, N) cin >> A[i];
+    rep(i, N) {
+        cin >> A[i];
+        A[i] %= M;
+    }
 
-    // cost[i][r]: i 文字目を M で割った余りを r にするのにかかるコスト
-    vector cost(L + 1, vll(M));
+    if (M <= 1) {
+        cout << 0 << endl;
+        return;
+    }
+
+    vvll cost(L, vll(M));
     rep(i, L) {
-        for (int j = i; j < N; j += L) {
-            rep(k, M) {
-                cost[i + 1][(A[j] + k) % M] += k;
+        rep(m, M) {
+            ll sum = 0;
+            for (ll j = i; j < N; j += L) {
+                if (A[j] <= m)
+                    sum += m - A[j];
+                else
+                    sum += M - A[j] + m;
+            }
+            cost[i][m] = sum;
+        }
+    }
+
+    vll dp = cost[0];
+
+    rep2(i, 1, L) {
+        vll dpn(M, INF);
+        rep(prm, M) {
+            rep(m, M) {
+                ll nm = (m + prm) % M;
+                chmin(dpn[nm], dp[prm] + cost[i][m]);
             }
         }
+        swap(dp, dpn);
     }
 
-    // dp[i][r]: i 文字目まで見たときの和の mod M が r となるときのコスト
-    vector dp(L + 1, vll(M, INF));
-    rep(i, M) dp[0][0] = 0;
-    rep2(i, 1, L + 1) {
-        rep(j, M) rep(k, M) {
-            chmin(dp[i][(j + k) % M], dp[i - 1][j] + cost[i][k]);
-        }
-    }
-    cout << dp[L][0] << endl;
+    cout << dp[0] << endl;
 }

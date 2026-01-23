@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc367/tasks/abc367_d
-// Mon 05 Jan 2026 09:36:25 PM JST
+// Thu 22 Jan 2026 10:38:07 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -67,28 +67,26 @@ void solve() {
 
     ll N, M;
     cin >> N >> M;
-
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    vll cumsum(1);
-    rep(i, N * 2) {
-        cumsum.push_back(cumsum.back() + A[i % N]);
-        cumsum.back() %= M;
+    vll cm(N * 2);
+    rep(i, N * 2 - 1) {
+        cm[i + 1] += cm[i] + A[i % N];
+        cm[i + 1] %= M;
     }
 
-    map<ll, vll> mp;
-    rep(i, N * 2 + 1) {
-        mp[cumsum[i]].push_back(i);
+    vvll mod(M);
+    rep(i, N * 2 - 1) {
+        mod[cm[i]].push_back(i);
     }
 
     ll ans = 0;
     rep(i, N) {
-        ll x = cumsum[i];
-        auto& v = mp[x];
-        auto lit = lower_bound(all(v), i + 1);
-        auto rit = lower_bound(all(v), i + N);
-        ans += (rit - lit);
+        ll m = cm[i];
+        auto l = upper_bound(all(mod[m]), i);
+        auto r = lower_bound(all(mod[m]), i + N);
+        ans += r - l;
     }
     cout << ans << endl;
 }

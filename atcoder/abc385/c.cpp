@@ -1,33 +1,34 @@
-// https://atcoder.jp/contest/abc385/tasks/abc385_c
+// https://atcoder.jp/contests/abc385/tasks/abc385_c
+// Thu 22 Jan 2026 09:11:48 PM JST
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
-#define rep(i, n) for (int i = 0; i < (n); ++i)
-#define rep2(i, k, n) for (int i = (k); i < (n); ++i)
-using namespace std;
+#define rep(i, n) for (long long int i = 0; i < (n); ++i)
+#define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
 using ll = long long;
-// using P = pair<ll,ll>;
-using P = pair<int, int>;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
-// const ll MOD = (ll)1e9+9;
+// const int INF = (int)2e9 + 7;
+
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -41,34 +42,44 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    puts(x ? "Yes" : "No");
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void solve() {
-    int N;
-    cin >> N;
-    vint H(N);
-    rep(i, N) cin >> H[i];
+void Yes() { yesno(true); }
 
-    int ans = 1;
-    int d = 0;
-    rep(i, N) {
-        rep2(d, 1, N) {
-            int j = i;
-            int h = H[j];
-            int cnt = 0;
-            while (j < N && H[j] == h) {
-                cnt++;
-                j += d;
-            }
-            chmax(ans, cnt);
-        }
-    }
-    cout << ans << endl;
-}
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
+
+void solve();
 
 int main() {
     solve();
     return 0;
+}
+
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N;
+    cin >> N;
+    vll H(N);
+    rep(i, N) cin >> H[i];
+
+    ll ans = 1;
+    rep2(w, 1, N) {
+        rep(i, w) {
+            ll cnt = 0;
+            for (int j = i; j < N; j += w) {
+                cnt++;
+                chmax(ans, cnt);
+                if (j + w < N && H[j] != H[j + w]) cnt = 0;
+            }
+        }
+    }
+    cout << ans << endl;
 }
