@@ -492,6 +492,8 @@ tags = ["atcoder", "tessoku", "鉄則"]
 
 2026/1/19 segment tree の問題だとわかった状態で自力 AC
 
+<https://kenkoooo.com/atcoder/#/contest/show/76c42792-10db-491b-9486-ffc7f4f226e1?activeTab=Standings>
+
 $dp(i)$ を $i$ 番目の地点に到達するまでの最小ジャンプ回数とする。
 
 <!-- dprint-ignore -->
