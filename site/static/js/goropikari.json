@@ -898,5 +898,17 @@
         "ContestName": "AtCoder Beginner Contest 441 (Promotion of Engineer Guild Fes)",
         "ContestNameEn": "",
         "EndTime": "2026-01-17T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 1907,
+        "OldRating": 1094,
+        "NewRating": 1120,
+        "Performance": 1333,
+        "InnerPerformance": 1333,
+        "ContestScreenName": "abc442.contest.atcoder.jp",
+        "ContestName": "JPRSプログラミングコンテスト2026#1（AtCoder Beginner Contest 442）",
+        "ContestNameEn": "JPRS Programming Contest 2026#1 (AtCoder Beginner Contest 442)",
+        "EndTime": "2026-01-24T22:40:00+09:00"
     }
 ]
