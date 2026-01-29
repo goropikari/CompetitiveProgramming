@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/typical90/tasks/typical90_009
-// Wed 28 Jan 2026 09:41:39 PM JST
+// https://atcoder.jp/contests/abc139/tasks/abc139_f
+// Wed 28 Jan 2026 10:36:03 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -54,15 +54,15 @@ ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 // floor(a/b)
 ll floor(ll a, ll b) { return a / b; }
 
+void solve();
+
+int main() {
+    solve();
+    return 0;
+}
+
 struct Point {
     long long x, y;
-
-    // 上半平面判定
-    int is_up() const {
-        if (y > 0) return 0;
-        if (y == 0 && x > 0) return 0;
-        return 1;
-    }
 
     // 外積
     long long cross(const Point& other) const {
@@ -74,41 +74,52 @@ struct Point {
         return x * other.x + y * other.y;
     }
 
+    double norm() {
+        return sqrt((double)this->norm2());
+    }
+
     // ノルム^2
     long long norm2() const {
         return x * x + y * y;
     }
 
+    Point operator+(const Point& other) const {
+        return Point({x + other.x, y + other.y});
+    }
+
+    Point& operator+=(const Point& other) {
+        this->x += other.x;
+        this->y += other.y;
+        return *this;
+    }
+
+    Point operator-(const Point& other) const {
+        return Point({x - other.x, y - other.y});
+    }
+
+    Point& operator-=(const Point& other) {
+        this->x -= other.x;
+        this->y -= other.y;
+        return *this;
+    }
+
+    // sort 用に上半平面判定
+    int _up() const {
+        if (y > 0) return 0;
+        if (y == 0 && x > 0) return 0;
+        return 1;
+    }
+
     // 偏角ソート用 comparator
+    // x 軸正方向から反時計回りに見たときの角度が小さい順
+    // (0, 0) があるとバグるので注意
     bool operator<(const Point& other) const {
-        int h1 = is_up();
-        int h2 = other.is_up();
+        int h1 = _up();
+        int h2 = other._up();
         if (h1 != h2) return h1 < h2;
         return cross(other) > 0;
     }
-
-    // ===== 角度計算 =====
-    // this と other のなす角（0〜π, ラジアン）
-    double angle(const Point& other) const {
-        double d = (double)dot(other);
-        double n = sqrt((double)norm2() * other.norm2());
-        double c = d / n;
-
-        return acos(clamp(c, -1.0, 1.0));
-    }
-
-    // 角度（度）
-    double angle_deg(const Point& other) const {
-        return angle(other) * 180.0 / M_PI;
-    }
 };
-
-void solve();
-
-int main() {
-    solve();
-    return 0;
-}
 
 void solve() {
     ios_base::sync_with_stdio(false);
@@ -116,31 +127,28 @@ void solve() {
 
     ll N;
     cin >> N;
-    vll X(N), Y(N);
-    rep(i, N) cin >> X[i] >> Y[i];
-
-    double ans = 0.0;
-    rep(j, N) {
-        vector<Point> pts;
-        rep(i, N) {
-            if (i == j) continue;
-            pts.emplace_back(X[i] - X[j], Y[i] - Y[j]);
-        }
-        sort(all(pts));
-
-        ll M = N - 1;
-        rep(i, M) pts.push_back(pts[i]);
-
-        ll r = 0;
-        rep(l, M) {
-            if (r < l) r = l;
-            while (r + 1 < l + M && pts[l].cross(pts[r + 1]) >= 0) r++;
-
-            chmax(ans, pts[l].angle_deg(pts[r]));
-            if (r + 1 < l + M)
-                chmax(ans, pts[l].angle_deg(pts[r + 1]));
-        }
+    vector<Point> pts;
+    rep(i, N) {
+        ll x, y;
+        cin >> x >> y;
+        if (x == 0 && y == 0) continue;
+        pts.emplace_back(x, y);
     }
 
-    printf("%.9lf\n", ans);
+    sort(all(pts));
+    // for (auto [x, y] : pts) printf("%lld %lld\n", x, y);
+
+    N = pts.size();
+    rep(i, N) pts.push_back(pts[i]);
+
+    ll norm_sq = 0;
+
+    rep(i, N) {
+        Point now = {0, 0};
+        rep(j, N) {
+            now += pts[i + j];
+            chmax(norm_sq, now.norm2());
+        }
+    }
+    printf("%.15lf\n", sqrt((double)norm_sq));
 }

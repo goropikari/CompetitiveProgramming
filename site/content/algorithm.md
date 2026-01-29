@@ -1884,6 +1884,72 @@ struct RollingHash {
 };
 ```
 
+## 偏角ソート
+
+<https://atcoder.jp/contests/typical90/submissions/72811356>
+
+```cpp
+struct Point {
+    long long x, y;
+
+    // 外積
+    long long cross(const Point& other) const {
+        return x * other.y - y * other.x;
+    }
+
+    // 内積
+    long long dot(const Point& other) const {
+        return x * other.x + y * other.y;
+    }
+
+    double norm() {
+        return sqrt((double)this->norm2());
+    }
+
+    // ノルム^2
+    long long norm2() const {
+        return x * x + y * y;
+    }
+
+    Point operator+(const Point& other) const {
+        return Point({x + other.x, y + other.y});
+    }
+
+    Point& operator+=(const Point& other) {
+        this->x += other.x;
+        this->y += other.y;
+        return *this;
+    }
+
+    Point operator-(const Point& other) const {
+        return Point({x - other.x, y - other.y});
+    }
+
+    Point& operator-=(const Point& other) {
+        this->x -= other.x;
+        this->y -= other.y;
+        return *this;
+    }
+
+    // sort 用に上半平面判定
+    int _up() const {
+        if (y > 0) return 0;
+        if (y == 0 && x > 0) return 0;
+        return 1;
+    }
+
+    // 偏角ソート用 comparator
+    // x 軸正方向から反時計回りに見たときの角度が小さい順
+    // (0, 0) があるとバグるので注意
+    bool operator<(const Point& other) const {
+        int h1 = _up();
+        int h2 = other._up();
+        if (h1 != h2) return h1 < h2;
+        return cross(other) > 0;
+    }
+};
+```
+
 ## 全探索
 
 ### 組み合わせ
