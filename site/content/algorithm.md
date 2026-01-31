@@ -1888,6 +1888,10 @@ struct RollingHash {
 
 <https://atcoder.jp/contests/typical90/submissions/72811356>
 
+### $[0, 2\pi)$ の範囲でソート
+
+$(0, 0)$ は使えない
+
 ```cpp
 struct Point {
     long long x, y;
@@ -1944,6 +1948,36 @@ struct Point {
     bool operator<(const Point& other) const {
         int h1 = _up();
         int h2 = other._up();
+        if (h1 != h2) return h1 < h2;
+        return cross(other) > 0;
+    }
+};
+```
+
+### $(-\pi, \pi]$ の範囲でソート
+
+$(0, 0)$ の角度は 0 とする
+
+<https://judge.yosupo.jp/submission/349134>
+
+```cpp
+struct Point {
+    long long x, y;
+
+    // 外積
+    long long cross(const Point& other) const {
+        return x * other.y - y * other.x;
+    }
+
+    int pos() const {
+        if (y < 0) return -1;
+        if (x >= 0 && y == 0) return 0;
+        return 1;
+    }
+
+    bool operator<(const Point& other) const {
+        int h1 = pos();
+        int h2 = other.pos();
         if (h1 != h2) return h1 < h2;
         return cross(other) > 0;
     }

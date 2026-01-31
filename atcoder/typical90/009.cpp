@@ -1,4 +1,4 @@
-// https://atcoder.jp/contests/typical90/tasks/typical90_009
+// https://atcoder.jp/contests/typical90/tasks/typical90_i
 // Wed 28 Jan 2026 09:41:39 PM JST
 #include <bits/stdc++.h>
 using namespace std;
