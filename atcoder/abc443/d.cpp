@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc443/tasks/abc443_d
-// Sat 31 Jan 2026 09:21:41 PM JST
+// Sun 01 Feb 2026 02:22:56 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -74,29 +74,17 @@ void solve() {
             R[i]--;
         }
 
-        // row number, index
-        using P = pair<ll, ll>;
-
-        priority_queue<P, vector<P>, greater<P>> pq;
-        rep(i, N) {
-            pq.push({R[i], i});
+        vll origin = R;
+        rep(_, 2) {
+            rep2(i, 1, N) {
+                chmin(R[i], R[i - 1] + 1);
+            }
+            reverse(all(R));
         }
 
         ll ans = 0;
-        while (pq.size()) {
-            auto [num, base_id] = pq.top();
-            pq.pop();
-
-            if (R[base_id] < num) continue;
-            for (ll d : {-1, 1}) {
-                ll neigh_id = base_id + d;
-                if (clamp(neigh_id, 0ll, N - 1) != neigh_id) continue;
-                if (R[neigh_id] > num + 1) {
-                    ans += R[neigh_id] - (num + 1);
-                    R[neigh_id] = num + 1;
-                    pq.push({num + 1, neigh_id});
-                }
-            }
+        rep(i, N) {
+            ans += origin[i] - R[i];
         }
         cout << ans << '\n';
     };

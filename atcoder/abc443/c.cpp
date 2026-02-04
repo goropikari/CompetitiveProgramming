@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc443/tasks/abc443_c
-// Sat 31 Jan 2026 09:07:36 PM JST
+// Sun 01 Feb 2026 11:33:39 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -74,12 +74,10 @@ void solve() {
 
     ll ans = 0;
     ll now = 0;
-    int i = 0;
-    while (i < N && now < T) {
-        while (i < N && A[i] < now) i++;
+    rep(i, N) {
+        if (A[i] < now) continue;
         ans += A[i] - now;
         now = A[i] + 100;
-        i++;
     }
     cout << ans << endl;
 }
