@@ -1,14 +1,3 @@
-async function loadData() {
-	try {
-		const response = await fetch("/CompetitiveProgramming/js/stat.json");
-		const data = await response.json();
-		return data;
-	} catch (error) {
-		console.error("Error loading data:", error);
-		return {};
-	}
-}
-
 async function loadRatingData() {
 	try {
 		const response = await fetch("/CompetitiveProgramming/js/goropikari.json");
