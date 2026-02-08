@@ -9,23 +9,71 @@ async function loadData() {
 	}
 }
 
+async function loadRatingData() {
+	try {
+		const response = await fetch("/CompetitiveProgramming/js/goropikari.json");
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error("Error loading data:", error);
+		return {};
+	}
+}
+
+function displayRating() {
+	loadRatingData().then((data) => {
+		const filteredData = data.filter((entry) => entry.IsRated);
+		const ratings = filteredData.map((entry) => entry.NewRating);
+		const dates = filteredData.map((entry) => new Date(entry.EndTime));
+		const colors = filteredData.map((entry) => {
+			if (entry.NewRating < 400)
+				return "#808080"; // gray
+			else if (entry.NewRating < 800)
+				return "#A52A2A"; // brown
+			else if (entry.NewRating < 1200)
+				return "#008000"; // green
+			else if (entry.NewRating < 1600)
+				return "#00FFFF"; // cyan
+			else if (entry.NewRating < 2000)
+				return "#0000FF"; // blue
+			else if (entry.NewRating < 2400)
+				return "#FFFF00"; // yellow
+			else if (entry.NewRating < 2800)
+				return "#FFA500"; // orange
+			else return "#FF0000"; // red
+		});
+		const contestNames = filteredData.map((entry) => entry.ContestName);
+
+		const trace = {
+			x: dates,
+			y: ratings,
+			text: contestNames,
+			mode: "lines+markers",
+			type: "scatter",
+			name: "Rating",
+			line: { color: "#808080" },
+			marker: { color: colors },
+			hovertemplate: "Date: %{x}<br>Rating: %{y}<br>%{text}<extra></extra>",
+		};
+
+		const layout = {
+			title: {
+				text: "User Rating Over Time",
+			},
+			xaxis: {
+				title: "Date",
+				type: "date",
+			},
+			yaxis: {
+				title: "Rating",
+			},
+		};
+
+		Plotly.newPlot("rating", [trace], layout);
+	});
+}
+
 let displayCount = 100; // Default display count
-
-document
-	.getElementById("displayCountSlider")
-	.addEventListener("input", function (event) {
-		displayCount = event.target.value;
-		document.getElementById("displayCountTextBox").value = displayCount;
-		updateDisplay();
-	});
-
-document
-	.getElementById("displayCountTextBox")
-	.addEventListener("change", function (event) {
-		displayCount = event.target.value;
-		document.getElementById("displayCountSlider").value = displayCount;
-		updateDisplay();
-	});
 
 function updateDisplay() {
 	loadData().then((data) => {
@@ -71,4 +119,8 @@ function updateDisplay() {
 	});
 }
 
-updateDisplay();
+[
+	{ IsRated: true, EndTime: "2023-01-15T12:00:00Z", NewRating: 1500 },
+	{ IsRated: false, EndTime: "2023-02-15T12:00:00Z", NewRating: 1550 },
+	{ IsRated: true, EndTime: "2023-02-15T12:00:00Z", NewRating: 1550 },
+];

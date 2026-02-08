@@ -48,13 +48,17 @@ async function calculatePerformance() {
 <button type="submit" id="calculate" onclick="calculatePerformance();">計算する</button>
 </p>
 
-<h1>Submissions</h1>
-<div id='submissions'><!-- Plotly chart will be drawn inside this DIV --></div>
-<input type="range" id="displayCountSlider" min="30" max="1000" value="60" oninput="updateDisplayCount(this.value)">
-<input type="text" id="displayCountTextBox" value="100" onchange="updateSliderCount(this.value)">
+<h1>Rating Distribution</h1>
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src='https://cdn.plot.ly/plotly-3.0.0.min.js'></script>
 <script src="{{ "js/stat.js" | relURL }}"></script>
+
+<div id='rating'><!-- Plotly chart will be drawn inside this DIV --></div>
+<script>displayRating()</script>
+
+<h1>Submissions</h1>
+<div id='submissions'><!-- Plotly chart will be drawn inside this DIV --></div>
+<script>updateDisplay()</script>
 
 
 <style>
