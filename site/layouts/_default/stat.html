@@ -48,6 +48,69 @@ async function calculatePerformance() {
 <button type="submit" id="calculate" onclick="calculatePerformance();">計算する</button>
 </p>
 
+<div id="ratingEstimatorTableContainer">
+    <h2>目標レーティングと必要パフォーマンス</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>目標レーティング</th>
+                <th>必要パフォーマンス</th>
+            </tr>
+        </thead>
+        <tbody id="performance_table_body">
+            <!-- JavaScript will populate this -->
+        </tbody>
+    </table>
+</div>
+
+<script type="module">
+// This ensures `displayContestData` is called and `contestData` is populated
+// before we try to use it.
+document.addEventListener("DOMContentLoaded", async function() {
+    // Ensure all necessary scripts are loaded and data is ready.
+    // displayContestData is exported globally from rating.js, so we can call it.
+    if (typeof displayContestData === 'function') {
+        await displayContestData();
+    } else {
+        console.error("displayContestData function not found. Is rating.js loaded?");
+        return;
+    }
+
+    // getContestData is also exported globally from rating.js
+    const contestData = getContestData();
+    const len = contestData.length;
+    const lastContest = contestData.length > 0 ? contestData[0] : null;
+
+    const tableBody = document.getElementById("performance_table_body");
+
+    if (!lastContest || lastContest.rating === undefined) {
+        const row = tableBody.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 2;
+        cell.textContent = "競技データがありません。";
+        return;
+    }
+
+    // calc and unpositivize_rating are provided by atcoder_rating.js
+    if (typeof calc !== 'function' || typeof unpositivize_rating !== 'function') {
+        console.error("atcoder_rating.js functions (calc, unpositivize_rating) not found.");
+        return;
+    }
+
+    for (let goal = 1000; goal <= 1400; goal += 50) {
+        const performance = calc(lastContest.rating, len, goal);
+        const formattedPerformance = Math.floor(performance * 10) / 10; // 小数点以下1桁で切り捨て
+
+        const row = tableBody.insertRow();
+        const cellGoal = row.insertCell();
+        const cellPerformance = row.insertCell();
+
+        cellGoal.textContent = goal;
+        cellPerformance.textContent = formattedPerformance;
+    }
+});
+</script>
+
 <h1>Rating Distribution</h1>
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src='https://cdn.plot.ly/plotly-3.0.0.min.js'></script>
