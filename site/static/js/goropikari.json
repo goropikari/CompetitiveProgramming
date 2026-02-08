@@ -922,5 +922,17 @@
         "ContestName": "デンソークリエイトプログラミングコンテスト2026（AtCoder Beginner Contest 443）",
         "ContestNameEn": "Denso Create Programming Contest 2026（AtCoder Beginner Contest 443）",
         "EndTime": "2026-01-31T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 1957,
+        "OldRating": 1181,
+        "NewRating": 1202,
+        "Performance": 1369,
+        "InnerPerformance": 1369,
+        "ContestScreenName": "abc444.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 444",
+        "ContestNameEn": "",
+        "EndTime": "2026-02-07T22:40:00+09:00"
     }
 ]
