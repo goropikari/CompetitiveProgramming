@@ -1,17 +1,17 @@
-// https://atcoder.jp/contests/abc430/tasks/abc430_e
-// Mon 09 Feb 2026 02:34:58 AM JST
+// https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/14/ALDS1_14_A
+// Mon 09 Feb 2026 10:50:41 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -65,25 +65,11 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    auto cal = []() -> void {
-        string A, B;
-        cin >> A >> B;
+    string T, P;
+    cin >> T >> P;
 
-        string S = B + A + A;
-
-        vint z = z_algorithm(S);
-
-        int n = A.size();
-        rep(i, n) {
-            if (z[n + i] >= n) {
-                cout << i << '\n';
-                return;
-            }
-        }
-        cout << -1 << '\n';
-    };
-
-    int t;
-    cin >> t;
-    rep(i, t) cal();
+    int n = P.size();
+    rep(i, (ll)T.size()) {
+        if (T.substr(i, n) == P) cout << i << endl;
+    }
 }

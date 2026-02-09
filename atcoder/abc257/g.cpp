@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc430/tasks/abc430_e
-// Mon 09 Feb 2026 02:34:58 AM JST
+// https://atcoder.jp/contests/abc257/tasks/abc257_g
+// Mon 09 Feb 2026 03:05:45 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -65,25 +65,38 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    auto cal = []() -> void {
-        string A, B;
-        cin >> A >> B;
+    string S, T;
+    cin >> S >> T;
 
-        string S = B + A + A;
+    int n = T.size();
+    vint Z;
+    {
+        vint tmp = z_algorithm(S + "$" + T);  // T の区間に |S| 以上の長さが出ないように $ を挟む
+        rep(i, n) Z.push_back(tmp[S.size() + i + 1]);
+    }
 
-        vint z = z_algorithm(S);
+    // min, sum
+    using P = pair<ll, ll>;
 
-        int n = A.size();
-        rep(i, n) {
-            if (z[n + i] >= n) {
-                cout << i << '\n';
-                return;
-            }
-        }
-        cout << -1 << '\n';
+    auto op = [](P a, P b) -> P {
+        return {max(a.first, b.first), min(a.second, b.second)};
     };
 
-    int t;
-    cin >> t;
-    rep(i, t) cal();
+    auto e = []() -> P {
+        return {0, INF};
+    };
+
+    segtree<P, op, e> seg(n + 1);
+    seg.set(n, {1, 0});
+
+    for (int i = n - 1; i >= 0; i--) {
+        if (!Z[i]) continue;
+        P p = seg.prod(i + 1, min(i + Z[i] + 1, n + 1));
+        seg.set(i, {p.first, p.second + 1});
+    }
+
+    P x = seg.get(0);
+    ll ans = -1;
+    if (x.first) ans = x.second;
+    cout << ans << endl;
 }

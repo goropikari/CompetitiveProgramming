@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc430/tasks/abc430_e
-// Mon 09 Feb 2026 02:34:58 AM JST
+// https://atcoder.jp/contests/abc141/tasks/abc141_e
+// Mon 09 Feb 2026 10:27:13 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -65,25 +65,17 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    auto cal = []() -> void {
-        string A, B;
-        cin >> A >> B;
+    ll N;
+    string S;
+    cin >> N >> S;
 
-        string S = B + A + A;
-
-        vint z = z_algorithm(S);
-
-        int n = A.size();
-        rep(i, n) {
-            if (z[n + i] >= n) {
-                cout << i << '\n';
-                return;
-            }
+    ll ans = 0;
+    rep(i, N) {
+        vint z = z_algorithm(S.substr(i));
+        int n = z.size();
+        rep(j, n) {
+            chmax(ans, min(j, (ll)z[j]));
         }
-        cout << -1 << '\n';
-    };
-
-    int t;
-    cin >> t;
-    rep(i, t) cal();
+    }
+    cout << ans << endl;
 }

@@ -1,11 +1,11 @@
-// https://atcoder.jp/contests/abc430/tasks/abc430_e
-// Mon 09 Feb 2026 02:34:58 AM JST
+// https://atcoder.jp/contests/abc284/tasks/abc284_f
+// Thu 05 Feb 2026 11:57:31 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
 using namespace atcoder;
 // using mint = modint998244353;
-// using mint = modint1000000007;
+using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
@@ -65,25 +65,29 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    auto cal = []() -> void {
-        string A, B;
-        cin >> A >> B;
+    ll N;
+    string T;
+    cin >> N >> T;
 
-        string S = B + A + A;
+    string t1 = T.substr(0, N);
+    string t2 = T.substr(N, N);
+    reverse(all(t2));
 
-        vint z = z_algorithm(S);
+    vint za = z_algorithm(t1 + t2);
+    vint zb = z_algorithm(t2 + t1);
 
-        int n = A.size();
-        rep(i, n) {
-            if (z[n + i] >= n) {
-                cout << i << '\n';
-                return;
-            }
-        }
-        cout << -1 << '\n';
-    };
-
-    int t;
-    cin >> t;
-    rep(i, t) cal();
+    rep(i, N) {
+        if (i && za[N * 2 - i] != i) continue;
+        ll j = N - i;
+        if (zb[N + i] != j) continue;
+        string s = t1 + t2;
+        string ans = s.substr(0, i);
+        string b = s.substr(N, j);
+        reverse(all(b));
+        ans += b;
+        cout << ans << endl;
+        cout << i << endl;
+        return;
+    }
+    cout << -1 << endl;
 }

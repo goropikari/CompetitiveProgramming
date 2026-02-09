@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc430/tasks/abc430_e
-// Mon 09 Feb 2026 02:34:58 AM JST
+// https://atcoder.jp/contests/abc444/tasks/abc444_f
+// Sun 08 Feb 2026 11:58:12 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -66,21 +66,43 @@ void solve() {
     cin.tie(nullptr);
 
     auto cal = []() -> void {
-        string A, B;
-        cin >> A >> B;
+        ll N, M;
+        cin >> N >> M;
+        vll A(N);
+        rep(i, N) cin >> A[i];
+        sort(all(A));
 
-        string S = B + A + A;
+        auto judge = [&](ll x) -> bool {
+            ll sum = 0;
+            ll cnt = 0;
+            auto f = [&](auto f, ll X) -> ll {
+                if (x <= X && X < x * 2 - 1) return 1;
+                if (cnt == M) return 0;
+                if (X < x * 2 - 1) return 0;
 
-        vint z = z_algorithm(S);
-
-        int n = A.size();
-        rep(i, n) {
-            if (z[n + i] >= n) {
-                cout << i << '\n';
-                return;
+                cnt++;
+                return f(f, X / 2) + f(f, (X + 1) / 2);
+            };
+            auto l = lower_bound(all(A), x * 2 - 1) - A.begin();
+            for (int j = N - 1; j >= l; j--) {
+                if (cnt == M) break;
+                ll t = f(f, A[j]);
+                sum += t - 1;
             }
+
+            ll y = A.end() - lower_bound(all(A), x) + sum;
+            return y >= (N + M + 1) / 2;
+        };
+
+        ll ac = 1, wa = INF;
+        while (wa - ac > 1) {
+            ll wj = (ac + wa) / 2;
+            if (judge(wj))
+                ac = wj;
+            else
+                wa = wj;
         }
-        cout << -1 << '\n';
+        cout << ac << endl;
     };
 
     int t;
