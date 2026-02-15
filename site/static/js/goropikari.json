@@ -934,5 +934,17 @@
         "ContestName": "AtCoder Beginner Contest 444",
         "ContestNameEn": "",
         "EndTime": "2026-02-07T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 2454,
+        "OldRating": 1202,
+        "NewRating": 1200,
+        "Performance": 1184,
+        "InnerPerformance": 1184,
+        "ContestScreenName": "abc445.contest.atcoder.jp",
+        "ContestName": "AtCoder Beginner Contest 445",
+        "ContestNameEn": "",
+        "EndTime": "2026-02-14T22:40:00+09:00"
     }
 ]
