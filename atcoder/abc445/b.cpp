@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc424/tasks/abc424_e
-// 2025年09月23日 00時10分40秒
+// https://atcoder.jp/contests/abc445/tasks/abc445_b
+// Sat 14 Feb 2026 09:03:54 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -26,13 +26,9 @@ using vvll = vector<vector<ll>>;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -46,27 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void Yes() {
-    yesno(true);
-}
+void Yes() { yesno(true); }
 
-void No() {
-    yesno(false);
-}
+void No() { yesno(false); }
 
 // ceil(a/b)
-ll ceil(ll a, ll b) {
-    return (a + b - 1) / b;
-}
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-ll floor(ll a, ll b) {
-    return a / b;
-}
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -79,14 +65,20 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    auto cal = []() -> void {
-        ll N, K, X;
-        cin >> N >> K >> X;
-        vll A(N);
-        rep(i, N) cin >> A[i];
-    };
+    ll N;
+    cin >> N;
+    vector<string> S(N);
+    rep(i, N) cin >> S[i];
 
-    int t;
-    cin >> t;
-    while (t--) cal();
+    ll m = 0;
+    rep(i, N) chmax(m, (ll)S[i].size());
+
+    for (string s : S) {
+        string ans = string(m, '.');
+        int len = (m - s.size()) / 2;
+        rep(i, (ll)s.size()) {
+            ans[len + i] = s[i];
+        }
+        cout << ans << '\n';
+    }
 }
