@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// https://atcoder.jp/contests/abc314/tasks/abc314_d
+// Wed 11 Feb 2026 12:57:44 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,21 +65,52 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
+    int N;
     cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    string S;
+    cin >> S;
+    int Q;
+    cin >> Q;
 
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
+    // state
+    // -1: 小文字
+    // 0: そのまま
+    // 1: 大文字
+    int state = 0;
 
-    ll ans = 0;
-    for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
+    set<int> diff;
+
+    while (Q--) {
+        int t, x;
+        char c;
+        cin >> t >> x >> c;
+        x--;
+
+        if (t == 1) {
+            S[x] = c;
+            diff.erase(x);
+            if (state != 0) diff.insert(x);
+        } else if (t == 2) {
+            state = -1;
+            diff.clear();
+        } else {
+            state = 1;
+            diff.clear();
         }
     }
-    cout << ans << endl;
+
+    if (state == 1) {
+        rep(i, N) {
+            if (diff.count(i)) continue;
+            if (islower(S[i])) S[i] ^= 32;
+        }
+    }
+    if (state == -1) {
+        rep(i, N) {
+            if (diff.count(i)) continue;
+            if (isupper(S[i])) S[i] ^= 32;
+        }
+    }
+
+    cout << S << endl;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// https://atcoder.jp/contests/abc313/tasks/abc313_d
+// Thu 12 Feb 2026 09:49:42 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,21 +65,68 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    ll N, K;
+    cin >> N >> K;
 
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
+    vint group0, group1;
+    vint q;
+    rep(i, K - 1) q.push_back(i);
 
-    ll ans = 0;
-    for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
+    rep2(i, K - 1, N) {
+        q.push_back(i);
+        cout << "?";
+        for (ll x : q) cout << " " << x + 1;
+        cout << '\n';
+        cout << flush;
+        q.pop_back();
+
+        int T;
+        cin >> T;
+        if (T == -1) return;
+        if (T == 0)
+            group0.push_back(i);
+        else
+            group1.push_back(i);
+    }
+
+    vint q2;
+    {
+        vint tmp0 = group0, tmp1 = group1;
+        if (tmp0.size() % 2 == 1) tmp0.pop_back();
+        if (tmp1.size() % 2 == 1) tmp1.pop_back();
+
+        vint v;
+        for (ll x : tmp0) v.push_back(x);
+        for (ll x : tmp1) v.push_back(x);
+
+        for (int i = 0; i < K - 1; i++) {
+            q2.push_back(v[i]);
         }
     }
-    cout << ans << endl;
+
+    vint ans(N);
+
+    rep(i, K - 1) {
+        q2.push_back(i);
+        cout << "?";
+        for (ll x : q2) cout << " " << x + 1;
+        cout << '\n';
+        cout << flush;
+        q2.pop_back();
+
+        int T;
+        cin >> T;
+        if (T == -1) return;
+        ans[i] = T;
+    }
+
+    int parity = 0;
+    rep(i, K - 1) parity ^= ans[i];
+
+    for (ll id : group0) ans[id] = parity;
+    for (ll id : group1) ans[id] = parity ^ 1;
+
+    cout << "! ";
+    print(ans);
+    cout << flush;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// https://atcoder.jp/contests/awc0005/tasks/awc0005_a
+// Fri 13 Feb 2026 07:59:09 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,21 +65,14 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
-
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
+    ll N, K;
+    cin >> N >> K;
 
     ll ans = 0;
-    for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
-        }
+    rep(i, N) {
+        ll p;
+        cin >> p;
+        if (p % K == 0) ans += p;
     }
     cout << ans << endl;
 }

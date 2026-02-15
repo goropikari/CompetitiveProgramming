@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// https://atcoder.jp/contests/awc0005/tasks/awc0005_d
+// Fri 13 Feb 2026 08:09:20 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -65,21 +65,32 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
+    ll N, K;
+    cin >> N >> K;
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
-
-    ll ans = 0;
-    for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
+    auto judge = [&](ll x) -> bool {
+        ll ret = 0;
+        ll sum = 0;
+        rep(i, N) {
+            sum += A[i];
+            if (sum >= x) {
+                ret++;
+                sum = 0;
+            }
         }
+        return ret >= K;
+    };
+
+    ll ac = 1, wa = INF;
+    while (wa - ac > 1) {
+        ll wj = (ac + wa) / 2;
+
+        if (judge(wj))
+            ac = wj;
+        else
+            wa = wj;
     }
-    cout << ans << endl;
+    cout << ac << endl;
 }

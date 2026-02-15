@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// https://atcoder.jp/contests/abc389/tasks/abc389_f
+// Sun 15 Feb 2026 04:16:46 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -65,21 +65,57 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    using S = ll;
+    auto op = [](S a, S b) -> S {
+        return max(a, b);
+    };
+
+    auto e = []() -> S {
+        return -1;
+    };
+
+    using F = ll;
+    auto mapping = [](F f, S x) -> S {
+        return x + f;
+    };
+
+    auto composition = [](F f, F g) -> F {
+        return f + g;
+    };
+
+    auto id = []() -> F {
+        return 0;
+    };
+
+    ll M = (ll)5e5;
+    vll v(M);
+    iota(all(v), 1ll);
+    lazy_segtree<S, op, e, F, mapping, composition, id> seg(v);
+
     ll N;
     cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    rep(i, N) {
+        ll L, R;
+        cin >> L >> R;
 
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
+        auto left = [&](S x) -> bool {
+            return x < L;
+        };
+        auto right = [&](S x) -> bool {
+            return x <= R;
+        };
 
-    ll ans = 0;
-    for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
-        }
+        ll l = seg.max_right(0, left);
+        ll r = seg.max_right(0, right);
+        seg.apply(l, r, 1);
     }
-    cout << ans << endl;
+
+    ll Q;
+    cin >> Q;
+    while (Q--) {
+        ll x;
+        cin >> x;
+        x--;
+        cout << seg.get(x) << endl;
+    }
 }

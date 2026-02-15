@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// https://atcoder.jp/contests/abc315/tasks/abc315_d
+// Wed 11 Feb 2026 12:19:01 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,21 +65,57 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
-
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
-
-    ll ans = 0;
-    for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
-        }
+    ll H, W;
+    cin >> H >> W;
+    vvint grid(H, vint(W));
+    rep(i, H) rep(j, W) {
+        char c;
+        cin >> c;
+        grid[i][j] = c - 'a';
     }
-    cout << ans << endl;
+
+    vvint rows(H, vint(26)), cols(W, vint(26));
+    rep(i, H) rep(j, W) {
+        rows[i][grid[i][j]]++;
+        cols[j][grid[i][j]]++;
+    }
+
+    using T = tuple<ll, ll, ll>;
+
+    vint delr(H), delc(W);
+    int nr = H, nc = W;
+    while (true) {
+        vector<T> v;
+
+        rep(i, H) rep(c, 26) {
+            if (rows[i][c] == nc && rows[i][c] > 1) v.push_back({0, i, c});
+        }
+        rep(j, W) rep(c, 26) {
+            if (cols[j][c] == nr && cols[j][c] > 1) v.push_back({1, j, c});
+        }
+
+        for (auto [t, i, c] : v) {
+            if (t == 0) {
+                delr[i] = 1;
+                rows[i][c] = 0;
+                rep(j, W) {
+                    if (delc[j]) continue;
+                    cols[j][c]--;
+                }
+                nr--;
+            } else {
+                delc[i] = 1;
+                cols[i][c] = 0;
+                rep(r, H) {
+                    if (delr[r]) continue;
+                    rows[r][c]--;
+                }
+                nc--;
+            }
+        }
+
+        if (v.size() == 0) break;
+    }
+
+    cout << nr * nc << endl;
 }

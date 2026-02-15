@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// https://atcoder.jp/contests/awc0005/tasks/awc0005_e
+// Fri 13 Feb 2026 08:14:16 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -65,21 +65,25 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
+    ll N, Q;
+    cin >> N >> Q;
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
+    auto op = [](ll a, ll b) -> ll {
+        return max(a, b);
+    };
 
-    ll ans = 0;
-    for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
-        }
+    auto e = []() -> ll {
+        return 0;
+    };
+
+    segtree<ll, op, e> seg(A);
+
+    while (Q--) {
+        ll l, r;
+        cin >> l >> r;
+        l--;
+        cout << seg.prod(l, r) << endl;
     }
-    cout << ans << endl;
 }
