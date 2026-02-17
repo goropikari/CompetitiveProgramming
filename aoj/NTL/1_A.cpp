@@ -1,17 +1,21 @@
 // https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
-// 2025年04月05日 23時04分10秒
-// https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
-// 2025年04月05日 22時53分22秒
+// Sun 15 Feb 2026 07:26:49 PM JST
 #include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -19,16 +23,12 @@ using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
 // const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -42,9 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
+
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -53,118 +61,114 @@ int main() {
     return 0;
 }
 
-// prime, cnt
-vector<pair<ll, ll>> factor(ll n) {
-    vector<pair<ll, ll>> ps;
-    ll t = n;
-    for (int i = 2; i * i <= n; i++) {
-        if (t % i == 0) {
-            ll cnt = 0;
-            while (t % i == 0) {
-                t /= i;
-                cnt++;
-            }
-            ps.emplace_back(i, cnt);
-        }
-    }
-    if (t > 1)
-        ps.emplace_back(t, 1);
+using ull = unsigned long long;
+template <class T>
+using V = vector<T>;
+template <class T>
+using VV = V<V<T>>;
 
-    return ps;
+// bit op
+int bsf(uint x) { return __builtin_ctz(x); }
+int bsf(ull x) { return __builtin_ctzll(x); }
+
+// binary gcd
+ll gcd(ll _a, ll _b) {
+    ull a = abs(_a), b = abs(_b);
+    if (a == 0) return b;
+    if (b == 0) return a;
+    int shift = bsf(a | b);
+    a >>= bsf(a);
+    do {
+        b >>= bsf(b);
+        if (a > b) swap(a, b);
+        b -= a;
+    } while (b);
+    return (a << shift);
 }
 
-// https://qiita.com/drken/items/3beb679e54266f20ab63#4-%E6%B4%BB%E7%94%A8%E4%BE%8B-1-%E9%AB%98%E9%80%9F%E7%B4%A0%E5%9B%A0%E6%95%B0%E5%88%86%E8%A7%A3%E9%AB%98%E9%80%9F%E7%B4%84%E6%95%B0%E5%88%97%E6%8C%99
-struct Sieve {
-    vector<bool> isprime;
+template <class T, class U>
+T pow_mod(T x, U n, T md) {
+    T r = 1 % md;
+    x %= md;
+    while (n) {
+        if (n & 1) r = (r * x) % md;
+        x = (x * x) % md;
+        n >>= 1;
+    }
+    return r;
+}
 
-    // 整数 i を割り切る最小の素数
-    vector<int> minfactor;
-
-    Sieve(int N) : isprime(N + 1, true),
-                   minfactor(N + 1, -1) {
-        isprime[1] = false;
-        minfactor[1] = 1;
-
-        for (int p = 2; p <= N; ++p) {
-            // すでに合成数であるものはスキップする
-            if (!isprime[p])
-                continue;
-
-            // p についての情報更新
-            minfactor[p] = p;
-
-            // p 以外の p の倍数から素数ラベルを剥奪
-            for (int q = p * 2; q <= N; q += p) {
-                // q は合成数なのでふるい落とす
-                isprime[q] = false;
-
-                // q は p で割り切れる旨を更新
-                if (minfactor[q] == -1)
-                    minfactor[q] = p;
-            }
+bool is_prime(ll n) {
+    if (n <= 1) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    ll d = n - 1;
+    while (d % 2 == 0) d /= 2;
+    for (ll a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+        if (n <= a) break;
+        ll t = d;
+        ll y = pow_mod<__int128_t>(a, t, n);  // over
+        while (t != n - 1 && y != 1 && y != n - 1) {
+            y = __int128_t(y) * y % n;  // flow
+            t <<= 1;
+        }
+        if (y != n - 1 && t % 2 == 0) {
+            return false;
         }
     }
+    return true;
+}
 
-    // 高速素因数分解
-    // pair (素因子, 指数) の vector を返す
-    vector<pair<ll, ll>> factorize(int n) {
-        vector<pair<ll, ll>> res;
-        while (n > 1) {
-            int p = minfactor[n];
-            int exp = 0;
-
-            // n で割り切れる限り割る
-            while (minfactor[n] == p) {
-                n /= p;
-                ++exp;
-            }
-            res.emplace_back(p, exp);
+ll pollard_single(ll n) {
+    if (is_prime(n)) return n;
+    if (n % 2 == 0) return 2;
+    ll st = 0;
+    auto f = [&](ll x) { return (__int128_t(x) * x + st) % n; };
+    while (true) {
+        st++;
+        ll x = st, y = f(x);
+        while (true) {
+            ll p = gcd((y - x + n), n);
+            if (p == 0 || p == n) break;
+            if (p != 1) return p;
+            x = f(x);
+            y = f(f(y));
         }
-        return res;
     }
+}
 
-    // 高速約数列挙
-    vector<int> divisors(int n) {
-        vector<int> res({1});
+V<ll> pollard(ll n) {
+    if (n == 1) return {};
+    ll x = pollard_single(n);
+    if (x == n) return {x};
+    V<ll> le = pollard(x);
+    V<ll> ri = pollard(n / x);
+    le.insert(le.end(), ri.begin(), ri.end());
+    return le;
+}
 
-        // n を素因数分解 (メンバ関数使用)
-        auto pf = factorize(n);
+vector<pair<ll, ll>> factorize(ll n) {
+    vll ps = pollard(n);
+    map<ll, ll> mp;
+    for (ll x : ps) mp[x]++;
 
-        // 約数列挙
-        for (auto p : pf) {
-            int s = (int)res.size();
-            for (int i = 0; i < s; ++i) {
-                int v = 1;
-                for (int j = 0; j < p.second; ++j) {
-                    v *= p.first;
-                    res.push_back(res[i] * v);
-                }
-            }
-        }
-        return res;
-    }
-};
+    vector<pair<ll, ll>> facs;
+    for (auto [k, cnt] : mp) facs.push_back({k, cnt});
+    return facs;
+}
 
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    Sieve sieve((int)1e7);
+    ll N;
+    cin >> N;
 
-    ll n;
-    cin >> n;
-    cout << n << ":";
-
-    vector<pair<ll, ll>> ps;
-    if (n < (int)1e7) {
-        ps = sieve.factorize(n);
-    } else {
-        ps = factor(n);
-    }
-    for (auto [x, cnt] : ps) {
-        rep(i, cnt) {
-            cout << ' ' << x;
-        }
+    auto facs = factorize(N);
+    sort(all(facs));
+    cout << N << ":";
+    for (auto [p, cnt] : facs) {
+        rep(i, cnt) cout << ' ' << p;
     }
     cout << endl;
 }

@@ -654,6 +654,57 @@ void solve() {
 
 <https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_fr>
 
+2026/2/17 segment tree の問題だとわかった状態で自力 AC
+
+<https://kenkoooo.com/atcoder/#/contest/show/76c42792-10db-491b-9486-ffc7f4f226e1?activeTab=Standings>
+
+$i-1$ から $i$ への移動で使ったガソリンはどの時点でガソリンスタンドで購入したガソリンかを考えると
+$i-K$ から $i-1$ までの区間にあるガソリンスタンドのうち、最も安いガソリンスタンドで購入したガソリンを使うのが最適であることがわかる。
+また一つのガソリンスタンドで補充できるガソリンは $K$ まで使えるので、同じ位置にガソリンスタンドがある場合は最安値のところを使えばよい。
+segment tree を使って、区間 $[i-K, i-1]$ にあるガソリンスタンドのうち最安値のガソリンを使って $i-1$ から $i$ への移動をすることを繰り返せば、最終的に $L$ に到達するまでの最小コストを求めることができる。
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N, L, K;
+    cin >> N >> L >> K;
+    L++;
+
+    auto op = [](ll a, ll b) -> ll {
+        return min(a, b);
+    };
+    auto e = []() -> ll {
+        return INF;
+    };
+
+    segtree<ll, op, e> seg(L);
+    seg.set(0, 0);
+
+    rep(i, N) {
+        ll a, c;
+        cin >> a >> c;
+        ll t = seg.get(a);
+        seg.set(a, min(t, c));
+    }
+
+    vll cost(L, INF);
+    cost[0] = 0;
+    rep2(i, 1, L) {
+        ll l = max(0ll, i - K);
+        cost[i] = seg.prod(l, i);
+    }
+
+    ll ans;
+    if (*max_element(all(cost)) == INF)
+        ans = -1;
+    else
+        ans = accumulate(all(cost), 0ll);
+    cout << ans << endl;
+}
+```
+
 ## C20. Mayor's Challenge
 
 <https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_fs>

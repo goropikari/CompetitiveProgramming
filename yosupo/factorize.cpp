@@ -1,17 +1,19 @@
-// https://atcoder.jp/contests/abc445/tasks/abc445_e
-// Sat 14 Feb 2026 10:08:19 PM JST
+// http://localhost:5173/problem/factorize
+// Sun 15 Feb 2026 07:57:31 PM JST
+// https://judge.yosupo.jp/problem/factorize
+// Sun 15 Feb 2026 07:55:25 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
-using mint = modint998244353;
+// #include <atcoder/all>
+// using namespace atcoder;
+// using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
@@ -147,62 +149,18 @@ V<ll> pollard(ll n) {
     return le;
 }
 
-vector<pair<ll, ll>> factorize(ll n) {
-    vll ps = pollard(n);
-    map<ll, ll> mp;
-    for (ll x : ps) mp[x]++;
-
-    vector<pair<ll, ll>> facs;
-    for (auto [k, cnt] : mp) facs.push_back({k, cnt});
-    return facs;
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    auto cal = [&]() -> void {
-        ll N;
-        cin >> N;
-        vll A(N);
-        rep(i, N) cin >> A[i];
-
-        vector<vector<pair<ll, ll>>> facs;
-        for (ll a : A) {
-            facs.push_back(factorize(a));
-        }
-
-        map<ll, ll> e1, e2;
-        rep(i, N) {
-            for (auto [p, cnt] : facs[i]) {
-                if (e1[p] < cnt) {
-                    e2[p] = e1[p];
-                    e1[p] = cnt;
-                } else if (e2[p] < cnt) {
-                    e2[p] = cnt;
-                }
-            }
-        }
-
-        mint cm = 1;
-        for (auto [p, cnt] : e1) {
-            cm *= ((mint)p).pow(cnt);
-        }
-
-        vll ans;
-        rep(i, N) {
-            mint v = cm;
-            for (auto [p, cnt] : facs[i]) {
-                if (e1[p] == cnt) {
-                    v /= mint(p).pow(e1[p] - e2[p]);
-                }
-            }
-            ans.push_back(v.val());
-        }
-        print(ans);
-    };
-
-    int t;
-    cin >> t;
-    rep(i, t) cal();
+    ll Q;
+    cin >> Q;
+    while (Q--) {
+        ll a;
+        cin >> a;
+        vll facs = pollard(a);
+        sort(all(facs));
+        cout << facs.size() << ' ';
+        print(facs);
+    }
 }
