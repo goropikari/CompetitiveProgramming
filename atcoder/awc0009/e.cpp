@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc223/tasks/abc223_f
-// Mon 16 Feb 2026 09:57:08 AM JST
+// https://atcoder.jp/contests/awc0009/tasks/awc0009_e
+// Thu 19 Feb 2026 08:19:33 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -61,50 +61,35 @@ int main() {
     return 0;
 }
 
-struct P {
-    ll sum, mi;
-};
-
-P op(P a, P b) {
-    return {a.sum + b.sum, min(a.mi, a.sum + b.mi)};
-}
-
-P e() {
-    return {0, 0};
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
     ll N, Q;
-    string S;
-    cin >> N >> Q >> S;
+    cin >> N >> Q;
+
+    using P = pair<ll, ll>;
+
+    auto op = [](P a, P b) -> P {
+        return {max(a.first, b.first), min(a.second, b.second)};
+    };
+
+    auto e = []() -> P {
+        return {-INF, INF};
+    };
 
     segtree<P, op, e> seg(N);
     rep(i, N) {
-        if (S[i] == '(')
-            seg.set(i, {1, 0});
-        else
-            seg.set(i, {-1, -1});
+        ll a;
+        cin >> a;
+        seg.set(i, {a, a});
     }
 
     while (Q--) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            ll l, r;
-            cin >> l >> r;
-            l--, r--;
-            P a = seg.get(l), b = seg.get(r);
-            swap(a, b);
-            seg.set(l, a), seg.set(r, b);
-        } else {
-            ll l, r;
-            cin >> l >> r;
-            l--;
-            P p = seg.prod(l, r);
-            yesno(p.sum == 0 && p.mi == 0);
-        }
+        ll l, r;
+        cin >> l >> r;
+        l--;
+        P x = seg.prod(l, r);
+        cout << x.first - x.second << endl;
     }
 }

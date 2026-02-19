@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc223/tasks/abc223_f
-// Mon 16 Feb 2026 09:57:08 AM JST
+// https://atcoder.jp/contests/awc0009/tasks/awc0009_d
+// Thu 19 Feb 2026 08:06:37 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -22,7 +22,7 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -61,50 +61,37 @@ int main() {
     return 0;
 }
 
-struct P {
-    ll sum, mi;
-};
-
-P op(P a, P b) {
-    return {a.sum + b.sum, min(a.mi, a.sum + b.mi)};
-}
-
-P e() {
-    return {0, 0};
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, Q;
-    string S;
-    cin >> N >> Q >> S;
+    ll N, M;
+    cin >> N >> M;
 
-    segtree<P, op, e> seg(N);
-    rep(i, N) {
-        if (S[i] == '(')
-            seg.set(i, {1, 0});
-        else
-            seg.set(i, {-1, -1});
+    using P = pair<ll, ll>;
+    vector<P> rain(M);
+    rep(i, M) {
+        ll l, r;
+        cin >> l >> r;
+        rain[i] = {l, r};
     }
+    rain.push_back({INF, INF});
 
-    while (Q--) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            ll l, r;
-            cin >> l >> r;
-            l--, r--;
-            P a = seg.get(l), b = seg.get(r);
-            swap(a, b);
-            seg.set(l, a), seg.set(r, b);
-        } else {
-            ll l, r;
-            cin >> l >> r;
-            l--;
-            P p = seg.prod(l, r);
-            yesno(p.sum == 0 && p.mi == 0);
+    sort(all(rain));
+
+    ll rem = N, now = 1;
+    for (auto [st, fin] : rain) {
+        if (now < st) {
+            ll d = st - now;
+            ll sub = min(d, rem);
+            rem -= sub;
+            if (rem == 0) {
+                now += sub - 1;
+                break;
+            }
         }
+        chmax(now, fin + 1);
     }
+
+    cout << now << endl;
 }

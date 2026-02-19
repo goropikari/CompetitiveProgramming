@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc378/tasks/abc378_e
-// Fri 23 Jan 2026 10:14:28 PM JST
+// Wed 18 Feb 2026 11:09:29 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -67,24 +67,20 @@ void solve() {
 
     ll N, M;
     cin >> N >> M;
+
     vll A(N);
     rep(i, N) cin >> A[i];
-
     vll cm(N + 1);
-    rep(i, N) {
-        cm[i + 1] = cm[i] + A[i];
-        cm[i + 1] %= M;
-    }
+    rep(i, N) cm[i + 1] = (cm[i] + A[i]) % M;
 
-    fenwick_tree<ll> freq(M), cmcm(N + 1);
-    rep(i, N) cmcm.add(i + 1, cm[i + 1]);
+    fenwick_tree<ll> fw(M);
 
     ll ans = 0;
-    rep2(i, 1, N + 1) {
-        ans += i * cm[i];
-        ans -= cmcm.sum(0, i);
-        freq.add(cm[i], 1);
-        ans += M * freq.sum(cm[i] + 1, M);
+    ll sum = 0;
+    rep(r, N + 1) {
+        ans += cm[r] * r - sum + fw.sum(cm[r] + 1, M) * M;
+        sum += cm[r];
+        fw.add(cm[r], 1);
     }
     cout << ans << endl;
 }

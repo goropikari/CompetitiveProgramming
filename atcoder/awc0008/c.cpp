@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/abc223/tasks/abc223_f
-// Mon 16 Feb 2026 09:57:08 AM JST
+// https://atcoder.jp/contests/awc0008/tasks/awc0008_c
+// Wed 18 Feb 2026 08:11:22 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -61,50 +61,20 @@ int main() {
     return 0;
 }
 
-struct P {
-    ll sum, mi;
-};
-
-P op(P a, P b) {
-    return {a.sum + b.sum, min(a.mi, a.sum + b.mi)};
-}
-
-P e() {
-    return {0, 0};
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, Q;
-    string S;
-    cin >> N >> Q >> S;
+    ll N, K;
+    cin >> N >> K;
+    vll A(N);
+    rep(i, N) cin >> A[i];
+    vll cumsum(N + 1);
+    rep(i, N) cumsum[i + 1] = cumsum[i] + A[i];
 
-    segtree<P, op, e> seg(N);
-    rep(i, N) {
-        if (S[i] == '(')
-            seg.set(i, {1, 0});
-        else
-            seg.set(i, {-1, -1});
+    ll ans = 0;
+    rep(i, N - K + 1) {
+        if (cumsum[i + K] - cumsum[i] <= 0) ans++;
     }
-
-    while (Q--) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            ll l, r;
-            cin >> l >> r;
-            l--, r--;
-            P a = seg.get(l), b = seg.get(r);
-            swap(a, b);
-            seg.set(l, a), seg.set(r, b);
-        } else {
-            ll l, r;
-            cin >> l >> r;
-            l--;
-            P p = seg.prod(l, r);
-            yesno(p.sum == 0 && p.mi == 0);
-        }
-    }
+    cout << ans << endl;
 }

@@ -68,65 +68,48 @@ void solve() {
     ll N, K;
     cin >> N >> K;
 
-    vint group0, group1;
-    vint q;
-    rep(i, K - 1) q.push_back(i);
-
-    rep2(i, K - 1, N) {
-        q.push_back(i);
-        cout << "?";
-        for (ll x : q) cout << " " << x + 1;
-        cout << '\n';
-        cout << flush;
-        q.pop_back();
-
-        int T;
-        cin >> T;
-        if (T == -1) return;
-        if (T == 0)
-            group0.push_back(i);
-        else
-            group1.push_back(i);
+    vvint qs(N, vint(N));
+    rep(i, K + 1) rep(j, K + 1) {
+        qs[i][j] = 1;
+        if (i == j) qs[i][j] = 0;
     }
 
-    vint q2;
-    {
-        vint tmp0 = group0, tmp1 = group1;
-        if (tmp0.size() % 2 == 1) tmp0.pop_back();
-        if (tmp1.size() % 2 == 1) tmp1.pop_back();
+    rep2(i, K + 1, N) rep(j, K - 1) {
+        qs[i][j] = 1;
+    }
+    rep2(i, K + 1, N) qs[i][i] = 1;
 
-        vint v;
-        for (ll x : tmp0) v.push_back(x);
-        for (ll x : tmp1) v.push_back(x);
-
-        for (int i = 0; i < K - 1; i++) {
-            q2.push_back(v[i]);
+    vll ret(N);
+    rep(i, N) {
+        cout << "?";
+        rep(j, N) {
+            if (qs[i][j]) cout << ' ' << j + 1;
         }
-    }
-
-    vint ans(N);
-
-    rep(i, K - 1) {
-        q2.push_back(i);
-        cout << "?";
-        for (ll x : q2) cout << " " << x + 1;
-        cout << '\n';
+        cout << endl;
         cout << flush;
-        q2.pop_back();
 
-        int T;
-        cin >> T;
-        if (T == -1) return;
-        ans[i] = T;
+        ll t;
+        cin >> t;
+        ret[i] = t;
     }
 
     int parity = 0;
-    rep(i, K - 1) parity ^= ans[i];
+    rep(i, K + 1) parity ^= ret[i];
 
-    for (ll id : group0) ans[id] = parity;
-    for (ll id : group1) ans[id] = parity ^ 1;
+    vll ans(N);
+    rep(i, K + 1) {
+        ans[i] = parity ^ ret[i];
+    }
+
+    int head = 0;
+    rep(i, K - 1) {
+        head ^= ans[i];
+    }
+
+    rep2(i, K + 1, N) {
+        ans[i] = head ^ ret[i];
+    }
 
     cout << "! ";
     print(ans);
-    cout << flush;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc223/tasks/abc223_f
-// Mon 16 Feb 2026 09:57:08 AM JST
+// https://atcoder.jp/contests/awc0008/tasks/awc0008_e
+// Wed 18 Feb 2026 08:24:47 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -61,50 +61,29 @@ int main() {
     return 0;
 }
 
-struct P {
-    ll sum, mi;
-};
-
-P op(P a, P b) {
-    return {a.sum + b.sum, min(a.mi, a.sum + b.mi)};
-}
-
-P e() {
-    return {0, 0};
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, Q;
-    string S;
-    cin >> N >> Q >> S;
+    ll N;
+    cin >> N;
 
-    segtree<P, op, e> seg(N);
+    using P = pair<ll, ll>;
+    vector<P> A(N);
     rep(i, N) {
-        if (S[i] == '(')
-            seg.set(i, {1, 0});
-        else
-            seg.set(i, {-1, -1});
+        ll a;
+        cin >> a;
+        a--;
+        A[i] = {a, i};
     }
 
-    while (Q--) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            ll l, r;
-            cin >> l >> r;
-            l--, r--;
-            P a = seg.get(l), b = seg.get(r);
-            swap(a, b);
-            seg.set(l, a), seg.set(r, b);
-        } else {
-            ll l, r;
-            cin >> l >> r;
-            l--;
-            P p = seg.prod(l, r);
-            yesno(p.sum == 0 && p.mi == 0);
-        }
+    sort(all(A));
+    fenwick_tree<ll> fw(N);
+
+    ll ans = 0;
+    for (auto [a, i] : A) {
+        ans += fw.sum(i, N);
+        fw.add(i, 1);
     }
+    cout << ans << endl;
 }

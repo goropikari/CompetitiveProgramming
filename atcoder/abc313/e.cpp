@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/abc223/tasks/abc223_f
-// Mon 16 Feb 2026 09:57:08 AM JST
+// https://atcoder.jp/contests/abc313/tasks/abc313_e
+// Wed 18 Feb 2026 12:11:21 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
 using namespace atcoder;
-// using mint = modint998244353;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -61,50 +61,47 @@ int main() {
     return 0;
 }
 
-struct P {
-    ll sum, mi;
-};
-
-P op(P a, P b) {
-    return {a.sum + b.sum, min(a.mi, a.sum + b.mi)};
-}
-
-P e() {
-    return {0, 0};
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, Q;
+    ll N;
     string S;
-    cin >> N >> Q >> S;
-
-    segtree<P, op, e> seg(N);
-    rep(i, N) {
-        if (S[i] == '(')
-            seg.set(i, {1, 0});
-        else
-            seg.set(i, {-1, -1});
-    }
-
-    while (Q--) {
-        int t;
-        cin >> t;
-        if (t == 1) {
-            ll l, r;
-            cin >> l >> r;
-            l--, r--;
-            P a = seg.get(l), b = seg.get(r);
-            swap(a, b);
-            seg.set(l, a), seg.set(r, b);
-        } else {
-            ll l, r;
-            cin >> l >> r;
-            l--;
-            P p = seg.prod(l, r);
-            yesno(p.sum == 0 && p.mi == 0);
+    cin >> N >> S;
+    rep(i, N - 1) {
+        if (S[i] != '1' && S[i + 1] != '1') {
+            cout << -1 << endl;
+            return;
         }
     }
+
+    using P = pair<mint, ll>;
+    deque<P> deq;
+    ll cnt = 0;
+    rep(i, N) {
+        if (S[i] != '1') {
+            deq.push_back({cnt, S[i] - '0'});
+            cnt = 0;
+        } else {
+            cnt++;
+        }
+    }
+    if (cnt) deq.push_back({cnt, 1});
+
+    mint ans = 0;
+    while (deq.size()) {
+        auto [num, d] = deq.back();
+        deq.pop_back();
+        if (num == 0) {
+            break;
+        }
+
+        if (d != 1)
+            ans += num + (d - 1) * (ans + 1);
+        else
+            ans += num - 1;
+        if (deq.size()) ans++;
+    }
+
+    cout << ans.val() << endl;
 }
