@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc381/tasks/abc381_d
-// 2025年07月20日 17時34分44秒
+// Thu 19 Feb 2026 11:59:55 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -26,13 +26,9 @@ using vvll = vector<vector<ll>>;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -46,27 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void Yes() {
-    yesno(true);
-}
+void Yes() { yesno(true); }
 
-void No() {
-    yesno(false);
-}
+void No() { yesno(false); }
 
 // ceil(a/b)
-ll ceil(ll a, ll b) {
-    return (a + b - 1) / b;
-}
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-ll floor(ll a, ll b) {
-    return a / b;
-}
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -97,43 +83,33 @@ void solve() {
     ll N;
     cin >> N;
     vll A(N);
-    rep(i, N) {
-        cin >> A[i];
-    }
+    rep(i, N) cin >> A[i];
 
-    vint used(N + 1, -1);
-
-    ll ans = 0;
-    ll l = 0;
-    auto ps = runLengthEncode(A);
-    rep(i, (ll)ps.size()) {
-        auto [num, cnt] = ps[i];
-        if (cnt < 2) {
-            while (l <= i) {
-                used[ps[l].first] = -1;
-                l++;
-            }
-        } else if (cnt > 2) {
-            if (used[num] != -1) {
-                chmax(ans, (i - l) * 2);
-            } else {
-                chmax(ans, (i - l + 1) * 2);
-            }
-            while (l < i) {
-                used[ps[l].first] = -1;
-                l++;
-            }
-            used[num] = i;
+    using P = pair<ll, ll>;
+    vector<P> vs;
+    for (auto [a, cnt] : runLengthEncode(A)) {
+        if (cnt <= 2) {
+            vs.push_back({a, cnt});
         } else {
-            if (used[num] != -1) {
-                chmax(ans, (i - l) * 2);
-                rep2(j, l, used[num]) used[ps[j].first] = -1;
-                l = used[num] + 1;
-            } else {
-                chmax(ans, (i - l + 1) * 2);
-            }
-            used[num] = i;
+            vs.push_back({a, 2});
+            vs.push_back({a, 2});
         }
     }
+
+    vint used(N + 1);
+    ll M = vs.size();
+    ll r = 0, ans = 0;
+    rep(l, M) {
+        if (vs[l].second == 1) continue;
+        chmax(r, l);
+        while (r < M && vs[r].second == 2 && used[vs[r].first] == 0) {
+            used[vs[r].first] = 1;
+            r++;
+        }
+
+        used[vs[l].first] = 0;
+        chmax(ans, (r - l) * 2);
+    }
+
     cout << ans << endl;
 }

@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc383/tasks/abc383_d
-// 2025年07月20日 04時15分52秒
+// Sat 21 Feb 2026 05:57:35 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -26,13 +26,9 @@ using vvll = vector<vector<ll>>;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -46,27 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void Yes() {
-    yesno(true);
-}
+void Yes() { yesno(true); }
 
-void No() {
-    yesno(false);
-}
+void No() { yesno(false); }
 
 // ceil(a/b)
-ll ceil(ll a, ll b) {
-    return (a + b - 1) / b;
-}
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-ll floor(ll a, ll b) {
-    return a / b;
-}
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -75,42 +61,98 @@ int main() {
     return 0;
 }
 
+vll cal_lpf(ll N) {
+    vll lpf(N + 1);
+    vint is_prime(N + 1, 1);
+    iota(all(lpf), 0ll);
+    rep2(p, 2, N + 1) {
+        if (!is_prime[p]) continue;
+        for (ll j = p + p; j <= N; j += p) {
+            is_prime[j] = 0;
+            if (lpf[j] < p) continue;
+            lpf[j] = p;
+        }
+    }
+
+    return lpf;
+}
+
+vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
+    vector<pair<ll, ll>> facs;
+    {
+        while (x != 1) {
+            ll p = lpf[x];
+            ll cnt = 0;
+            while (x % p == 0) {
+                x /= p;
+                cnt++;
+            }
+            facs.push_back({p, cnt});
+        }
+    }
+
+    return facs;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    using Int = unsigned long long int;
+
+    auto kth_root = [](Int x, Int k) -> Int {
+        assert(k != 0);
+        if (x == 1 || k == 1) return x;
+        Int l = 0, r = x;
+        while (r - l > 1) {
+            Int m = (r - l) / 2 + l;
+            Int t = x;
+            rep(i, k) t /= m;
+            if (1 > t) {
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+        return l;
+    };
+
+    // 平方根
+    auto isqrt = [&](Int x) -> Int {
+        return kth_root(x, 2);
+    };
+
     ll N;
     cin >> N;
 
-    ll mx = (ll)2e6 + 5;
-    // ll mx = 5;
-    vll is_primes(mx, true);
-    is_primes[0] = is_primes[1] = false;
-    rep2(i, 2, mx) {
-        for (int j = i + i; j < mx; j += i) {
-            is_primes[j] = false;
+    // p^8 (p>=2)
+    // p^2 * q^2 (p != q)
+    ll up = 2e6 + 5;
+    vll lpf = cal_lpf(up);
+
+    set<ll> ans;
+    rep2(i, 2, 40) {
+        if (lpf[i] != i) continue;
+        ll t = 1;
+        rep(j, 8) t *= i;
+        if (t <= N) ans.insert(t);
+    }
+
+    rep2(i, 2, (ll)isqrt(N) + 1) {
+        auto ps = factorize(lpf, i);
+        if (ps.size() != 2) continue;
+
+        int ok = 1;
+        ll mul = 1;
+        for (auto [p, cnt] : ps) {
+            if (cnt != 1) ok = 0;
+            mul *= p;
         }
+        if (!ok) continue;
+
+        ll t = mul * mul;
+        ans.insert(t);
     }
 
-    ll ans = 0;
-
-    rep(i, mx) {
-        if (!is_primes[i]) continue;
-        ll t = N;
-        rep(j, 8) t /= i;
-        if (t) ans++;
-    }
-
-    vll prime_sqs;
-    rep(i, mx) if (is_primes[i]) prime_sqs.push_back(i * i);
-
-    int r = prime_sqs.size() - 1;
-    rep(l, (ll)prime_sqs.size()) {
-        ll psq = prime_sqs[l];
-        while (psq * prime_sqs[r] > N && l < r) r--;
-        if (l >= r) break;
-        ans += r - l;
-    }
-
-    cout << ans << endl;
+    cout << ans.size() << endl;
 }

@@ -2133,6 +2133,21 @@ struct Point {
         if (h1 != h2) return h1 < h2;
         return cross(other) > 0;
     }
+
+    // ===== 角度計算 =====
+    // this と other のなす角（0〜π, ラジアン）
+    double angle(const Point& other) const {
+        double d = (double)dot(other);
+        double n = sqrt((double)norm2() * other.norm2());
+        double c = d / n;
+
+        return acos(clamp(c, -1.0, 1.0));
+    }
+
+    // 角度（度）
+    double angle_deg(const Point& other) const {
+        return angle(other) * 180.0 / M_PI;
+    }
 };
 ```
 

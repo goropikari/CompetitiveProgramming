@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc444/tasks/abc444_e
-// Sat 07 Feb 2026 09:57:05 PM JST
+// Thu 19 Feb 2026 11:42:25 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -70,34 +70,26 @@ void solve() {
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    // number, index
-    map<ll, ll> S;
-    S[-INF] = S[INF] = -1;  // sentinel
+    set<ll> S = {-INF, INF};
+    ll ans = 0, r = 0;
+    rep(l, N) {
+        chmax(r, l);
+        while (r < N) {
+            auto lit = S.lower_bound(A[r]);
+            lit--;
+            auto rit = S.lower_bound(A[r]);
 
-    int l = 0;
-
-    auto del_neigh = [&](ll x) -> void {
-        ll tmpl = -1;
-        auto it = S.lower_bound(x);
-        auto [num1, index1] = *it;
-        if (abs(num1 - x) < D) chmax(tmpl, index1);
-
-        it--;
-        auto [num2, index2] = *it;
-        if (abs(num2 - x) < D) chmax(tmpl, index2);
-
-        while (l <= tmpl) {
-            S.erase(A[l]);
-            l++;
+            if (A[r] - *lit >= D && *rit - A[r] >= D) {
+                S.insert(A[r]);
+                r++;
+            } else {
+                break;
+            }
         }
-    };
 
-    ll ans = 0;
+        ans += r - l;
 
-    rep(r, N) {
-        del_neigh(A[r]);
-        S[A[r]] = r;
-        ans += r - l + 1;
+        S.erase(A[l]);
     }
 
     cout << ans << endl;

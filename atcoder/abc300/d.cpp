@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc300/tasks/abc300_d
-// 2025年07月16日 21時01分49秒
+// Sat 21 Feb 2026 06:41:50 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -26,13 +26,9 @@ using vvll = vector<vector<ll>>;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -46,27 +42,17 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void Yes() {
-    yesno(true);
-}
+void Yes() { yesno(true); }
 
-void No() {
-    yesno(false);
-}
+void No() { yesno(false); }
 
 // ceil(a/b)
-ll ceil(ll a, ll b) {
-    return (a + b - 1) / b;
-}
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-ll floor(ll a, ll b) {
-    return a / b;
-}
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -75,66 +61,54 @@ int main() {
     return 0;
 }
 
+vll cal_lpf(ll N) {
+    vll lpf(N + 1, -1);
+    vll primes;
+    rep2(d, 2, N + 1) {
+        if (lpf[d] < 0) {
+            lpf[d] = d;
+            primes.push_back(d);
+        }
+        for (ll p : primes) {
+            if (p * d > N || p > lpf[d]) break;
+            lpf[p * d] = p;
+        }
+    }
+
+    return lpf;
+}
+
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int m = (int)1e6 + 5;
-    vint isp(m, 1);
-    isp[0] = isp[1] = 0;
-    rep2(i, 2, m) {
-        for (ll j = i + i; j < m; j += i) {
-            isp[j] = 0;
-        }
-    }
-
-    vll primes;
-    rep(i, m) if (isp[i]) primes.push_back(i);
-
-    using ull = unsigned long long int;
-
-    auto kth_root = [](ull x, int k) -> ull {
-        assert(k != 0);
-        if (x == 1 || k == 1) return x;
-        ull l = 0, r = x;
-        while (r - l > 1) {
-            ull m = (r - l) / 2 + l;
-            ull t = x;
-            rep(i, k) t /= m;
-            if (1 > t) {
-                r = m;
-            } else {
-                l = m;
-            }
-        }
-        return l;
-    };
-
-    // 平方根
-    auto isqrt = [&](ull x) -> ull {
-        return kth_root(x, 2);
-    };
-
     ll N;
     cin >> N;
 
-    ll ans = 0;
-
-    rep(i, m) {
-        ll a = primes[i];
-        if (a * a * a * a * a > N) break;
-        rep2(j, i + 1, m) {
-            ll b = primes[j];
-            if (b * b * b > N / a / a) break;
-            ll csq_upper = N / (a * a * b);
-            ll c = isqrt(csq_upper);
-            if (b < c) {
-                auto lit = lower_bound(all(primes), b);
-                auto rit = prev(upper_bound(all(primes), c));
-                ans += rit - lit;
-            }
-        }
+    ll mx = (ll)3e5 + 5;
+    vll lpf = cal_lpf(mx);
+    vll primes;
+    rep2(i, 2, mx) {
+        if (lpf[i] == i) primes.push_back(i);
     }
 
+    ll M = primes.size();
+    ll ans = 0;
+    rep(i, M) {
+        ll k = M - 1;
+        rep2(j, i + 1, k) {
+            ll a = primes[i], b = primes[j];
+            if (N / a / a / b / b / b < 1) break;
+            while (j < k) {
+                ll c = primes[k];
+                ll t = N / a / a / b / c / c;
+                if (t < 1)
+                    k--;
+                else
+                    break;
+            }
+            ans += k - j;
+        }
+    }
     cout << ans << endl;
 }

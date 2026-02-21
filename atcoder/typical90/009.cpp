@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/typical90/tasks/typical90_i
-// Wed 28 Jan 2026 09:41:39 PM JST
+// Thu 19 Feb 2026 10:55:50 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -54,15 +54,15 @@ ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 // floor(a/b)
 ll floor(ll a, ll b) { return a / b; }
 
+void solve();
+
+int main() {
+    solve();
+    return 0;
+}
+
 struct Point {
     long long x, y;
-
-    // 上半平面判定
-    int is_up() const {
-        if (y > 0) return 0;
-        if (y == 0 && x > 0) return 0;
-        return 1;
-    }
 
     // 外積
     long long cross(const Point& other) const {
@@ -74,15 +74,48 @@ struct Point {
         return x * other.x + y * other.y;
     }
 
+    double norm() {
+        return sqrt((double)this->norm2());
+    }
+
     // ノルム^2
     long long norm2() const {
         return x * x + y * y;
     }
 
+    Point operator+(const Point& other) const {
+        return Point({x + other.x, y + other.y});
+    }
+
+    Point& operator+=(const Point& other) {
+        this->x += other.x;
+        this->y += other.y;
+        return *this;
+    }
+
+    Point operator-(const Point& other) const {
+        return Point({x - other.x, y - other.y});
+    }
+
+    Point& operator-=(const Point& other) {
+        this->x -= other.x;
+        this->y -= other.y;
+        return *this;
+    }
+
+    // sort 用に上半平面判定
+    int _up() const {
+        if (y > 0) return 0;
+        if (y == 0 && x > 0) return 0;
+        return 1;
+    }
+
     // 偏角ソート用 comparator
+    // x 軸正方向から反時計回りに見たときの角度が小さい順
+    // (0, 0) があるとバグるので注意
     bool operator<(const Point& other) const {
-        int h1 = is_up();
-        int h2 = other.is_up();
+        int h1 = _up();
+        int h2 = other._up();
         if (h1 != h2) return h1 < h2;
         return cross(other) > 0;
     }
@@ -103,42 +136,39 @@ struct Point {
     }
 };
 
-void solve();
-
-int main() {
-    solve();
-    return 0;
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
     ll N;
     cin >> N;
-    vll X(N), Y(N);
-    rep(i, N) cin >> X[i] >> Y[i];
+
+    vector<Point> pts(N);
+    rep(i, N) {
+        ll x, y;
+        cin >> x >> y;
+        pts[i] = Point(x, y);
+    }
 
     double ans = 0.0;
     rep(j, N) {
-        vector<Point> pts;
+        vector<Point> segment;
         rep(i, N) {
             if (i == j) continue;
-            pts.emplace_back(X[i] - X[j], Y[i] - Y[j]);
+            segment.push_back(pts[i] - pts[j]);
         }
-        sort(all(pts));
 
-        ll M = N - 1;
-        rep(i, M) pts.push_back(pts[i]);
+        sort(all(segment));
+        rep(i, N - 1) segment.push_back(segment[i]);
 
         ll r = 0;
-        rep(l, M) {
-            if (r < l) r = l;
-            while (r + 1 < l + M && pts[l].cross(pts[r + 1]) >= 0) r++;
+        rep(l, N - 1) {
+            chmax(r, l);
+            while (r + 1 < l + N - 1 && segment[l].cross(segment[r + 1]) >= 0) {
+                r++;
+            }
 
-            chmax(ans, pts[l].angle_deg(pts[r]));
-            if (r + 1 < l + M)
-                chmax(ans, pts[l].angle_deg(pts[r + 1]));
+            chmax(ans, segment[l].angle_deg(segment[r]));
         }
     }
 

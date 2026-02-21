@@ -1,32 +1,34 @@
-/*https://atcoder.jp/contests/abc393/tasks/abc393_f*/
-/*2025年02月17日 21時14分19秒*/
+// https://atcoder.jp/contests/abc393/tasks/abc393_f
+// Sat 21 Feb 2026 01:40:50 AM JST
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+const ll INF = (ll)2e18 + 9;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -40,9 +42,22 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+template <typename T>
+void vprint(vector<T> v) {
+    for (T x : v) cout << x << '\n';
 }
+
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
+
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -52,32 +67,34 @@ int main() {
 }
 
 void solve() {
-    int n, q;
-    cin >> n >> q;
-    vint a(n);
-    rep(i, n) cin >> a[i];
-    vector<tuple<int, int, int>> qs;
-    rep(i, q) {
-        int r, x;
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ll N, Q;
+    cin >> N >> Q;
+    vll A(N);
+    rep(i, N) cin >> A[i];
+
+    using P = tuple<ll, ll, ll>;
+    vector<P> rs;
+    rep(i, Q) {
+        ll r, x;
         cin >> r >> x;
-        qs.push_back({r, x, i});
+        rs.emplace_back(r, x, i);
     }
+    sort(all(rs));
 
-    sort(all(qs));
-
-    vint lis(n + 1, INF);
-    int k = 0;
-    vint ans(q);
-    for (auto [r, x, id] : qs) {
-        for (int i = k; i < r; i++) {
-            *lower_bound(all(lis), a[i]) = a[i];
+    vll lis(N, INF), ans(Q);
+    int i = 0;
+    for (auto [r, x, j] : rs) {
+        while (i < r) {
+            auto it = lower_bound(all(lis), A[i]);
+            *it = A[i];
+            i++;
         }
-        k = r;
 
-        int d = upper_bound(all(lis), x) - lis.begin();
-        ans[id] = d;
+        ans[j] = upper_bound(all(lis), x) - lis.begin();
     }
 
-    for (int x : ans)
-        cout << x << endl;
+    vprint(ans);
 }

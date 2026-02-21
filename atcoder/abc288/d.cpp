@@ -1,9 +1,9 @@
 // https://atcoder.jp/contests/abc288/tasks/abc288_d
-// Sat 24 Jan 2026 03:48:07 PM JST
+// Thu 19 Feb 2026 09:05:13 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -70,12 +70,13 @@ void solve() {
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    vvll cm(K, vll(N + 1));
+    using f = fenwick_tree<ll>;
+    vector<f> fw(K);
+    rep(i, K) fw[i] = fenwick_tree<ll>(N);
+
     rep(i, N) {
-        cm[i % K][i + 1] = A[i];
-    }
-    rep(i, K) rep(j, N) {
-        cm[i][j + 1] += cm[i][j];
+        int j = i % K;
+        fw[j].add(i, A[i]);
     }
 
     ll Q;
@@ -85,11 +86,14 @@ void solve() {
         cin >> l >> r;
         l--;
 
-        vll s;
+        vll v;
         rep(i, K) {
-            s.push_back(cm[i][r] - cm[i][l]);
+            v.push_back(fw[i].sum(l, r));
         }
-        sort(all(s));
-        yesno(s[0] == s.back());
+
+        int ok = 1;
+        ll num = v[0];
+        rep(i, K) if (num != v[i]) ok = 0;
+        yesno(ok);
     }
 }

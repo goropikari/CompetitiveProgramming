@@ -1,9 +1,9 @@
 // https://atcoder.jp/contests/abc439/tasks/abc439_e
-// Sat 03 Jan 2026 09:32:04 PM JST
+// Sat 21 Feb 2026 01:27:37 AM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -67,31 +67,26 @@ void solve() {
 
     ll N;
     cin >> N;
-    vll A(N), B(N);
-    rep(i, N) cin >> A[i] >> B[i];
 
     using P = pair<ll, ll>;
-    vector<P> ps;
+    vector<P> vs;
     rep(i, N) {
-        ps.emplace_back(A[i], B[i]);
+        ll a, b;
+        cin >> a >> b;
+        vs.emplace_back(a, b);
     }
 
-    sort(all(ps), [](P a, P b) -> bool {
+    sort(all(vs), [](P a, P b) -> bool {
         if (a.first != b.first) return a.first < b.first;
         return a.second > b.second;
     });
 
-    vll v(N, INF);
-
-    rep(i, N) {
-        auto [_, b] = ps[i];
-        auto it = lower_bound(all(v), b);
-        *it = b;
+    vll lis(N, INF);
+    for (auto [l, r] : vs) {
+        auto it = lower_bound(all(lis), r);
+        *it = r;
     }
 
-    ll ans = 0;
-    rep(i, N) {
-        if (v[i] != INF) ans++;
-    }
+    ll ans = lower_bound(all(lis), INF) - lis.begin();
     cout << ans << endl;
 }
