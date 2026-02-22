@@ -946,5 +946,17 @@
         "ContestName": "AtCoder Beginner Contest 445",
         "ContestNameEn": "",
         "EndTime": "2026-02-14T22:40:00+09:00"
+    },
+    {
+        "IsRated": true,
+        "Place": 1942,
+        "OldRating": 1200,
+        "NewRating": 1205,
+        "Performance": 1251,
+        "InnerPerformance": 1251,
+        "ContestScreenName": "abc446.contest.atcoder.jp",
+        "ContestName": "AtCoder × Engineer Guild オンサイトコンテスト ～ACからはじまる27卒キャリア～予選　（AtCoder Beginner Contest 446）",
+        "ContestNameEn": "AtCoder Beginner Contest 446",
+        "EndTime": "2026-02-21T22:40:00+09:00"
     }
 ]
