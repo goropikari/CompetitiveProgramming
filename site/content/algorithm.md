@@ -341,6 +341,8 @@ int lcm(int a, int b) {
 
 $\floor{\sqrt[\leftroot{-3}\uproot{3}k]{x}}$ を求める関数
 
+lambda 式版
+
 ```cpp
 using Int = unsigned long long int;
 
@@ -363,6 +365,34 @@ auto kth_root = [](Int x, Int k) -> Int {
 
 // 平方根
 auto isqrt = [&](Int x) -> Int {
+    return kth_root(x, 2);
+};
+```
+
+関数版
+
+```cpp
+using Int = unsigned long long int;
+
+Int kth_root(Int x, Int k) {
+    assert(k != 0);
+    if (x == 1 || k == 1) return x;
+    Int l = 0, r = x;
+    while (r - l > 1) {
+        Int m = (r - l) / 2 + l;
+        Int t = x;
+        rep(i, k) t /= m;
+        if (1 > t) {
+            r = m;
+        } else {
+            l = m;
+        }
+    }
+    return l;
+};
+
+// 平方根
+Int isqrt(Int x) {
     return kth_root(x, 2);
 };
 ```
@@ -568,6 +598,54 @@ for (int i = 2; i < MAX; i++) {
         }
     }
 }
+```
+
+### 区間篩
+
+区間 $[L,R]$ の数字が素数であるかどうかを判定する.
+
+$L, R$ が $10^{14}$ 程度の大きな数であっても, $R-L$ が $10^7$ 程度であればこの方法で素数判定が可能.
+
+- <https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html?utm_source=chatgpt.com>
+- <https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bt>
+- <https://atcoder.jp/contests/abc412/tasks/abc412_e>
+
+```cpp
+// エラトステネスの区間篩
+// 区間 [L, R] の数字が素数であるかどうかを判定する
+struct SieveRange {
+    long long int L, R;
+    vector<int> _isprime, issegprime;
+    vector<long long int> primes;
+
+    SieveRange(ll L, ll R) : L(L), R(R) {
+        ll M = isqrt(R) + 1;
+        _isprime.resize(M, 1);
+        issegprime.resize(R - L + 1, 1);
+
+        for (ll p = 2; p < M; p++) {
+            if (!_isprime[p]) continue;
+            primes.push_back(p);
+            for (long long int j = p * p; j < M; j += p) {
+                _isprime[j] = 0;
+            }
+        }
+
+        for (long long int p : primes) {
+            ll start = (L + p - 1) / p * p;  // L 以上の一番小さい p の倍数
+            start = max(p * p, start);       // L が小さいと p と一致することがあるので最低限 p*p から始まるようにする
+                                             // p+p でも良いが q<p を満たす素数 q によってすでにマークされているので p*p 始まりでよい。
+            for (long long int j = start; j <= R; j += p) {
+                issegprime[j - L] = 0;
+            }
+        }
+        if (L == 1) issegprime[0] = 0;
+    }
+
+    bool isprime(long long x) {
+        return issegprime[x - L];
+    }
+};
 ```
 
 ### 最小素因数/素因数分解/約数列挙

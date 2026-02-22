@@ -1,10 +1,10 @@
-// https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bt
-// Sun 22 Feb 2026 10:42:17 AM JST
+// https://atcoder.jp/contests/abc227/tasks/abc227_g
+// Sun 22 Feb 2026 07:38:34 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-// using mint = modint998244353;
+#include <atcoder/all>
+using namespace atcoder;
+using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
@@ -85,54 +85,87 @@ Int isqrt(Int x) {
     return kth_root(x, 2);
 };
 
-// エラトステネスの区間篩
-// 区間 [L, R] の数字が素数であるかどうかを判定する
-struct SieveRange {
-    long long int L, R;
-    vector<int> _isprime, issegprime;
-    vector<long long int> primes;
-
-    SieveRange(ll L, ll R) : L(L), R(R) {
-        ll M = isqrt(R) + 1;
-        _isprime.resize(M, 1);
-        issegprime.resize(R - L + 1, 1);
-
-        for (ll p = 2; p < M; p++) {
-            if (!_isprime[p]) continue;
-            primes.push_back(p);
-            for (long long int j = p * p; j < M; j += p) {
-                _isprime[j] = 0;
-            }
+vll cal_lpf(ll N) {
+    vll lpf(N + 1, -1);
+    vll primes;
+    rep2(d, 2, N + 1) {
+        if (lpf[d] < 0) {
+            lpf[d] = d;
+            primes.push_back(d);
         }
-
-        for (long long int p : primes) {
-            ll start = (L + p - 1) / p * p;  // L 以上の一番小さい p の倍数
-            start = max(p * p, start);       // L が小さいと p と一致することがあるので最低限 p*p から始まるようにする
-                                             // p+p でも良いが q<p を満たす素数 q によってすでにマークされているので p*p 始まりでよい。
-            for (long long int j = start; j <= R; j += p) {
-                issegprime[j - L] = 0;
-            }
+        for (ll p : primes) {
+            if (p * d > N || p > lpf[d]) break;
+            lpf[p * d] = p;
         }
-        if (L == 1) issegprime[0] = 0;
     }
 
-    bool isprime(long long x) {
-        return issegprime[x - L];
+    return lpf;
+}
+
+// x を素因数分解する
+// pair = <prime, cnt>
+vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
+    vector<pair<ll, ll>> facs;
+    {
+        while (x != 1) {
+            ll p = lpf[x];
+            ll cnt = 0;
+            while (x % p == 0) {
+                x /= p;
+                cnt++;
+            }
+            facs.push_back({p, cnt});
+        }
     }
-};
+
+    return facs;
+}
 
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, K;
+    cin >> N >> K;
 
-    ll ans = 0;
-    SieveRange sieve(L, R);
-    rep2(i, L, R + 1) {
-        ans += sieve.isprime(i);
+    ll M = max(K + 1, (ll)isqrt(N) + 1);
+    vll lpf = cal_lpf(M), primes;
+    rep2(i, 2, M) {
+        if (lpf[i] == i) primes.push_back(i);
     }
 
-    cout << ans << endl;
+    ll psz = primes.size();
+    vll cnt(psz);
+    rep2(k, 2, K + 1) {
+        auto ps = factorize(lpf, k);
+        for (auto [p, num] : ps) {
+            int i = lower_bound(all(primes), p) - primes.begin();
+            cnt[i] -= num;
+        }
+    }
+
+    ll L = N - K + 1, R = N;
+    vll A(R - L + 1);
+    iota(all(A), L);
+    rep(i, psz) {
+        ll p = primes[i];
+        for (ll j = ceil(L, p) * p; j <= R; j += p) {
+            ll x = A[j - L];
+            ll num = 0;
+            while (x % p == 0) {
+                num++;
+                x /= p;
+            }
+            cnt[i] += num;
+            A[j - L] = x;
+        }
+    }
+
+    mint ans = 1;
+    for (ll x : cnt) ans *= x + 1;
+    for (ll x : A) {
+        if (x != 1) ans *= 2;
+    }
+
+    cout << ans.val() << endl;
 }

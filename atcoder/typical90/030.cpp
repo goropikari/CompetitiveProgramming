@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc412/tasks/abc412_e
-// Sun 22 Feb 2026 12:43:10 PM JST
+// https://atcoder.jp/contests/typical90/tasks/typical90_ad
+// Sun 22 Feb 2026 12:23:32 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -65,34 +65,29 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll L, R;
-    cin >> L >> R;
+    ll N, K;
+    cin >> N >> K;
 
-    ll upper = (ll)1e7 + 5;
-    vll primes, isprime(upper, true);
-    rep2(i, 2, upper) {
-        if (!isprime[i]) continue;
-        primes.push_back(i);
-        for (ll j = i * i; j < upper; j += i) {
+    vint isprime(N + 1, 1);
+    rep2(i, 2, N + 1) {
+        for (ll j = i * i; j <= N; j += i) {
             isprime[j] = false;
         }
     }
 
-    ll M = R - L + 1;
-    ll ans = 0;
-    vll mark(M, 1);
-    for (ll p : primes) {
-        for (ll j = ceil(L, p) * p; R / j; j += p) {
-            ll x = j;
-            while (x % p == 0) x /= p;
-            if (x != 1) {
-                mark[j - L] = 0;
-            }
+    vll nfac(N + 1);
+    rep2(i, 2, N + 1) {
+        if (!isprime[i]) continue;
+        for (ll j = i; j <= N; j += i) {
+            nfac[j]++;
         }
     }
 
-    mark[0] = 1;
-    ans = accumulate(all(mark), 0ll);
-
+    ll ans = 0;
+    rep2(i, 2, N + 1) {
+        if (nfac[i] >= K) {
+            ans++;
+        }
+    }
     cout << ans << endl;
 }
