@@ -71,16 +71,6 @@ void solve() {
         vll A(N);
         rep(i, N) cin >> A[i];
 
-        ll maxlen = 0;
-        {
-            vll lis(N, INF);
-            for (ll a : A) {
-                auto it = lower_bound(all(lis), a);
-                *it = a;
-            }
-            maxlen = lower_bound(all(lis), INF) - lis.begin();
-        }
-
         vll last(N), head(N);
         vll lislast(N, INF), lishead(N, INF);
         rep(i, N) {
@@ -96,6 +86,8 @@ void solve() {
                 head[N - i - 1] = it - lishead.begin() + 1;
             }
         }
+
+        ll maxlen = lower_bound(all(lislast), INF) - lislast.begin();
 
         vll ans;
         rep(i, N) {

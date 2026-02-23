@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc446/tasks/abc446_e
-// Mon 23 Feb 2026 10:25:56 AM JST
+// Sat 21 Feb 2026 09:30:37 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -9,21 +9,20 @@ using namespace std;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-// #include <boost/multiprecision/cpp_int.hpp>
-// using namespace boost::multiprecision;
-// using int128 = int128_t;
+#include <boost/multiprecision/cpp_int.hpp>
+using namespace boost::multiprecision;
+using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
+// const ll INF = (ll)2e18+9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -41,11 +40,6 @@ void print(vector<T> v) {
             cout << ' ' << v[i];
     }
     cout << endl;
-}
-
-template <typename T>
-void vprint(vector<T> v) {
-    for (auto x : v) cout << x << '\n';
 }
 
 void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
@@ -73,39 +67,31 @@ void solve() {
 
     ll M, A, B;
     cin >> M >> A >> B;
+    A %= M;
+    B %= M;
 
-    auto nx = [&](int s2, int s1) -> int {
-        return (A * s2 + B * s1) % M;
-    };
+    vvint ok(M, vint(M)), visited(M, vint(M));
 
-    auto id = [&](int s2, int s1) -> int {
-        return s2 * M + s1;
-    };
+    // dfs(s1, s2): s1, s2 から始めて M の倍数になるかどうか判定
+    // true  -> M の倍数になる
+    // false -> M の倍数にならない
+    auto dfs = [&](auto dfs, ll s1, ll s2) -> bool {
+        if (s1 == 0 || s2 == 0 || ok[s1][s2]) return true;
 
-    vvint graph(M * M);
-    rep(s1, M) rep(s2, M) {
-        int s3 = nx(s2, s1);
-        graph[id(s3, s2)].push_back(id(s2, s1));
-    }
-
-    vint visited(M * M);
-    auto dfs = [&](auto dfs, int s3, int s2) -> void {
-        if (visited[id(s3, s2)]) return;
-        visited[id(s3, s2)] = 1;
-
-        for (int p : graph[id(s3, s2)]) {
-            int y = p / M;
-            int x = p % M;
-            dfs(dfs, y, x);
+        if (visited[s1][s2]) {
+            return false;
         }
-    };
 
-    rep(i, M) {
-        dfs(dfs, i, 0);
-        dfs(dfs, 0, i);
-    }
+        visited[s1][s2] = 1;
+        ll s3 = (A * s2 + B * s1) % M;
+        return ok[s1][s2] = dfs(dfs, s2, s3);
+    };
 
     ll ans = 0;
-    rep(i, M) rep(j, M) ans += visited[id(i, j)] == 0;
+    rep(x, M) rep(y, M) {
+        if (!dfs(dfs, x, y))
+            ans++;
+    }
+
     cout << ans << endl;
 }
