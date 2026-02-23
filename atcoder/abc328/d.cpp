@@ -1,32 +1,35 @@
-/*https://atcoder.jp/contests/abc328/tasks/abc328_d*/
-/*2025年01月24日 20時07分27秒*/
+// https://atcoder.jp/contests/abc328/tasks/abc328_d
+// Mon 23 Feb 2026 12:27:54 AM JST
+#include <bits/stdc++.h>
+using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
-#include <bits/stdc++.h>
+// using vmint = vector<mint>;
+// modint::set_mod(10);
+// using mint = modint;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
-using namespace std;
+#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
-const int INF = (int)2e9 + 7;
+const ll INF = (ll)2e18 + 9;
+// const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -40,9 +43,22 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    puts(x ? "Yes" : "No");
+template <typename T>
+void vprint(vector<T> v) {
+    for (auto x : v) cout << x << '\n';
 }
+
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
+
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
+
+// ceil(a/b)
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
+
+// floor(a/b)
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -52,18 +68,24 @@ int main() {
 }
 
 void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     string S;
     cin >> S;
 
-    string ans = "";
-    for (char c : S) {
-        ans.push_back(c);
-        int n = ans.size();
-        if (c == 'C' && n >= 3 && ans[n - 3] == 'A' && ans[n - 2] == 'B') {
-            ans.pop_back();
-            ans.pop_back();
-            ans.pop_back();
+    string t;
+    int N = S.size();
+    rep(i, N) {
+        t.push_back(S[i]);
+
+        int m = t.size();
+        if (m >= 3) {
+            if (t[m - 3] == 'A' && t[m - 2] == 'B' && t[m - 1] == 'C') {
+                rep(j, 3) t.pop_back();
+            }
         }
     }
-    cout << ans << endl;
+
+    cout << t << endl;
 }

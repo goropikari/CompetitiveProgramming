@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc441/tasks/abc441_f
-// Sat 17 Jan 2026 10:25:15 PM JST
+// Tue 24 Feb 2026 12:05:27 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -9,13 +9,14 @@ using namespace std;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -40,6 +41,11 @@ void print(vector<T> v) {
             cout << ' ' << v[i];
     }
     cout << endl;
+}
+
+template <typename T>
+void vprint(vector<T> v) {
+    for (auto x : v) cout << x << '\n';
 }
 
 void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
@@ -67,44 +73,60 @@ void solve() {
 
     ll N, M;
     cin >> N >> M;
-    vll P(N), V(N);
-    rep(i, N) cin >> P[i] >> V[i];
+    vll P(N + 2), V(N + 2);
+    rep(i, N) cin >> P[i + 1] >> V[i + 1];
 
-    using PR = pair<ll, ll>;
-    vector<PR> dp(M + 1, {-INF, 0});
-    dp[0] = {0, 1};
+    // dp[i][j]: 1~i 番目の商品を使って値段が j 円以下のときの価値の最大値
+    vvll dp(N + 2, vll(M + 1));
 
-    rep(i, N) {
-        vector<PR> dpn(M + 1, {-INF, 0});
-        for (ll price = M; price >= 0; price--) {
-            ll x = price - P[i];
-            if (x >= 0 && dp[x].first >= 0) {
-                if (dp[price].first == dp[x].first + V[i]) {
-                    dp[price].second += dp[x].second;
-                } else if (dp[price].first < dp[x].first + V[i]) {
-                    dp[price].first = dp[x].first + V[i];
-                    dp[price].second = dp[x].second;
-                }
+    // dp[i][j]: i 番目以降の商品を使って値段が j 円以下のときの価値の最大値
+    vvll dp2(N + 2, vll(M + 1));
+
+    rep(_, 2) {
+        rep2(i, 1, N + 1) {
+            rep(p, M + 1) {
+                chmax(dp[i][p], dp[i - 1][p]);
+                if (p > 0)
+                    chmax(dp[i][p], dp[i][p - 1]);
+                if (p - P[i] < 0) continue;
+                chmax(dp[i][p], dp[i - 1][p - P[i]] + V[i]);
             }
-            chmax(dpn[price], dp[price]);
         }
-        swap(dpn, dp);
+        swap(dp, dp2);
+        reverse(all(P));
+        reverse(all(V));
+    }
+    reverse(all(dp2));
+
+    ll mxval = dp[N][M];
+
+    vint memo(N + 1);
+    rep2(i, 1, N + 1) {
+        rep(p, M + 1) {
+            // i 番目の商品を使わないで最大価値を達成できるか
+            if (M - p >= 0 && dp[i - 1][p] + dp2[i + 1][M - p] == mxval) {
+                memo[i] |= 1;
+            }
+
+            // i 番目の商品を使って最大価値を達成できるか
+            if (M - p - P[i] >= 0 && dp[i - 1][p] + V[i] + dp2[i + 1][M - p - P[i]] == mxval) {
+                memo[i] |= 2;
+            }
+        }
     }
 
-    for (auto [k, v] : dp) cout << k << ' ' << v << endl;
+    string ans;
 
-    ll vmax = 0;
-    for (auto [v, freq] : dp) {
-        chmax(vmax, v);
+    rep2(i, 1, N + 1) {
+        int x = memo[i];
+        if (x == 1) {
+            ans.push_back('C');
+        } else if (x == 3) {
+            ans.push_back('B');
+        } else if (x == 2) {
+            ans.push_back('A');
+        }
     }
 
-    // price, freq
-    vector<PR> wf;
-    rep(i, (ll)dp.size()) {
-        if (dp[i].first == vmax) wf.push_back({i, dp[i].second});
-    }
-
-    string ans = "";
-    rep(i, N) {
-    }
+    cout << ans << endl;
 }

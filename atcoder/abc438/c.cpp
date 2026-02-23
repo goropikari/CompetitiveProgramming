@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc438/tasks/abc438_c
-// Sat 27 Dec 2025 09:05:43 PM JST
+// Mon 23 Feb 2026 12:21:31 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -9,20 +9,21 @@ using namespace std;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -40,6 +41,11 @@ void print(vector<T> v) {
             cout << ' ' << v[i];
     }
     cout << endl;
+}
+
+template <typename T>
+void vprint(vector<T> v) {
+    for (auto x : v) cout << x << '\n';
 }
 
 void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
@@ -61,35 +67,6 @@ int main() {
     return 0;
 }
 
-template <typename T>
-vector<pair<T, ll>> runLengthEncode(const vector<T>& input) {
-    vector<pair<T, ll>> encoded;
-    int size = input.size();
-    for (int i = 0; i < size; ++i) {
-        long long int count = 1;
-        while (i + 1 < size && input[i] == input[i + 1]) {
-            ++i;
-            ++count;
-        }
-        encoded.emplace_back(input[i], count);
-    }
-    return encoded;
-}
-
-vector<pair<char, long long int>> runLengthEncode(const string& input) {
-    vector<pair<char, long long int>> encoded;
-    int size = input.size();
-    for (int i = 0; i < size; ++i) {
-        long long int count = 1;
-        while (i + 1 < size && input[i] == input[i + 1]) {
-            ++i;
-            ++count;
-        }
-        encoded.emplace_back(input[i], count);
-    }
-    return encoded;
-}
-
 void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -99,27 +76,19 @@ void solve() {
     vll A(N);
     rep(i, N) cin >> A[i];
 
-    auto vs = runLengthEncode(A);
-    using P = pair<ll, ll>;
-    vector<P> pr = vs;
-
-    int sz = pr.size();
-    rep(i, sz) {
-        pr[i].second %= 4;
-    }
-    vector<P> nx;
-    rep(i, sz) {
-        if (pr[i].second % 4 == 0) continue;
-        if (nx.size() && nx.back().first == pr[i].first) {
-            nx.back().second += pr[i].second;
-            nx.back().second %= 4;
-            if (nx.back().second % 4 == 0) nx.pop_back();
-        } else {
-            nx.push_back(pr[i]);
+    vint st;
+    rep(i, N) {
+        st.push_back(A[i]);
+        if (st.size() >= 4) {
+            int ok = 1;
+            int sz = st.size();
+            int b = st.back();
+            rep(j, 4) if (st[sz - j - 1] != b) ok = 0;
+            if (ok) {
+                rep(j, 4) st.pop_back();
+            }
         }
     }
 
-    ll ans = 0;
-    rep(i, (ll)nx.size()) ans += nx[i].second;
-    cout << ans << endl;
+    cout << st.size() << endl;
 }
