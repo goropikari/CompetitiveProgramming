@@ -17,32 +17,33 @@ menu.atcoder = [
 ]
 
 [taxonomies]
-  tag = "tags"
+tag = "tags"
 
 [markup]
-  [markup.tableOfContents]
-    startLevel = 2
-    endLevel = 4
-    ordered = false
-  [markup.goldmark]
-    [markup.goldmark.renderHooks]
-      [markup.goldmark.renderHooks.image]
-        enableDefault = true
-    [markup.goldmark.extensions]
-      [markup.goldmark.extensions.passthrough]
-        enable = true
-        [markup.goldmark.extensions.passthrough.delimiters]
-          block = [['\[', '\]'], ['$$', '$$']]
-          inline = [['$', '$']]
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 4
+ordered = false
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+[markup.goldmark.renderHooks]
+[markup.goldmark.renderHooks.image]
+enableDefault = true
+[markup.goldmark.extensions]
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['$', '$']]
 
 [params]
-  math = true
-
+math = true
 
 [module]
-  [[module.mounts]]
-    source = 'assets'
-    target = 'assets'
-  [[module.mounts]]
-    source = 'static'
-    target = 'assets'
+[[module.mounts]]
+source = 'assets'
+target = 'assets'
+[[module.mounts]]
+source = 'static'
+target = 'assets'

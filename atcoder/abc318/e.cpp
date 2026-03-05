@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc318/tasks/abc318_e
-// Tue 10 Feb 2026 01:42:28 AM JST
+// Sun 01 Mar 2026 08:06:40 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -9,20 +9,21 @@ using namespace std;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -40,6 +41,11 @@ void print(vector<T> v) {
             cout << ' ' << v[i];
     }
     cout << endl;
+}
+
+template <typename T>
+void vprint(vector<T> v) {
+    for (auto x : v) cout << x << '\n';
 }
 
 void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
@@ -68,18 +74,26 @@ void solve() {
     ll N;
     cin >> N;
     vll A(N);
-    rep(i, N) cin >> A[i];
+    rep(i, N) {
+        cin >> A[i];
+        A[i]--;
+    }
 
-    vvll ids(N + 1);
-    rep(i, N) ids[A[i]].push_back(i);
+    vvint ids(N);
+    rep(i, N) {
+        ids[A[i]].pb(i);
+    }
 
     ll ans = 0;
+
     for (auto v : ids) {
-        ll n = v.size();
-        rep(i, n - 1) {
-            ll num = v[i + 1] - v[i] - 1;
-            ans += num * (n - (i + 1)) * (i + 1);
+        int sz = v.size();
+        if (sz < 2) continue;
+        rep(i, sz - 1) {
+            ll w = v[i + 1] - v[i] - 1;
+            ans += w * (i + 1) * (sz - i - 1);
         }
     }
+
     cout << ans << endl;
 }

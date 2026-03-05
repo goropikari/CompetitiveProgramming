@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/arc114/tasks/arc114_a
-// 2025年08月21日 19時54分17秒
+// Sun 01 Mar 2026 06:27:35 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -9,13 +9,14 @@ using namespace std;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -26,13 +27,9 @@ const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -46,27 +43,22 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
+template <typename T>
+void vprint(vector<T> v) {
+    for (auto x : v) cout << x << '\n';
 }
 
-void Yes() {
-    yesno(true);
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void No() {
-    yesno(false);
-}
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
 
 // ceil(a/b)
-ll ceil(ll a, ll b) {
-    return (a + b - 1) / b;
-}
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-ll floor(ll a, ll b) {
-    return a / b;
-}
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -84,37 +76,24 @@ void solve() {
     vll X(N);
     rep(i, N) cin >> X[i];
 
-    vint used(55);
-    for (ll x : X) {
-        ll t = x;
-        rep2(i, 2, t + 1) {
-            if (x % i == 0) {
-                used[i] = 1;
-                while (x % i == 0) x /= i;
-            }
-        }
-    }
-
-    vll primes;
-    rep(i, 50) {
-        if (used[i]) primes.push_back(i);
-    }
+    vint primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47};
+    int m = primes.size();
 
     ll ans = INF;
-    int sz = primes.size();
-    rep(state, 1ll << sz) {
-        ll y = 1;
-        rep(i, sz) {
-            if ((state >> i) & 1) y *= primes[i];
+
+    rep(state, 1 << m) {
+        ll f = 1;
+        rep(j, m) {
+            if (state >> j & 1) f *= primes[j];
         }
+
         int ok = 1;
-        for (ll x : X) {
-            if (gcd(y, x) == 1) {
-                ok = 0;
-                break;
-            }
+        rep(i, N) {
+            if (gcd(X[i], f) == 1) ok = 0;
         }
-        if (ok) chmin(ans, y);
+        if (ok)
+            chmin(ans, f);
     }
+
     cout << ans << endl;
 }

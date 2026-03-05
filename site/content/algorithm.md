@@ -1505,6 +1505,10 @@ void solve() {
 }
 ```
 
+## ネットワークフロー (最大流、network flow, max flow, min cut)
+
+[解説]({{< ref "network_flow.md" >}})
+
 ## Segment tree (セグメント木)
 
 ACL の使い方は別途まとめた
@@ -2004,6 +2008,83 @@ void solve() {
             cout << seg.prod(l, r) << endl;
         }
     }
+}
+```
+
+### Range Set Query
+
+オフラインで区間に含まれる要素の種類数を求める。
+
+数列 $A$ の区間 $[L,R]$ に含まれる要素の種類数を求める問題。
+
+- クエリを $R$ で昇順ソート
+- 数列を左から右へ走査していく
+  - 走査している位置を $i$ とする
+  - $A[i]$ を最後に見た位置が $j$ であれば, セグメント木の位置 $j$ に 0 をセットする
+  - セグメント木の位置 $i$ に 1 をセットする
+  - クエリのうち $R=i+1$ のものについて, セグメント木の区間 $[L,R)$ の和を求める
+    - 右端が同じものはまとめて処理するということ
+
+以下2つの問題は同じコードで解ける
+
+- <https://atcoder.jp/contests/abc174/tasks/abc174_f>
+- <https://atcoder.jp/contests/awc0015/tasks/awc0015_e>
+
+```cpp
+void solve() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int N, Q;
+    cin >> N >> Q;
+
+    vint C(N);
+    rep(i, N) cin >> C[i];
+
+    unordered_map<int, int> last;
+
+    auto op = [](int a, int b) -> int {
+        return a + b;
+    };
+    auto e = []() -> int {
+        return 0;
+    };
+    segtree<int, op, e> seg(N);
+
+    // l, r, index
+    using T = tuple<int, int, int>;
+    vector<T> qs(Q);
+    rep(i, Q) {
+        int l, r;
+        cin >> l >> r;
+        l--;
+        qs[i] = {l, r, i};
+    }
+
+    sort(all(qs), [](T a, T b) -> bool {
+        return get<1>(a) < get<1>(b);
+    });
+
+    vint ans(Q);
+
+    int qi = 0;
+    rep(i, N) {
+        int c = C[i];
+        if (last.count(c)) {
+            seg.set(last[c], 0);
+        }
+
+        seg.set(i, 1);
+        last[c] = i;
+
+        while (qi < Q && get<1>(qs[qi]) == i + 1) {
+            auto [l, r, id] = qs[qi];
+            ans[id] = seg.prod(l, r);
+            qi++;
+        }
+    }
+
+    vprint(ans);
 }
 ```
 

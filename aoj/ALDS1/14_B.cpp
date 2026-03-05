@@ -1,5 +1,5 @@
 // https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/14/ALDS1_14_B
-// Mon 09 Feb 2026 01:19:48 AM JST
+// Sat 28 Feb 2026 01:11:01 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -16,13 +16,14 @@ using namespace std;
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-// const ll INF = (ll)2e18+9;
+const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
@@ -40,6 +41,11 @@ void print(vector<T> v) {
             cout << ' ' << v[i];
     }
     cout << endl;
+}
+
+template <typename T>
+void vprint(vector<T> v) {
+    for (auto x : v) cout << x << '\n';
 }
 
 void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
@@ -61,7 +67,6 @@ int main() {
     return 0;
 }
 
-// https://github.com/atcoder/ac-library/blob/864245a00b00dd008d1abfdc239618fdb7d139da/atcoder/string.hpp
 template <class T>
 std::vector<int> z_algorithm(const std::vector<T>& s) {
     int n = int(s.size());
@@ -94,12 +99,11 @@ void solve() {
     string T, P;
     cin >> T >> P;
 
-    string s = P + "$" + T;
-    vint z = z_algorithm(s);
+    string S = P + "#" + T;
+    vint v = z_algorithm(S);
 
-    vint ans;
-    rep(i, (ll)T.size() - (ll)P.size() + 1) {
-        if (z[P.size() + i + 1] == (ll)P.size()) ans.push_back(i);
+    int n = P.size(), m = T.size();
+    rep(i, m) {
+        if (v[i + n + 1] == n) cout << i << endl;
     }
-    for (ll x : ans) cout << x << '\n';
 }

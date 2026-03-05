@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc372/tasks/abc372_d
-// 2025年07月21日 02時55分38秒
+// Sat 28 Feb 2026 05:41:54 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -9,13 +9,14 @@ using namespace std;
 // using vmint = vector<mint>;
 // modint::set_mod(10);
 // using mint = modint;
-#include <boost/multiprecision/cpp_int.hpp>
-using namespace boost::multiprecision;
-using int128 = int128_t;
+// #include <boost/multiprecision/cpp_int.hpp>
+// using namespace boost::multiprecision;
+// using int128 = int128_t;
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define rep(i, n) for (long long int i = 0; i < (n); ++i)
 #define rep2(i, k, n) for (long long int i = (k); i < (n); ++i)
+#define pb push_back
 using ll = long long;
 using vint = vector<int>;
 using vll = vector<ll>;
@@ -26,13 +27,9 @@ const ll INF = (ll)2e18 + 9;
 // const int INF = (int)2e9 + 7;
 
 template <typename T>
-void chmin(T& a, T b) {
-    a = min(a, b);
-}
+void chmin(T& a, T b) { a = min(a, b); }
 template <typename T>
-void chmax(T& a, T b) {
-    a = max(a, b);
-}
+void chmax(T& a, T b) { a = max(a, b); }
 
 template <typename T>
 void print(vector<T> v) {
@@ -46,27 +43,22 @@ void print(vector<T> v) {
     cout << endl;
 }
 
-void yesno(bool x) {
-    cout << (x ? "Yes" : "No") << '\n';
+template <typename T>
+void vprint(vector<T> v) {
+    for (auto x : v) cout << x << '\n';
 }
 
-void Yes() {
-    yesno(true);
-}
+void yesno(bool x) { cout << (x ? "Yes" : "No") << '\n'; }
 
-void No() {
-    yesno(false);
-}
+void Yes() { yesno(true); }
+
+void No() { yesno(false); }
 
 // ceil(a/b)
-ll ceil(ll a, ll b) {
-    return (a + b - 1) / b;
-}
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-ll floor(ll a, ll b) {
-    return a / b;
-}
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -79,23 +71,30 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int N;
+    ll N;
     cin >> N;
+    vll H(N);
+    rep(i, N) cin >> H[i];
 
-    vll H(N + 1);
-    rep(i, N) cin >> H[i + 1];
-    H[0] = INF;
+    vint ans(N);
+    vint st;
 
-    vll ans(N + 1);
-    stack<int> st;
-    st.push(0);
-    rep2(i, 1, N + 1) {
-        while (H[st.top()] < H[i]) st.pop();
-        ans[st.top()]++;
+    rep2(i, 1, N) {
+        while (st.size() && H[st.back()] < H[i]) {
+            st.pop_back();
+        }
+
+        if (st.size()) {
+            ans[st.back()]++;
+        } else {
+            ans[0]++;
+        }
+
         ans[i]--;
-        st.push(i);
+
+        st.pb(i);
     }
-    rep(i, N) ans[i + 1] += ans[i];
-    ans.erase(ans.begin(), ans.begin() + 1);
+
+    rep2(i, 1, N) ans[i] += ans[i - 1];
     print(ans);
 }
