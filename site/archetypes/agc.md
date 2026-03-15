@@ -1,7 +1,7 @@
 +++
 date = '{{ .Date }}'
 title = 'AGC {{ replace .File.ContentBaseName "-" " " | title }}'
-tags = ["atcoder", "agc"]
+tags = ['atcoder', 'agc']
 +++
 
-https://atcoder.jp/contests/agc{{ .File.ContentBaseName }}
+<https://atcoder.jp/contests/agc{{> .File.ContentBaseName }}

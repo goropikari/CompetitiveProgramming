@@ -29,7 +29,7 @@ ordered = false
 unsafe = true
 [markup.goldmark.renderHooks]
 [markup.goldmark.renderHooks.image]
-enableDefault = true
+useEmbedded = "fallback"
 [markup.goldmark.extensions]
 [markup.goldmark.extensions.passthrough]
 enable = true

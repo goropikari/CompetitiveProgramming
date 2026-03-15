@@ -1,6 +1,7 @@
 +++
 date = '2026-01-25T00:20:52+09:00'
 title = 'Joisc2007'
+tags = ['joi']
 +++
 
 <https://atcoder.jp/contests/abcjoisc2007>

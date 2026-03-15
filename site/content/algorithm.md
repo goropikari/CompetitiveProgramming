@@ -162,7 +162,9 @@ int main(int argc, char* argv[]) {
 0 1
 ```
 
-## ceil, floor
+## 整数
+
+### ceil, floor
 
 $x / y$ が負のときにも対応
 
@@ -189,9 +191,9 @@ ll floor(ll x, ll y) {
 }
 ```
 
-## 未満
+### 未満
 
-### part 1
+#### part 1
 
 $s, x, P$ が正整数のとき
 
@@ -238,7 +240,7 @@ $f(sx+1) = s+1$
 
 ref: <https://atcoder.jp/contests/abc384/tasks/abc384_e>
 
-### part 2
+#### part 2
 
 $x, a, X$ が正整数のとき
 
@@ -267,7 +269,7 @@ $\frac{M}{a} \geq \floor{\frac{M}{a}}$ であるから
 
 ref: <https://atcoder.jp/contests/abc406/tasks/abc406_e>
 
-## 以下
+### 以下
 
 $x,a,y$ が正整数のとき
 
@@ -313,7 +315,7 @@ $\frac{x}{a} \leq \lceil \frac{x}{a} \rceil$ であるから
 
 ref: <https://atcoder.jp/contests/past202212-open/tasks/past202212_f>
 
-## gcd, lcm
+### gcd, lcm
 
 $\mathrm{gcd}(a, b) = \mathrm{gcd}(b, a \\% b)$.
 
@@ -337,7 +339,7 @@ int lcm(int a, int b) {
 }
 ```
 
-## 冪乗根 / 平方根
+### 冪乗根 / 平方根
 
 $\floor{\sqrt[\leftroot{-3}\uproot{3}k]{x}}$ を求める関数
 
@@ -401,6 +403,429 @@ ref
 
 - [ABC 400 C 問題]({{< ref "abc/400.md" >}})
 - <https://judge.yosupo.jp/submission/299508>
+
+### べき乗計算(冪乗)
+
+#### 高速べき乗計算
+
+$x^n$ を高速に求める
+
+```cpp
+// x^n
+ll intpow(ll x, ll n) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret *= x;
+        x *= x;
+        n >>= 1;
+    }
+    return ret;
+}
+```
+
+ref: [逆元](#逆元)
+
+#### 逆元
+
+ref: [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆元から離散対数まで 〜](https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a)
+
+##### exponential mod
+
+```cpp
+// べき乗 mod
+// x^n mod m
+ll modpow(ll x, ll n, ll mod) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret = (ret * x) % mod;
+        x = (x * x) % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+```
+
+フェルマーの小定理より素数 $p$ に対して $a^{p-1} \equiv 1 \mod p$ であるから
+$a^{-1} \equiv a^{p-2} \mod p$
+
+```cpp
+// べき乗 inv mod
+// x^{-1} mod m
+ll modinv(ll x, ll mod) {
+    return modpow(x, mod - 2, mod);
+}
+```
+
+### repunit (レピュニット)
+
+11...1 といった1が n 個並んだ数を repunit と呼ぶ. 例えば 111 は repunit である.
+
+```cpp
+ll modpow(ll x, ll n, ll mod) {
+    long long ret = 1;
+    while (n > 0) {
+        if (n & 1)
+            ret = (ret * x) % mod;
+        x = (x * x) % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+
+struct Repunit {
+    ll mod;
+    int up = 32;
+    vll d;  // d[i]: (1 が 2^i 個並んだ数字) % mod
+
+    Repunit(ll mod) : mod(mod) {
+        d.resize(up);
+        d[0] = 1 % mod;
+        rep2(i, 1, up) {
+            d[i] = d[i - 1] * modpow(10, 1ll << (i - 1), mod) + d[i - 1];
+            d[i] %= mod;
+        }
+    }
+
+    // (1 が n 個並んだ数) % mod
+    ll cal(ll n) {
+        ll ret = 0;
+        rep(i, up) {
+            if (n >> i & 1) {
+                ret *= modpow(10, 1ll << i, mod);
+                ret += d[i];
+                ret %= mod;
+            }
+        }
+        return ret;
+    }
+};
+```
+
+<https://atcoder.jp/contests/abc448/submissions/73979622>
+
+### 素数
+
+#### エラトステネスのふるい
+
+```cpp
+int MAX = 100005;
+vector<int> isprime(MAX, true);
+isprime[0] = isprime[1] = false;
+for (int i = 2; i < MAX; i++) {
+    if (isprime[i]) {
+        for (int j = i + i; j < MAX; j += i) {
+            isprime[j] = false;
+        }
+    }
+}
+```
+
+#### 区間篩
+
+区間 $[L,R]$ の数字が素数であるかどうかを判定する.
+
+$L, R$ が $10^{14}$ 程度の大きな数であっても, $R-L$ が $10^7$ 程度であればこの方法で素数判定が可能.
+
+- <https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html?utm_source=chatgpt.com>
+- <https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bt>
+- <https://atcoder.jp/contests/abc412/tasks/abc412_e>
+
+```cpp
+// エラトステネスの区間篩
+// 区間 [L, R] の数字が素数であるかどうかを判定する
+struct SieveRange {
+    long long int L, R;
+    vector<int> _isprime, issegprime;
+    vector<long long int> primes;
+
+    SieveRange(ll L, ll R) : L(L), R(R) {
+        ll M = isqrt(R) + 1;
+        _isprime.resize(M, 1);
+        issegprime.resize(R - L + 1, 1);
+
+        for (ll p = 2; p < M; p++) {
+            if (!_isprime[p]) continue;
+            primes.push_back(p);
+            for (long long int j = p * p; j < M; j += p) {
+                _isprime[j] = 0;
+            }
+        }
+
+        for (long long int p : primes) {
+            ll start = (L + p - 1) / p * p;  // L 以上の一番小さい p の倍数
+            start = max(p * p, start);       // L が小さいと p と一致することがあるので最低限 p*p から始まるようにする
+                                             // p+p でも良いが q<p を満たす素数 q によってすでにマークされているので p*p 始まりでよい。
+            for (long long int j = start; j <= R; j += p) {
+                issegprime[j - L] = 0;
+            }
+        }
+        if (L == 1) issegprime[0] = 0;
+    }
+
+    bool isprime(long long x) {
+        return issegprime[x - L];
+    }
+};
+```
+
+#### 最小素因数/素因数分解/約数列挙
+
+##### エラトステネスの篩を使った方法
+
+- 素因数分解:
+- 約数: <https://onlinejudge.u-aizu.ac.jp/solutions/problem/ITP1_3_D/review/11333189/goropikari/C++23>
+
+```cpp
+// N 以下の数の least prime factor を求める
+vll cal_lpf(ll N) {
+    vll lpf(N + 1);
+    vint is_prime(N + 1, 1);
+    iota(all(lpf), 0ll);
+    rep2(p, 2, N + 1) {
+        if (!is_prime[p]) continue;
+        for (ll j = p + p; j <= N; j += p) {
+            is_prime[j] = 0;
+            if (lpf[j] < p) continue;
+            lpf[j] = p;
+        }
+    }
+
+    return lpf;
+}
+
+// x を素因数分解する
+// pair = <prime, cnt>
+vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
+    vector<pair<ll, ll>> facs;
+    {
+        while (x != 1) {
+            ll p = lpf[x];
+            ll cnt = 0;
+            while (x % p == 0) {
+                x /= p;
+                cnt++;
+            }
+            facs.push_back({p, cnt});
+        }
+    }
+
+    return facs;
+}
+
+// x の約数列挙
+vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
+    vll divs = {1};
+    for (auto [p, cnt] : facs) {
+        ll n = divs.size();
+        rep(i, n) {
+            ll mul = 1;
+            rep(j, cnt) {
+                mul *= p;
+                divs.push_back(divs[i] * mul);
+            }
+        }
+    }
+    return divs;
+}
+```
+
+##### 線形篩
+
+ref: <https://37zigen.com/linear-sieve/>
+
+$N$ 以下の最小素因数 (least prime factor) を求めるアルゴリズム.
+計算量 $O(N)$.
+
+<https://onlinejudge.u-aizu.ac.jp/solutions/problem/ITP1_3_D/review/11333207/goropikari/C++23>
+
+```cpp
+// N 以下の数の least prime factor を求める
+vll cal_lpf(ll N) {
+    vll lpf(N + 1, -1);
+    vll primes;
+    rep2(d, 2, N + 1) {
+        if (lpf[d] < 0) {
+            lpf[d] = d;
+            primes.push_back(d);
+        }
+        for (ll p : primes) {
+            if (p * d > N || p > lpf[d]) break;
+            lpf[p * d] = p;
+        }
+    }
+
+    return lpf;
+}
+
+// x を素因数分解する
+// pair = <prime, cnt>
+vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
+    vector<pair<ll, ll>> facs;
+    {
+        while (x != 1) {
+            ll p = lpf[x];
+            ll cnt = 0;
+            while (x % p == 0) {
+                x /= p;
+                cnt++;
+            }
+            facs.push_back({p, cnt});
+        }
+    }
+
+    return facs;
+}
+
+// x の約数列挙
+vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
+    vll divs = {1};
+    for (auto [p, cnt] : facs) {
+        ll n = divs.size();
+        rep(i, n) {
+            ll mul = 1;
+            rep(j, cnt) {
+                mul *= p;
+                divs.push_back(divs[i] * mul);
+            }
+        }
+    }
+    return divs;
+}
+```
+
+##### ポラード・ロー法 (pollard's rho)
+
+<https://github.com/yosupo06/library-checker-problems/blob/ed3d7f3da745881ad343e1a26bbc618b85e6ebc7/number_theory/factorize/sol/correct.cpp>
+
+```cpp
+using ull = unsigned long long;
+template <class T>
+using V = vector<T>;
+template <class T>
+using VV = V<V<T>>;
+
+// bit op
+int bsf(uint x) { return __builtin_ctz(x); }
+int bsf(ull x) { return __builtin_ctzll(x); }
+
+// binary gcd
+ll gcd(ll _a, ll _b) {
+    ull a = abs(_a), b = abs(_b);
+    if (a == 0) return b;
+    if (b == 0) return a;
+    int shift = bsf(a | b);
+    a >>= bsf(a);
+    do {
+        b >>= bsf(b);
+        if (a > b) swap(a, b);
+        b -= a;
+    } while (b);
+    return (a << shift);
+}
+
+template <class T, class U>
+T pow_mod(T x, U n, T md) {
+    T r = 1 % md;
+    x %= md;
+    while (n) {
+        if (n & 1) r = (r * x) % md;
+        x = (x * x) % md;
+        n >>= 1;
+    }
+    return r;
+}
+
+bool is_prime(ll n) {
+    if (n <= 1) return false;
+    if (n == 2) return true;
+    if (n % 2 == 0) return false;
+    ll d = n - 1;
+    while (d % 2 == 0) d /= 2;
+    for (ll a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+        if (n <= a) break;
+        ll t = d;
+        ll y = pow_mod<__int128_t>(a, t, n);  // over
+        while (t != n - 1 && y != 1 && y != n - 1) {
+            y = __int128_t(y) * y % n;  // flow
+            t <<= 1;
+        }
+        if (y != n - 1 && t % 2 == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+ll pollard_single(ll n) {
+    if (is_prime(n)) return n;
+    if (n % 2 == 0) return 2;
+    ll st = 0;
+    auto f = [&](ll x) { return (__int128_t(x) * x + st) % n; };
+    while (true) {
+        st++;
+        ll x = st, y = f(x);
+        while (true) {
+            ll p = gcd((y - x + n), n);
+            if (p == 0 || p == n) break;
+            if (p != 1) return p;
+            x = f(x);
+            y = f(f(y));
+        }
+    }
+}
+
+// 素因数を列挙
+V<ll> pollard(ll n) {
+    if (n == 1) return {};
+    ll x = pollard_single(n);
+    if (x == n) return {x};
+    V<ll> le = pollard(x);
+    V<ll> ri = pollard(n / x);
+    le.insert(le.end(), ri.begin(), ri.end());
+    return le;
+}
+
+// 素因数をごとに数をカウントする
+vector<pair<ll, ll>> factorize(ll n) {
+    vll ps = pollard(n);
+    map<ll, ll> mp;
+    for (ll x : ps) mp[x]++;
+
+    vector<pair<ll, ll>> facs;
+    for (auto [k, cnt] : mp) facs.push_back({k, cnt});
+    return facs;
+}
+```
+
+##### 試し割り
+
+計算量 $O(\sqrt{N})$
+
+<https://onlinejudge.u-aizu.ac.jp/solutions/problem/NTL_1_A/review/11333204/goropikari/C++23>
+
+```cpp
+// 素因数分解
+// prime, cnt
+vector<pair<ll, ll>> factorize(ll x) {
+    vector<pair<ll, ll>> facs;
+    for (ll i = 2; i * i <= x; i++) {
+        if (x % i == 0) {
+            ll cnt = 0;
+            while (x % i == 0) {
+                cnt++;
+                x /= i;
+            }
+            facs.push_back({i, cnt});
+        }
+    }
+    if (x != 1) {
+        facs.push_back({x, 1});
+    }
+    return facs;
+}
+```
 
 ## 累積和 (cumsum)
 
@@ -528,382 +953,6 @@ struct Cumsum3d {
 ```
 
 <https://atcoder.jp/contests/abc366/submissions/65702920>
-
-## べき乗計算(冪乗)
-
-### 高速べき乗計算
-
-$x^n$ を高速に求める
-
-```cpp
-// x^n
-ll intpow(ll x, ll n) {
-    long long ret = 1;
-    while (n > 0) {
-        if (n & 1)
-            ret *= x;
-        x *= x;
-        n >>= 1;
-    }
-    return ret;
-}
-```
-
-ref: [逆元](#逆元)
-
-### 逆元
-
-ref: [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆元から離散対数まで 〜](https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a)
-
-#### exponential mod
-
-```cpp
-// べき乗 mod
-// x^n mod m
-ll modpow(ll x, ll n, ll mod) {
-    long long ret = 1;
-    while (n > 0) {
-        if (n & 1)
-            ret = (ret * x) % mod;
-        x = (x * x) % mod;
-        n >>= 1;
-    }
-    return ret;
-}
-```
-
-フェルマーの小定理より素数 $p$ に対して $a^{p-1} \equiv 1 \mod p$ であるから
-$a^{-1} \equiv a^{p-2} \mod p$
-
-```cpp
-// べき乗 inv mod
-// x^{-1} mod m
-ll modinv(ll x, ll mod) {
-    return modpow(x, mod - 2, mod);
-}
-```
-
-## 素数
-
-### エラトステネスのふるい
-
-```cpp
-int MAX = 100005;
-vector<int> isprime(MAX, true);
-isprime[0] = isprime[1] = false;
-for (int i = 2; i < MAX; i++) {
-    if (isprime[i]) {
-        for (int j = i + i; j < MAX; j += i) {
-            isprime[j] = false;
-        }
-    }
-}
-```
-
-### 区間篩
-
-区間 $[L,R]$ の数字が素数であるかどうかを判定する.
-
-$L, R$ が $10^{14}$ 程度の大きな数であっても, $R-L$ が $10^7$ 程度であればこの方法で素数判定が可能.
-
-- <https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html?utm_source=chatgpt.com>
-- <https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bt>
-- <https://atcoder.jp/contests/abc412/tasks/abc412_e>
-
-```cpp
-// エラトステネスの区間篩
-// 区間 [L, R] の数字が素数であるかどうかを判定する
-struct SieveRange {
-    long long int L, R;
-    vector<int> _isprime, issegprime;
-    vector<long long int> primes;
-
-    SieveRange(ll L, ll R) : L(L), R(R) {
-        ll M = isqrt(R) + 1;
-        _isprime.resize(M, 1);
-        issegprime.resize(R - L + 1, 1);
-
-        for (ll p = 2; p < M; p++) {
-            if (!_isprime[p]) continue;
-            primes.push_back(p);
-            for (long long int j = p * p; j < M; j += p) {
-                _isprime[j] = 0;
-            }
-        }
-
-        for (long long int p : primes) {
-            ll start = (L + p - 1) / p * p;  // L 以上の一番小さい p の倍数
-            start = max(p * p, start);       // L が小さいと p と一致することがあるので最低限 p*p から始まるようにする
-                                             // p+p でも良いが q<p を満たす素数 q によってすでにマークされているので p*p 始まりでよい。
-            for (long long int j = start; j <= R; j += p) {
-                issegprime[j - L] = 0;
-            }
-        }
-        if (L == 1) issegprime[0] = 0;
-    }
-
-    bool isprime(long long x) {
-        return issegprime[x - L];
-    }
-};
-```
-
-### 最小素因数/素因数分解/約数列挙
-
-#### エラトステネスの篩を使った方法
-
-- 素因数分解:
-- 約数: <https://onlinejudge.u-aizu.ac.jp/solutions/problem/ITP1_3_D/review/11333189/goropikari/C++23>
-
-```cpp
-// N 以下の数の least prime factor を求める
-vll cal_lpf(ll N) {
-    vll lpf(N + 1);
-    vint is_prime(N + 1, 1);
-    iota(all(lpf), 0ll);
-    rep2(p, 2, N + 1) {
-        if (!is_prime[p]) continue;
-        for (ll j = p + p; j <= N; j += p) {
-            is_prime[j] = 0;
-            if (lpf[j] < p) continue;
-            lpf[j] = p;
-        }
-    }
-
-    return lpf;
-}
-
-// x を素因数分解する
-// pair = <prime, cnt>
-vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
-    vector<pair<ll, ll>> facs;
-    {
-        while (x != 1) {
-            ll p = lpf[x];
-            ll cnt = 0;
-            while (x % p == 0) {
-                x /= p;
-                cnt++;
-            }
-            facs.push_back({p, cnt});
-        }
-    }
-
-    return facs;
-}
-
-// x の約数列挙
-vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
-    vll divs = {1};
-    for (auto [p, cnt] : facs) {
-        ll n = divs.size();
-        rep(i, n) {
-            ll mul = 1;
-            rep(j, cnt) {
-                mul *= p;
-                divs.push_back(divs[i] * mul);
-            }
-        }
-    }
-    return divs;
-}
-```
-
-#### 線形篩
-
-ref: <https://37zigen.com/linear-sieve/>
-
-$N$ 以下の最小素因数 (least prime factor) を求めるアルゴリズム.
-計算量 $O(N)$.
-
-<https://onlinejudge.u-aizu.ac.jp/solutions/problem/ITP1_3_D/review/11333207/goropikari/C++23>
-
-```cpp
-// N 以下の数の least prime factor を求める
-vll cal_lpf(ll N) {
-    vll lpf(N + 1, -1);
-    vll primes;
-    rep2(d, 2, N + 1) {
-        if (lpf[d] < 0) {
-            lpf[d] = d;
-            primes.push_back(d);
-        }
-        for (ll p : primes) {
-            if (p * d > N || p > lpf[d]) break;
-            lpf[p * d] = p;
-        }
-    }
-
-    return lpf;
-}
-
-// x を素因数分解する
-// pair = <prime, cnt>
-vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
-    vector<pair<ll, ll>> facs;
-    {
-        while (x != 1) {
-            ll p = lpf[x];
-            ll cnt = 0;
-            while (x % p == 0) {
-                x /= p;
-                cnt++;
-            }
-            facs.push_back({p, cnt});
-        }
-    }
-
-    return facs;
-}
-
-// x の約数列挙
-vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
-    vll divs = {1};
-    for (auto [p, cnt] : facs) {
-        ll n = divs.size();
-        rep(i, n) {
-            ll mul = 1;
-            rep(j, cnt) {
-                mul *= p;
-                divs.push_back(divs[i] * mul);
-            }
-        }
-    }
-    return divs;
-}
-```
-
-#### ポラード・ロー法 (pollard's rho)
-
-<https://github.com/yosupo06/library-checker-problems/blob/ed3d7f3da745881ad343e1a26bbc618b85e6ebc7/number_theory/factorize/sol/correct.cpp>
-
-```cpp
-using ull = unsigned long long;
-template <class T>
-using V = vector<T>;
-template <class T>
-using VV = V<V<T>>;
-
-// bit op
-int bsf(uint x) { return __builtin_ctz(x); }
-int bsf(ull x) { return __builtin_ctzll(x); }
-
-// binary gcd
-ll gcd(ll _a, ll _b) {
-    ull a = abs(_a), b = abs(_b);
-    if (a == 0) return b;
-    if (b == 0) return a;
-    int shift = bsf(a | b);
-    a >>= bsf(a);
-    do {
-        b >>= bsf(b);
-        if (a > b) swap(a, b);
-        b -= a;
-    } while (b);
-    return (a << shift);
-}
-
-template <class T, class U>
-T pow_mod(T x, U n, T md) {
-    T r = 1 % md;
-    x %= md;
-    while (n) {
-        if (n & 1) r = (r * x) % md;
-        x = (x * x) % md;
-        n >>= 1;
-    }
-    return r;
-}
-
-bool is_prime(ll n) {
-    if (n <= 1) return false;
-    if (n == 2) return true;
-    if (n % 2 == 0) return false;
-    ll d = n - 1;
-    while (d % 2 == 0) d /= 2;
-    for (ll a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
-        if (n <= a) break;
-        ll t = d;
-        ll y = pow_mod<__int128_t>(a, t, n);  // over
-        while (t != n - 1 && y != 1 && y != n - 1) {
-            y = __int128_t(y) * y % n;  // flow
-            t <<= 1;
-        }
-        if (y != n - 1 && t % 2 == 0) {
-            return false;
-        }
-    }
-    return true;
-}
-
-ll pollard_single(ll n) {
-    if (is_prime(n)) return n;
-    if (n % 2 == 0) return 2;
-    ll st = 0;
-    auto f = [&](ll x) { return (__int128_t(x) * x + st) % n; };
-    while (true) {
-        st++;
-        ll x = st, y = f(x);
-        while (true) {
-            ll p = gcd((y - x + n), n);
-            if (p == 0 || p == n) break;
-            if (p != 1) return p;
-            x = f(x);
-            y = f(f(y));
-        }
-    }
-}
-
-// 素因数を列挙
-V<ll> pollard(ll n) {
-    if (n == 1) return {};
-    ll x = pollard_single(n);
-    if (x == n) return {x};
-    V<ll> le = pollard(x);
-    V<ll> ri = pollard(n / x);
-    le.insert(le.end(), ri.begin(), ri.end());
-    return le;
-}
-
-// 素因数をごとに数をカウントする
-vector<pair<ll, ll>> factorize(ll n) {
-    vll ps = pollard(n);
-    map<ll, ll> mp;
-    for (ll x : ps) mp[x]++;
-
-    vector<pair<ll, ll>> facs;
-    for (auto [k, cnt] : mp) facs.push_back({k, cnt});
-    return facs;
-}
-```
-
-#### 試し割り
-
-計算量 $O(\sqrt{N})$
-
-<https://onlinejudge.u-aizu.ac.jp/solutions/problem/NTL_1_A/review/11333204/goropikari/C++23>
-
-```cpp
-// 素因数分解
-// prime, cnt
-vector<pair<ll, ll>> factorize(ll x) {
-    vector<pair<ll, ll>> facs;
-    for (ll i = 2; i * i <= x; i++) {
-        if (x % i == 0) {
-            ll cnt = 0;
-            while (x % i == 0) {
-                cnt++;
-                x /= i;
-            }
-            facs.push_back({i, cnt});
-        }
-    }
-    if (x != 1) {
-        facs.push_back({x, 1});
-    }
-    return facs;
-}
-```
 
 ## 行列
 

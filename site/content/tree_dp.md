@@ -1,6 +1,7 @@
 +++
 date = '2026-03-01T23:45:30+09:00'
 title = '木 DP (ABC Tree DP)'
+tags = ["tree_dp"]
 +++
 
 ## 🌳 木DP 問題集
