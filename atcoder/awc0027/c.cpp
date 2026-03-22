@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// https://atcoder.jp/contests/awc0027/tasks/awc0027_c
+// Sat 21 Mar 2026 03:41:08 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,27 +79,24 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K, B;
-    cin >> N >> K >> B;
-    vll C(N + 1), S(N + 1);
-    rep2(i, 1, N + 1) cin >> C[i] >> S[i];
+    ll N;
+    cin >> N;
+    vll X(N);
+    rep(i, N) cin >> X[i];
+    sort(all(X));
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
-    dp[0][0] = 0;
-
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
-            }
+    ll ac = INF, wa = -1;
+    while (ac - wa > 1) {
+        ll wj = (ac + wa) / 2;
+        int ok = 1;
+        rep2(i, 1, N) {
+            if (X[i] - X[i - 1] > wj) ok = 0;
         }
+        if (ok)
+            ac = wj;
+        else
+            wa = wj;
     }
 
-    ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
-    }
-    cout << ans << endl;
+    cout << ac << endl;
 }

@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// https://atcoder.jp/contests/awc0030/tasks/awc0030_d
+// Fri 20 Mar 2026 08:11:35 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,27 +79,34 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K, B;
-    cin >> N >> K >> B;
-    vll C(N + 1), S(N + 1);
-    rep2(i, 1, N + 1) cin >> C[i] >> S[i];
+    ll N;
+    cin >> N;
+    vll T(N);
+    rep(i, N) cin >> T[i];
+    rep(i, N) T[i]--;
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
-    dp[0][0] = 0;
+    dsu uf(N);
 
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
-            }
+    rep(i, N) {
+        uf.merge(i, T[i]);
+    }
+
+    vll visited(N, -1);
+
+    vll ans(N);
+
+    for (auto g : uf.groups()) {
+        int now = g[0];
+        visited[now] = 0;
+        ll cnt = 0;
+        while (visited[T[now]] == -1) {
+            cnt++;
+            now = T[now];
+            visited[now] = cnt;
         }
-    }
 
-    ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
+        ll len = cnt - visited[T[now]] + 1;
+        for (int id : g) ans[id] = len;
     }
-    cout << ans << endl;
+    print(ans);
 }

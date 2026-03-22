@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc449/tasks/abc449_b
-// Sat 14 Mar 2026 09:01:02 PM JST
+// Fri 20 Mar 2026 11:08:43 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -83,13 +83,13 @@ void solve() {
     cin >> H >> W >> Q;
 
     rep(i, Q) {
-        ll t, x;
+        int t, x;
         cin >> t >> x;
         if (t == 1) {
             cout << x * W << endl;
             H -= x;
         } else {
-            cout << H * x << endl;
+            cout << x * H << endl;
             W -= x;
         }
     }

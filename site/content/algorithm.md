@@ -575,7 +575,7 @@ struct SieveRange {
 ##### エラトステネスの篩を使った方法
 
 - 素因数分解:
-- 約数: <https://onlinejudge.u-aizu.ac.jp/solutions/problem/ITP1_3_D/review/11333189/goropikari/C++23>
+- 約数: <https://onlinejudge.u-aizu.ac.jp/status/users/goropikari/submissions/1/ITP1_3_D/judge/11378397/C++17>
 
 ```cpp
 // N 以下の数の least prime factor を求める
@@ -615,7 +615,7 @@ vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
 }
 
 // x の約数列挙
-vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
+vector<ll> cal_divisor(vector<pair<ll, ll>>& facs) {
     vll divs = {1};
     for (auto [p, cnt] : facs) {
         ll n = divs.size();
@@ -629,6 +629,11 @@ vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
     }
     return divs;
 }
+
+// example
+vll lpf = cal_lpf(x);
+vector<pair<ll, ll>> facs = factorize(lpf, x);
+vll divs = cal_divisor(facs);
 ```
 
 ##### 線形篩
@@ -679,7 +684,7 @@ vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
 }
 
 // x の約数列挙
-vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
+vector<ll> cal_divisor(vector<pair<ll, ll>>& facs) {
     vll divs = {1};
     for (auto [p, cnt] : facs) {
         ll n = divs.size();

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// https://atcoder.jp/contests/awc0029/tasks/awc0029_e
+// Thu 19 Mar 2026 08:11:41 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,27 +79,74 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K, B;
-    cin >> N >> K >> B;
-    vll C(N + 1), S(N + 1);
-    rep2(i, 1, N + 1) cin >> C[i] >> S[i];
+    ll N, M;
+    cin >> N >> M;
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
+    // to, cost
+    using P = pair<ll, ll>;
+    vector<vector<P>> graph(N);
+    rep(i, M) {
+        ll u, v, w;
+        cin >> u >> v >> w;
+        u--, v--;
+        graph[u].emplace_back(v, w);
+    }
+
+    ll S, K;
+    cin >> S >> K;
+    S--;
+
+    vll T(K);
+    rep(i, K) {
+        cin >> T[i];
+        T[i]--;
+    }
+
+    vvll dist(N, vll(N, INF));
+    rep(i, N) dist[i][i] = 0;
+    rep(now, N) {
+        for (auto [nx, w] : graph[now]) {
+            dist[now][nx] = w;
+        }
+    }
+    rep(k, N) rep(i, N) rep(j, N) {
+        chmin(dist[i][j], dist[i][k] + dist[k][j]);
+    }
+
+    K++;
+    vector<vector<P>> to(K);
+    T.insert(T.begin(), S);
+
+    rep(i, K) rep(j, K) {
+        if (i == j) continue;
+        int u = T[i], v = T[j];
+        if (dist[u][v] != INF) to[i].pb({j, dist[u][v]});
+    }
+
+    vvll dp(K, vll(1 << K, INF));
     dp[0][0] = 0;
 
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
-            }
+    // cost, now, visited
+    using F = tuple<ll, ll, ll>;
+    priority_queue<F, vector<F>, greater<F>> pq;
+    pq.push({0, 0, 0});
+
+    while (pq.size()) {
+        auto [cost, now, vis] = pq.top();
+        pq.pop();
+
+        if (dp[now][vis] < cost) continue;
+
+        for (auto [nx, w] : to[now]) {
+            ll nxvis = vis;
+            nxvis = vis | (1 << nx);
+            if (dp[nx][nxvis] <= cost + w) continue;
+            dp[nx][nxvis] = cost + w;
+            pq.push({cost + w, nx, nxvis});
         }
     }
 
-    ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
-    }
+    ll ans = -1;
+    if (dp[0][(1 << K) - 1] != INF) ans = dp[0][(1 << K) - 1];
     cout << ans << endl;
 }

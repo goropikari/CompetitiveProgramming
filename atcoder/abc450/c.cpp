@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// https://atcoder.jp/contests/abc450/tasks/abc450_c
+// Sat 21 Mar 2026 09:03:50 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,27 +79,37 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K, B;
-    cin >> N >> K >> B;
-    vll C(N + 1), S(N + 1);
-    rep2(i, 1, N + 1) cin >> C[i] >> S[i];
+    ll H, W;
+    cin >> H >> W;
+    vector<string> grid(H);
+    rep(i, H) cin >> grid[i];
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
-    dp[0][0] = 0;
+    dsu uf(H * W + 1);
+    vint di = {0, 1, 0, -1};
+    vint dj = {1, 0, -1, 0};
 
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
+    int ban = H * W;
+
+    rep(i, H) {
+        rep(j, W) {
+            if (grid[i][j] == '#') continue;
+            ll now = i * W + j;
+            if (i == 0 || j == 0 || i == H - 1 || j == W - 1) uf.merge(now, ban);
+
+            rep(d, 4) {
+                ll ni = i + di[d], nj = j + dj[d];
+                if (clamp(ni, 0ll, H - 1) != ni || clamp(nj, 0ll, W - 1) != nj) continue;
+                if (grid[ni][nj] == '.') uf.merge(now, ni * W + nj);
             }
         }
     }
 
-    ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
+    set<int> ans;
+    rep(i, H) {
+        rep(j, W) {
+            ll now = i * W + j;
+            if (grid[i][j] == '.' && !uf.same(now, ban)) ans.insert(uf.leader(now));
+        }
     }
-    cout << ans << endl;
+    cout << ans.size() << endl;
 }

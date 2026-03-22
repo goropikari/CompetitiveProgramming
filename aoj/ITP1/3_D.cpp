@@ -99,7 +99,7 @@ vector<pair<ll, ll>> factorize(vll& lpf, ll x) {
 }
 
 // x の約数列挙
-vector<ll> cal_divisor(vector<pair<ll, ll>>& facs, ll x) {
+vector<ll> cal_divisor(vector<pair<ll, ll>>& facs) {
     vll divs = {1};
     for (auto [p, cnt] : facs) {
         ll n = divs.size();
@@ -123,7 +123,7 @@ void solve() {
 
     vll lpf = cal_lpf(c);
     vector<pair<ll, ll>> facs = factorize(lpf, c);
-    vll divs = cal_divisor(facs, c);
+    vll divs = cal_divisor(facs);
     sort(all(divs));
 
     auto rit = upper_bound(all(divs), b);

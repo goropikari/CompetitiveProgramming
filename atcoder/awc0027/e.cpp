@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// https://atcoder.jp/contests/awc0027/tasks/awc0027_e
+// Sat 21 Mar 2026 04:01:01 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/all>
+using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,27 +79,30 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K, B;
-    cin >> N >> K >> B;
-    vll C(N + 1), S(N + 1);
-    rep2(i, 1, N + 1) cin >> C[i] >> S[i];
+    ll N, M, K;
+    cin >> N >> M >> K;
+    vll A(N);
+    rep(i, N) cin >> A[i];
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
-    dp[0][0] = 0;
+    rep(i, N) A[i] += M;
 
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
-            }
-        }
-    }
+    vll S(N + 1);
+    rep(i, N) S[i + 1] += S[i] + A[i];
+
+    vll pos = S;
+    sort(all(pos));
+    pos.erase(unique(all(pos)), pos.end());
+
+    auto get_id = [&](ll x) -> int {
+        return lower_bound(all(pos), x) - pos.begin();
+    };
+
+    fenwick_tree<ll> fw(pos.size());
 
     ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
+    rep(r, N + 1) {
+        ans += r - fw.sum(0, get_id(S[r] - K));
+        fw.add(get_id(S[r]), 1);
     }
     cout << ans << endl;
 }

@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// https://atcoder.jp/contests/abc450/tasks/abc450_d
+// Sat 21 Mar 2026 09:11:35 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,27 +79,22 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K, B;
-    cin >> N >> K >> B;
-    vll C(N + 1), S(N + 1);
-    rep2(i, 1, N + 1) cin >> C[i] >> S[i];
+    ll N, K;
+    cin >> N >> K;
+    vll A(N);
+    rep(i, N) cin >> A[i];
+    rep(i, N) A[i] %= K;
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
-    dp[0][0] = 0;
+    sort(all(A));
 
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
-            }
-        }
-    }
+    deque<ll> deq;
+    rep(i, N) deq.pb(A[i]);
 
-    ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
+    ll ans = deq.back() - deq.front();
+    rep(i, N) {
+        deq.pb(deq.front() + K);
+        deq.pop_front();
+        chmin(ans, deq.back() - deq.front());
     }
     cout << ans << endl;
 }

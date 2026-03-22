@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// https://atcoder.jp/contests/awc0027/tasks/awc0027_d
+// Sat 21 Mar 2026 03:45:26 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,27 +79,36 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, K, B;
-    cin >> N >> K >> B;
-    vll C(N + 1), S(N + 1);
-    rep2(i, 1, N + 1) cin >> C[i] >> S[i];
+    ll N, M;
+    cin >> N >> M;
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
-    dp[0][0] = 0;
+    vll H(N), S(N);
+    rep(i, N) cin >> H[i] >> S[i];
+    vll P(M);
+    rep(i, M) cin >> P[i];
 
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
-            }
+    multiset<ll> setp;
+    rep(i, M) setp.insert(P[i]);
+
+    // store, skill
+    vector<pair<ll, ll>> sh(N);
+    rep(i, N) sh[i] = {-S[i], H[i]};
+    sort(all(sh));
+
+    int cnt = 0;
+    ll ans = 0;
+    for (int i = 0; i < N && cnt < M; i++) {
+        auto [s, h] = sh[i];
+        s *= -1;
+
+        auto it = setp.lower_bound(h);
+        if (it != setp.end()) {
+            setp.erase(it);
+            cnt++;
+            ans += s;
         }
     }
 
-    ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
-    }
+    if (cnt != M) ans = -1;
     cout << ans << endl;
 }
