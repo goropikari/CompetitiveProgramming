@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/awc0027/tasks/awc0027_e
-// Sat 21 Mar 2026 04:01:01 PM JST
+// Sun 22 Mar 2026 09:23:27 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -40,13 +40,13 @@ bool chmax(T& a, T b) {
 }
 
 template <typename T>
-void print(vector<T> v) {
+void print(vector<T> v, char delim = ' ') {
     int n = v.size();
     rep(i, n) {
         if (i == 0)
             cout << v[i];
         else
-            cout << ' ' << v[i];
+            cout << delim << v[i];
     }
     cout << endl;
 }
@@ -83,11 +83,10 @@ void solve() {
     cin >> N >> M >> K;
     vll A(N);
     rep(i, N) cin >> A[i];
-
     rep(i, N) A[i] += M;
 
     vll S(N + 1);
-    rep(i, N) S[i + 1] += S[i] + A[i];
+    rep(i, N) S[i + 1] = S[i] + A[i];
 
     vll pos = S;
     sort(all(pos));
@@ -101,7 +100,8 @@ void solve() {
 
     ll ans = 0;
     rep(r, N + 1) {
-        ans += r - fw.sum(0, get_id(S[r] - K));
+        int id = get_id(S[r] - K);
+        ans += fw.sum(id, pos.size());
         fw.add(get_id(S[r]), 1);
     }
     cout << ans << endl;

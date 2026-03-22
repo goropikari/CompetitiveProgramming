@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/abc449/tasks/abc449_d
-// Sat 14 Mar 2026 09:19:02 PM JST
+// Sun 22 Mar 2026 09:07:13 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -40,13 +40,13 @@ bool chmax(T& a, T b) {
 }
 
 template <typename T>
-void print(vector<T> v) {
+void print(vector<T> v, char delim = ' ') {
     int n = v.size();
     rep(i, n) {
         if (i == 0)
             cout << v[i];
         else
-            cout << ' ' << v[i];
+            cout << delim << v[i];
     }
     cout << endl;
 }
@@ -84,32 +84,34 @@ void solve() {
 
     ll ans = 0;
     rep(_, 2) {
-        // |x| > |y| and |x| is even
-        for (ll x = L; x <= R; x++) {
+        // |x| > |y| のとき
+        rep2(x, L, R + 1) {
             if (x % 2 != 0) continue;
             ll ax = abs(x);
+            if (U <= -ax) continue;
+            if (ax <= D) continue;
             ll d = max(-ax + 1, D);
             ll u = min(ax - 1, U);
-            ans += max(u - d + 1, 0ll);
+            if (d > u) continue;
+
+            ans += u - d + 1;
         }
+
         swap(L, D);
         swap(R, U);
     }
 
-    vint sign = {1, -1};
+    // |x| = |y|
     rep2(i, 1, (ll)1e6 + 5) {
         if (i % 2 != 0) continue;
-        for (int sx : sign)
-            for (int sy : sign) {
-                ll x = sx * i, y = sy * i;
-                if (clamp(x, L, R) == x && clamp(y, D, U) == y) {
-                    ans++;
-                }
+        for (ll si : {1, -1}) {
+            for (ll sj : {1, -1}) {
+                ll ti = si * i, tj = sj * i;
+                if (clamp(ti, L, R) == ti && clamp(tj, D, U) == tj) ans++;
             }
+        }
     }
-    if (clamp(0ll, L, R) == 0 && clamp(0ll, D, U) == 0) {
-        ans++;
-    }
+    if (clamp(0ll, L, R) == 0ll && clamp(0ll, D, U) == 0ll) ans++;
 
     cout << ans << endl;
 }
