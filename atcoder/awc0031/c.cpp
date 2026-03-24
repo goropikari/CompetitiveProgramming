@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc450/tasks/abc450_e
-// Tue 24 Mar 2026 09:55:07 AM JST
+// https://atcoder.jp/contests/awc0031/tasks/awc0031_c
+// Tue 24 Mar 2026 01:10:51 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,63 +79,43 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string X, Y;
-    cin >> X >> Y;
-    ll Q;
-    cin >> Q;
+    ll N, D, S, T;
+    cin >> N >> D >> S >> T;
+    S--, T--;
+    vll X(N), Y(N);
+    rep(i, N) cin >> X[i] >> Y[i];
 
-    ll xsz = X.size(), ysz = Y.size();
-    vll len(100);
-    len[1] = xsz, len[2] = ysz;
-    int cnt = 0;
-    rep2(i, 3, 100) {
-        len[i] = len[i - 1] + len[i - 2];
-        cnt = i;
-        if (len[i] > (ll)2e18) break;
-    }
-
-    vvll xcnt(26, vll(xsz + 1)), ycnt(26, vll(ysz + 1));
-    rep(i, xsz) {
-        int c = X[i] - 'a';
-        xcnt[c][i + 1]++;
-        xcnt[c][i + 1] += xcnt[c][i];
-    }
-    rep(i, ysz) {
-        int c = Y[i] - 'a';
-        ycnt[c][i + 1]++;
-        ycnt[c][i + 1] += ycnt[c][i];
-    }
-
-    vvll S(26, vll(100));
-    rep(c, 26) {
-        S[c][1] = xcnt[c][xsz];
-    }
-    rep(c, 26) {
-        S[c][2] = ycnt[c][ysz];
-    }
-    rep(c, 26) {
-        rep2(i, 3, cnt) {
-            S[c][i] = S[c][i - 1] + S[c][i - 2];
+    // to, cost
+    using P = pair<ll, ll>;
+    vvint to(N);
+    rep(i, N) rep2(j, i + 1, N) {
+        ll dx = X[i] - X[j];
+        ll dy = Y[i] - Y[j];
+        if (dx * dx + dy * dy <= D * D) {
+            to[i].pb(j);
+            to[j].pb(i);
         }
     }
 
-    auto f = [&](auto f, int index, ll r, int c) -> ll {
-        if (index == 1) return xcnt[c][r];
-        if (index == 2) return ycnt[c][r];
+    vll dist(N, INF);
+    dist[S] = 0;
 
-        if (r <= len[index - 1]) return f(f, index - 1, r, c);
-        return S[c][index - 1] + f(f, index - 2, r - len[index - 1], c);
-    };
+    queue<pair<ll, ll>> que;
+    que.emplace(S, 0);
+    while (que.size()) {
+        auto [now, d] = que.front();
+        que.pop();
 
-    while (Q--) {
-        ll L, R;
-        char C;
-        cin >> L >> R >> C;
-        int c = C - 'a';
+        if (dist[now] < d) continue;
 
-        int si = 1;
-        while (len[si] < R) si++;
-
-        cout << f(f, si, R, c) - f(f, si, L - 1, c) << endl;
+        for (int nx : to[now]) {
+            if (dist[nx] <= d + 1) continue;
+            dist[nx] = d + 1;
+            que.emplace(nx, d + 1);
+        }
     }
+
+    ll ans = -1;
+    if (dist[T] != INF) ans = dist[T];
+    cout << ans << endl;
 }

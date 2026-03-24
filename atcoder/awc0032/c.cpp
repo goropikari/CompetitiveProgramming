@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/abc450/tasks/abc450_e
-// Tue 24 Mar 2026 09:55:07 AM JST
+// https://atcoder.jp/contests/awc0032/tasks/awc0032_c
+// Wed 25 Mar 2026 12:06:52 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -79,63 +79,30 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string X, Y;
-    cin >> X >> Y;
-    ll Q;
-    cin >> Q;
+    ll N, Q;
+    cin >> N >> Q;
+    using P = pair<ll, ll>;
 
-    ll xsz = X.size(), ysz = Y.size();
-    vll len(100);
-    len[1] = xsz, len[2] = ysz;
-    int cnt = 0;
-    rep2(i, 3, 100) {
-        len[i] = len[i - 1] + len[i - 2];
-        cnt = i;
-        if (len[i] > (ll)2e18) break;
+    vector<P> mounts(N);
+    rep(i, N) {
+        ll y, p;
+        cin >> y >> p;
+        mounts[i] = {y, p};
     }
 
-    vvll xcnt(26, vll(xsz + 1)), ycnt(26, vll(ysz + 1));
-    rep(i, xsz) {
-        int c = X[i] - 'a';
-        xcnt[c][i + 1]++;
-        xcnt[c][i + 1] += xcnt[c][i];
-    }
-    rep(i, ysz) {
-        int c = Y[i] - 'a';
-        ycnt[c][i + 1]++;
-        ycnt[c][i + 1] += ycnt[c][i];
-    }
+    vll L(Q);
+    rep(i, Q) cin >> L[i];
 
-    vvll S(26, vll(100));
-    rep(c, 26) {
-        S[c][1] = xcnt[c][xsz];
-    }
-    rep(c, 26) {
-        S[c][2] = ycnt[c][ysz];
-    }
-    rep(c, 26) {
-        rep2(i, 3, cnt) {
-            S[c][i] = S[c][i - 1] + S[c][i - 2];
-        }
+    sort(all(mounts));
+
+    vll cm(N + 1);
+    rep(i, N) {
+        auto [y, p] = mounts[i];
+        cm[i + 1] += cm[i] + p;
     }
 
-    auto f = [&](auto f, int index, ll r, int c) -> ll {
-        if (index == 1) return xcnt[c][r];
-        if (index == 2) return ycnt[c][r];
-
-        if (r <= len[index - 1]) return f(f, index - 1, r, c);
-        return S[c][index - 1] + f(f, index - 2, r - len[index - 1], c);
-    };
-
-    while (Q--) {
-        ll L, R;
-        char C;
-        cin >> L >> R >> C;
-        int c = C - 'a';
-
-        int si = 1;
-        while (len[si] < R) si++;
-
-        cout << f(f, si, R, c) - f(f, si, L - 1, c) << endl;
+    for (ll l : L) {
+        int x = lower_bound(all(mounts), make_pair(l, -1ll)) - mounts.begin();
+        cout << cm[N] - cm[x] << endl;
     }
 }
