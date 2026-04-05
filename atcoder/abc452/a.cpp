@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/awc0027/tasks/awc0027_e
-// Mon 30 Mar 2026 11:58:28 PM JST
+// https://atcoder.jp/contests/abc452/tasks/abc452_a
+// Sun 05 Apr 2026 10:28:47 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,31 +79,11 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M, K;
-    cin >> N >> M >> K;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    int M, D;
+    cin >> M >> D;
 
-    rep(i, N) A[i] += M;
+    map<pair<int, int>, int> mp;
+    mp[{1, 7}] = mp[{3, 3}] = mp[{5, 5}] = mp[{7, 7}] = mp[{9, 9}] = 1;
 
-    vll S(N + 1);
-    rep(i, N) S[i + 1] += S[i] + A[i];
-
-    vll pos = S;
-    sort(all(pos));
-    pos.erase(unique(all(pos)), pos.end());
-
-    auto get_id = [&](ll x) -> ll {
-        return lower_bound(all(pos), x) - pos.begin();
-    };
-
-    fenwick_tree<ll> fw(pos.size());
-    ll ans = 0;
-    for (auto s : S) {
-        // S[r] - S[l-1] <= K
-        // S[r] - K <= S[l-1]
-        ans += fw.sum(get_id(s - K), pos.size());
-        fw.add(get_id(s), 1);
-    }
-    cout << ans << endl;
+    yesno(mp[{M, D}]);
 }

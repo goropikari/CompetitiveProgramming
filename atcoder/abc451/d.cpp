@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/awc0027/tasks/awc0027_e
-// Mon 30 Mar 2026 11:58:28 PM JST
+// https://atcoder.jp/contests/abc451/tasks/abc451_d
+// Sun 29 Mar 2026 05:23:00 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,31 +79,41 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M, K;
-    cin >> N >> M >> K;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    ll N;
+    cin >> N;
 
-    rep(i, N) A[i] += M;
-
-    vll S(N + 1);
-    rep(i, N) S[i + 1] += S[i] + A[i];
-
-    vll pos = S;
-    sort(all(pos));
-    pos.erase(unique(all(pos)), pos.end());
-
-    auto get_id = [&](ll x) -> ll {
-        return lower_bound(all(pos), x) - pos.begin();
+    auto len = [](ll x) -> ll {
+        ll cnt = 0;
+        while (x) {
+            cnt++;
+            x /= 10;
+        }
+        return cnt;
     };
 
-    fenwick_tree<ll> fw(pos.size());
-    ll ans = 0;
-    for (auto s : S) {
-        // S[r] - S[l-1] <= K
-        // S[r] - K <= S[l-1]
-        ans += fw.sum(get_id(s - K), pos.size());
-        fw.add(get_id(s), 1);
+    set<ll> S;
+    vll p(11);
+    p[0] = 1;
+    rep2(i, 1, 11) {
+        p[i] = p[i - 1] * 10;
     }
-    cout << ans << endl;
+
+    auto dfs = [&](auto dfs, ll s) -> void {
+        rep(i, 31) {
+            ll t = 1ll << i;
+            ll nxs = s * p[len(t)] + t;
+            if (nxs > (ll)1e9) continue;
+            if (S.count(nxs)) continue;
+            S.insert(nxs);
+            dfs(dfs, nxs);
+        }
+    };
+
+    dfs(dfs, 0);
+
+    vll val;
+    for (auto x : S) val.pb(x);
+    sort(all(val));
+
+    cout << val[N - 1] << endl;
 }

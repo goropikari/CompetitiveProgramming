@@ -1,5 +1,5 @@
 // https://atcoder.jp/contests/awc0018/tasks/awc0018_e
-// Fri 20 Mar 2026 10:49:50 PM JST
+// Tue 31 Mar 2026 12:08:18 AM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -40,13 +40,13 @@ bool chmax(T& a, T b) {
 }
 
 template <typename T>
-void print(vector<T> v) {
+void print(vector<T> v, char delim = ' ') {
     int n = v.size();
     rep(i, n) {
         if (i == 0)
             cout << v[i];
         else
-            cout << ' ' << v[i];
+            cout << delim << v[i];
     }
     cout << endl;
 }
@@ -81,25 +81,28 @@ void solve() {
 
     ll N, K, B;
     cin >> N >> K >> B;
+
     vll C(N + 1), S(N + 1);
     rep2(i, 1, N + 1) cin >> C[i] >> S[i];
 
-    // dp[i][k]: 最後に残った山 i が k 個目の山の時の入山料の最小値
-    vvll dp(N + 1, vll(K + 1, INF));
+    // dp[i][j][k]: i 番目までの山で j 個の山を登って最後に訪れた山が k のときの入山料の合計の最小値
+    vector dp(K + 1, vll(N + 1, INF));
     dp[0][0] = 0;
 
-    rep2(now, 1, N + 1) {
-        rep(from, now) {
-            if (S[from] >= S[now]) continue;
-            for (ll k = K - 1; k >= 0; k--) {
-                chmin(dp[now][k + 1], dp[from][k] + C[now]);
+    rep2(k, 1, N + 1) {
+        vvll dpn = dp;
+        rep(pr, k) {
+            rep(j, K) {
+                if (S[pr] < S[k])
+                    chmin(dpn[j + 1][k], dp[j][pr] + C[k]);
             }
         }
+        swap(dpn, dp);
     }
 
     ll ans = 0;
-    rep2(i, 1, N + 1) {
-        rep(k, K + 1) if (dp[i][k] <= B) chmax(ans, k);
+    rep(k, K + 1) rep2(i, 1, N + 1) {
+        if (dp[k][i] <= B) chmax(ans, k);
     }
     cout << ans << endl;
 }

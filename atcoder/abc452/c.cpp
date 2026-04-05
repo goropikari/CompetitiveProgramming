@@ -1,9 +1,9 @@
-// https://atcoder.jp/contests/awc0027/tasks/awc0027_e
-// Mon 30 Mar 2026 11:58:28 PM JST
+// https://atcoder.jp/contests/abc452/tasks/abc452_c
+// Sun 05 Apr 2026 10:32:52 PM JST
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/all>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using vmint = vector<mint>;
@@ -79,31 +79,41 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M, K;
-    cin >> N >> M >> K;
-    vll A(N);
-    rep(i, N) cin >> A[i];
-
-    rep(i, N) A[i] += M;
-
-    vll S(N + 1);
-    rep(i, N) S[i + 1] += S[i] + A[i];
-
-    vll pos = S;
-    sort(all(pos));
-    pos.erase(unique(all(pos)), pos.end());
-
-    auto get_id = [&](ll x) -> ll {
-        return lower_bound(all(pos), x) - pos.begin();
-    };
-
-    fenwick_tree<ll> fw(pos.size());
-    ll ans = 0;
-    for (auto s : S) {
-        // S[r] - S[l-1] <= K
-        // S[r] - K <= S[l-1]
-        ans += fw.sum(get_id(s - K), pos.size());
-        fw.add(get_id(s), 1);
+    ll N;
+    cin >> N;
+    vll A(N), B(N);
+    rep(i, N) {
+        cin >> A[i] >> B[i];
+        B[i]--;
     }
-    cout << ans << endl;
+
+    ll M;
+    cin >> M;
+    vector<string> S(M);
+    rep(i, M) cin >> S[i];
+
+    int mx = 15;
+    vector memo(mx, vector(mx, vint(26)));
+    for (auto s : S) {
+        int sz = s.size();
+        rep(i, sz) {
+            char c = s[i] - 'a';
+            memo[sz][i][c] = 1;
+        }
+    }
+
+    for (auto s : S) {
+        ll sz = s.size();
+        if (sz != N) {
+            No();
+            continue;
+        }
+
+        int ok = 1;
+        rep(i, N) {
+            int target = s[i] - 'a';
+            if (!memo[A[i]][B[i]][target]) ok = 0;
+        }
+        yesno(ok);
+    }
 }

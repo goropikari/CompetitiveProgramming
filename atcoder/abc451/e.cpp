@@ -1,5 +1,5 @@
-// https://atcoder.jp/contests/awc0027/tasks/awc0027_e
-// Mon 30 Mar 2026 11:58:28 PM JST
+// https://atcoder.jp/contests/abc451/tasks/abc451_e
+// Wed 01 Apr 2026 10:53:41 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 #include <atcoder/all>
@@ -79,31 +79,53 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N, M, K;
-    cin >> N >> M >> K;
-    vll A(N);
-    rep(i, N) cin >> A[i];
+    ll N;
+    cin >> N;
 
-    rep(i, N) A[i] += M;
+    int m = 10005;
+    using P = pair<ll, ll>;
+    vector<vector<P>> as(m);
 
-    vll S(N + 1);
-    rep(i, N) S[i + 1] += S[i] + A[i];
+    rep(i, N) rep2(j, i + 1, N) {
+        ll a;
+        cin >> a;
+        as[a].pb({i, j});
+    }
 
-    vll pos = S;
-    sort(all(pos));
-    pos.erase(unique(all(pos)), pos.end());
+    dsu uf(N);
 
-    auto get_id = [&](ll x) -> ll {
-        return lower_bound(all(pos), x) - pos.begin();
+    vvll dist(N, vll(N));
+    vvint to(N);
+    rep(k, m) {
+        for (auto [i, j] : as[k]) {
+            if (uf.same(i, j)) continue;
+            uf.merge(i, j);
+            dist[i][j] = dist[j][i] = k;
+            to[i].pb(j);
+            to[j].pb(i);
+        }
+    }
+
+    vvll lens(N, vll(N, INF));
+    rep(i, N) lens[i][i] = 0;
+
+    auto dfs = [&](auto dfs, vll& len, ll sum, int now, int p) -> void {
+        for (int nx : to[now]) {
+            if (nx == p) continue;
+            len[nx] = sum + dist[now][nx];
+            dfs(dfs, len, sum + dist[now][nx], nx, now);
+        }
     };
 
-    fenwick_tree<ll> fw(pos.size());
-    ll ans = 0;
-    for (auto s : S) {
-        // S[r] - S[l-1] <= K
-        // S[r] - K <= S[l-1]
-        ans += fw.sum(get_id(s - K), pos.size());
-        fw.add(get_id(s), 1);
+    rep(i, N)
+        dfs(dfs, lens[i], 0, i, -1);
+
+    int ok = 1;
+    rep(k, m) {
+        for (auto [i, j] : as[k]) {
+            if (lens[i][j] != k)
+                ok = 0;
+        }
     }
-    cout << ans << endl;
+    yesno(ok);
 }
