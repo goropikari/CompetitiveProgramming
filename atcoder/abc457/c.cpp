@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/abc457/tasks/abc457_c
+// Sat 09 May 2026 09:02:22 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -61,12 +63,10 @@ void Yes() { yesno(true); }
 void No() { yesno(false); }
 
 // ceil(a/b)
-template <typename T>
-T ceil(T a, T b) { return (a + b - 1) / b; }
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-template <typename T>
-T floor(T a, T b) { return a / b; }
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -79,11 +79,39 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
-    ll x;
-    cin >> x;
-    cout << A[x - 1] << endl;
+    ll N, K;
+    cin >> N >> K;
+    vvll A(N);
+    rep(i, N) {
+        ll l;
+        cin >> l;
+        rep(j, l) {
+            ll x;
+            cin >> x;
+            A[i].pb(x);
+        }
+    }
+
+    vll C(N);
+    rep(i, N) cin >> C[i];
+
+    vll len;
+    rep(i, N) {
+        len.pb((ll)A[i].size() * C[i]);
+    }
+    rep(i, N - 1) {
+        len[i + 1] += len[i];
+    }
+
+    ll p = 0;
+    auto it = lower_bound(all(len), K);
+    if (it != len.begin()) {
+        K -= *prev(it);
+    }
+    p = it - len.begin();
+
+    K--;
+    K %= A[p].size();
+
+    cout << A[p][K] << endl;
 }

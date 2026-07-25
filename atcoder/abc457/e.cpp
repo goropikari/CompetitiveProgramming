@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/abc457/tasks/abc457_e
+// Sat 09 May 2026 09:26:58 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -21,8 +23,8 @@ using vll = vector<ll>;
 using vvint = vector<vector<int>>;
 using vvll = vector<vector<ll>>;
 
-const ll INF = (ll)2e18 + 9;
-// const int INF = (int)2e9 + 7;
+// const ll INF = (ll)2e18 + 9;
+const int INF = (int)2e9 + 7;
 
 template <typename T>
 bool chmin(T& a, T b) {
@@ -61,12 +63,10 @@ void Yes() { yesno(true); }
 void No() { yesno(false); }
 
 // ceil(a/b)
-template <typename T>
-T ceil(T a, T b) { return (a + b - 1) / b; }
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-template <typename T>
-T floor(T a, T b) { return a / b; }
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -79,11 +79,64 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
-    ll x;
-    cin >> x;
-    cout << A[x - 1] << endl;
+    ll N, M;
+    cin >> N >> M;
+
+    vll L(M), R(M);
+    rep(i, M) {
+        cin >> L[i] >> R[i];
+        L[i]--, R[i]--;
+    }
+
+    ll Q;
+    cin >> Q;
+    vll S(Q), T(Q);
+    rep(i, Q) {
+        cin >> S[i] >> T[i];
+        S[i]--, T[i]--;
+    }
+
+    // len, id
+    using P = pair<ll, ll>;
+    vector<vector<P>> st(N), fin(N);
+    rep(i, M) {
+        ll l = L[i], r = R[i];
+        ll len = r - l + 1;
+        st[l].pb({len, i});
+        fin[r].pb({len, i});
+    }
+    rep(i, N) {
+        sort(all(st[i]));
+        sort(all(fin[i]));
+    }
+    rep(i, N) {
+        st[i].pb({INF, INF});
+        fin[i].pb({INF, INF});
+    }
+
+    rep(i, Q) {
+        ll s = S[i], t = T[i];
+        ll width = t - s + 1;
+
+        auto& sv = st[s];
+        auto& fv = fin[t];
+
+        int ok = 0;
+        for (auto [len, li] : sv) {
+            ll rem = width - len;
+            if (rem < 0) {
+                break;
+            }
+
+            auto it = lower_bound(all(fv), P({rem, -1}));
+            if (it->second == li)
+                continue;
+            if (it->first > width)
+                continue;
+            ok = 1;
+            break;
+        }
+
+        yesno(ok);
+    }
 }

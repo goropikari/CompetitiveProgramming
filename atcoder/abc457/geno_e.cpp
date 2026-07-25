@@ -61,12 +61,10 @@ void Yes() { yesno(true); }
 void No() { yesno(false); }
 
 // ceil(a/b)
-template <typename T>
-T ceil(T a, T b) { return (a + b - 1) / b; }
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-template <typename T>
-T floor(T a, T b) { return a / b; }
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -79,11 +77,32 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
-    ll x;
-    cin >> x;
-    cout << A[x - 1] << endl;
+    ll N, M;
+    cin >> N >> M;
+
+    vll L(M), R(M);
+    rep(i, M) {
+        cin >> L[i] >> R[i];
+    }
+
+    ll Q;
+    cin >> Q;
+    vll S(Q), T(Q);
+    rep(i, N) cin >> S[i] >> T[i];
+
+    using P = pair<ll, ll>;
+    set<P> stock;
+    rep(i, M) rep(j, M) {
+        if (i == j) continue;
+        ll l1 = L[i], r1 = R[i];
+        ll l2 = L[j], r2 = R[j];
+
+        if (l1 <= l2 && l2 <= r1 + 1) {
+            stock.insert({l1, max(r1, r2)});
+        }
+    }
+
+    rep(i, Q) {
+        yesno(stock.count({S[i], T[i]}));
+    }
 }

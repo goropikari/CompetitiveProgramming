@@ -1,3 +1,5 @@
+// https://atcoder.jp/contests/abc457/tasks/abc457_b
+// Sat 09 May 2026 09:01:07 PM JST
 #include <bits/stdc++.h>
 using namespace std;
 // #include <atcoder/all>
@@ -61,12 +63,10 @@ void Yes() { yesno(true); }
 void No() { yesno(false); }
 
 // ceil(a/b)
-template <typename T>
-T ceil(T a, T b) { return (a + b - 1) / b; }
+ll ceil(ll a, ll b) { return (a + b - 1) / b; }
 
 // floor(a/b)
-template <typename T>
-T floor(T a, T b) { return a / b; }
+ll floor(ll a, ll b) { return a / b; }
 
 void solve();
 
@@ -79,11 +79,21 @@ void solve() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll N;
-    cin >> N;
-    vll A(N);
-    rep(i, N) cin >> A[i];
-    ll x;
-    cin >> x;
-    cout << A[x - 1] << endl;
+    ll n;
+    cin >> n;
+    vvll A(n);
+    rep(i, n) {
+        ll l;
+        cin >> l;
+        rep(j, l) {
+            ll x;
+            cin >> x;
+            A[i].pb(x);
+        }
+    }
+
+    ll x, y;
+    cin >> x >> y;
+    x--, y--;
+    cout << A[x][y] << endl;
 }
